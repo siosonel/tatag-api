@@ -1,0 +1,11 @@
+﻿
+_exclude/*
+config*
+config/*
+
+nplite/*
+
+resources/*
+lib/*
+
+php/test.php
