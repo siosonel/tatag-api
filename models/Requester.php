@@ -1,5 +1,7 @@
 <?php
 
+include_once "models/Utils.php";
+include_once "models/Base.php";
 
 class Requester {
 	public static $user_id=0;
@@ -10,6 +12,12 @@ class Requester {
 	public static $holder_id;
 	
 	static function init() {
+		@header("Content-Type: text/plain");
+		
+		global $dbs;
+		include_once "config.php";
+		DBquery::init($dbs, array("nplite"));	
+		
 		//session_set_cookie_params(0, '/nplite/');
 		if (session_status() == PHP_SESSION_NONE) session_start(); //print_r($_SESSION); //exit();
 		
@@ -28,24 +36,21 @@ class Requester {
 			self::$email = $_POST['user'];
 			$pass = $_POST['pass'];
 			self::login($id,$pass);
-		} else exit("hhh");
+		}
 	}
 	
-	static function login($id,$pass) {	//self::$user_id=2; return;
-		$sql = "SELECT user_id, name, password FROM users WHERE (user_id='$id' OR email='". self::$email ."')"; //exit($sql);
-		$row = DBquery::select($sql);
+	static function login($id,$pass) { //self::$user_id=2; return;
+		$sql = "SELECT user_id, name, password FROM users WHERE (user_id=? OR email=?)"; //exit($sql);
+		$row = DBquery::get($sql, array(self::$user_id, self::$email));		
+		if (!$row) Error::http(401, "Invalid user ID/email or password.");
 		
-		if (!count($row)) Error::http(401, "Invalid user ID/email or password.");
-		else {
-			$user = $row[0];		
-			$pass = getHash($pass, $user['password']);
-			if ($pass != $user['password']) Error::http(401, "Invalid user ID/email or password.");
-		
-			self::$user_id=$user['user_id'];
-			self::$name=$user['name'];
-			$_SESSION['nplite_user_id'] = self::$user_id; //exit(" ok ".self::$user_id);
-			$_SESSION['nplite_user_name'] = self::$name;
-		}
+		$user = $row[0];		
+		if (!password_verify($pass, $user['password'])) Error::http(401, "Invalid user ID/email or password.");
+	
+		self::$user_id=$user['user_id'];
+		self::$name=$user['name'];
+		$_SESSION['nplite_user_id'] = self::$user_id; //exit(" ok ".self::$user_id);
+		$_SESSION['nplite_user_name'] = self::$name;
 	}
 	
 	static function isUser($user_id) {
@@ -53,12 +58,12 @@ class Requester {
 	}
 	
 	static function isBrandAdmin($brand_id) { 	
-		$sql = "SELECT member_id FROM members WHERE brand_id IN ($brand_id) AND user_id IN (". self::$user_id .") AND role='admin'";
-		$row = DBquery::select($sql);
+		$sql = "SELECT member_id FROM members WHERE brand_id IN (:brand_id) AND user_id IN (:user_id) AND role='admin'";
+		$row = DBquery::get($sql, array('brand_id'=>$brand_id, 'user_id'=>self::$user_id));
 		
 		if (!count($row)) {
 			$sql = "SELECT member_id FROM members WHERE brand_id IN ($brand_id) LIMIT 1";
-			$row = DBquery::select($sql); 
+			$row = DBquery::get($sql, array('brand_id'=>$brand_id)); 
 			if (!count($row)) return 1; //the first member of a brand must be assigned the role of admin
 		}
 		else {
@@ -68,32 +73,27 @@ class Requester {
 	}
 	
 	static function isAccountAdmin($account_id) { 	
-		$sql = "SELECT member_id FROM members JOIN accounts USING (brand_id) WHERE account_id=$account_id AND user_id IN (". self::$user_id .") AND role='admin'";
-		$row = DBquery::select($sql);
+		$sql = "SELECT member_id FROM members JOIN accounts USING (brand_id) WHERE account_id=:account_id AND user_id IN (:user_id) AND role='admin'";
+		$row = DBquery::get($sql, array('account_id'=>$account_id, 'user_id'=>self::$user_id));
+		if (!$row) return 0; //	401, "User #". self::$user_id ." is not an account admin for account #$account_id."
+
 		
-		if (!count($row)) Error::http(401, "User #". self::$user_id ." is not an account admin for account #$account_id.");
-		else {
-			self::$member_id=$row[0]['member_id'];
-			return 1;
-		}
+		self::$member_id=$row[0]['member_id'];
+		return 1;
 	}
 	
 	static function isAccountHolder($account_id) { 	
-		$sql = "SELECT holder_id, authcode FROM holders WHERE account_id IN ($account_id) AND user_id IN (". self::$user_id .")"; echo "\n$sql";
-		$row = DBquery::select($sql);
+		$sql = "SELECT holder_id, authcode FROM holders WHERE account_id IN (:account_id) AND user_id IN (:user_id)";
+		$row = DBquery::get($sql, array('account_id'=>$account_id, 'user_id'=>self::$user_id));
+		if (!$row) Error::http(401, "User #". self::$user_id ." is not an account holder for account #$account_id.");
 		
-		if (!count($row)) Error::halt(401, "User #". self::$user_id ." is not an account holder for account #$account_id.");
-		else {
-			self::$holder_id=$row[0]['holder_id'];
-			return $row[0];
-		}
+		self::$holder_id=$row[0]['holder_id'];
+		return $row[0];
 	}
 	
 	static function isMember($brand_id) {
-		$sql = "SELECT member_id FROM members WHERE brand_id IN ($brand_id) AND user_id IN (". self::$user_id .") LIMIT 1";
-		$row = DBquery::select($sql); 
+		$sql = "SELECT member_id FROM members WHERE brand_id IN (:brand_id) AND user_id IN (:user_id) LIMIT 1";
+		$row = DBquery::get($sql, array('brand_id'=>$brand_id, 'user_id'=>self::$user_id));
 		if ($row) return 1; 
 	}
 }
-
-?>

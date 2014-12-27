@@ -62,7 +62,6 @@ class Base {
 		if (!$rowCount) Error::http(500, "Error: database query to create brand failed.");
 		$id = DBquery::$conn->lastInsertId(); echo " id=$id ";
 		
-		//$this->logChange($id);		
 		return $id;
 	}
 	
@@ -78,7 +77,6 @@ class Base {
 		$sql = "UPDATE $this->table SET ($this->keyStr) VALUES ($this->valStr) WHERE $filter";
 		$rowCount = DBquery::set($sql);
 		if (!$rowCount) Error::http(500, "Affected rows=0.");		echo " filter=$filter ";
-		$this->logChange();	
 	}
 	
 	function logChange($id='') { echo " logID=$id ";

@@ -3,7 +3,7 @@ _exclude/*
 config*
 config/*
 
-nplite/*
+specs/*
 
 resources/*
 lib/*

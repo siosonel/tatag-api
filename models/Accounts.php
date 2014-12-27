@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class Accounts extends Base {
 	function __construct($data='') {
