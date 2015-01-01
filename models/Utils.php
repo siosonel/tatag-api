@@ -6,23 +6,32 @@ class Router {
 	public static $method; 
 	public static $Resource;
 	
-	public static function run() {		
-		$method = strtolower($_SERVER['REQUEST_METHOD']);
-		self::$method = $method;
-		
+	public static function run() {
 		$_url = trim($_GET['_url'], " \/\\\t\n\r\0\x0B");
 		list(self::$table, self::$id) = explode("/", $_url);
-
-		$ObjClass = ucfirst(self::$table); //echo "--". self::$method ." ". self::$table ." ". self::$id ."--". $ObjClass;
-		if (!self::$table OR !file_exists("models/$ObjClass.php")) Error::http(404, "The resource='".self::$table."' does not exist");
-
-		require_once "models/$ObjClass.php";
-		self::$Resource = new $ObjClass;
 		
+		$method = strtolower($_SERVER['REQUEST_METHOD']);
+		
+		if ($method=='post') {
+			if (self::$id) $method = 'set';
+			else $method = 'add';
+		}
+		
+		self::$method = $method;		
+		
+		$data = ($method=='get') ? json_decode('{"id":'.self::$id.'}') : json_decode(trim(file_get_contents("php://input")));
+		//if (gettype($data)=='string') $data = json_decode($data);	
+		
+		$ObjClass = ucfirst(self::$table); 
+		if (!self::$table OR !file_exists("models/$ObjClass.php")) Error::http(404, "The resource='".self::$table."' does not exist");
+				
+		require_once "models/$ObjClass.php";
+		self::$Resource = new $ObjClass();
+		self::$Resource->init($data);
+			
 		if (!method_exists(self::$Resource,$method)) Error::http(405, "The method='$method' is not supported by resource='". self::$table ."'.");		
 		
-		$data = $method=='get' ? json_decode('{"id":'.self::$id.'}') : json_decode(file_get_contents("php://input"));			
-		exit(json_encode(self::$Resource->$method($data), JSON_NUMERIC_CHECK));
+		exit(json_encode(self::$Resource->$method(), JSON_NUMERIC_CHECK));
 	}
 }
 
@@ -140,7 +149,7 @@ class DBquery {
 		return $results;
 	}
 	
-	static function post($statement, $vars=array(), $noResultStatus=0, $noResultMssg="") {
+	static function set($statement, $vars=array(), $noResultStatus=0, $noResultMssg="") {
 		if (gettype($statement=='string')) $statement = self::$conn->prepare($statement);
 		
 		try { 
@@ -151,18 +160,12 @@ class DBquery {
 				Error::http(500, $info[2]);
 			}
 			
-			if (!$statement->rowCount()) {
-				if ($noResultStatus) Error::http($noResultStatus, $noResultMssg);
-				else if ($noResultMssg) Error::halt($noResultMssg);
-			}
-			else {
-				if ($statement->$queryString AND stripos($statement->$queryString,"INSERT")!==false) return $statement->lastInsertId();
-			}
+			return $statement->rowCount();
 		} 
 		catch(PDOException $e) { 
 			Error::halt($e->getMessage()); 
 		} 
-	}		
+	}
 }
 
 

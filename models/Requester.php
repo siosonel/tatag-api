@@ -12,18 +12,23 @@ class Requester {
 	public static $holder_id;
 	
 	static function init() {
-		@header("Content-Type: text/plain");
+		//@header("Content-Type: text/plain");
+		@header("Content-Type: application/json");
+		error_reporting(error_reporting() & ~E_NOTICE);
 		
 		global $dbs;
 		include_once "config.php";
-		DBquery::init($dbs, array("nplite"));	
+		DBquery::init($dbs, array("tatagtest"));	
 		
 		//session_set_cookie_params(0, '/nplite/');
 		if (session_status() == PHP_SESSION_NONE) session_start(); //print_r($_SESSION); //exit();
 		
 		if (isset($_GET['user_id']) AND $_GET['user_id']) {unset($_SESSION['nplite_user_id']); echo 0; exit();}
 		else if ($_SERVER['REQUEST_METHOD']=="POST") {
-			if ($_GET['s']=='users' AND (!$_POST['user_id'] OR $_POST['name'])) return;
+			$_url = trim($_GET['_url'], " \/\\\t\n\r\0\x0B");
+			list($table, $id) = explode("/", $_url);
+			
+			if ($table=='users' AND (!$_POST['user_id'] OR $_POST['name'])) return;
 			if ((!isset($_POST['user']) OR !isset($_POST['pass'])) AND !isset($_SESSION['nplite_user_id'])) Error::http(401, "Missing credentials."); 
 		}
 	

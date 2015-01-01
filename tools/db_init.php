@@ -17,7 +17,7 @@ if ($step=='dump') {
 }
 else if ($step=='upload') { 
 	$sql = file_get_contents("tools/tatag.sql");
-	DBquery::post($sql);
+	DBquery::set($sql);
 } 
 else exit("Invalid step='$step'.");
 

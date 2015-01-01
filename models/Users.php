@@ -9,10 +9,9 @@ class Users extends Base {
 		$this->cols = 'user_id,email,name,password,created,ended';
 		$this->user_id = $this->getID();
 		$this->filterKey = 'user_id';
-		$this->init($data); 
 	}
 	
-	function add() { 
+	function add($data='') { 
 		$this->okToAdd = array('email', 'name', 'password');
 		
 		$this->obj->password = password_hash($this->obj->password, PASSWORD_DEFAULT);
@@ -43,7 +42,7 @@ class Users extends Base {
 		return $info;
 	}
 	
-	function getToAnon() { //limited public profile information
+	function getToAnon() {//limited public profile information
 		$sql = "SELECT m.user_id, name, m.created, COUNT(DISTINCT(brand_id)) AS numMemberships, SUM(hours) AS totalHours
 		FROM members m
 		JOIN users ON m.user_id=users.user_id

@@ -18,7 +18,7 @@ class Base {
 	private $quotedValArr = array();
 	
 	function init($data) {	
-		if (!$data) return; 
+		if (!$data) return;  
 		
 		$this->validate($data);
 		$this->obj = $data;
@@ -47,6 +47,7 @@ class Base {
 		$this->keyArr[] = $key;
 		$this->valArr[] = $val; 
 		$this->quotedValArr[] = ($val=='NULL') ? $val : DBquery::$conn->quote($val);
+		$this->paramMarker[] = "?";
 	}
 	
 	function insert() { 
@@ -55,12 +56,12 @@ class Base {
 		//if (!in_array($this->filterKey,$this->okToFilterBy)) Error::halt("Invalid filter key: '$this->filterKey'.");
 		
 		$keyStr = implode(",", $this->keyArr);
-		$valStr = implode(",", $this->quotedValArr);
+		$valStr = implode(",", $this->paramMarker);
 		
-		$sql = "INSERT INTO $this->table ($keyStr,created) VALUES ($valStr,NOW())"; echo "\n$sql\n"; 
-		$rowCount = DBquery::set($sql);
+		$sql = "INSERT INTO $this->table ($keyStr,created) VALUES ($valStr,NOW())"; //echo "\n$sql\n"; 
+		$rowCount = DBquery::set($sql, $this->valArr);
 		if (!$rowCount) Error::http(500, "Error: database query to create brand failed.");
-		$id = DBquery::$conn->lastInsertId(); echo " id=$id ";
+		$id = DBquery::$conn->lastInsertId(); //echo " id=$id ";
 		
 		return $id;
 	}
