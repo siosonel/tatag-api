@@ -68,11 +68,9 @@ class Brands extends Base {
 	}
 	
 	function get() { 
-		if (Requester::isBrandAdmin($this->brand_id)) $info = $this->getToAdmin();
-		else if (Requester::isMember($this->brand_id)) $info = $this->getToMember();
-		else $info = $this->getToAnon();
-				
-		exit(json_encode($info));
+		if (Requester::isBrandAdmin($this->brand_id)) return $this->getToAdmin();
+		else if (Requester::isMember($this->brand_id)) return $this->getToMember();
+		else return $this->getToAnon();
 	}
 	
 	function getToAdmin() {

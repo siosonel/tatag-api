@@ -1,6 +1,6 @@
 ﻿<?php
 
-include_once "php/Accounts.php";
+require_once "models/Accounts.php";
 
 class Records extends Base {
 	function __construct($data='') { 
@@ -19,7 +19,7 @@ class Records extends Base {
 			array_push($this->okToAdd, "from_acct", "from_user", "to_acct", "to_user", "amount", "comment", "cart_id");
 			if ($this->amount < 0) $this->to_holder = $holder;
 			else $this->from_holder = $holder;
-		} //print_r($this);
+		}
 		
 		if ($this->amount < 0) $this->addKeyVal('to_user', Requester::$user_id);
 		else $this->addKeyVal('from_user', Requester::$user_id);
@@ -29,7 +29,7 @@ class Records extends Base {
 		
 		$this->verifyOther();
 		$this->verifyAuthBals();
-		//$this->record_id = $this->insert();
+		$this->record_id = $this->insert();
 		$this->verifyAuthBals($this->record_id); //void transaction record as needed
 	}
 	
@@ -59,7 +59,7 @@ class Records extends Base {
 		list($holder_id,$limkey) = explode("-", $otherAcct);
 	
 		$sql = "SELECT user_id, account_id, limkey, authcode FROM holders WHERE holder_id=$holder_id";
-		$row = DBquery::select($sql);
+		$row = DBquery::get($sql);
 		if ($row[0]['limkey'] != $limkey) Error::http(403, 'Invalid limkey.');
 		
 		if ($this->amount < 0) {
@@ -78,14 +78,14 @@ class Records extends Base {
 		$mssg = "";
 		
 		$sql = DBquery::$conn->prepare("CALL acctAuthBals(?,?)");
-		$sql->execute(array($this->from_acct, $this->to_acct));		
+		$sql->execute(array($this->from_acct, $this->to_acct));
 		$rows = $sql->fetchAll(PDO::FETCH_ASSOC);
 		
 		if (!$rows) {
 			if ($record_id) {/*delete record*/}
 			Error::http(403, "Both from and to accounts have insufficient balance.");
 		}
-		else { echo "\n".json_encode($rows,JSON_NUMERIC_CHECK) ."\n";
+		else { //echo "\n".json_encode($rows,JSON_NUMERIC_CHECK) ."\n";
 			if ($rows[0]['account_id']==$this->from_acct) $from = $rows[0];
 			else if ($rows[1] AND $rows[1]['account_id']==$this->from_acct) $from = $rows[1];
 			
@@ -97,7 +97,7 @@ class Records extends Base {
 			$recordType =  $fromType . $toType;
 			
 			if (!$record_id) $mssg = $this->verifyAuth($recordType,$from,$to);
-			$mssg .= $this->verifyBals($recordType,$from,$to);
+			$mssg .= $this->verifyBals($recordType,$from,$to); 
 			
 			if ($mssg AND $record_id) {
 				$sql = "UPDATE records SET status=10 WHERE entry_id=$record_id";
@@ -113,7 +113,7 @@ class Records extends Base {
 	function verifyAuth($recordType,$from,$to) {
 		$mssg = "";
 		
-		if ($from['unit']!=$to['unit'] Error::http(403, 'The accounts in a transaction must use the same unit.');
+		if ($from['unit']!=$to['unit']) Error::http(403, 'The accounts in a transaction must use the same unit.');
 		
 		//if account holder authcode is empty, override with account authcode value
 		if (!$this->from_holder['authcode']) $this->from_holder = $from['authcode'];
@@ -135,8 +135,8 @@ class Records extends Base {
 				
 				if (!$this->cart_id) $mssg .= "Intra-entity budget use requires a cart_id. If you were trying to reverse currency issuance, use a negative amount instead with the revenue budget account as the from account.";
 				else {
-					$mssg .= $this->verifyCartMatch($to['brand_id']);
-					$mssg .= $this->verifyPriceToAmount();
+					/*$mssg .= $this->verifyCartMatch($to['brand_id']);
+					$mssg .= $this->verifyPriceToAmount();*/
 				}
 			}
 			else {
@@ -147,11 +147,11 @@ class Records extends Base {
 			}
 		}
 		//the following conditions are inter-brand transaction restrictions 
-		else if ($from['sign']==$to['sign']) { echo " 161 ";
+		else if ($from['sign']==$to['sign']) {
 			$mssg = "Budgets may not be assigned between accounts of different brands.";
 		}		
 		//budgets may only be created using accounts from the same brand  
-		else if ($from['sign']==-1) { echo " 165 ";
+		else if ($from['sign']==-1) {
 			$mssg = "Budgets may not be created using accounts from different brands.";
 		}
 		//only budget use is allowed between brands
@@ -175,7 +175,7 @@ class Records extends Base {
 		$mssg="";
 		
 		$sql = "SELECT user_id, brand_id, price FROM carts WHERE cart_id=$this->cart_id";
-		$row = DBquery::select($sql);
+		$row = DBquery::get($sql);
 		
 		if ($row[0]['brand_id']!=$toBrandID) $mssg = "The to-account brand must match the cart brand_id.";
 		
@@ -194,7 +194,7 @@ class Records extends Base {
 		$mssg="";
 		
 		$sql = "SELECT SUM(amount) AS amt FROM records WHERE cart_id=$this->cart_id";
-		$rows = DBquery::select($sql);
+		$rows = DBquery::get($sql);
 		$amt = $rows ? $rows[0]['amt'] : 0;
 		
 		if ($this->amount<0) {

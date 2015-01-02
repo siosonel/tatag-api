@@ -14,6 +14,9 @@ class Accounts extends Base {
 			array_push($this->okToAdd, 'brand_id','name','authcode','unit','sign');
 		}
 		
+		$this->addKeyVal('unit', 'hour', 'ifMissing');	
+		$this->addKeyVal('sign', 1, 'ifMissing');			
+		
 		$this->account_id = $this->insert();
 		return $this;
 	}

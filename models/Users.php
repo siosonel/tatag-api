@@ -9,6 +9,7 @@ class Users extends Base {
 		$this->cols = 'user_id,email,name,password,created,ended';
 		$this->user_id = $this->getID();
 		$this->filterKey = 'user_id';
+		$this->init($data);
 	}
 	
 	function add($data='') {

@@ -26,11 +26,10 @@ class Router {
 		if (!self::$table OR !file_exists("models/$ObjClass.php")) Error::http(404, "The resource='".self::$table."' does not exist");
 				
 		require_once "models/$ObjClass.php";
-		self::$Resource = new $ObjClass();
-		self::$Resource->init($data);
-			
+		self::$Resource = new $ObjClass($data);		
+		
 		if (!method_exists(self::$Resource,$method)) Error::http(405, "The method='$method' is not supported by resource='". self::$table ."'.");		
-
+		
 		exit(json_encode(self::$Resource->$method(), JSON_NUMERIC_CHECK));
 	}
 }

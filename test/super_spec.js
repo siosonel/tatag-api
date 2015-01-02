@@ -37,7 +37,74 @@ describe('API test', function () {
 			.end(inspect('body', done))
 	})
 	
-	it.only('should login a user', function (done) {
+	it('should allow account creation', function (done) {
+		request.post('/accounts')
+			.auth('21','pass2')
+			.send({
+				brand_id: 104,
+				name: 'Personal Expense',
+				authcode: 'ftix',
+				sign: 1
+			})
+			.expect(200)
+			.end(inspect('body', done))
+	});
+	
+	it.only('should assign account holder', function (done) {
+		request.post('/holders')
+			.auth('21','pass2')
+			.send({
+				account_id: 94,
+				user_id: 21,
+				authcode: 'ftix'
+			})
+			.expect(200)
+			.end(inspect('body', done))
+	});
+	
+	it('should allow budget creation', function (done) {
+		request.post('/records')
+			.auth('21','pass2')
+			.send({
+				from_acct: 92,
+				to_acct: 93,
+				amount: 1000,
+				comment: 'first budget',
+				cart_id: 0
+			})
+			.expect(200)
+			.end(inspect('body', done))
+	});
+	
+	it('should allow budget assignment', function (done) {
+		request.post('/records')
+			.auth('21','pass2')
+			.send({
+				from_acct: 93,
+				to_acct: 94,
+				amount: 35.87,
+				comment: 'wages',
+				cart_id: 0
+			})
+			.expect(200)
+			.end(inspect('body', done))
+	});
+	
+	it('should allow budget intrause', function (done) {
+		request.post('/records')
+			.auth('21','pass2')
+			.send({
+				from_acct: 94,
+				to_acct: 92,
+				amount: 4.05,
+				comment: 'disounted employee purchase',
+				cart_id: 1
+			})
+			.expect(200)
+			.end(inspect('body', done))
+	});
+	
+	it.only('should give detailed info to a logged-in user', function (done) {
 		request.get('/users/21')
 			.auth('21','pass2')
 			.expect(200)
@@ -50,6 +117,7 @@ function inspector() {
 	var fxns = {
 		done: function () {},
 		body: function (err, res) {
+			if (err) console.log(err);
 			if (res && res.body) console.log(res.body); 
 			return fxns.done(err);
 		}
