@@ -48,7 +48,7 @@ class Members extends Base {
 			SELECT COUNT(*) AS numMembers, brand_id FROM members WHERE brand_id=$this->brand_id 
 		) m ON b.brand_id=m.brand_id
 		WHERE b.brand_id=$this->brand_id";
-		$rows = DBquery::select($sql); exit(json_encode($rows));
+		$rows = DBquery::get($sql); exit(json_encode($rows));
 		
 	}
 	
@@ -63,7 +63,7 @@ class Members extends Base {
 		}
 		
 		$sql = "SELECT member_id FROM members WHERE user_id=$user_id AND brand_id=$this->brand_id AND ended IS NULL";
-		$row = DBquery::select($sql);
+		$row = DBquery::get($sql);
 		return $row[0]['member_id'];
 	}
 }

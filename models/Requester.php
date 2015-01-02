@@ -18,44 +18,28 @@ class Requester {
 		
 		global $dbs;
 		include_once "config.php";
-		DBquery::init($dbs, array("tatagtest"));	
+		DBquery::init($dbs, array("tatagtest"));
 		
-		//session_set_cookie_params(0, '/nplite/');
-		if (session_status() == PHP_SESSION_NONE) session_start(); //print_r($_SESSION); //exit();
-		
-		if (isset($_GET['user_id']) AND $_GET['user_id']) {unset($_SESSION['nplite_user_id']); echo 0; exit();}
-		else if ($_SERVER['REQUEST_METHOD']=="POST") {
-			$_url = trim($_GET['_url'], " \/\\\t\n\r\0\x0B");
-			list($table, $id) = explode("/", $_url);
+		if (isset($_SERVER['PHP_AUTH_USER'])) { 
+			$user = $_SERVER['PHP_AUTH_USER'];
+			self::$user_id = is_numeric($user) ? 1*$user : 0; 
+			self::$email = self::$user_id ? "" : "$user";
+			$pwd = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : "";  //exit('"'. self::$user_id ." ". $pwd ."---".  self::$email. '---"');
 			
-			if ($table=='users' AND (!$_POST['user_id'] OR $_POST['name'])) return;
-			if ((!isset($_POST['user']) OR !isset($_POST['pass'])) AND !isset($_SESSION['nplite_user_id'])) Error::http(401, "Missing credentials."); 
-		}
-	
-		if (isset($_SESSION['nplite_user_id'])) {
-			self::$user_id = $_SESSION['nplite_user_id'];
-			self::$name = $_SESSION['nplite_user_name'];
-		}
-		else if (isset($_POST['user'])) {
-			self::$user_id = $_POST['user']; 
-			self::$email = $_POST['user'];
-			$pass = $_POST['pass'];
-			self::login($id,$pass);
+			self::login($pwd);
 		}
 	}
 	
-	static function login($id,$pass) { //self::$user_id=2; return;
-		$sql = "SELECT user_id, name, password FROM users WHERE (user_id=? OR email=?)"; //exit($sql);
-		$row = DBquery::get($sql, array(self::$user_id, self::$email));		
-		if (!$row) Error::http(401, "Invalid user ID/email or password.");
+	static function login($pwd) {
+		$sql = "SELECT user_id, name, password FROM users WHERE (user_id=? OR email=?)";
+		$row = DBquery::get($sql, array(self::$user_id, self::$email));
+		if (!$row) Error::http(401, "Invalid user ID/email or password. User ID: ". self::$user_id .", Email: ". self::$email);
 		
-		$user = $row[0];		
-		if (!password_verify($pass, $user['password'])) Error::http(401, "Invalid user ID/email or password.");
-	
+		$user = $row[0];		 
+		if (!$user OR !password_verify($pwd, $user['password'])) Error::http(401, "Invalid user ID/email or password. User ID: ". self::$user_id .", Email: ". self::$email);
+
 		self::$user_id=$user['user_id'];
 		self::$name=$user['name'];
-		$_SESSION['nplite_user_id'] = self::$user_id; //exit(" ok ".self::$user_id);
-		$_SESSION['nplite_user_name'] = self::$name;
 	}
 	
 	static function isUser($user_id) {

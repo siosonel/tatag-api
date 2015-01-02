@@ -13,9 +13,10 @@ class Base {
 	protected $filterKey;
 	protected $filterVal;
 	
-	private $keyArr = array();
-	private $valArr = array();
-	private $quotedValArr = array();
+	protected $keyArr = array();
+	protected $valArr = array();
+	protected $quotedValArr = array();
+	protected $paramMarker = array();
 	
 	function init($data) {	
 		if (!$data) return;  
@@ -50,15 +51,14 @@ class Base {
 		$this->paramMarker[] = "?";
 	}
 	
-	function insert() { 
-		if ($arr = array_diff($this->keyArr, $this->okToAdd)) Error::halt("Cannot insert values for these object properties: ". implode(",", $arr));
-		if ($arr = array_diff($this->okToAdd, $this->keyArr)) Error::halt("Missing object properties: ". implode(",", $arr));// .' '. implode(',',$this->keyArr));
-		//if (!in_array($this->filterKey,$this->okToFilterBy)) Error::halt("Invalid filter key: '$this->filterKey'.");
+	function insert() {
+		if ($arr = array_diff($this->keyArr, $this->okToAdd)) Error::http(400, "Cannot insert values for these object properties: ". implode(",", $arr));
+		if ($arr = array_diff($this->okToAdd, $this->keyArr)) Error::http(400, "Missing object properties: ". implode(",", $arr));
 		
 		$keyStr = implode(",", $this->keyArr);
 		$valStr = implode(",", $this->paramMarker);
 		
-		$sql = "INSERT INTO $this->table ($keyStr,created) VALUES ($valStr,NOW())"; //echo "\n$sql\n"; 
+		$sql = "INSERT INTO $this->table ($keyStr,created) VALUES ($valStr,NOW())";
 		$rowCount = DBquery::set($sql, $this->valArr);
 		if (!$rowCount) Error::http(500, "Error: database query to create brand failed.");
 		$id = DBquery::$conn->lastInsertId(); //echo " id=$id ";

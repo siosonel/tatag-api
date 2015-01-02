@@ -11,10 +11,12 @@ class Users extends Base {
 		$this->filterKey = 'user_id';
 	}
 	
-	function add($data='') { 
+	function add($data='') {
 		$this->okToAdd = array('email', 'name', 'password');
 		
 		$this->obj->password = password_hash($this->obj->password, PASSWORD_DEFAULT);
+		$this->valArr[ array_search('password', $this->keyArr) ] = $this->obj->password; 
+		
 		$User = $this->obj;
 		$User->user_id = $this->insert();
 		unset($User->password); //no need to communicate this back for privacy
@@ -62,7 +64,7 @@ class Users extends Base {
 		
 		$sql = "SELECT a.brand_id, b.name AS brand_name, a.account_id AS account_id, a.name AS account_name, 
 			sign, balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0)) AS balance, unit,
-			holder_id, limkey, account_authcode, holder_authcode
+			holder_id, limkey, a.authcode, h.authcode
 			FROM accounts a
 			JOIN brands b ON a.brand_id = b.brand_id
 			JOIN holders h ON a.account_id=h.account_id AND h.user_id=?
@@ -78,7 +80,7 @@ class Users extends Base {
 				WHERE entry_id > 0
 				GROUP BY to_acct
 			) t ON to_acct=a.account_id
-			GROUP BY a.account_id";
+			GROUP BY a.account_id"; 
 			
 		$this->accounts = DBquery::get($sql, array($this->user_id));
 		

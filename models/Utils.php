@@ -30,7 +30,7 @@ class Router {
 		self::$Resource->init($data);
 			
 		if (!method_exists(self::$Resource,$method)) Error::http(405, "The method='$method' is not supported by resource='". self::$table ."'.");		
-		
+
 		exit(json_encode(self::$Resource->$method(), JSON_NUMERIC_CHECK));
 	}
 }
@@ -123,10 +123,10 @@ class DBquery {
 		self::$conn = self::$dbs[$alias]['conn'];
 	}
 	
-	static function get($statement, $vars=array(), $noResultStatus=0, $noResultMssg="") { 
-		if (gettype($statement=='string')) $statement = self::$conn->prepare($statement);
+	static function get($statement, $vars=array()) {
+		if (gettype($statement=='string')) $statement = self::$conn->prepare($statement); 
 		
-		try { 
+		try {
 			$result = $statement->execute($vars); 
 			
 			if (!$result) {
@@ -134,22 +134,19 @@ class DBquery {
 				Error::http(500, $info[2]);
 			}
 			
-			if (!$statement->rowCount()) {
-				if ($noResultStatus) Error::http($noResultStatus, $noResultMssg);
-				else if ($noResultMssg) Error::halt($noResultMssg);
-			}
+			if (!$statement->rowCount()) return array();
 		} 
-		catch(PDOException $e) {
+		catch(PDOException $e) { 
 			Error::http(500, $e->getMessage()); 
 		}
 		
-		self::$statement = $statement;	
+		self::$statement = $statement;
 		$results = $statement->fetchAll(PDO::FETCH_ASSOC);
-		$statement->closeCursor();
+		$statement->closeCursor(); 
 		return $results;
 	}
 	
-	static function set($statement, $vars=array(), $noResultStatus=0, $noResultMssg="") {
+	static function set($statement, $vars=array()) {
 		if (gettype($statement=='string')) $statement = self::$conn->prepare($statement);
 		
 		try { 
