@@ -404,7 +404,7 @@ LEFT JOIN ( -- intrause
 LEFT JOIN ( -- inflow
 	SELECT SUM(amount) AS inflow, t.brand_id
 	FROM records r
-	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN (brandID) -- AND f.sign=1
+	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id NOT IN (brandID) -- AND f.sign=1
 	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN (brandID) -- AND t.sign=-1
 	WHERE r.status<10
 ) flowin ON brands.brand_id=C.brand_id
@@ -412,7 +412,7 @@ LEFT JOIN ( -- outflow
 	SELECT SUM(amount) AS outflow, f.brand_id
 	FROM records r
 	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN (brandID) -- AND f.sign=1
-	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN (brandID) -- AND t.sign=-1
+	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id NOT IN (brandID) -- AND t.sign=-1
 	WHERE r.status<10
 ) flowout ON brands.brand_id=C.brand_id
 LEFT JOIN (

@@ -102,7 +102,7 @@ class DBquery {
 
 				if (!$SERVER_NAME OR !$DB_NAME OR !$USER OR !$PWD) Error::http(500, "Missing DBconnect parameter(s).", "DBquery->connect");
 				
-				$OPTS = $TYPE == 'mysql' ? 	array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'", PDO::MYSQL_ATTR_USE_BUFFERED_QUERY=> 1) : array();			
+				$OPTS = $TYPE == 'mysql' ? 	array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'", PDO::MYSQL_ATTR_USE_BUFFERED_QUERY=> true) : array();			
 				
 				$dsn = "$TYPE:host=$SERVER_NAME;dbname=$DB_NAME;charset=utf8";
 				self::$dbs[ $alias ]['conn'] = new PDO($dsn, $USER, $PWD, $OPTS);
@@ -122,30 +122,32 @@ class DBquery {
 		self::$conn = self::$dbs[$alias]['conn'];
 	}
 	
-	static function get($statement, $vars=array()) {
+	static function get($statement, $vars=array(), $test=0) {
+		if (gettype(self::$statement)=='object') self::$statement->closeCursor();
 		if (gettype($statement=='string')) $statement = self::$conn->prepare($statement); 
 		
 		try {
 			$result = $statement->execute($vars); 
 			
 			if (!$result) {
-				$info = $statement->errorInfo(); 
+				$info = $statement->errorInfo();
 				Error::http(500, $info[2]);
 			}
 			
 			if (!$statement->rowCount()) return array();
+			else {
+				self::$statement = $statement;
+				$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+				return $results;
+			}
 		} 
 		catch(PDOException $e) { 
 			Error::http(500, $e->getMessage()); 
 		}
-		
-		self::$statement = $statement;
-		$results = $statement->fetchAll(PDO::FETCH_ASSOC);
-		$statement->closeCursor(); 
-		return $results;
 	}
 	
 	static function set($statement, $vars=array()) {
+		if (gettype(self::$statement)=='object') self::$statement->closeCursor();
 		if (gettype($statement=='string')) $statement = self::$conn->prepare($statement);
 		
 		try { 
@@ -156,7 +158,10 @@ class DBquery {
 				Error::http(500, $info[2]);
 			}
 			
-			return $statement->rowCount();
+			self::$statement = $statement;
+			$rowcount = $statement->rowCount();
+			$statement->fetchAll();
+			return $rowcount;
 		} 
 		catch(PDOException $e) { 
 			Error::halt($e->getMessage()); 

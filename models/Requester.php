@@ -47,8 +47,8 @@ class Requester {
 	}
 	
 	static function isBrandAdmin($brand_id) { 	
-		$sql = "SELECT member_id FROM members WHERE brand_id IN (:brand_id) AND user_id IN (:user_id) AND role='admin'";
-		$row = DBquery::get($sql, array('brand_id'=>$brand_id, 'user_id'=>self::$user_id));
+		$sql = "SELECT member_id FROM members WHERE brand_id IN (?) AND user_id IN (?) AND role='admin'";
+		$row = DBquery::get($sql, array($brand_id, self::$user_id));
 		
 		if (!count($row)) {
 			$sql = "SELECT member_id FROM members WHERE brand_id IN ($brand_id) LIMIT 1";
@@ -62,8 +62,8 @@ class Requester {
 	}
 	
 	static function isAccountAdmin($account_id) { 	
-		$sql = "SELECT member_id FROM members JOIN accounts USING (brand_id) WHERE account_id=:account_id AND user_id IN (:user_id) AND role='admin'";
-		$row = DBquery::get($sql, array('account_id'=>$account_id, 'user_id'=>self::$user_id));
+		$sql = "SELECT member_id FROM members JOIN accounts USING (brand_id) WHERE account_id=? AND user_id IN (?) AND role='admin'";
+		$row = DBquery::get($sql, array($account_id, self::$user_id));
 		if (!$row) return 0; //	401, "User #". self::$user_id ." is not an account admin for account #$account_id."
 
 		
@@ -72,8 +72,8 @@ class Requester {
 	}
 	
 	static function isAccountHolder($account_id) { 	
-		$sql = "SELECT holder_id, authcode FROM holders WHERE account_id IN (:account_id) AND user_id IN (:user_id)";
-		$row = DBquery::get($sql, array('account_id'=>$account_id, 'user_id'=>self::$user_id));
+		$sql = "SELECT holder_id, authcode FROM holders WHERE account_id IN (?) AND user_id IN (?)";
+		$row = DBquery::get($sql, array($account_id, self::$user_id));
 		if (!$row) Error::http(401, "User #". self::$user_id ." is not an account holder for account #$account_id.");
 		
 		self::$holder_id=$row[0]['holder_id'];
@@ -81,8 +81,8 @@ class Requester {
 	}
 	
 	static function isMember($brand_id) {
-		$sql = "SELECT member_id FROM members WHERE brand_id IN (:brand_id) AND user_id IN (:user_id) LIMIT 1";
-		$row = DBquery::get($sql, array('brand_id'=>$brand_id, 'user_id'=>self::$user_id));
+		$sql = "SELECT member_id FROM members WHERE brand_id IN (?) AND user_id IN (?) LIMIT 1";
+		$row = DBquery::get($sql, array($brand_id, self::$user_id));
 		if ($row) return 1; 
 	}
 }

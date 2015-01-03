@@ -50,7 +50,7 @@ describe('API test', function () {
 			.end(inspect('body', done))
 	});
 	
-	it.only('should assign account holder', function (done) {
+	it('should assign account holder', function (done) {
 		request.post('/holders')
 			.auth('21','pass2')
 			.send({
@@ -96,15 +96,15 @@ describe('API test', function () {
 			.send({
 				from_acct: 94,
 				to_acct: 92,
-				amount: 4.05,
+				amount: 2.05,
 				comment: 'disounted employee purchase',
-				cart_id: 1
+				cart_id: 0
 			})
 			.expect(200)
 			.end(inspect('body', done))
 	});
 	
-	it.only('should give detailed info to a logged-in user', function (done) {
+	it('should give detailed info to a logged-in user', function (done) {
 		request.get('/users/21')
 			.auth('21','pass2')
 			.expect(200)

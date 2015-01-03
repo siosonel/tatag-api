@@ -133,11 +133,11 @@ class Records extends Base {
 				if (strpos($to['authcode'],"i")===false) $mssg .= "The to-account #$this->to_acct is not authorized for internal budget use. ";
 				if (strpos($this->to_holder['authcode'],"i")===false) $mssg .= "The to-acct-holder #$this->to_holder->user_id is not authorized to use budget internally using account #$this->to_acct. ";
 				
-				if (!$this->cart_id) $mssg .= "Intra-entity budget use requires a cart_id. If you were trying to reverse currency issuance, use a negative amount instead with the revenue budget account as the from account.";
+				/*if (!$this->cart_id) $mssg .= "Intra-entity budget use requires a cart_id. If you were trying to reverse currency issuance, use a negative amount instead with the revenue budget account as the from account.";
 				else {
-					/*$mssg .= $this->verifyCartMatch($to['brand_id']);
-					$mssg .= $this->verifyPriceToAmount();*/
-				}
+					$mssg .= $this->verifyCartMatch($to['brand_id']);
+					$mssg .= $this->verifyPriceToAmount();
+				}*/
 			}
 			else {
 				if (strpos($from['authcode'],"f")===false) $mssg = "The from-account #$this->from_acct is not authorized to originate budget transfers. ";
@@ -171,17 +171,17 @@ class Records extends Base {
 		return $mssg;
 	}
 	
-	function verifyCartMatch($toBrandID) {
-		$mssg="";
+	function verifyCartMatch($toBrandID) { 
+		$mssg=""; 
 		
-		$sql = "SELECT user_id, brand_id, price FROM carts WHERE cart_id=$this->cart_id";
-		$row = DBquery::get($sql);
+		$sql = "SELECT user_id, brand_id, price FROM carts WHERE cart_id=?";
+		$row = DBquery::get($sql, array($this->cart_id)); 
 		
 		if ($row[0]['brand_id']!=$toBrandID) $mssg = "The to-account brand must match the cart brand_id.";
 		
 		if (!$mssg AND !$row[0]['user_id']) {
-			$sql = "UPDATE carts SET user_id=$this->from_user WHERE cart_id=$this->cart_id";
-			$mssg = DBquery::update($sql);
+			$sql = "UPDATE carts SET user_id=$this->from_user WHERE cart_id=?";
+			$mssg = DBquery::update($sql, array($this->cart_id));
 			return $mssg;
 		}
 		else if ($row[0]['user_id'] != $this->from_user) $mssg .= "The cart user must match the from_user id. ";		

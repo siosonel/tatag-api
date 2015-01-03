@@ -14,7 +14,9 @@ class Holders extends Base {
 			array_push($this->okToAdd, "user_id", "account_id", "authcode");			
 		} //print_r($this);
 		
-		$this->holder_id = $this->insert();
+		if ($row = $this->get($this->obj->user_id,$this->obj->account_id)) return $row[0]; 
+		else $this->holder_id = $this->insert();
+		
 		return $this;
 	}
 	
@@ -32,8 +34,9 @@ class Holders extends Base {
 		$this->update();
 	}
 	
-	function get() {
-	
+	function get($user_id,$account_id) {
+		$sql = "SELECT holder_id, user_id, account_id, authcode, created FROM holders WHERE user_id=? AND account_id=?";
+		return DBquery::get($sql, array($user_id, $account_id));		
 	}
 }
 
