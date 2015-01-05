@@ -156,8 +156,8 @@ class Records extends Base {
 		}
 		//only budget use is allowed between brands
 		else { 
-			if (!$this->cart_id) $mssg = "Inter-entity budget use requires a cart_id. ";
-			$mssg .= $this->verifyCartMatch($to['brand_id']);
+			//if (!$this->cart_id) $mssg = "Inter-entity budget use requires a cart_id. ";
+			//$mssg .= $this->verifyCartMatch($to['brand_id']);
 						
 			if ($this->amount>0) { 
 				if (strpos($from['authcode'],"x")===false) $mssg .= "The from-account #$this->from_acct is not authorized for external budget use. ";

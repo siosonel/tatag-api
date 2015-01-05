@@ -45,10 +45,18 @@ class Base {
 		if ($restrict=='ifMissing' AND in_array($key, $this->keyArr)) return;
 		
 		$this->$key = $val;
-		$this->keyArr[] = $key;
-		$this->valArr[] = $val; 
-		$this->quotedValArr[] = ($val=='NULL') ? $val : DBquery::$conn->quote($val);
-		$this->paramMarker[] = "?";
+		$keypos = array_search($key, $this->keyArr);	
+			
+		if ($keypos!==false) {
+			$this->valArr[$keypos] = $val;
+			$this->quotedValArr[$keypos] = ($val=='NULL') ? $val : DBquery::$conn->quote($val);
+		}
+		else {
+			$this->keyArr[] = $key;
+			$this->valArr[] = $val; 
+			$this->quotedValArr[] = ($val=='NULL') ? $val : DBquery::$conn->quote($val);
+			$this->paramMarker[] = "?";
+		}
 	}
 	
 	function insert() {

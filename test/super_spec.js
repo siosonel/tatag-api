@@ -104,6 +104,59 @@ describe('API test', function () {
 			.end(inspect('body', done))
 	});
 	
+	
+	// TO-DO: for testing, pre-load conformant test data
+	// in order to skip this second round of user, brand, and budget creation
+	// and jump straight to external budget use test
+	it('should register another user', function (done) {		
+		request.post('/users')
+			.send({
+				email: "user"+Date.now()+"@email.org", 
+				name: "User Two", 
+				password: "pass2"
+			})
+			.expect(200, done)
+	})
+
+	it('should register another brand', function (done) {
+		request.post('/brands')			
+			.auth('22','pass2')
+			.send({
+				name: 'abc'+ Date.now(), 
+				mission: 'to be the second brand', 
+				description: "for testing",
+				rating_min: 0,  rating_formula: 0
+			})			
+			.expect(200, done)
+	})
+	
+	it('should create a budget for second brand', function (done) {
+		request.post('/records')
+			.auth('22','pass2')
+			.send({
+				from_acct: 95,
+				to_acct: 96,
+				amount: 1000,
+				comment: 'first budget',
+				cart_id: 0
+			})
+			.expect(200, done)
+	})
+
+	it('should allow external budget use', function (done) {
+		request.post('/records')
+			.auth('22','pass2')
+			.send({
+				from_acct: 96,
+				to_acct: '41-abc',
+				amount: 9.37,
+				comment: 'first external budget use',
+				cart_id: 0
+			})
+			.expect(200)
+			.end(inspect('body', done))	
+	});
+	
 	it('should give detailed info to a logged-in user', function (done) {
 		request.get('/users/21')
 			.auth('21','pass2')

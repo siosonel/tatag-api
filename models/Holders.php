@@ -11,8 +11,10 @@ class Holders extends Base {
 	
 	function add() {
 		if (Requester::isAccountAdmin($this->account_id)) {
-			array_push($this->okToAdd, "user_id", "account_id", "authcode");			
+			array_push($this->okToAdd, "user_id", "account_id", "authcode", "limkey");			
 		} //print_r($this);
+		
+		$this->addKeyVal('limkey','abc');
 		
 		if ($row = $this->get($this->obj->user_id,$this->obj->account_id)) return $row[0]; 
 		else $this->holder_id = $this->insert();
