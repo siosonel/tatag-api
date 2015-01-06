@@ -1,18 +1,13 @@
 var assert = require('assert');
 var request = require('supertest');
-var hasDB = 0;
+var hasDB = 1;
 
 request = request('http://localhost/tatag');
 
-describe('API test', function () {	
-	before(function (done) {
-		if (hasDB) done();
-		else request.post('/tools/db_init.php?step=upload&data=testdata.sql')				
-				.expect(logBody)
-				.expect(200, done)
-	});	
+describe('users', function () {	
+	before(initDB);	
 	
-	it('should register a user', function (done) {
+	it.skip('should register a user', function (done) {
 		request.post('/users')
 			.send({
 				email: "user"+Date.now()+"@email.org", 
@@ -22,6 +17,58 @@ describe('API test', function () {
 			.expect(logBody)
 			.expect(200, done)
 	});
+	
+	it('should give detailed info to a logged-in user', function (done) {
+		request.get('/users/21')
+			.auth('21','pass2')
+			.expect(logBody)
+			.expect(200, done)
+	});
+	
+	it.only('should allow a user to change his email', function (done) {
+		request.post('/users/21')
+			.auth('21','pass2')
+			.send({
+				email: "user-new-addr@email.org"
+			})
+			.expect(logBody)
+			.expect(200, done)
+	});
+	
+	it('should not register a user if email is missing', function (done) {
+		request.post('/users')
+			.send({
+				name: "Another User", 
+				password: "pass2"
+			})
+			.expect(logBody)
+			.expect(400, done)
+	});
+	
+	it('should not register a user if name is missing', function (done) {
+		request.post('/users')
+			.send({
+				email: "user-"+Date.now()+"@email.org", 
+				password: "pass2"
+			})
+			.expect(logBody)
+			.expect(400, done)
+	});
+	
+	it('should not allow shared emails between users', function (done) {
+		request.post('/users')
+			.send({
+				email: "user21@email.org", //already registered in tools/testdata.sql
+				name: "User With Non-Unique Email", 
+				password: "pass2"
+			})
+			.expect(logBody)
+			.expect(500, done)
+	});
+})
+
+describe('brands', function () {	
+	before(initDB);	
 	
 	it('should register a brand', function(done) {
 		request.post('/brands')			
@@ -35,6 +82,16 @@ describe('API test', function () {
 			.expect(logBody)
 			.expect(200, done)
 	})
+})
+
+describe('members', function () {	
+	before(initDB);	
+	
+	it('should add a member');
+})
+
+describe('accounts', function () {	
+	before(initDB);	
 	
 	it('should allow account creation', function (done) {
 		request.post('/accounts')
@@ -48,6 +105,10 @@ describe('API test', function () {
 			.expect(logBody)
 			.expect(200, done)
 	});
+})
+
+describe('holders', function () {	
+	before(initDB);	
 	
 	it('should assign account holder', function (done) {
 		request.post('/holders')
@@ -60,6 +121,10 @@ describe('API test', function () {
 			.expect(logBody)
 			.expect(200, done)
 	});
+})
+
+describe('records', function () {	
+	before(initDB);	
 	
 	it('should allow budget creation', function (done) {
 		request.post('/records')
@@ -116,15 +181,18 @@ describe('API test', function () {
 			.expect(logBody)
 			.expect(200, done)
 	});
-	
-	it('should give detailed info to a logged-in user', function (done) {
-		request.get('/users/21')
-			.auth('21','pass2')
-			.expect(logBody)
-			.expect(200, done)
-	});
 })
 
-function logBody(res) {
+function initDB(done) {
+	if (hasDB) done();
+	else {	
+		hasDB=1;	
+		request.post('/tools/db_init.php?step=upload&data=testdata.sql')				
+			.expect(logBody)
+			.expect(200, done)
+	}
+}
+
+function logBody(res) { console.log(res.body); return;
 	if (res && (typeof res.body=='string' || (res.body.status && res.body.status=='error'))) console.log(res.body); 
 }

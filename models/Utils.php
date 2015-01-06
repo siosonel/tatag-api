@@ -154,7 +154,7 @@ class DBquery {
 			$result = $statement->execute($vars);
 			
 			if (!$result) {
-				$info = $statement->errorInfo(); 
+				$info = $statement->errorInfo();
 				Error::http(500, $info[2]);
 			}
 			
@@ -164,7 +164,7 @@ class DBquery {
 			return $rowcount;
 		} 
 		catch(PDOException $e) { 
-			Error::halt($e->getMessage()); 
+			Error::http(500, $e->getMessage()); 
 		} 
 	}
 }

@@ -25,10 +25,10 @@ class Users extends Base {
 	}
 	
 	function set() {
-		if (Requester::isSysAdmin()) {
+		/*if (Requester::isSysAdmin()) {
 			array_push($this->okToSet, "ended");
 			array_push($this->okToFilterBy, "user_id");		
-		}		
+		}	*/	
 		
 		if (Requester::isUser($this->user_id)) {
 			array_push($this->okToSet, "ended","email","name","password");

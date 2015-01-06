@@ -56,6 +56,7 @@ class Base {
 			$this->valArr[] = $val; 
 			$this->quotedValArr[] = ($val=='NULL') ? $val : DBquery::$conn->quote($val);
 			$this->paramMarker[] = "?";
+			$this->keyEqualsMarker[] = "$key=?";
 		}
 	}
 	
@@ -74,18 +75,17 @@ class Base {
 		return $id;
 	}
 	
-	function update($filter) {
-		if (!$filter) Error::halt("A filter key=value is required when updating $this->table.");
+	function update() {
+		//if (!$filter) Error::halt("A filter key=value is required when updating $this->table.");
 		if ($bannedSet = array_diff($this->keyArr,$this->okToSet)) Error::halt("These parameters may not be set by the user: ". json_encode($bannedSet) .".");	
 		//if (!in_array($this->filterKey,$this->okToFilterBy)) Error::halt("Invalid filter key: '$this->filterKey'.");
 		
-		$keyStr = implode(",", $this->keyArr);
-		$valStr = implode(",", $this->quotedValArr);
+		$keyValStr = implode(",", $this->keyEqualsMarker);
 	
 		//$sql = "UPDATE $this->table SET ($this->keyStr) VALUES ($this->valStr) WHERE $this->filterKey IN ($this->filterVals)";
-		$sql = "UPDATE $this->table SET ($this->keyStr) VALUES ($this->valStr) WHERE $filter";
-		$rowCount = DBquery::set($sql);
-		if (!$rowCount) Error::http(500, "Affected rows=0.");		echo " filter=$filter ";
+		$sql = "UPDATE $this->table SET $keyValStr WHERE user_id=". Requester::$user_id;
+		$rowCount = DBquery::set($sql, $this->valArr);
+		if (!$rowCount) Error::http(500, "Affected rows=0.");	
 	}
 	
 	function logChange($id='') { echo " logID=$id ";
