@@ -31,6 +31,13 @@ class Records extends Base {
 		$this->verifyAuthBals();
 		$this->record_id = $this->insert();
 		$this->verifyAuthBals($this->record_id); //void transaction record as needed
+		
+		//no need to divulge to-endpoint information
+		foreach($this AS $key=>$val) {
+			if (substr($key,0,3)==='to_') unset($this->$key);
+		}
+		
+		return $this;
 	}
 	
 	function set() {				

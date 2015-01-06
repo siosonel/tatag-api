@@ -9,15 +9,15 @@ $step = isset($_GET['step']) ? $_GET['step'] : '';
 chdir("../");
 include "models/Utils.php";
 include "config.php";
-
-DBquery::init($dbs, array("tatagtest"));	
+	
 
 if ($step=='dump') { 
 	echo shell_exec("mysqldump --user=$USER --password=$PWD --host=127.0.0.1 nplite > $dumpfile");
 }
 else if ($step=='upload') { 
-	$sql = file_get_contents("tools/tatag.sql");
-	DBquery::set($sql);
+	DBquery::init($dbs, array("tatagtest"));
+	DBquery::set(file_get_contents("tools/db_schema.sql"));
+	if (isset($_GET['data']) AND $data = $_GET['data']) DBquery::set(file_get_contents("tools/$data"));
 } 
 else exit("Invalid step='$step'.");
 
