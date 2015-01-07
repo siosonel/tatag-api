@@ -5,7 +5,9 @@ class Members extends Base {
 		$this->table = "members";
 		$this->cols = "member_id,brand_id,user_id,role,hours,created";
 		$this->member_id = $this->getID();
-		$this->filterKey = 'member_id'; //print_r($this);
+		$this->filterKey = 'member_id'; //print_r($this);		
+		if (isset($data->ended) AND $data->ended + 300 > time()) $data->ended = date("Y-m-d H:i:s", $data->ended);
+		
 		$this->init($data); 
 	}
 	
@@ -14,25 +16,28 @@ class Members extends Base {
 			$this->okToAdd = array('brand_id','user_id','role','hours');	
 		}
 		
-		if ($this->isMember()) Error::http(409, "User #$this->user_id is already a member of brand #$this->brand_id."); 
+		if ($this->getMemberId()) Error::http(409, "User #$this->user_id is already a member of brand #$this->brand_id."); 
 		
 		$Member = $this->obj;
 		$Member->member_id = $this->insert();
-		return $this;
+		return $Member;
 	}
 	
 	function set() {
+		if ($this->member_id) $this->setDetails();
+	
 		if (Requester::isBrandAdmin($this->brand_id)) {
-			array_push($this->okToSet, "role");		 
+			array_push($this->okToSet, "role", 'hours','ended');		 
 			array_push($this->okToFilterBy, "brand_id","member_id");
 		}
 		
-		if (Requester::isUser()) {
-			array_push($this->okToSet, "hours");		 
+		if ($this->user_id == Requester::$user_id) {
+			array_push($this->okToSet, "hours", 'ended');		 
 			array_push($this->okToFilterBy, "member_id");
 		}
 		
-		$this->update();
+		$this->update("WHERE member_id=?", array($this->member_id));
+		return $this;
 	}
 	
 	function get() {
@@ -48,13 +53,13 @@ class Members extends Base {
 			SELECT COUNT(*) AS numMembers, brand_id FROM members WHERE brand_id=$this->brand_id 
 		) m ON b.brand_id=m.brand_id
 		WHERE b.brand_id=$this->brand_id";
-		$rows = DBquery::get($sql); exit(json_encode($rows));
-		
+		return DBquery::get($sql);		
 	}
 	
-	function isMember($brand_id=0,$user_id=0) {
+	function getMemberId($brand_id=0,$user_id=0) {
 		if (!$brand_id) {
 			if (!$this->brand_id) Error::http(400, "Missing brand_id property for Member->isMember().");
+			$brand_id = $this->brand_id;
 		}
 	
 		if (!$user_id) {
@@ -62,9 +67,20 @@ class Members extends Base {
 			$user_id = $this->user_id;
 		}
 		
-		$sql = "SELECT member_id FROM members WHERE user_id=$user_id AND brand_id=$this->brand_id AND ended IS NULL";
+		$sql = "SELECT member_id FROM members WHERE user_id=$user_id AND brand_id=$brand_id AND ended IS NULL";
 		$row = DBquery::get($sql);
 		return $row[0]['member_id'];
+	}
+	
+	function setDetails() {		
+		$sql = "SELECT brand_id, user_id, role, hours, created FROM members WHERE member_id=? AND ended IS NULL";
+		$row = DBquery::get($sql, array($this->member_id));
+		
+		if ($row) { 
+			foreach($row[0] AS $key=>$val) $this->$key = $val;
+		}
+		
+		return;
 	}
 }
 

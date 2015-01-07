@@ -17,6 +17,7 @@ class Base {
 	protected $valArr = array();
 	protected $quotedValArr = array();
 	protected $paramMarker = array();
+	protected $keyMarkerArr = array();
 	
 	function init($data) {	
 		if (!$data) return;  
@@ -76,7 +77,7 @@ class Base {
 	}
 	
 	function update($filter="", $vars=array()) { 
-		if (!$filter) Error::halt("A filter key=value is required when updating $this->table.");
+		if (!$filter) Error::http(500, "A filter key=value is required when updating $this->table.");
 		if ($bannedSet = array_diff($this->keyArr,$this->okToSet)) Error::http(403, "These parameters may not be set by the user: ". json_encode($bannedSet) .".");	
 		//if (!in_array($this->filterKey,$this->okToFilterBy)) Error::halt("Invalid filter key: '$this->filterKey'.");
 		
