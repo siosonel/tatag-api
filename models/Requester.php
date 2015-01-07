@@ -46,13 +46,15 @@ class Requester {
 		return (self::$user_id == $user_id);
 	}
 	
-	static function isBrandAdmin($brand_id) { 	
+	static function isBrandAdmin($brand_id) {
+		if (!$brand_id) Error::halt(400, 'Invalid brand id (null).'); 
+	
 		$sql = "SELECT member_id FROM members WHERE brand_id IN (?) AND user_id IN (?) AND role='admin'";
 		$row = DBquery::get($sql, array($brand_id, self::$user_id));
 		
 		if (!count($row)) {
-			$sql = "SELECT member_id FROM members WHERE brand_id IN ($brand_id) LIMIT 1";
-			$row = DBquery::get($sql, array('brand_id'=>$brand_id)); 
+			$sql = "SELECT member_id FROM members WHERE brand_id IN (?) LIMIT 1";
+			$row = DBquery::get($sql, array($brand_id));
 			if (!count($row)) return 1; //the first member of a brand must be assigned the role of admin
 		}
 		else {

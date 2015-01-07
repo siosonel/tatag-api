@@ -24,7 +24,7 @@ describe('users', function () {
 			.expect(logBody)
 			.expect(function (res) {
 				if (!res || !res.body) return;
-				if (!Array.isArray(res.body.memberships)) console.log(res.body);
+				if (!Array.isArray(res.body[0].memberships)) return JSON.stringify(res.body[0]);
 			})
 			.expect(200, done)
 	});
@@ -34,11 +34,12 @@ describe('users', function () {
 			.expect(logBody)
 			.expect(function (res) {
 				if (!res || !res.body) return;
+				var info = res.body[0];
 				if (
-					typeof res.body.numMemberships!='number' 
-					|| typeof res.body.totalHours!='number'
-					|| Array.isArray(res.body.memberships)
-				) console.log(res.body);
+					typeof info.numMemberships!='number' 
+					|| typeof info.totalHours!='number'
+					|| Array.isArray(info.memberships)
+				) return JSON.stringify(info);
 			})
 			.expect(200, done)
 	});
@@ -102,14 +103,46 @@ describe('brands', function () {
 		request.post('/brands')			
 			.auth('21','pass2')
 			.send({
-				name: 'abc'+ Date.now(), 
+				name: 'abc-'+ Date.now(), 
 				mission: 'to be the first brand', 
 				description: "for testing",
 				rating_min: 0,  rating_formula: 0
 			})
 			.expect(logBody)
 			.expect(200, done)
-	})
+	});
+	
+	it('should give detailed brand-info to a member', function (done) {
+		request.get('/brands/104')
+			.auth('21','pass2')
+			.expect(logBody)
+			.expect(function (res) {
+				if (!res || !res.body) return;
+				if (!Array.isArray(res.body[0].accounts)) return JSON.stringify(res.body);
+			})
+			.expect(200, done)
+	});
+	
+	it('should give general info about a brand to a non-member', function (done) {
+		request.get('/brands/104')
+			.expect(logBody)
+			.expect(function (res) {
+				if (!res || !res.body) return;
+				if (typeof res.body[0].numMembers!='number') return JSON.stringify(res.body);
+			})
+			.expect(200, done)
+	});
+	
+	it("should allow an admin to change a brand's mission and description", function (done) {
+		request.post('/brands/104')
+			.auth('21','pass2')
+			.send({
+				mission: 'To test change in brand mission' + Date.now(),
+				description: 'To test change in brand description' + Date.now()
+			})
+			.expect(logBody)
+			.expect(200, done)
+	});
 })
 
 describe('members', function () {	
@@ -221,6 +254,6 @@ function initDB(done) {
 	}
 }
 
-function logBody(res) {
+function logBody(res) { //console.log(257); return;
 	if (res && (typeof res.body=='string' || (res.body.status && res.body.status=='error'))) console.log(res.body); 
 }

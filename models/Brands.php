@@ -59,12 +59,13 @@ class Brands extends Base {
 	}
 	
 	function set() {
-		if (Requester::isBrandAdmin($brand_id)) {
+		if (Requester::isBrandAdmin($this->brand_id)) {
 			array_push($this->okToSet, "ended","mission","description");		 
 			array_push($this->okToFilterBy, "brand_id");			
 		}
 		
-		$this->update();
+		$this->update("WHERE brand_id=?", array($this->brand_id));
+		return array($this->obj);
 	}
 	
 	function get() { 
@@ -91,8 +92,7 @@ class Brands extends Base {
 	
 	
 	function getToAnon() {
-		$rows = DBquery::get("CALL tally(?)", array($this->brand_id)); 		
-		return $rows;
+		return DBquery::get("CALL tally(?)", array($this->brand_id)); 
 	}
 	
 	

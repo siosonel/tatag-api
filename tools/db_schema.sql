@@ -33,7 +33,7 @@ CREATE TABLE `accounts` (
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,7 +51,7 @@ CREATE TABLE `advisors` (
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`advisor_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `brands` (
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`brand_id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +92,7 @@ CREATE TABLE `carts` (
   `viewkey` varchar(5) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`cart_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,7 +110,7 @@ CREATE TABLE `changes` (
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`change_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +127,7 @@ CREATE TABLE `fills` (
   `qty` int(11) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`fill_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,7 +146,7 @@ CREATE TABLE `holders` (
   `ended` timestamp NULL DEFAULT NULL,
   `limkey` varchar(12) DEFAULT NULL,
   PRIMARY KEY (`holder_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,7 +167,7 @@ CREATE TABLE `items` (
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,7 +186,7 @@ CREATE TABLE `members` (
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,7 +203,7 @@ CREATE TABLE `orders` (
   `qty` int(11) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +222,7 @@ CREATE TABLE `ratings` (
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`rater_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +244,7 @@ CREATE TABLE `records` (
   `cart_id` int(11) DEFAULT NULL,
   `status` tinyint(3) unsigned DEFAULT '0',
   PRIMARY KEY (`entry_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,7 +265,7 @@ CREATE TABLE `users` (
   `bannerImg` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

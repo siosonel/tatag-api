@@ -35,7 +35,8 @@ class Users extends Base {
 			array_push($this->okToFilterBy,"user_id","email");		
 		}		
 		
-		$this->update();
+		$this->update("WHERE user_id=?", array(Requester::$user_id));
+		return $this->obj;
 	}
 	
 	function get() {
@@ -48,7 +49,7 @@ class Users extends Base {
 	
 	function getCollectionSummary() {
 		$sql = "SELECT COUNT(*) AS numUsers, MIN(created) AS earliest, MAX(created) AS latest FROM users";		
-		return DBquery::get($sql)[0];
+		return DBquery::get($sql);
 	}
 	
 	function getToAnon() {//limited public profile information
@@ -58,8 +59,7 @@ class Users extends Base {
 		WHERE m.user_id IN (?) AND m.ended IS NULL
 		GROUP BY m.user_id";
 		
-		$rows = DBquery::get($sql, array($this->user_id));		
-		return $rows[0];
+		return DBquery::get($sql, array($this->user_id));	
 	}
 	
 	private function getToSelf() {
@@ -92,7 +92,7 @@ class Users extends Base {
 			
 		$this->accounts = DBquery::get($sql, array($this->user_id));
 		
-		return $this;
+		return array($this);
 	}
 }
 

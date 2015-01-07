@@ -75,20 +75,21 @@ class Base {
 		return $id;
 	}
 	
-	function update() {
-		//if (!$filter) Error::halt("A filter key=value is required when updating $this->table.");
-		if ($bannedSet = array_diff($this->keyArr,$this->okToSet)) Error::halt("These parameters may not be set by the user: ". json_encode($bannedSet) .".");	
+	function update($filter="", $vars=array()) { 
+		if (!$filter) Error::halt("A filter key=value is required when updating $this->table.");
+		if ($bannedSet = array_diff($this->keyArr,$this->okToSet)) Error::http(403, "These parameters may not be set by the user: ". json_encode($bannedSet) .".");	
 		//if (!in_array($this->filterKey,$this->okToFilterBy)) Error::halt("Invalid filter key: '$this->filterKey'.");
 		
 		$keyValStr = implode(",", $this->keyMarkerArr);
-	
+		$valArr = array_merge($this->valArr, $vars);
+		
 		//$sql = "UPDATE $this->table SET ($this->keyStr) VALUES ($this->valStr) WHERE $this->filterKey IN ($this->filterVals)";
-		$sql = "UPDATE $this->table SET $keyValStr WHERE user_id=". Requester::$user_id;
-		$rowCount = DBquery::set($sql, $this->valArr);
+		$sql = "UPDATE $this->table SET $keyValStr $filter";
+		$rowCount = DBquery::set($sql, $valArr);
 		if (!$rowCount) Error::http(500, "Affected rows=0.");	
 	}
 	
-	function logChange($id='') { echo " logID=$id ";
+	function logChange($id='') {
 		if (in_array($this->table, array('records'))) return;
 	
 		$cols = str_replace('created','NOW()',$this->cols);
