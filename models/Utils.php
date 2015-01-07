@@ -19,7 +19,7 @@ class Router {
 		
 		self::$method = $method;		
 		
-		$data = ($method=='get') ? json_decode('{"id":'.self::$id.'}') : json_decode(trim(file_get_contents("php://input")));
+		$data = ($method=='get') ? json_decode(json_encode(array("id"=>self::$id))) : json_decode(trim(file_get_contents("php://input")));
 		if (gettype($data)!='object') Error::http(400, "Bad Request");
 		
 		$ObjClass = ucfirst(self::$table); 

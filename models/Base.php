@@ -56,7 +56,7 @@ class Base {
 			$this->valArr[] = $val; 
 			$this->quotedValArr[] = ($val=='NULL') ? $val : DBquery::$conn->quote($val);
 			$this->paramMarker[] = "?";
-			$this->keyEqualsMarker[] = "$key=?";
+			$this->keyMarkerArr[] = "$key=?";
 		}
 	}
 	
@@ -80,7 +80,7 @@ class Base {
 		if ($bannedSet = array_diff($this->keyArr,$this->okToSet)) Error::halt("These parameters may not be set by the user: ". json_encode($bannedSet) .".");	
 		//if (!in_array($this->filterKey,$this->okToFilterBy)) Error::halt("Invalid filter key: '$this->filterKey'.");
 		
-		$keyValStr = implode(",", $this->keyEqualsMarker);
+		$keyValStr = implode(",", $this->keyMarkerArr);
 	
 		//$sql = "UPDATE $this->table SET ($this->keyStr) VALUES ($this->valStr) WHERE $this->filterKey IN ($this->filterVals)";
 		$sql = "UPDATE $this->table SET $keyValStr WHERE user_id=". Requester::$user_id;

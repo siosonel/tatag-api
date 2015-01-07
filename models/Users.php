@@ -39,10 +39,16 @@ class Users extends Base {
 	}
 	
 	function get() {
-		if (Requester::isUser($this->user_id)) $info = $this->getToSelf();
+		if (!Router::$id) $info = $this->getCollectionSummary();
+		else if (Requester::isUser($this->user_id)) $info = $this->getToSelf();
 		else $info = $this->getToAnon();
 		
 		return $info;
+	}
+	
+	function getCollectionSummary() {
+		$sql = "SELECT COUNT(*) AS numUsers, MIN(created) AS earliest, MAX(created) AS latest FROM users";		
+		return DBquery::get($sql)[0];
 	}
 	
 	function getToAnon() {//limited public profile information
@@ -52,7 +58,8 @@ class Users extends Base {
 		WHERE m.user_id IN (?) AND m.ended IS NULL
 		GROUP BY m.user_id";
 		
-		return DBquery::get($sql, array($this->user_id));		
+		$rows = DBquery::get($sql, array($this->user_id));		
+		return $rows[0];
 	}
 	
 	private function getToSelf() {

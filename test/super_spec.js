@@ -7,7 +7,7 @@ request = request('http://localhost/tatag');
 describe('users', function () {	
 	before(initDB);	
 	
-	it.skip('should register a user', function (done) {
+	it('should register a user', function (done) {
 		request.post('/users')
 			.send({
 				email: "user"+Date.now()+"@email.org", 
@@ -18,18 +18,46 @@ describe('users', function () {
 			.expect(200, done)
 	});
 	
-	it('should give detailed info to a logged-in user', function (done) {
+	it('should give detailed self-info to a logged-in user', function (done) {
 		request.get('/users/21')
 			.auth('21','pass2')
 			.expect(logBody)
+			.expect(function (res) {
+				if (!res || !res.body) return;
+				if (!Array.isArray(res.body.memberships)) console.log(res.body);
+			})
 			.expect(200, done)
 	});
 	
-	it.only('should allow a user to change his email', function (done) {
+	it('should give general info about a user to a non-logged in user', function (done) {
+		request.get('/users/21')
+			.expect(logBody)
+			.expect(function (res) {
+				if (!res || !res.body) return;
+				if (
+					typeof res.body.numMemberships!='number' 
+					|| typeof res.body.totalHours!='number'
+					|| Array.isArray(res.body.memberships)
+				) console.log(res.body);
+			})
+			.expect(200, done)
+	});
+	
+	it('should give summary info about the users collection', function (done) {
+		request.get('/users')
+			.expect(logBody)
+			.expect(function (res) {
+				if (!res || !res.body) return;
+				if (typeof res.body.numUsers!='number') console.log(res.body);
+			})
+			.expect(200, done)
+	});
+	
+	it('should allow a user to change his email', function (done) {
 		request.post('/users/21')
 			.auth('21','pass2')
 			.send({
-				email: "user-new-addr@email.org"
+				email: "edited-email-"+Date.now()+"@email.org"
 			})
 			.expect(logBody)
 			.expect(200, done)
@@ -58,7 +86,7 @@ describe('users', function () {
 	it('should not allow shared emails between users', function (done) {
 		request.post('/users')
 			.send({
-				email: "user21@email.org", //already registered in tools/testdata.sql
+				email: "user22@email.org", //already registered in tools/testdata.sql
 				name: "User With Non-Unique Email", 
 				password: "pass2"
 			})
@@ -193,6 +221,6 @@ function initDB(done) {
 	}
 }
 
-function logBody(res) { console.log(res.body); return;
+function logBody(res) {
 	if (res && (typeof res.body=='string' || (res.body.status && res.body.status=='error'))) console.log(res.body); 
 }
