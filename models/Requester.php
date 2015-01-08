@@ -63,7 +63,7 @@ class Requester {
 		}
 	}
 	
-	static function isAccountAdmin($account_id) { // not being used?	
+	static function isAccountAdmin($account_id) {	
 		$sql = "SELECT member_id FROM members JOIN accounts USING (brand_id) WHERE account_id=? AND user_id IN (?) AND role='admin'";
 		$row = DBquery::get($sql, array($account_id, self::$user_id));
 		if (!$row) return 0; //	401, "User #". self::$user_id ." is not an account admin for account #$account_id."

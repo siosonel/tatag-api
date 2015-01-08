@@ -21,7 +21,7 @@
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (92,104,'Main Revenue','cftix','hour',0.00,-1,'2015-01-05 19:53:31',NULL),(93,104,'Main Expense','cftix','hour',0.00,1,'2015-01-05 19:53:31',NULL),(94,104,'Personal Expense','ftix','hour',0.00,1,'2015-01-05 19:53:32',NULL),(95,105,'Main Revenue','cftix','hour',0.00,-1,'2015-01-05 19:53:33',NULL),(96,105,'Main Expense','cftix','hour',0.00,1,'2015-01-05 19:53:33',NULL);
+INSERT INTO `accounts` VALUES (92,104,'Main Revenue','cftix','hour',0.00,-1,'2015-01-05 19:53:31',NULL),(93,104,'Main Expense','cftix','hour',0.00,1,'2015-01-05 19:53:31',NULL),(94,104,'Personal Expense','ftix','hour',0.00,1,'2015-01-05 19:53:32',NULL),(95,105,'Main Revenue','cftix','hour',0.00,-1,'2015-01-05 19:53:33',NULL),(96,105,'Main Expense','cftix','hour',0.00,1,'2015-01-05 19:53:33',NULL),(97,104,'Test Expense','ftix','hour',0.00,1,'2015-01-05 19:53:33',NULL);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -77,7 +77,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `holders` WRITE;
 /*!40000 ALTER TABLE `holders` DISABLE KEYS */;
-INSERT INTO `holders` VALUES (41,21,92,'cftix','2015-01-05 19:53:31',NULL,'abc'),(42,21,93,'cftix','2015-01-05 19:53:31',NULL,'abc'),(43,21,94,'ftix','2015-01-05 19:53:32',NULL,'abc'),(44,22,95,'cftix','2015-01-05 19:53:33',NULL,'abc'),(45,22,96,'cftix','2015-01-05 19:53:33',NULL,'abc');
+INSERT INTO `holders` VALUES (41,21,92,'cftix','2015-01-05 19:53:31',NULL,'abc',NULL),(42,21,93,'cftix','2015-01-05 19:53:31',NULL,'abc',NULL),(43,21,94,'ftix','2015-01-05 19:53:32',NULL,'abc',NULL),(44,22,95,'cftix','2015-01-05 19:53:33',NULL,'abc',NULL),(45,22,96,'cftix','2015-01-05 19:53:33',NULL,'abc',NULL);
 /*!40000 ALTER TABLE `holders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
-INSERT INTO `members` VALUES (53,104,21,'admin','0','2015-01-05 19:53:31',NULL),(54,105,22,'admin','0','2015-01-05 19:53:33',NULL);
+INSERT INTO `members` VALUES (53,104,21,'admin','0','2015-01-05 19:53:31',NULL),(54,105,22,'admin','0','2015-01-05 19:53:33',NULL),(55,104,23,'staff','0','2015-01-05 19:53:31',NULL);
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +134,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (21,'user21@email.org','User One','$2y$10$6AtN5uH28i6jwugnPLf3DOv1H9HzSruikFEfssr2ls0kESJLtZ1zS','2015-01-05 19:53:31',NULL,NULL,NULL),(22,'user22@email.org','User Two','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.','2015-01-05 19:53:33',NULL,NULL,NULL);
+INSERT INTO `users` VALUES (21,'user21@email.org','User One','$2y$10$6AtN5uH28i6jwugnPLf3DOv1H9HzSruikFEfssr2ls0kESJLtZ1zS','2015-01-05 19:53:31',NULL,NULL,NULL),(22,'user22@email.org','User Two','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.','2015-01-05 19:53:33',NULL,NULL,NULL),(23,'user23@email.org','User Two','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.','2015-01-05 19:53:33',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

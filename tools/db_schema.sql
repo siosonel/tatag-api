@@ -145,6 +145,7 @@ CREATE TABLE `holders` (
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   `limkey` varchar(12) DEFAULT NULL,
+  `alias` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`holder_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

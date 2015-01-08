@@ -193,13 +193,23 @@ describe('members', function () {
 			.end(inspect(done));
 	});
 	
-	it('should allow an admin to remove a current member', function (done) {
+	it('should allow an admin to deactivate a current member', function (done) {
 		request.post('/members/'+ member.member_id)			
 			.auth('21','pass2')
 			.send({
 				ended: Math.round(Date.now()/1000)
 			})
 			.expect(200)
+			.end(inspect(done));
+	});	
+	
+	it('should not allow an admin to deactivate himself', function (done) {
+		request.post('/members/53')			
+			.auth('21','pass2')
+			.send({
+				ended: Math.round(Date.now()/1000)
+			})
+			.expect(403)
 			.end(inspect(done));
 	});	
 })
@@ -217,7 +227,10 @@ describe('accounts', function () {
 				sign: 1
 			})
 			.expect(200)
-			.expect(function (res) {account=res.body; console.log(account)}) 
+			.expect(function (res) {
+				account=res.body; 
+				if (!account.account_id) return 'Invalid account_id (null).'; 
+			}) 
 			.end(inspect(done));
 	});
 	
@@ -279,20 +292,89 @@ describe('accounts', function () {
 })
 
 describe('holders', function () {		
+	var holder;
+	
 	it('should assign account holder', function (done) {
 		request.post('/holders')
 			.auth('21','pass2')
 			.send({
 				account_id: 97,
-				user_id: 21,
+				user_id: 23,
 				authcode: 'ftix'
+			})
+			.expect(200)
+			.expect(function (res) {holder=res.body})
+			.end(inspect(done));
+	});
+	
+	it("should allow an account holder to change the assigned alias", function (done) {
+		request.post('/holders/'+ holder.holder_id)
+			.auth('23','pass2')
+			.send({
+				alias: 'alias-' + Date.now()
 			})
 			.expect(200)
 			.end(inspect(done));
 	});
 	
-	it("should allow an account holder to change the assigned alias");
+	it("should NOT allow a non-account holder to change the assigned alias", function (done) {
+		request.post('/holders/'+ holder.holder_id)
+			.auth('21','pass2')
+			.send({
+				alias: 'admin-' + Date.now()
+			})
+			.expect(403)
+			.end(inspect(done));
+	});
 	
+	it("should NOT allow edits to created value", function (done) {
+		request.post('/holders/'+ holder.holder_id)
+			.auth('21','pass2')
+			.send({
+				created: Math.round(Date.now()/1000)
+			})
+			.expect(403)
+			.end(inspect(done));
+	});
+	
+	it("should allow an account holders to view holding details including limkey", function (done) {
+		request.get('/holders/'+ holder.holder_id)
+			.auth('23','pass2')
+			.send({
+				created: Math.round(Date.now()/1000)
+			})
+			.expect(200)
+			.expect(function (res) {
+				if (!res || !res.body || !Array.isArray(res.body) || !res.body.length) return 'Invalid response body. '+ JSON.stringify(res.body);
+				
+				var info = res.body[0];
+				if (!info.limkey) return JSON.stringify(res.body);
+			})
+			.end(inspect(done));
+	});
+	
+	it("should allow a non-holder admin to view holding details except limkey", function (done) {
+		request.get('/holders/'+ holder.holder_id)
+			.auth('21','pass2')
+			.expect(200)
+			.expect(function (res) {
+				if (!res || !res.body || !Array.isArray(res.body) || !res.body.length) return 'Invalid response body. '+ JSON.stringify(res.body);
+				
+				var info = res.body[0];
+				if (info.limkey) return JSON.stringify(res.body);
+			})
+			.end(inspect(done));
+	});
+	
+	it("should NOT allow a non-holder, non-admin to view any details", function (done) {
+		request.get('/holders/42')
+			.auth('22','pass2')
+			.expect(200)
+			.expect(function (res) {
+				if (!res.body) return 'Invalid response body. '+ JSON.stringify(res.body);
+			})
+			.end(inspect(done));
+	});
 })
 
 describe('records', function () {		
@@ -355,7 +437,7 @@ describe('records', function () {
 
 function initDB(done) {
 	if (hasDB) done();
-	else {	
+	else {
 		hasDB=1;	
 		request.post('/tools/db_init.php?step=upload&data=testdata.sql')
 			.expect(200, done)

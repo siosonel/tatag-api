@@ -34,6 +34,9 @@ class Members extends Base {
 		if ($this->user_id == Requester::$user_id) {
 			array_push($this->okToSet, "hours", 'ended');		 
 			array_push($this->okToFilterBy, "member_id");
+			
+			if ($this->ended AND $this->user_id==Requester::$user_id) 
+				Error::http(403, 'To prevent a brand from not having an admin, an admin cannot deactivate his own membership.');
 		}
 		
 		$this->update("WHERE member_id=?", array($this->member_id));
