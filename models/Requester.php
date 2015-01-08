@@ -47,7 +47,7 @@ class Requester {
 	}
 	
 	static function isBrandAdmin($brand_id) {
-		if (!$brand_id) Error::halt(400, 'Invalid brand id (null).'); 
+		if (!$brand_id) Error::http(400, 'Invalid brand id (null).'); 
 	
 		$sql = "SELECT member_id FROM members WHERE brand_id IN (?) AND user_id IN (?) AND role='admin'";
 		$row = DBquery::get($sql, array($brand_id, self::$user_id));
@@ -63,7 +63,7 @@ class Requester {
 		}
 	}
 	
-	static function isAccountAdmin($account_id) { 	
+	static function isAccountAdmin($account_id) { // not being used?	
 		$sql = "SELECT member_id FROM members JOIN accounts USING (brand_id) WHERE account_id=? AND user_id IN (?) AND role='admin'";
 		$row = DBquery::get($sql, array($account_id, self::$user_id));
 		if (!$row) return 0; //	401, "User #". self::$user_id ." is not an account admin for account #$account_id."
@@ -76,9 +76,8 @@ class Requester {
 	static function isAccountHolder($account_id) { 	
 		$sql = "SELECT holder_id, authcode FROM holders WHERE account_id IN (?) AND user_id IN (?)";
 		$row = DBquery::get($sql, array($account_id, self::$user_id));
-		if (!$row) Error::http(401, "User #". self::$user_id ." is not an account holder for account #$account_id.");
+		if ($row) self::$holder_id=$row[0]['holder_id'];
 		
-		self::$holder_id=$row[0]['holder_id'];
 		return $row[0];
 	}
 	

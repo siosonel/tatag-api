@@ -22,23 +22,48 @@ class Accounts extends Base {
 	}
 	
 	function set() {
-		if (Requester::isBrandAdmin($this->brand_id)) {
-			array_push($this->okToAdd, "name","authcode");
+		$info = $this->getInfo()[0];
+		if (!$info) return array();
+		
+		if (Requester::isBrandAdmin($info['brand_id'])) {
+			array_push($this->okToSet, "name","authcode");
 			array_push($this->okToFilterBy, "brand_id", "account_id");
 		}
 		
-		$this->update();
+		$this->update('WHERE account_id=?', array($this->account_id));
+		return $this;
 	}
 	
 	function get() {
-		//$this->cols; holders
-		//by brand, holder, by unit, by ...
-		return $this->getBalance();
+		$info = $this->getInfo()[0];		
+		if (!$info) return array();
+		
+		if (Requester::isBrandAdmin($info['brand_id'])) $info['holders'] = $this->getByAdmin();
+		else if (Requester::isAccountHolder($this->account_id)) $info['holders'] = $this->getByHolder();
+		else return array(array("balance"=> $info['sign']*$info['balance'], "unit"=> $info['unit']));
+
+		return array($info);
 	}
 	
-	function getBalance() {
+	function getInfo() {
 		$sql = "CALL accountInfo(?)";
 		return DBquery::get($sql, array($this->account_id));		
+	}
+	
+	function getByAdmin() {
+		$sql = "SELECT holder_id, user_id, authcode, created, '---' AS limkey FROM holders WHERE account_id=? AND user_id!=?
+			UNION ALL
+			SELECT holder_id, user_id, authcode, created, limkey FROM holders WHERE account_id=? AND user_id=?";
+		
+		return DBquery::get($sql, array($this->account_id, Requester::$user_id, $this->account_id, Requester::$user_id));
+	}
+	
+	function getByHolder() {
+		$sql = "SELECT 0 AS holder_id, user_id, authcode, created, '---' AS limkey FROM holders WHERE account_id=? AND user_id!=?
+			UNION ALL
+			SELECT holder_id, user_id, authcode, created, limkey FROM holders WHERE account_id=? AND user_id=?";
+		
+		return DBquery::get($sql, array($this->account_id, Requester::$user_id, $this->account_id, Requester::$user_id));
 	}
 }
 

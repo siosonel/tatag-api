@@ -204,7 +204,9 @@ describe('members', function () {
 	});	
 })
 
-describe('accounts', function () {		
+describe('accounts', function () {
+	var account = {};
+		
 	it('should allow account creation', function (done) {
 		request.post('/accounts')
 			.auth('21','pass2')
@@ -215,6 +217,63 @@ describe('accounts', function () {
 				sign: 1
 			})
 			.expect(200)
+			.expect(function (res) {account=res.body; console.log(account)}) 
+			.end(inspect(done));
+	});
+	
+	it('should allow an admin to change an account name and authcode', function (done) {
+		request.post('/accounts/'+ account.account_id)
+			.auth('21','pass2')
+			.send({
+				name: 'edited-'+ Date.now(),
+				authcode: 'ft'
+			})
+			.expect(200)
+			.end(inspect(done));
+	});
+	
+	
+	it("should NOT allow an admin to change an account's unit or sign", function (done) {
+		request.post('/accounts/'+ account.account_id)
+			.auth('21','pass2')
+			.send({
+				unit: 'ft',
+				sign: -1
+			})
+			.expect(403)
+			.end(inspect(done));
+	});
+	
+	it('should allow an account holder to view account details with limited holder info', function (done) {
+		request.get('/accounts/92')
+			.auth('21','pass2')
+			.expect(200)
+			.end(inspect(done));
+	});
+	
+	it('should allow an admin to view account details with more detailed holder info', function (done) {
+		request.get('/accounts/92')
+			.auth('21','pass2')
+			.expect(200)
+			.expect(function (res) {
+				if (!res || !res.body || !Array.isArray(res.body) || !res.body.length) return 'Invalid response body. '+ JSON.stringify(res.body);
+				
+				var info = res.body[0];
+				if (!info.unit || !info.holders || !info.holders.length || !info.holders[0].holder_id
+				) return JSON.stringify(res.body); 
+			})
+			.end(inspect(done));
+	});
+	
+	it("should allow non-holders to view an account's balance and unit, but not other details", function (done) {
+		request.get('/accounts/92')
+			.expect(200)
+			.expect(function (res) {
+				if (!res || !res.body || !Array.isArray(res.body) || !res.body.length) return 'Invalid response body. '+ JSON.stringify(res.body);
+				
+				var info = res.body[0]; //should not show account holders
+				if (!info.unit || info.holders) return JSON.stringify(res.body);				
+			})
 			.end(inspect(done));
 	});
 })
@@ -231,6 +290,9 @@ describe('holders', function () {
 			.expect(200)
 			.end(inspect(done));
 	});
+	
+	it("should allow an account holder to change the assigned alias");
+	
 })
 
 describe('records', function () {		

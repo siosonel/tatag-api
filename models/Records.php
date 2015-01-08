@@ -20,6 +20,7 @@ class Records extends Base {
 			if ($this->amount < 0) $this->to_holder = $holder;
 			else $this->from_holder = $holder;
 		}
+		else Error::http(403, 'Requester is not an account holder.');
 		
 		if ($this->amount < 0) $this->addKeyVal('to_user', Requester::$user_id);
 		else $this->addKeyVal('from_user', Requester::$user_id);
