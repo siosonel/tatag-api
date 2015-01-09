@@ -21,7 +21,7 @@
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (92,104,'Main Revenue','cftix','hour',0.00,-1,'2015-01-05 19:53:31',NULL),(93,104,'Main Expense','cftix','hour',0.00,1,'2015-01-05 19:53:31',NULL),(94,104,'Personal Expense','ftix','hour',0.00,1,'2015-01-05 19:53:32',NULL),(95,105,'Main Revenue','cftix','hour',0.00,-1,'2015-01-05 19:53:33',NULL),(96,105,'Main Expense','cftix','hour',0.00,1,'2015-01-05 19:53:33',NULL),(97,104,'Test Expense','ftix','hour',0.00,1,'2015-01-05 19:53:33',NULL);
+INSERT INTO `accounts` VALUES (92,104,'Main Revenue','cftix','hour',0.00,-1,'2015-01-05 19:53:31',NULL),(93,104,'Main Expense','cftix','hour',0.00,1,'2015-01-05 19:53:31',NULL),(94,104,'Personal Expense','ti','hour',0.00,1,'2015-01-05 19:53:32',NULL),(95,105,'Main Revenue','cftix','hour',0.00,-1,'2015-01-05 19:53:33',NULL),(96,105,'Main Expense','cftix','hour',0.00,1,'2015-01-05 19:53:33',NULL),(97,104,'Test Expense','ftix','hour',0.00,1,'2015-01-05 19:53:33',NULL);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 

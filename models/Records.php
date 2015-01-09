@@ -9,7 +9,7 @@ class Records extends Base {
 		$this->holder_id = $this->getID();
 		$this->filterKey = 'holder_id';
 		$this->init($data);
-		if ($this->from_acct == $this->to_acct) Error::halt("The from_acct and to_acct must have a different account id's.");
+		if ($this->from_acct == $this->to_acct) Error::http(403, "The from_acct and to_acct must have a different account id's.");
 	}
 		
 	function add() {
@@ -20,7 +20,7 @@ class Records extends Base {
 			if ($this->amount < 0) $this->to_holder = $holder;
 			else $this->from_holder = $holder;
 		}
-		else Error::http(403, 'Requester is not an account holder.');
+		else Error::http(401, 'Requester is not an account holder.');
 		
 		if ($this->amount < 0) $this->addKeyVal('to_user', Requester::$user_id);
 		else $this->addKeyVal('from_user', Requester::$user_id);
@@ -54,7 +54,7 @@ class Records extends Base {
 		if (strpos($this->to_acct,'-')) $this->setOtherByHolder($otherAcct);
 		else {
 			$holder = Requester::isAccountHolder($otherAcct);
-			if (!$holder) Error::http(403, 'The to_acct must be held by the Requester or submitted as encoded relay information.');
+			if (!$holder) Error::http(401, 'The to_acct must be held by the Requester or submitted as encoded relay information.');
 			
 			$this->addKeyVal('to_user', Requester::$user_id);
 			
@@ -68,7 +68,7 @@ class Records extends Base {
 	
 		$sql = "SELECT user_id, account_id, limkey, authcode FROM holders WHERE holder_id=$holder_id";
 		$row = DBquery::get($sql);
-		if ($row[0]['limkey'] != $limkey) Error::http(403, 'Invalid limkey.');
+		if ($row[0]['limkey'] != $limkey) Error::http(401, 'Invalid limkey.');
 		
 		if ($this->amount < 0) {
 			$this->addKeyVal('from_acct', $row[0]['account_id']);
@@ -124,22 +124,22 @@ class Records extends Base {
 		if ($from['unit']!=$to['unit']) Error::http(403, 'The accounts in a transaction must use the same unit.');
 		
 		//if account holder authcode is empty, override with account authcode value
-		if (!$this->from_holder['authcode']) $this->from_holder = $from['authcode'];
-		if (!$this->to_holder['authcode']) $this->to_holder = $to['authcode'];
+		if (!$this->from_holder['authcode']) $this->from_holder['authcode'] = $from['authcode'];
+		if (!$this->to_holder['authcode']) $this->to_holder['authcode'] = $to['authcode'];
 		
 		//check for transaction restrictions within brand		
 		if ($from['brand_id'] == $to['brand_id']) {
 			if ($recordType=='np') {
 				if (strpos($from['authcode'],"c")===false) $mssg = "The from-account #$this->from_acct is not authorized for budget creation. ";
-				if (strpos($this->from_holder['authcode'],"c")===false) $mssg .= "The from-acct-holder #$this->from_holder->user_id is not authorized to create budgets using account #$this->from_acct.";
+				if (strpos($this->from_holder['authcode'],"c")===false) $mssg .= "The from-acct-holder is not authorized to create budgets using account #$this->from_acct.";
 				if (strpos($to['authcode'],"c")===false) $mssg .= "The to-account #$this->to_acct is not authorized for budget creation.";
-				if (strpos($this->to_holder['authcode'],"c")===false) $mssg .= "The to-acct-holder #$this->to_holder->user_id is not authorized to create budgets using account #$this->to_acct.";
+				if (strpos($this->to_holder['authcode'],"c")===false) $mssg .= "The to-acct-holder is not authorized to create budgets using account #$this->to_acct.";
 			}
 			else if ($recordType=='pn') {
 				if (strpos($from['authcode'],"i")===false) $mssg = "The from-account #$this->from_acct is not authorized for internal budget use. ";
-				if (strpos($this->from_holder['authcode'],"i")===false) $mssg .= "The from-acct-holder #$this->from_holder->user_id is not authorized to use budget internally using account #$this->from_acct. ";				
+				if (strpos($this->from_holder['authcode'],"i")===false) $mssg .= "The from-acct-holder is not authorized to use budget internally using account #$this->from_acct. ";				
 				if (strpos($to['authcode'],"i")===false) $mssg .= "The to-account #$this->to_acct is not authorized for internal budget use. ";
-				if (strpos($this->to_holder['authcode'],"i")===false) $mssg .= "The to-acct-holder #$this->to_holder->user_id is not authorized to use budget internally using account #$this->to_acct. ";
+				if (strpos($this->to_holder['authcode'],"i")===false) $mssg .= "The to-acct-holder is not authorized to use budget internally using account #$this->to_acct. ";
 				
 				/*if (!$this->cart_id) $mssg .= "Intra-entity budget use requires a cart_id. If you were trying to reverse currency issuance, use a negative amount instead with the revenue budget account as the from account.";
 				else {

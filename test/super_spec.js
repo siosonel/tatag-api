@@ -392,6 +392,20 @@ describe('records', function () {
 			.end(inspect(done));
 	});
 	
+	it("should NOT allow budget creation if an account's authcode do not have a 'c' character", function (done) {
+		request.post('/records')
+			.auth('21','pass2')
+			.send({
+				from_acct: 92,
+				to_acct: 94,
+				amount: 1000,
+				comment: 'first budget',
+				cart_id: 0
+			})
+			.expect(403)
+			.end(inspect(done));
+	});
+	
 	it('should allow budget assignment', function (done) {
 		request.post('/records')
 			.auth('21','pass2')
@@ -403,6 +417,20 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(200)
+			.end(inspect(done));
+	});
+	
+	it("should NOT allow budget assignment from an account that does not have a 'f' authcode", function (done) {
+		request.post('/records')
+			.auth('21','pass2')
+			.send({
+				from_acct: 94,
+				to_acct: 93,
+				amount: 6.66,
+				comment: 'returned pay',
+				cart_id: 0
+			})
+			.expect(403)
 			.end(inspect(done));
 	});
 	
@@ -418,8 +446,22 @@ describe('records', function () {
 			})
 			.expect(200)
 			.end(inspect(done));
+	});	
+	
+	it('should NOT allow budget intrause when either from or to-account balance is insufficient', function (done) {
+		request.post('/records')
+			.auth('21','pass2')
+			.send({
+				from_acct: 94,
+				to_acct: 92,
+				amount: 20000000.05,
+				comment: 'disounted employee purchase',
+				cart_id: 0
+			})
+			.expect(403)
+			.end(inspect(done));
 	});
-
+	
 	it('should allow external budget use', function (done) {
 		request.post('/records')
 			.auth('22','pass2')
@@ -431,6 +473,34 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(200)
+			.end(inspect(done));
+	});
+	
+	it("should NOT allow external budget use from an account that does not have an 'x' authcode", function (done) {
+		request.post('/records')
+			.auth('21','pass2')
+			.send({
+				from_acct: 94,
+				to_acct: '44-abc',
+				amount: 6.69,
+				comment: 'purchase',
+				cart_id: 0
+			})
+			.expect(403)
+			.end(inspect(done));
+	});
+		
+	it('should NOT allow external budget use if the relay is invalid', function (done) {
+		request.post('/records')
+			.auth('22','pass2')
+			.send({
+				from_acct: 96,
+				to_acct: '41-fake',
+				amount: 9.37,
+				comment: 'first external budget use',
+				cart_id: 0
+			})
+			.expect(401)
 			.end(inspect(done));
 	});
 })
@@ -449,7 +519,7 @@ function inspector() {
 	var fxns = {
 		done: function () {},
 		body: function (err, res) {
-			if (res && (typeof res.body=='string' || (err && res.body))) console.log(res.status+' '+res.body); 
+			if (res && (typeof res.body=='string' || (err && res.body))) console.log(JSON.stringify(res.status)+' '+JSON.stringify(res.body)); 
 			return fxns.done(err);
 		}
 	};

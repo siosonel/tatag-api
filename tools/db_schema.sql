@@ -4,24 +4,12 @@
 -- ------------------------------------------------------
 -- Server version	5.5.28
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 --
 -- Table structure for table `accounts`
 --
 
 DROP TABLE IF EXISTS `accounts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `accounts` (
   `account_id` int(11) NOT NULL AUTO_INCREMENT,
   `brand_id` int(11) DEFAULT NULL,
@@ -33,34 +21,12 @@ CREATE TABLE `accounts` (
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `advisors`
---
 
-DROP TABLE IF EXISTS `advisors`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `advisors` (
-  `advisor_id` int(11) NOT NULL AUTO_INCREMENT,
-  `brand_id` int(11) DEFAULT NULL,
-  `rater_id` int(11) DEFAULT NULL,
-  `weight` float DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `ended` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`advisor_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `brands`
---
 
 DROP TABLE IF EXISTS `brands`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `brands` (
   `brand_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
@@ -72,71 +38,11 @@ CREATE TABLE `brands` (
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`brand_id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `carts`
---
-
-DROP TABLE IF EXISTS `carts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `carts` (
-  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `brand_id` int(11) DEFAULT NULL,
-  `price` decimal(9,2) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `ended` timestamp NULL DEFAULT NULL,
-  `viewkey` varchar(5) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`cart_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `changes`
---
-
-DROP TABLE IF EXISTS `changes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `changes` (
-  `change_id` int(11) NOT NULL AUTO_INCREMENT,
-  `affected` varchar(24) DEFAULT NULL,
-  `params` varchar(120) DEFAULT NULL,
-  `vals` varchar(255) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `ended` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`change_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `fills`
---
-
-DROP TABLE IF EXISTS `fills`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fills` (
-  `fill_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cart_id` int(11) DEFAULT NULL,
-  `item_id` int(11) DEFAULT NULL,
-  `qty` int(11) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`fill_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `holders`
---
 
 DROP TABLE IF EXISTS `holders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `holders` (
   `holder_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
@@ -147,37 +53,14 @@ CREATE TABLE `holders` (
   `limkey` varchar(12) DEFAULT NULL,
   `alias` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`holder_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `items`
---
-
-DROP TABLE IF EXISTS `items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `items` (
-  `item_id` int(11) NOT NULL AUTO_INCREMENT,
-  `brand_id` int(11) DEFAULT NULL,
-  `name` varchar(120) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `unit` varchar(24) DEFAULT NULL,
-  `qty` int(11) DEFAULT NULL,
-  `price` decimal(9,2) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `ended` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `members`
 --
 
 DROP TABLE IF EXISTS `members`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `members` (
   `member_id` int(11) NOT NULL AUTO_INCREMENT,
   `brand_id` int(11) DEFAULT NULL,
@@ -187,52 +70,15 @@ CREATE TABLE `members` (
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `orders`
---
-
-DROP TABLE IF EXISTS `orders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `orders` (
-  `order_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cart_id` int(11) DEFAULT NULL,
-  `item_id` int(11) DEFAULT NULL,
-  `qty` int(11) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `ratings`
---
-
-DROP TABLE IF EXISTS `ratings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ratings` (
-  `rater_id` int(11) NOT NULL AUTO_INCREMENT,
-  `brand_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `rating` float DEFAULT NULL,
-  `rated_id` int(11) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `ended` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`rater_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `records`
 --
 
 DROP TABLE IF EXISTS `records`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `records` (
   `entry_id` int(11) NOT NULL AUTO_INCREMENT,
   `from_acct` int(11) DEFAULT NULL,
@@ -245,16 +91,15 @@ CREATE TABLE `records` (
   `cart_id` int(11) DEFAULT NULL,
   `status` tinyint(3) unsigned DEFAULT '0',
   PRIMARY KEY (`entry_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 
 --
 -- Table structure for table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(120) DEFAULT NULL,
@@ -266,11 +111,11 @@ CREATE TABLE `users` (
   `bannerImg` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 
 --
--- Dumping routines for database 'nplite'
+-- Dumping routines for database 
 --
 DROP PROCEDURE IF EXISTS `accountInfo`;
 
