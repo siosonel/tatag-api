@@ -5,7 +5,9 @@ class Brands extends Base {
 		$this->table = "brands";
 		$this->cols = "brand_id,name,mission,description,rating_min,rating_formula,created";
 		$this->brand_id = $this->getID();
-		$this->filterKey = 'brand_id';
+		$this->idkey = 'brand_id';
+		$this->okToGet = array("brand_id", "name", "mission", "description");
+		
 		$this->init($data);
 	}
 	

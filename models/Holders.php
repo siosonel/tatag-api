@@ -5,7 +5,8 @@ class Holders extends Base {
 		$this->table = "holders";
 		$this->cols = "holder_id,user_id,account_id,authcode,created";
 		$this->holder_id = $this->getID();
-		$this->filterKey = 'holder_id';
+		$this->idkey = 'holder_id';
+		$this->okToGet = array('holder_id', 'account_id', 'authcode');
 		$this->init($data);
 	}
 	

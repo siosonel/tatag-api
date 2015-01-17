@@ -9,8 +9,9 @@ class Base {
 	protected $cols;
 	protected $okToAdd=array();
 	protected $okToSet=array(); //values that may be set by an admin or user
+	protected $okToGet=array();
 	protected $okToFilterBy=array(); //parameters that may be used to filter the affected or returned rows
-	protected $filterKey;
+	protected $idkey;
 	protected $filterVal;
 	
 	protected $keyArr = array();
@@ -18,6 +19,8 @@ class Base {
 	protected $quotedValArr = array();
 	protected $paramMarker = array();
 	protected $keyMarkerArr = array();
+	
+	protected $actions = array();
 	
 	function init($data) {	
 		if (!$data) return;  
@@ -79,25 +82,57 @@ class Base {
 	function update($filter="", $vars=array()) { 
 		if (!$filter) Error::http(500, "A filter key=value is required when updating $this->table.");
 		if ($bannedSet = array_diff($this->keyArr,$this->okToSet)) Error::http(403, "These parameters may not be set by the user: ". json_encode($bannedSet) .".");	
-		//if (!in_array($this->filterKey,$this->okToFilterBy)) Error::halt("Invalid filter key: '$this->filterKey'.");
+		//if (!in_array($this->idkey,$this->okToFilterBy)) Error::halt("Invalid filter key: '$this->idkey'.");
 		
 		$keyValStr = implode(",", $this->keyMarkerArr);
 		$valArr = array_merge($this->valArr, $vars);
 		
-		//$sql = "UPDATE $this->table SET ($this->keyStr) VALUES ($this->valStr) WHERE $this->filterKey IN ($this->filterVals)";
+		//$sql = "UPDATE $this->table SET ($this->keyStr) VALUES ($this->valStr) WHERE $this->idkey IN ($this->filterVals)";
 		$sql = "UPDATE $this->table SET $keyValStr $filter";
 		$rowCount = DBquery::set($sql, $valArr);
 		if (!$rowCount) Error::http(500, "Affected rows=0.");	
+	}
+	
+	function getViewable($idKey="", $idVals=array(), $relkey='') {
+		if (!$idKey OR !$idVals) return array(); 
+		
+		foreach($idVals AS $v) {
+			if (!is_numeric($v) OR !is_int(1*$v)) Error::http(500, "Queried IDs must be integers.");
+		}
+		
+		$idVals = implode(",", $idVals);
+		$cols = implode(",", $this->okToGet);
+	
+		$sql = "SELECT $cols FROM $this->table WHERE $idKey IN ($idVals)"; //echo "\n$sql\n";
+		$rows =  DBquery::get($sql);
+		
+		$rekeyed = array();
+		$relVals = array();
+		
+		foreach($rows AS &$r) {
+			$rekeyed["/$this->table/". $r[$this->idkey]] = $r;
+			if ($relkey AND is_numeric($r[$relkey])) $relVals[] = 1*$r[$relkey];
+		}
+		
+		return array($rekeyed, $relVals);
+	}
+	
+	function setActions(&$row, $resource, $form) {
+		$link = "/actions/#$resource.$form";
+	
+		if (!isset($row['_links']['actions'])) $row['_links']['actions'] = array();
+		if (!in_array($link, $row['_links']['actions'])) $row['_links']['actions'][] = $link; 	
+		if (!isset($this->actions[$link])) $this->actions[$link] = Requester::$actions[$resource][$form];
 	}
 	
 	function logChange($id='') {
 		if (in_array($this->table, array('records'))) return;
 	
 		$cols = str_replace('created','NOW()',$this->cols);
-		$filterKey = $this->filterKey;
-		$filterVal = $id ? $id : $this->$filterKey;
+		$idkey = $this->idkey;
+		$filterVal = $id ? $id : $this->$idkey;
 	
-		$sql = "INSERT INTO x_$this->table ($this->cols) SELECT $cols FROM $this->table WHERE $filterKey IN ($filterVal)";
+		$sql = "INSERT INTO x_$this->table ($this->cols) SELECT $cols FROM $this->table WHERE $idkey IN ($filterVal)";
 		$rowCount = DBquery::insert($sql);
 		if (!$rowCount) Error::http(500, "Affected rows=0.");		
 		$this->logChange();

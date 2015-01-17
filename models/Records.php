@@ -7,7 +7,7 @@ class Records extends Base {
 		$this->table = "records";
 		$this->cols = "from_acct,from_user,to_acct,to_user,amount,comment,created,cart_id";
 		$this->holder_id = $this->getID();
-		$this->filterKey = 'holder_id';
+		$this->idkey = 'holder_id';
 		$this->init($data);
 		if ($this->from_acct == $this->to_acct) Error::http(403, "The from_acct and to_acct must have a different account id's.");
 	}

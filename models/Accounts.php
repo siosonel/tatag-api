@@ -5,7 +5,8 @@ class Accounts extends Base {
 		$this->table = "accounts";
 		$this->cols = "account_id,brand_id,name,authcode,unit,balance,sign,created";
 		$this->account_id = $this->getID();
-		$this->filterKey = 'account_id';
+		$this->idkey = 'account_id';
+		$this->okToGet = array("brand_id", "account_id", "name", "balance", "unit", "authcode");
 		$this->init($data);
 	}
 	

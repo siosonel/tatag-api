@@ -10,6 +10,7 @@ class Requester {
 	public static $name='';
 	public static $member_id=0;
 	public static $holder_id;
+	public static $actions;
 	
 	static function init() {
 		//@header("Content-Type: text/plain");
@@ -19,6 +20,9 @@ class Requester {
 		global $dbs;
 		include_once "config.php";
 		DBquery::init($dbs, array("tatagtest"));
+		
+		include_once "definitions/actions.php";
+		self::$actions = $actions;
 		
 		if (isset($_SERVER['PHP_AUTH_USER'])) { 
 			$user = $_SERVER['PHP_AUTH_USER'];
@@ -50,7 +54,7 @@ class Requester {
 		if (!$brand_id) Error::http(400, 'Invalid brand id (null).'); 
 	
 		$sql = "SELECT member_id FROM members WHERE brand_id IN (?) AND user_id IN (?) AND role='admin'";
-		$row = DBquery::get($sql, array($brand_id, self::$user_id));
+		$row = DBquery::get($sql, array($brand_id, self::$user_id)); 
 		
 		if (!count($row)) {
 			$sql = "SELECT member_id FROM members WHERE brand_id IN (?) LIMIT 1";

@@ -1,5 +1,7 @@
 <?php
 
+//$DEF = json_decode();
+
 class Router {
 	public static $table;
 	public static $id;
@@ -30,7 +32,7 @@ class Router {
 		
 		if (!method_exists(self::$Resource,$method)) Error::http(405, "The method='$method' is not supported by resource='". self::$table ."'.");		
 		
-		exit(json_encode(self::$Resource->$method(), JSON_NUMERIC_CHECK));
+		exit(json_encode(self::$Resource->$method(), JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT));
 	}
 }
 
