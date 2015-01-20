@@ -10,7 +10,10 @@ class Requester {
 	public static $name='';
 	public static $member_id=0;
 	public static $holder_id;
-	public static $actions;
+	public static $forms;
+	
+	public static $graph=array();
+	public static $graphRefs=array();
 	
 	static function init() {
 		//@header("Content-Type: text/plain");
@@ -21,8 +24,8 @@ class Requester {
 		include_once "config.php";
 		DBquery::init($dbs, array("tatagtest"));
 		
-		include_once "definitions/actions.php";
-		self::$actions = $actions;
+		include_once "definitions/forms.php";
+		self::$forms = $forms;
 		
 		if (isset($_SERVER['PHP_AUTH_USER'])) { 
 			$user = $_SERVER['PHP_AUTH_USER'];

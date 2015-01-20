@@ -32,7 +32,7 @@ class Router {
 		
 		if (!method_exists(self::$Resource,$method)) Error::http(405, "The method='$method' is not supported by resource='". self::$table ."'.");		
 		
-		exit(json_encode(self::$Resource->$method(), JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT));
+		exit(json_encode(self::$Resource->$method(), JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 	}
 }
 

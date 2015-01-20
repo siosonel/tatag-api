@@ -20,7 +20,7 @@ class Base {
 	protected $paramMarker = array();
 	protected $keyMarkerArr = array();
 	
-	protected $actions = array();
+	protected $forms = array();
 	
 	function init($data) {	
 		if (!$data) return;  
@@ -117,12 +117,17 @@ class Base {
 		return array($rekeyed, $relVals);
 	}
 	
-	function setActions(&$row, $resource, $form) {
-		$link = "/actions/#$resource.$form";
+	function setForms(&$row, $resource, $form) {
+		$link = "/forms/$resource-$form";
 	
-		if (!isset($row['_links']['actions'])) $row['_links']['actions'] = array();
-		if (!in_array($link, $row['_links']['actions'])) $row['_links']['actions'][] = $link; 	
-		if (!isset($this->actions[$link])) $this->actions[$link] = Requester::$actions[$resource][$form];
+		if (!isset($row['links']['forms'])) $row['links']['forms'] = array();
+		if (!in_array($link, $row['links']['forms'])) $row['links']['forms'][] = $link;
+		
+		if (!Requester::$graphRefs[$link]) {
+			Requester::$forms[$resource][$form]["@"] = $link; 		
+			Requester::$graph[] = Requester::$forms[$resource][$form];
+			Requester::$graphRefs[$link]++;
+		}
 	}
 	
 	function logChange($id='') {

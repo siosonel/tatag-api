@@ -5,9 +5,11 @@ Manage collection of user records
 
 class Users extends Base {	
 	function __construct($data='') {
+		$id =  $this->getID();	
+		$this->{"@"} = $id ? "/users/$id" : "/users";
 		$this->table = 'users';
 		$this->cols = 'user_id,email,name,password,created,ended';
-		$this->user_id = $this->getID();
+		$this->user_id = $id;
 		$this->idkey = 'user_id';
 		$this->init($data);
 	}
@@ -63,7 +65,7 @@ class Users extends Base {
 	}
 	
 	private function getToSelf() {
-		$actions = array();
+		$forms = array();
 	
 		$sql = "SELECT brand_id, member_id, m.created AS joined, role, hours 
 			FROM members m
@@ -74,12 +76,12 @@ class Users extends Base {
 		$isAdminOf = array();
 		
 		foreach($this->memberships AS &$row) {
-			$row['_links']["brand"] = "/brands/".$row['brand_id'];
-			$this->setActions($row, 'memberships', 'edit-by-member');
+			$row['links']["brand"] = "/brands/".$row['brand_id'];
+			$this->setForms($row, 'memberships', 'edit-by-member');
 		
 			if ($row['role']=='admin') {
 				$isAdminOf[] = $row['brand_id'];
-				$this->setActions($row, "memberships", "edit-by-admin");
+				$this->setForms($row, "memberships", "edit-by-admin");
 			}			
 		}
 		
@@ -107,15 +109,15 @@ class Users extends Base {
 		$this->accounts = DBquery::get($sql, array($this->user_id));
 		
 		foreach($this->accounts AS &$row) {	
-			$row['_links']["brand"] = "/brands/".$row['brand_id'];
+			$row['links']["brand"] = "/brands/".$row['brand_id'];
 			
 			if (in_array($row['brand_id'], $isAdminOf)) {
-				$this->setActions($row, "accounts", "edit-by-admin");
-				$this->setActions($row, "accounts", "add-holder");
+				$this->setForms($row, "accounts", "edit-by-admin");
+				$this->setForms($row, "accounts", "add-holder");
 			}
 		}
 		
-		return array_merge(array("/users/$this->user_id" => $this), $this->actions);
+		return array("@context"=>"", "@graph"=>array_merge(array($this), Requester::$graph));
 	}
 	
 	private function getToSelfNormalized() {		
@@ -139,8 +141,8 @@ class Users extends Base {
 			list($brands) = $Brands->getViewable("brand_id", array_unique($member_brands + $account_brands));
 		}  
 		
-		foreach($memberships AS $k=>$m) $this->_links['memberships'][] = $k;
-		foreach($holdings AS $k=>$m) $this->_links['accountholdings'][] = $k;
+		foreach($memberships AS $k=>$m) $this->links['memberships'][] = $k;
+		foreach($holdings AS $k=>$m) $this->links['accountholdings'][] = $k;
 		
 		return array_merge(array("/users/21"=>$this), $memberships, $holdings, $accounts, $brands);
 	}
