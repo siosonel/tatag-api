@@ -110,12 +110,9 @@
 		}]
 	},
 
-
-
 	"userAccounts": {
-		"description": "",
-		"link": "",
-
+		"description": "One or more budget accounts held by the user.",
+		
 		"properties": {
 			
 		},
@@ -132,9 +129,29 @@
 		}]
 	},
 	
-	"": {
-		"description": "",
-		"link": "",
+	"brand": {
+		"description": "A budget-issuing organization.",
+
+		"properties": {
+			
+		},
+		
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#brand-edit",
+			"method": "POST",
+			"inputs": [{
+				"name": {"required": false},
+				"url": {"required": false},
+				"mission": {"required": false},
+				"description": {"required": false}
+			}]
+		}]
+	},
+	
+	"brandMembers": {
+		"description": "All users that are current members of a brand.",
 
 		"properties": {
 			"":	{
@@ -143,14 +160,20 @@
 			}
 		},
 		
-		"actions": {
-		
-		}
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#member-edit",
+			"method": "POST",
+			"inputs": [{
+				"role": {"required": false},
+				"hours": {"required": false}
+			}]
+		}]
 	},
 	
-	"": {
-		"description": "",
-		"link": "",
+	"brandAccounts": {
+		"description": "The accounts administered by a brand.",
 
 		"properties": {
 			"":	{
@@ -159,14 +182,20 @@
 			}
 		},
 		
-		"actions": {
-		
-		}
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#account-edit",
+			"method": "POST",
+			"inputs": [{
+				"name": {"required": false},
+				"authcode": {"required": false}
+			}]
+		}]
 	},
 	
-	"": {
-		"description": "",
-		"link": "",
+	"brandHolders": {
+		"description": "Those users who are currently assigned an account administered by a brand.",
 
 		"properties": {
 			"":	{
@@ -175,34 +204,10 @@
 			}
 		},
 		
-		"actions": {
-			"":	{
-				"type": "",
-				"regex": ""
-			}
-		}
+		"actions": []
 	},
 	
-	"": {
-		"description": "",
-		"link": "",
-
-		"properties": {
-			"":	{
-				"type": "",
-				"regex": ""
-			}
-		},
-		
-		"actions": {
-			"":	{
-				"type": "",
-				"regex": ""
-			}
-		}
-	},
-	
-	"": {
+	"brandAbout": {
 		"description": "",
 		"link": "",
 

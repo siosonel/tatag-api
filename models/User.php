@@ -7,7 +7,7 @@ class User extends Base {
 	function __construct($data='') {
 		$this->{"@type"} = 'user';
 		$this->user_id =  $this->getID();	
-		if (0 AND !Requester::isUser($this->user_id)) Error::http(401, "The requester must be logged in as the requested user.");
+		if (!Requester::isUser($this->user_id)) Error::http(401, "The requester must be logged in as the requested user.");
 		
 		$this->{"@id"} = "/user/$this->user_id";		
 		$this->table = 'users';
@@ -36,12 +36,12 @@ class User extends Base {
 		
 		include_once "models/userBrands.php";		
 		include_once "models/userAccounts.php";
-		$obj = json_decode('{"user_id":' . $this->user_id .'"}');	
+		$obj = json_decode('{"user_id":' . $this->user_id .'}');	
 		
-		return array(
-			$this,
-			(new userBrands($obj))->get(),
-			(new userAccounts($obj))->get()
+		return array_merge(
+			array($this),
+			(new UserBrands($obj))->get(),
+			(new UserAccounts($obj))->get()
 		);
 	}
 }

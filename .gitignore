@@ -8,4 +8,5 @@ specs/*
 resources/*
 lib/*
 
+models/old/*
 php/test.php

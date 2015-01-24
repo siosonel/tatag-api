@@ -46,12 +46,12 @@ class UserBrands extends Base {
 			$row["_brand"] = "/brands/".$row['brand_id']."/about";			
 			$this->setForms();
 			
-			if ($row['role']=='admin') {
+			/*if ($row['role']=='admin') {
 				$row["_adminViews"] = array("/member/".$row['member_id'], "/brand/".$row['brand_id']);
-			}
+			}*/
 		}
 		
-		return $this;
+		return array($this);
 	}
 }
 

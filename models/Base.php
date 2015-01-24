@@ -25,6 +25,7 @@ class Base {
 	
 	function init($data) {		
 		if (!$data) return;  
+		if (isset($data->ended) AND $data->ended + 300 > time()) $data->ended = date("Y-m-d H:i:s", $data->ended);
 		
 		$this->validate($data);
 		$this->obj = $data;
@@ -120,28 +121,17 @@ class Base {
 	
 	function setForms() {
 		$actions = Requester::$defs->{$this->{'@type'}}->actions;
+		if (!$actions) return;
+		if (!$this->actions) $this->actions = array();
 		
 		foreach($actions AS $form) {
-			$link = $form->{"@id"};
+			if (!in_array($form->{'@id'}, $this->actions)) $this->actions[] = $form->{"@id"};
 			
-			if (!Requester::$graphRefs[$link]) {
-				$this->actions[] = $form->{"@id"};
+			if (!Requester::$graphRefs[$link]) {				
 				Requester::$graph[] = $form;
-				Requester::$graphRefs[$link]++;
+				Requester::$graphRefs[$form->{"@id"}]++;
 			}
-		} return;
-		
-		
-		$link = "/forms/$resource-$form";
-	
-		if (!isset($row['forms'])) $row['forms'] = array();
-		if (!in_array($link, $row['forms'])) $row['forms'][] = $link;
-		
-		if (!Requester::$graphRefs[$link]) {
-			Requester::$forms[$resource][$form]["@id"] = $link; 		
-			Requester::$graph[] = Requester::$forms[$resource][$form];
-			Requester::$graphRefs[$link]++;
-		}
+		} 
 	}
 	
 	function logChange($id='') {

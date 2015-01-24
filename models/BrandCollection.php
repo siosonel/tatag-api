@@ -60,16 +60,6 @@ class Brands extends Base {
 		exit(json_encode($Brand));
 	}
 	
-	function set() {
-		if (Requester::isBrandAdmin($this->brand_id)) {
-			array_push($this->okToSet, "ended","mission","description");		 
-			array_push($this->okToFilterBy, "brand_id");			
-		}
-		
-		$this->update("WHERE brand_id=?", array($this->brand_id));
-		return array($this->obj);
-	}
-	
 	function get() { 
 		if (Requester::isBrandAdmin($this->brand_id)) return $this->getToAdmin();
 		else if (Requester::isMember($this->brand_id)) return $this->getToMember();

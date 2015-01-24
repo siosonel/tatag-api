@@ -60,12 +60,12 @@ class UserAccounts extends Base {
 			$row['@id'] = $this->{'@id'} ."?holder_id=". $row['holder_id']; 	
 			$row["_brand"] = "/brand/".$row['brand_id'] ."/about";
 			
-			if ($row['role']=='admin') {
+			/*if ($row['role']=='admin') {
 				$row["_adminViews"] = array("/account/".$row['account_id'], "/brand/".$row['brand_id']);
-			}
+			}*/
 		}
 		
-		return $this;
+		return array($this);
 	}
 }
 
