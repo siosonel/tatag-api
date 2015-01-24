@@ -3,20 +3,25 @@
 //$DEF = json_decode();
 
 class Router {
-	public static $table;
+	public static $resource;
 	public static $id;
 	public static $method; 
 	public static $Resource;
+	public static $subresource;
 	
 	public static function run() {
 		$_url = trim($_GET['_url'], " \/\\\t\n\r\0\x0B");
-		list(self::$table, self::$id) = explode("/", $_url);
+		list(self::$resource, self::$id, self::$subresource) = explode("/", $_url);
 		
-		$method = strtolower($_SERVER['REQUEST_METHOD']);
+		if (self::$subresource=='collection' AND self::$id) Error::http(404, "A generic 'collection' subresource for ". self::$resource ." #". self::$id ." does not exist.");		
+		if (!self::$subresource AND !is_numeric(self::$id)) self::$subresource = self::$id;
+		//if (!self::$subresource AND !self::$id) self::$subresource = 'links';
 		
-		if ($method=='post') {
-			if (self::$id) $method = 'set';
-			else $method = 'add';
+		
+		$method = strtolower($_SERVER['REQUEST_METHOD']);			
+		if ($method=='post') { //exit(json_encode(self::$resource ."---". self::$id ."---". self::$subresource));
+			if (self::$subresource=='collection') $method = 'add';
+			else $method = 'set';
 		}
 		
 		self::$method = $method;		
@@ -24,15 +29,29 @@ class Router {
 		$data = ($method=='get') ? json_decode(json_encode(array("id"=>self::$id))) : json_decode(trim(file_get_contents("php://input")));
 		if (gettype($data)!='object') Error::http(400, "Bad Request");
 		
-		$ObjClass = ucfirst(self::$table); 
-		if (!self::$table OR !file_exists("models/$ObjClass.php")) Error::http(404, "The resource='".self::$table."' does not exist");
+		$ObjClass = ucfirst(self::$resource) . ucfirst(self::$subresource); 
+		if (!self::$resource OR !file_exists("models/$ObjClass.php")) Error::http(404, self::getLinks());
 				
 		require_once "models/$ObjClass.php";
 		self::$Resource = new $ObjClass($data);
 		
-		if (!method_exists(self::$Resource,$method)) Error::http(405, "The method='$method' is not supported by resource='". self::$table ."'.");		
+		if (!method_exists(self::$Resource,$method)) Error::http(405, "The method='$method' is not supported by resource='". self::$resource ."'.");		
 		
-		exit(json_encode(self::$Resource->$method(), JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+		exit(json_encode(array(
+			"@context"=> "--test--",
+			"@graph"=> array_merge(self::$Resource->$method(), Requester::$graph)
+		), JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+	}
+	
+	public static function getLinks() {
+		$map = json_decode(file_get_contents("definitions/tentativeLinks.json"),true);
+		
+		foreach($map AS $key=>&$val) {
+			if (strpos($key, 'user')===false) unset($map[$key]);
+			else $val = str_replace("{user_id}", Requester::$user_id, $val);
+		}
+		
+		return $map;
 	}
 }
 
@@ -73,7 +92,7 @@ class Error {
 		else header("HTTP/1.1 $numCode");
 		
 		if (self::$debug) $mssg .= " [". $debugMssg ."]";			
-		exit(json_encode($mssg));
+		exit(json_encode($mssg, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 	}
 }
 

@@ -10,10 +10,12 @@ class Requester {
 	public static $name='';
 	public static $member_id=0;
 	public static $holder_id;
+	public static $defs;
 	public static $forms;
 	
 	public static $graph=array();
 	public static $graphRefs=array();
+	
 	
 	static function init() {
 		//@header("Content-Type: text/plain");
@@ -24,21 +26,20 @@ class Requester {
 		include_once "config.php";
 		DBquery::init($dbs, array("tatagtest"));
 		
-		include_once "definitions/forms.php";
-		self::$forms = $forms;
+		self::$defs = json_decode(file_get_contents("definitions/defs.json")); //print_r(self::$defs); exit();
 		
-		if (isset($_SERVER['PHP_AUTH_USER'])) { 
-			$user = $_SERVER['PHP_AUTH_USER'];
-			self::$user_id = is_numeric($user) ? 1*$user : 0; 
-			self::$email = self::$user_id ? "" : "$user";
-			$pwd = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : "";  //exit('"'. self::$user_id ." ". $pwd ."---".  self::$email. '---"');
-			
-			self::login($pwd);
-		}
+		if (!isset($_SERVER['PHP_AUTH_USER'])) Error::http(401, "The header must include basic auth information.");
+		 
+		$user = $_SERVER['PHP_AUTH_USER'];
+		self::$user_id = is_numeric($user) ? 1*$user : 0; 
+		self::$email = self::$user_id ? "" : "$user";
+		$pwd = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : "";  //exit('"'. self::$user_id ." ". $pwd ."---".  self::$email. '---"');
+		
+		self::login($pwd);
 	}
 	
 	static function login($pwd) {
-		$sql = "SELECT user_id, name, password FROM users WHERE (user_id=? OR email=?)";
+		$sql = "SELECT user_id, name, password, email FROM users WHERE (user_id=? OR email=?)";
 		$row = DBquery::get($sql, array(self::$user_id, self::$email));
 		if (!$row) Error::http(401, "Invalid user ID/email or password. User ID: ". self::$user_id .", Email: ". self::$email);
 		
@@ -47,6 +48,7 @@ class Requester {
 
 		self::$user_id=$user['user_id'];
 		self::$name=$user['name'];
+		self::$email=$user['email'];
 	}
 	
 	static function isUser($user_id) {

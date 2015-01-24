@@ -1,0 +1,240 @@
+{	
+	"resourceGroups": {
+		"personal": [
+			"user",
+			"userMemberships",
+			"userAccounts"
+		],
+		
+		"admin": [
+			"brand",
+			"brandMembers",
+			"brandAccounts",
+			"brandHolders"
+		],
+		
+		"intro": [
+			"userAbout",
+			"userFeed",
+			"brandAbout",
+			"brandFeed"
+		],
+		
+		"analysis": [
+			"userCollection",
+			"brandCollection"
+		]
+	},
+
+	"tentativeLinks": {
+		"user": "/user/{user_id}",
+		"userMemberships": "/user/{user_id}/brands",
+		"userAccounts": "/user/{user_id}/accounts",
+		"userIntro": "/user/{user_id}/intro",
+		"userCollection": "/user/collection",
+		
+		"brand": "/brand/{brand_id}",
+		"brandMembers": "/brand/{brand_id}/members",
+		"brandAccounts": "/brand/{brand_id}/accounts",
+		"brandHolders": "/brand/{brand_id}/holders",		
+		"brandIntro": "/brand/{brand_id}/intro",
+		"brandCollection": "/brand/collection"		
+	},
+
+	"user": {		
+		"description": "Personal information for the authorized user.", 
+		
+		"properties": {
+			"name": {
+				"typeOf": "string",
+				"regex": "[a-zA-Z]"
+			},
+			
+			"email": {
+				"typeOf": {"js": "string"}
+			},
+			
+			"password": {
+				"typeOf": {"js": "string"}
+			}
+		},
+		
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#user-edit",
+			"method": "POST",
+			"inputs": [{
+				"name": {"required": false},
+				"email": {"required": false}
+			}]
+		},{
+			"title": "Deactivate",
+			"@type": "form",
+			"@id": "/forms#user-deactivate",
+			"method": "POST",
+			"inputs": [{
+				"ended": {"required": true}
+			}]
+		}]		
+	},
+
+	"userMemberships": {
+		"description": "A user's list of memberships in brands, encoded as an array of brand member properties.",
+
+		"properties": {
+			"user_id": {
+				
+			},
+			
+			"role": {
+				"typeOf": {"js": "string"},
+				"regex": "(admin|regular)"
+			},
+			
+			"hours": {
+				"typeOf": {"js": "number"},
+				"regex": ""
+			}
+		},
+		
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#member-edit",
+			"method": "POST",
+			"filters": ["member_id"],
+			"inputs": [{
+				"hours": {"required": false}
+			}]
+		}]
+	},
+
+
+
+	"userAccounts": {
+		"description": "",
+		"link": "",
+
+		"properties": {
+			
+		},
+		
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#holder-edit",
+			"method": "POST",
+			"filters": ["member_id"],
+			"inputs": [{
+				"alias": {"required": true}
+			}]
+		}]
+	},
+	
+	"": {
+		"description": "",
+		"link": "",
+
+		"properties": {
+			"":	{
+				"type": "",
+				"regex": ""
+			}
+		},
+		
+		"actions": {
+		
+		}
+	},
+	
+	"": {
+		"description": "",
+		"link": "",
+
+		"properties": {
+			"":	{
+				"type": "",
+				"regex": ""
+			}
+		},
+		
+		"actions": {
+		
+		}
+	},
+	
+	"": {
+		"description": "",
+		"link": "",
+
+		"properties": {
+			"":	{
+				"type": "",
+				"regex": ""
+			}
+		},
+		
+		"actions": {
+			"":	{
+				"type": "",
+				"regex": ""
+			}
+		}
+	},
+	
+	"": {
+		"description": "",
+		"link": "",
+
+		"properties": {
+			"":	{
+				"type": "",
+				"regex": ""
+			}
+		},
+		
+		"actions": {
+			"":	{
+				"type": "",
+				"regex": ""
+			}
+		}
+	},
+	
+	"": {
+		"description": "",
+		"link": "",
+
+		"properties": {
+			"":	{
+				"type": "",
+				"regex": ""
+			}
+		},
+		
+		"actions": {
+			"":	{
+				"type": "",
+				"regex": ""
+			}
+		}
+	},
+	
+	"": {
+		"description": "",
+		"link": "",
+
+		"properties": {
+			"":	{
+				"type": "",
+				"regex": ""
+			}
+		},
+		
+		"actions": {
+		
+		}
+	}
+}
+	

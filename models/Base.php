@@ -6,6 +6,7 @@ Inherited class of common methods, including enforced input validation
 class Base {
 	protected $obj;
 	protected $table;
+	protected $id;
 	protected $cols;
 	protected $okToAdd=array();
 	protected $okToSet=array(); //values that may be set by an admin or user
@@ -22,7 +23,7 @@ class Base {
 	
 	protected $forms = array();
 	
-	function init($data) {	
+	function init($data) {		
 		if (!$data) return;  
 		
 		$this->validate($data);
@@ -33,7 +34,7 @@ class Base {
 	
 	//generalize the handling of collection or instance identifier from a particular URL structure
 	function getID() {
-		if (!isset(Router::$id)) return;
+		if (!isset(Router::$id) OR !is_numeric(Router::$id)) return;
 		return str_replace("-",",",Router::$id);
 	}
 	
@@ -117,14 +118,27 @@ class Base {
 		return array($rekeyed, $relVals);
 	}
 	
-	function setForms(&$row, $resource, $form) {
+	function setForms() {
+		$actions = Requester::$defs->{$this->{'@type'}}->actions;
+		
+		foreach($actions AS $form) {
+			$link = $form->{"@id"};
+			
+			if (!Requester::$graphRefs[$link]) {
+				$this->actions[] = $form->{"@id"};
+				Requester::$graph[] = $form;
+				Requester::$graphRefs[$link]++;
+			}
+		} return;
+		
+		
 		$link = "/forms/$resource-$form";
 	
-		if (!isset($row['links']['forms'])) $row['links']['forms'] = array();
-		if (!in_array($link, $row['links']['forms'])) $row['links']['forms'][] = $link;
+		if (!isset($row['forms'])) $row['forms'] = array();
+		if (!in_array($link, $row['forms'])) $row['forms'][] = $link;
 		
 		if (!Requester::$graphRefs[$link]) {
-			Requester::$forms[$resource][$form]["@"] = $link; 		
+			Requester::$forms[$resource][$form]["@id"] = $link; 		
 			Requester::$graph[] = Requester::$forms[$resource][$form];
 			Requester::$graphRefs[$link]++;
 		}
