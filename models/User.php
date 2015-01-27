@@ -15,6 +15,7 @@ class User extends Base {
 		$this->idkey = 'user_id';
 		$this->init($data);
 		
+		$this->name = Requester::$name;
 		$this->email = Requester::$email;		
 		$this->okToSet = array("ended","email","name","password");
 		$this->okToFilterBy =  array("user_id","email");	
@@ -30,8 +31,9 @@ class User extends Base {
 	}
 	
 	function get() {
-		$this->_userMemberships = $this->{'@id'}."/brands";
-		$this->_userAccounts = $this->{'@id'}."/accounts";
+		$this->links = array();
+		$this->userMemberships = $this->{'@id'}."/brands";
+		$this->userAccounts = $this->{'@id'}."/accounts";
 		$this->setForms();	
 		
 		include_once "models/userBrands.php";		

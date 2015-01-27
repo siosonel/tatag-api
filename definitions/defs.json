@@ -3,21 +3,23 @@
 		"personal": [
 			"user",
 			"userMemberships",
-			"userAccounts"
+			"userAccounts",
+			"userFeed"
 		],
 		
 		"admin": [
 			"brand",
 			"brandMembers",
 			"brandAccounts",
-			"brandHolders"
+			"brandHolders",
+			"brandFeed"
 		],
 		
 		"intro": [
 			"userAbout",
-			"userFeed",
+			"userWall",
 			"brandAbout",
-			"brandFeed"
+			"brandWall"
 		],
 		
 		"analysis": [
@@ -45,17 +47,20 @@
 		"description": "Personal information for the authorized user.", 
 		
 		"properties": {
+			"user_id": {
+				"type": "string"
+			},
+			
 			"name": {
-				"typeOf": "string",
-				"regex": "[a-zA-Z]"
+				"type": "string"
 			},
 			
 			"email": {
-				"typeOf": {"js": "string"}
+				"type": "string"
 			},
 			
 			"password": {
-				"typeOf": {"js": "string"}
+				"type": "string"
 			}
 		},
 		
@@ -64,19 +69,34 @@
 			"@type": "form",
 			"@id": "/forms#user-edit",
 			"method": "POST",
-			"inputs": [{
-				"name": {"required": false},
-				"email": {"required": false}
+			
+			"inputs": {
+				"allowed": ["name","email"],
+				"required": []
+			},
+			
+			"examples": [{
+				"heading": "Should allow edits to username",
+				"inputs": {
+					"name": "esi"
+				},
+				"response_status": 200
+			},{
+				"heading": "Should not allow edits to start data",
+				"inputs": {
+					"joined": "esi"
+				},
+				"response_status": 403
 			}]
 		},{
 			"title": "Deactivate",
 			"@type": "form",
 			"@id": "/forms#user-deactivate",
-			"method": "POST",
-			"inputs": [{
-				"ended": {"required": true}
-			}]
-		}]		
+			"method": "DELETE"
+		}],
+		
+		"required": ["@type", "@id", "user_id", "name", "email", "userMemberships", "userAccounts"],
+		"allowed": ["links", "actions"]
 	},
 
 	"userMemberships": {
@@ -88,13 +108,12 @@
 			},
 			
 			"role": {
-				"typeOf": {"js": "string"},
-				"regex": "(admin|regular)"
+				"type": "string",
+				"selection": ["admin", "regular"]
 			},
 			
 			"hours": {
-				"typeOf": {"js": "number"},
-				"regex": ""
+				"type": "number"
 			}
 		},
 		
@@ -103,9 +122,13 @@
 			"@type": "form",
 			"@id": "/forms#member-edit",
 			"method": "POST",
-			"filters": ["member_id"],
+			"filters": {
+				"required": ["member_id"],
+				"allowed": []				
+			},
 			"inputs": [{
-				"hours": {"required": false}
+				"required": ["hours"],
+				"allowed": []				
 			}]
 		}]
 	},

@@ -1,4 +1,8 @@
 {
+		"@id": "/",
+		"@type": "root",
+		"definitions": "/definitions/defs.json",
+		
 		"user": "/user/{user_id}",
 		"userMemberships": "/user/{user_id}/brands",
 		"userAccounts": "/user/{user_id}/accounts",

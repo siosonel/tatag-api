@@ -9,8 +9,9 @@ class Router {
 	public static $Resource;
 	public static $subresource;
 	
-	public static function run() {
+	public static function run() {	
 		$_url = trim($_GET['_url'], " \/\\\t\n\r\0\x0B");
+		if (!$_url) exit(json_encode(self::getLinks(), JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 		list(self::$resource, self::$id, self::$subresource) = explode("/", $_url);
 		
 		if (self::$subresource=='collection' AND self::$id) Error::http(404, "A generic 'collection' subresource for ". self::$resource ." #". self::$id ." does not exist.");		
@@ -47,11 +48,13 @@ class Router {
 		$map = json_decode(file_get_contents("definitions/tentativeLinks.json"),true);
 		
 		foreach($map AS $key=>&$val) {
-			if (strpos($key, 'user')===false) unset($map[$key]);
+			if ($key=='definitions' || $key=='@type' || $key=='@id') {}
+			else if (strpos($key, 'user')===false) unset($map[$key]);
 			else $val = str_replace("{user_id}", Requester::$user_id, $val);
 		}
 		
-		return $map;
+		$map['_brand'] = Requester::adminLinks();		
+		return array("@context"=> "--test--", "@graph"=> array($map));
 	}
 }
 

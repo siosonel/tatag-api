@@ -25,7 +25,6 @@ class Base {
 	
 	function init($data) {		
 		if (!$data) return;  
-		if (isset($data->ended) AND $data->ended + 300 > time()) $data->ended = date("Y-m-d H:i:s", $data->ended);
 		
 		$this->validate($data);
 		$this->obj = $data;
@@ -119,17 +118,18 @@ class Base {
 		return array($rekeyed, $relVals);
 	}
 	
-	function setForms() {
+	function setForms() { 
 		$actions = Requester::$defs->{$this->{'@type'}}->actions;
 		if (!$actions) return;
-		if (!$this->actions) $this->actions = array();
+		if (!isset($this->actions)) $this->actions = array();
 		
 		foreach($actions AS $form) {
-			if (!in_array($form->{'@id'}, $this->actions)) $this->actions[] = $form->{"@id"};
+			$link = $form->{'@id'};
+			if (!in_array($link, $this->actions)) $this->actions[] = $link;
 			
 			if (!Requester::$graphRefs[$link]) {				
 				Requester::$graph[] = $form;
-				Requester::$graphRefs[$form->{"@id"}]++;
+				Requester::$graphRefs[$link]++;
 			}
 		} 
 	}

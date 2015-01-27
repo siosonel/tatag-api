@@ -2,17 +2,17 @@
 
 class Brand extends Base {
 	function __construct($data='') {
-		$this->{"@type"} = 'brand';
-		$this->table = "brands";
-		$this->cols = "brand_id,name,mission,description,rating_min,rating_formula,created";
-		$this->brand_id = $this->getID();
-		
+		$this->brand_id = $this->getID();		
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
-		
-		$this->idkey = 'brand_id';
-		$this->okToSet = array("ended","mission","description");
+	
+		$this->{"@type"} = 'brand';
+		$this->{"@id"} = "/brand/$this->brand_id";
+		$this->table = "brands";
 		
 		$this->init($data);
+		
+		$this->cols = "brand_id,name,mission,description,rating_min,rating_formula,created";		
+		$this->okToSet = array("ended","mission","description");
 	}
 	
 	function add() {

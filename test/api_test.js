@@ -1,26 +1,43 @@
 assert = require('assert');
 request = require('supertest')('http://localhost/tatag');
+Q = require('q');
 var helpers = require('helpers/helpers.js');
 
-before(helpers.initDB);
+var ldgraph = require('helpers/ld-flat.js');
+var api = ldgraph.api({
+	"entrance": {"_type": "root", "value": "/"}, 
+	'userid':'21', 'pass':'pass2', 'request': request,
+	'_id':'@id', '_type': '@type' //in case these property names were aliased
+});
+//before(helpers.initDB);
 
-describe.only('User Resources', function () {
+describe.only('Definitions', function () {
+	it('provides contextual links', function (done) {
+		api.get('root').then(helpers.inspect(done), done);
+	})
+	
+	it('provides definitions', function (done) {
+		api.get('definitions').then(helpers.inspect(done), done)
+	})
+})
+
+describe('User Resources', function () {
 	describe('userSelf', function () {
-		it('should give detailed self-info to a logged-in user', function (done) {
-			request.get('/user/21')
-				.auth('21','pass2')
-				.expect(function (res) {
-					if (!res || !res.body) return;
-					if (
-						!Array.isArray(res.body['@graph'].memberships)
-						|| !Array.isArray(res.body['@graph'].accounts)
-					) return JSON.stringify(res.body[0]);
-				})
-				.expect(200)
-				.end(helpers.inspect(done));
-		});
+		it('should provide user resource', function (done) {
+			api.get('user').then(helpers.inspect(done), done)
+		})
 		
-		it('should allow a user to change his email', function (done) {
+		it('should give detailed self-info to a logged-in user', function () {
+			var defs = api.byType.definitions;
+			assert.equal(undefined, helpers.compareKeys(api.curr.user, defs.user.required, defs.user.allowed))
+		})
+		
+		/*
+	
+		
+		
+		
+		/*it('should allow a user to change his email', function (done) {
 			request.post('/user/21')
 				.auth('21','pass2')
 				.send({
@@ -28,10 +45,10 @@ describe.only('User Resources', function () {
 				})
 				.expect(200)
 				.end(helpers.inspect(done));
-		});	
+		});*/
 	})
 
-	describe('userIntro', function () {
+	/*describe('userIntro', function () {
 		it('should give general info about a user to a non-logged in user', function (done) {
 			request.get('/user/21/intro')
 				.expect(function (res) {
@@ -103,9 +120,9 @@ describe.only('User Resources', function () {
 				.expect(200)
 				.end(helpers.inspect(done));
 		});
-	})
+	})*/
 })
-
+/*
 describe('brand', function () {		
 	describe('/brandcollection', function () {
 		it('should register a brand', function(done) {
@@ -518,3 +535,4 @@ describe('records', function () {
 			.end(helpers.inspect(done));
 	});
 })
+*/
