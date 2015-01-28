@@ -1,7 +1,7 @@
 assert = require('assert');
 request = require('supertest')('http://localhost/tatag');
 Q = require('q');
-var helpers = require('helpers/helpers.js');
+var help = require('helpers/helpers.js');
 
 var ldgraph = require('helpers/ld-flat.js');
 var api = ldgraph.api({
@@ -9,33 +9,58 @@ var api = ldgraph.api({
 	'userid':'21', 'pass':'pass2', 'request': request,
 	'_id':'@id', '_type': '@type' //in case these property names were aliased
 });
-//before(helpers.initDB);
 
-describe.only('Definitions', function () {
+before(help.initDB);
+
+describe('Definitions', function () {
 	it('provides contextual links', function (done) {
-		api.get('root').then(helpers.inspect(done), done);
+		api.load('root').then(help.inspect(done), done);
 	})
 	
 	it('provides definitions', function (done) {
-		api.get('definitions').then(helpers.inspect(done), done)
+		api.load('definitions').then(help.inspect(done), done)
 	})
 })
 
 describe('User Resources', function () {
-	describe('userSelf', function () {
-		it('should provide user resource', function (done) {
-			api.get('user').then(helpers.inspect(done), done)
-		})
-		
-		it('should give detailed self-info to a logged-in user', function () {
-			var defs = api.byType.definitions;
-			assert.equal(undefined, helpers.compareKeys(api.curr.user, defs.user.required, defs.user.allowed))
-		})
-		
-		/*
+	var formIDs, userID;
 	
+	describe('user', function () {
+		it('should provide user resource', function (done) {
+			api.load('user').then(help.inspect(done), done)
+		})
 		
-		
+		it('should give detailed self-info to a logged-in user', function (done) {
+			var defs = api.byType.definitions;
+			assert.equal(undefined, help.compareKeys(api.curr.user, defs.user.required, defs.user.allowed))
+			done()
+		})
+
+		it('should provide user actions', function (done) {
+			api.load('user').then(function (user) {
+				var deferred = Q.deferred
+				if (!user.actions) console.log('No user actions.')
+				formIDs = user.actions;
+				userID = user['@id'];
+				done();
+			})
+		})
+	
+		it('should follow action examples', function (done) {
+			help.inspect.reset(api, done);
+			
+			if (!formIDs || !formIDs.length) done();
+			else formIDs.map(function (id) {
+				var form = api.byId[id];				
+				if (form && form.examples) form.examples.map(help.inspect.wait)
+			});
+			
+			help.inspect.skipAsNeeded();
+		})
+	})
+	
+	
+	/*		
 		
 		/*it('should allow a user to change his email', function (done) {
 			request.post('/user/21')
@@ -44,9 +69,8 @@ describe('User Resources', function () {
 					email: "edited-email-"+Date.now()+"@email.org"
 				})
 				.expect(200)
-				.end(helpers.inspect(done));
+				.end(help.inspect(done));
 		});*/
-	})
 
 	/*describe('userIntro', function () {
 		it('should give general info about a user to a non-logged in user', function (done) {
@@ -64,7 +88,7 @@ describe('User Resources', function () {
 					) return JSON.stringify(info);
 				})
 				.expect(200)
-				.end(helpers.inspect(done));
+				.end(help.inspect(done));
 		});
 	})
 
@@ -77,7 +101,7 @@ describe('User Resources', function () {
 					password: "pass2"
 				})
 				.expect(200)
-				.end(helpers.inspect(done));
+				.end(help.inspect(done));
 		});
 		
 		it('should not register a user if email is missing', function (done) {
@@ -87,7 +111,7 @@ describe('User Resources', function () {
 					password: "pass2"
 				})
 				.expect(400)
-				.end(helpers.inspect(done));
+				.end(help.inspect(done));
 		});
 		
 		it('should not register a user if name is missing', function (done) {
@@ -97,7 +121,7 @@ describe('User Resources', function () {
 					password: "pass2"
 				})
 				.expect(400)
-				.end(helpers.inspect(done));
+				.end(help.inspect(done));
 		});
 		
 		it('should not allow shared emails between users', function (done) {
@@ -108,7 +132,7 @@ describe('User Resources', function () {
 					password: "pass2"
 				})
 				.expect(500)
-				.end(helpers.inspect(done));
+				.end(help.inspect(done));
 		});
 		
 		it('should give summary info about the users collection', function (done) {
@@ -118,7 +142,7 @@ describe('User Resources', function () {
 					if (typeof res.body.numUsers!='number') console.log(res.body);
 				})
 				.expect(200)
-				.end(helpers.inspect(done));
+				.end(help.inspect(done));
 		});
 	})*/
 })
@@ -188,7 +212,7 @@ describe('members', function () {
 			})
 			.expect(200)
 			.expect(function (res) {member=res.body})
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it('should not allow an admin to re-add a current member', function (done) {
@@ -201,7 +225,7 @@ describe('members', function () {
 				hours: 1,
 			})
 			.expect(409)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should allow an admin to edit a member's role", function (done) {
@@ -211,7 +235,7 @@ describe('members', function () {
 				role: 'edited-'+ Date.now()
 			})			
 			.expect(200)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should allow a member to edit his hours", function (done) {
@@ -221,7 +245,7 @@ describe('members', function () {
 				hours: 10
 			})
 			.expect(200)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it('should allow an admin to deactivate a current member', function (done) {
@@ -231,7 +255,7 @@ describe('members', function () {
 				ended: Math.round(Date.now()/1000)
 			})
 			.expect(200)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});	
 	
 	it('should not allow an admin to deactivate himself', function (done) {
@@ -241,7 +265,7 @@ describe('members', function () {
 				ended: Math.round(Date.now()/1000)
 			})
 			.expect(403)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});	
 })
 
@@ -262,7 +286,7 @@ describe('accounts', function () {
 				account=res.body; 
 				if (!account.account_id) return 'Invalid account_id (null).'; 
 			}) 
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it('should allow an admin to change an account name and authcode', function (done) {
@@ -273,7 +297,7 @@ describe('accounts', function () {
 				authcode: 'ft'
 			})
 			.expect(200)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	
@@ -285,14 +309,14 @@ describe('accounts', function () {
 				sign: -1
 			})
 			.expect(403)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it('should allow an account holder to view account details with limited holder info', function (done) {
 		request.get('/accounts/92')
 			.auth('21','pass2')
 			.expect(200)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it('should allow an admin to view account details with more detailed holder info', function (done) {
@@ -306,7 +330,7 @@ describe('accounts', function () {
 				if (!info.unit || !info.holders || !info.holders.length || !info.holders[0].holder_id
 				) return JSON.stringify(res.body); 
 			})
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should allow non-holders to view an account's balance and unit, but not other details", function (done) {
@@ -318,7 +342,7 @@ describe('accounts', function () {
 				var info = res.body[0]; //should not show account holders
 				if (!info.unit || info.holders) return JSON.stringify(res.body);				
 			})
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 })
 
@@ -335,7 +359,7 @@ describe('holders', function () {
 			})
 			.expect(200)
 			.expect(function (res) {holder=res.body})
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should allow an account holder to change the assigned alias", function (done) {
@@ -345,7 +369,7 @@ describe('holders', function () {
 				alias: 'alias-' + Date.now()
 			})
 			.expect(200)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should NOT allow a non-account holder to change the assigned alias", function (done) {
@@ -355,7 +379,7 @@ describe('holders', function () {
 				alias: 'admin-' + Date.now()
 			})
 			.expect(403)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should NOT allow edits to created value", function (done) {
@@ -365,7 +389,7 @@ describe('holders', function () {
 				created: Math.round(Date.now()/1000)
 			})
 			.expect(403)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should allow an account holders to view holding details including limkey", function (done) {
@@ -381,7 +405,7 @@ describe('holders', function () {
 				var info = res.body[0];
 				if (!info.limkey) return JSON.stringify(res.body);
 			})
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should allow a non-holder admin to view holding details except limkey", function (done) {
@@ -394,7 +418,7 @@ describe('holders', function () {
 				var info = res.body[0];
 				if (info.limkey) return JSON.stringify(res.body);
 			})
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should NOT allow a non-holder, non-admin to view any details", function (done) {
@@ -404,7 +428,7 @@ describe('holders', function () {
 			.expect(function (res) {
 				if (!res.body) return 'Invalid response body. '+ JSON.stringify(res.body);
 			})
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 })
 
@@ -420,7 +444,7 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(200)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should NOT allow budget creation if an account's authcode do not have a 'c' character", function (done) {
@@ -434,7 +458,7 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(403)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it('should allow budget assignment', function (done) {
@@ -448,7 +472,7 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(200)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should NOT allow budget assignment from an account that does not have a 'f' authcode", function (done) {
@@ -462,7 +486,7 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(403)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it('should allow budget intrause', function (done) {
@@ -476,7 +500,7 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(200)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});	
 	
 	it('should NOT allow budget intrause when either from or to-account balance is insufficient', function (done) {
@@ -490,7 +514,7 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(403)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it('should allow external budget use', function (done) {
@@ -504,7 +528,7 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(200)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 	
 	it("should NOT allow external budget use from an account that does not have an 'x' authcode", function (done) {
@@ -518,7 +542,7 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(403)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 		
 	it('should NOT allow external budget use if the relay is invalid', function (done) {
@@ -532,7 +556,7 @@ describe('records', function () {
 				cart_id: 0
 			})
 			.expect(401)
-			.end(helpers.inspect(done));
+			.end(help.inspect(done));
 	});
 })
 */

@@ -27,7 +27,7 @@ class User extends Base {
 	
 	function set() {		
 		$this->update("WHERE user_id=?", array(Requester::$user_id));
-		return $this->obj;
+		return array($this);
 	}
 	
 	function get() {

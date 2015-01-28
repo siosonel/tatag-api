@@ -1,4 +1,6 @@
 {	
+	"@id": "/definitions/defs.json",
+	
 	"resourceGroups": {
 		"personal": [
 			"user",
@@ -77,14 +79,18 @@
 			
 			"examples": [{
 				"heading": "Should allow edits to username",
+				"target": "/user/21",
+				"method": "POST",
 				"inputs": {
-					"name": "esi"
+					"name": "esi-po---p"
 				},
 				"response_status": 200
 			},{
-				"heading": "Should not allow edits to start data",
+				"heading": "Should not allow edits to registered date",
+				"target": "/user/21",
+				"method": "POST",
 				"inputs": {
-					"joined": "esi"
+					"created": "esi-pop"
 				},
 				"response_status": 403
 			}]
@@ -122,7 +128,7 @@
 			"@type": "form",
 			"@id": "/forms#member-edit",
 			"method": "POST",
-			"filters": {
+			"query": {
 				"required": ["member_id"],
 				"allowed": []				
 			},
@@ -145,7 +151,7 @@
 			"@type": "form",
 			"@id": "/forms#holder-edit",
 			"method": "POST",
-			"filters": ["member_id"],
+			"query": ["member_id"],
 			"inputs": [{
 				"alias": {"required": true}
 			}]
