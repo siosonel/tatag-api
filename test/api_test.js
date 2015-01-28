@@ -38,24 +38,26 @@ describe('User Resources', function () {
 
 		it('should provide user actions', function (done) {
 			api.load('user').then(function (user) {
-				var deferred = Q.deferred
 				if (!user.actions) console.log('No user actions.')
 				formIDs = user.actions;
 				userID = user['@id'];
 				done();
 			})
 		})
-	
-		it('should follow action examples', function (done) {
-			help.inspect.reset(api, done);
-			
+		
+		it('should follow action examples', function (done) {			
 			if (!formIDs || !formIDs.length) done();
-			else formIDs.map(function (id) {
-				var form = api.byId[id];				
-				if (form && form.examples) form.examples.map(help.inspect.wait)
-			});
+			else {
+				// this helper maintains the action context within each api request, simpler than Q.all approach?
+				help.wait.reset(api, done);
+				
+				formIDs.map(function (id) {
+					var form = api.byId[id];				
+					if (form && form.examples) form.examples.map(help.wait)
+				});
 			
-			help.inspect.skipAsNeeded();
+				help.wait.orNot();
+			}
 		})
 	})
 	
