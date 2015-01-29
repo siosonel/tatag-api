@@ -5,7 +5,8 @@ class BrandMembers extends Base {
 		$this->brand_id = $this->getID();
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
 		
-		$this->{"@type"} = 'brandMembers';		
+		$this->{"@type"} = 'brandMembers';			
+		$this->{"@id"} = "/brand/$this->brand_id/members";
 		$this->table = "members";
 		$this->cols = "member_id,brand_id,user_id,role,hours,created";		
 		$this->idkey = 'member_id'; 

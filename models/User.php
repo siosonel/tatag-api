@@ -31,9 +31,10 @@ class User extends Base {
 	}
 	
 	function get() {
-		$this->links = array();
-		$this->userMemberships = $this->{'@id'}."/brands";
-		$this->userAccounts = $this->{'@id'}."/accounts";
+		$this->links = new stdClass();
+		$this->links->userMemberships = $this->{'@id'}."/brands";
+		$this->links->userAccounts = $this->{'@id'}."/accounts";
+		$this->links->adminOf = $this->getAdminLinks();
 		$this->setForms();	
 		
 		include_once "models/userBrands.php";		
@@ -41,10 +42,18 @@ class User extends Base {
 		$obj = json_decode('{"user_id":' . $this->user_id .'}');	
 		
 		return array_merge(
-			array($this),
-			(new UserBrands($obj))->get(),
-			(new UserAccounts($obj))->get()
+			array($this)
+			, (new UserBrands($obj))->get()
+			, (new UserAccounts($obj))->get()
 		);
+	}
+	
+	function getAdminLinks() {
+		$sql = "SELECT CONCAT('/brand/',brand_id) AS link FROM members WHERE user_id IN (?)";
+		$rows = DBquery::get($sql, array($this->user_id));
+		$vals = array();		
+		foreach($rows AS $r) $vals[] = $r['link'];	
+		return $vals;
 	}
 }
 

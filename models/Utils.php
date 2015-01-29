@@ -52,8 +52,7 @@ class Router {
 			else if (strpos($key, 'user')===false) unset($map[$key]);
 			else $val = str_replace("{user_id}", Requester::$user_id, $val);
 		}
-		
-		$map['_brand'] = Requester::adminLinks();		
+	
 		return array("@context"=> "--test--", "@graph"=> array($map));
 	}
 }

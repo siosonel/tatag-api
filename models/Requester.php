@@ -95,12 +95,4 @@ class Requester {
 		$row = DBquery::get($sql, array($brand_id, self::$user_id));
 		if ($row) return 1; 
 	}
-	
-	static function adminLinks() {
-		$sql = "SELECT CONCAT('/brand/',brand_id) AS link FROM members WHERE user_id IN (?)";
-		$rows = DBquery::get($sql, array(self::$user_id));
-		$vals = array();		
-		foreach($rows AS $r) $vals[] = $r['link'];	
-		return $vals;
-	}
 }

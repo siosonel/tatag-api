@@ -3,21 +3,24 @@ request = require('supertest')('http://localhost/tatag');
 Q = require('q');
 
 var help = require('helpers/helpers.js');
+
 var api = require('helpers/ld-flat.js').api({
 	"entrance": {"_type": "root", "value": "/"}, 
 	'userid':'21', 'pass':'pass2', 'request': request,
 	'_id':'@id', '_type': '@type' //in case these property names were aliased
 });
 
-before(help.initDB);
+
+//before(help.initDB);
+
 
 describe('Definitions', function () {
 	it('provides contextual links', function (done) {
-		api.load('root').then(help.inspect(done), done);
+		api.loadType('root').then(help.inspect(done), done);
 	})
 	
 	it('provides definitions', function (done) {
-		api.load('definitions').then(help.inspect(done), done)
+		api.loadType('definitions').then(help.inspect(done), done)
 	})
 	
 	it('provides testable resource views and actions', function (done) {
@@ -27,12 +30,13 @@ describe('Definitions', function () {
 })
 
 
-function testResource(type) { if (type!='user' && type!='userMemberships')	return;	
-	var formIDs;
+function testResource(type) { 
+	if (type.search('#') == 0) return;	
+	var formIDs, currResource;
 	
 	describe(type+' resource', function () {
 		it('should provide '+ type +' resource', function (done) {
-			api.load(type).then(help.inspect(done), done)
+			api.loadType(type).then(help.inspect(done), done)
 		})
 		
 		it('should match '+type+" definitions", function (done) {
@@ -42,9 +46,10 @@ function testResource(type) { if (type!='user' && type!='userMemberships')	retur
 		})
 
 		it('should provide '+type+' actions', function (done) {
-			api.load(type).then(function (resource) {
+			api.loadType(type).then(function (resource) {
 				var mssg='';
-				if (!resource.actions) mssg = 'No '+resource['@type']+' actions.'
+				currResource = resource;
+				if (!resource.actions) mssg = 'No '+resource['@type']+' actions.';
 				formIDs = resource.actions;
 				done(mssg ? new Error(mssg) : null);
 			})
@@ -63,6 +68,11 @@ function testResource(type) { if (type!='user' && type!='userMemberships')	retur
 			
 				help.wait.orNot();
 			}
+		})
+		
+		it('may have dereferenceable links', function (done) {
+			if (!currResource.links) done();
+			else api.deref(currResource.links).then(help.inspect(done), done)
 		})
 	})
 }

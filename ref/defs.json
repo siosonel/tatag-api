@@ -1,25 +1,26 @@
 {	
 	"@id": "/definitions/defs.json",
+	"@type": "definitions",
 	
 	"resourceTypes": [
 		"user",
-		"userMemberships",
-		"userAccounts",
-		"userFeed",
+		"#userMemberships",
+		"#userAccounts",
+		"#userFeed",
 		
 		"brand",
 		"brandMembers",
 		"brandAccounts",
 		"brandHolders",
-		"brandFeed",
+		"#brandFeed",
 		
-		"userAbout",
-		"userWall",
-		"brandAbout",
-		"brandWall",
+		"#userAbout",
+		"#userWall",
+		"#brandAbout",
+		"#brandWall",
 		
-		"userCollection",
-		"brandCollection"		
+		"#userCollection",
+		"#brandCollection"		
 	],
 
 	"user": {		
@@ -94,7 +95,8 @@
 		"description": "One or more budget accounts held by the user.",
 		
 		"properties": {
-			
+			"required": ["@type", "@id", "user_id", "items"],
+			"allowed": ["links", "actions"]
 		},
 		
 		"actions": [{
@@ -113,7 +115,8 @@
 		"description": "A budget-issuing organization.",
 
 		"properties": {
-			
+			"required": ["@type", "@id", "brand_id", "name", "mission", "description", "created", "tally"],
+			"allowed": ["links", "actions"]
 		},
 		
 		"actions": [{
@@ -134,10 +137,8 @@
 		"description": "All users that are current members of a brand.",
 
 		"properties": {
-			"":	{
-				"type": "",
-				"regex": ""
-			}
+			"required": ["@type", "@id", "brand_id", "items"],
+			"allowed": ["links", "actions"]
 		},
 		
 		"actions": [{
@@ -156,10 +157,8 @@
 		"description": "The accounts administered by a brand.",
 
 		"properties": {
-			"":	{
-				"type": "",
-				"regex": ""
-			}
+			"required": ["@type", "@id", "brand_id", "items"],
+			"allowed": ["links", "actions"]
 		},
 		
 		"actions": [{
@@ -178,13 +177,20 @@
 		"description": "Those users who are currently assigned an account administered by a brand.",
 
 		"properties": {
-			"":	{
-				"type": "",
-				"regex": ""
-			}
+			"required": ["@type", "@id", "brand_id", "items"],
+			"allowed": ["links", "actions"]
 		},
 		
-		"actions": []
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#holder-edit",
+			"method": "POST",
+			"inputs": [{
+				"name": {"required": false},
+				"authcode": {"required": false}
+			}]
+		}]
 	},
 	
 	"brandAbout": {
