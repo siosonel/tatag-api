@@ -1,7 +1,7 @@
 {
 		"@id": "/",
 		"@type": "root",
-		"definitions": "/definitions/defs.json",
+		"definitions": "/ref/defs.json",
 		
 		"user": "/user/{user_id}",
 		"userMemberships": "/user/{user_id}/brands",

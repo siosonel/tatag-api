@@ -26,7 +26,7 @@ class Requester {
 		include_once "config.php";
 		DBquery::init($dbs, array("tatagtest"));
 		
-		self::$defs = json_decode(file_get_contents("definitions/defs.json")); //print_r(self::$defs); exit();
+		self::$defs = json_decode(file_get_contents("ref/defs.json")); //print_r(self::$defs); exit();
 		
 		if (!isset($_SERVER['PHP_AUTH_USER'])) Error::http(401, "The header must include basic auth information.");
 		 

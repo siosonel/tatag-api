@@ -1,10 +1,9 @@
 assert = require('assert');
 request = require('supertest')('http://localhost/tatag');
 Q = require('q');
-var help = require('helpers/helpers.js');
 
-var ldgraph = require('helpers/ld-flat.js');
-var api = ldgraph.api({
+var help = require('helpers/helpers.js');
+var api = require('helpers/ld-flat.js').api({
 	"entrance": {"_type": "root", "value": "/"}, 
 	'userid':'21', 'pass':'pass2', 'request': request,
 	'_id':'@id', '_type': '@type' //in case these property names were aliased
@@ -20,32 +19,38 @@ describe('Definitions', function () {
 	it('provides definitions', function (done) {
 		api.load('definitions').then(help.inspect(done), done)
 	})
+	
+	it('provides testable resource views and actions', function (done) {
+		api.byType.definitions.resourceTypes.map(testResource);
+		done();
+	})
 })
 
-describe('User Resources', function () {
-	var formIDs, userID;
+
+function testResource(type) { if (type!='user' && type!='userMemberships')	return;	
+	var formIDs;
 	
-	describe('user', function () {
-		it('should provide user resource', function (done) {
-			api.load('user').then(help.inspect(done), done)
+	describe(type+' resource', function () {
+		it('should provide '+ type +' resource', function (done) {
+			api.load(type).then(help.inspect(done), done)
 		})
 		
-		it('should give detailed self-info to a logged-in user', function (done) {
-			var defs = api.byType.definitions;
-			assert.equal(undefined, help.compareKeys(api.curr.user, defs.user.required, defs.user.allowed))
+		it('should match '+type+" definitions", function (done) {
+			var defs = api.byType.definitions, props=defs[type].properties;
+			assert.equal(undefined, help.compareKeys(api.curr[type], props.required, props.allowed))
 			done()
 		})
 
-		it('should provide user actions', function (done) {
-			api.load('user').then(function (user) {
-				if (!user.actions) console.log('No user actions.')
-				formIDs = user.actions;
-				userID = user['@id'];
-				done();
+		it('should provide '+type+' actions', function (done) {
+			api.load(type).then(function (resource) {
+				var mssg='';
+				if (!resource.actions) mssg = 'No '+resource['@type']+' actions.'
+				formIDs = resource.actions;
+				done(mssg ? new Error(mssg) : null);
 			})
 		})
 		
-		it('should follow action examples', function (done) {			
+		it('should follow documented action examples', function (done) {			
 			if (!formIDs || !formIDs.length) done();
 			else {
 				// this helper maintains the action context within each api request, simpler than Q.all approach?
@@ -60,7 +65,7 @@ describe('User Resources', function () {
 			}
 		})
 	})
-	
+}
 	
 	/*		
 		
@@ -147,7 +152,7 @@ describe('User Resources', function () {
 				.end(help.inspect(done));
 		});
 	})*/
-})
+
 /*
 describe('brand', function () {		
 	describe('/brandcollection', function () {

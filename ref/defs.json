@@ -1,70 +1,34 @@
 {	
 	"@id": "/definitions/defs.json",
 	
-	"resourceGroups": {
-		"personal": [
-			"user",
-			"userMemberships",
-			"userAccounts",
-			"userFeed"
-		],
+	"resourceTypes": [
+		"user",
+		"userMemberships",
+		"userAccounts",
+		"userFeed",
 		
-		"admin": [
-			"brand",
-			"brandMembers",
-			"brandAccounts",
-			"brandHolders",
-			"brandFeed"
-		],
+		"brand",
+		"brandMembers",
+		"brandAccounts",
+		"brandHolders",
+		"brandFeed",
 		
-		"intro": [
-			"userAbout",
-			"userWall",
-			"brandAbout",
-			"brandWall"
-		],
+		"userAbout",
+		"userWall",
+		"brandAbout",
+		"brandWall",
 		
-		"analysis": [
-			"userCollection",
-			"brandCollection"
-		]
-	},
-
-	"tentativeLinks": {
-		"user": "/user/{user_id}",
-		"userMemberships": "/user/{user_id}/brands",
-		"userAccounts": "/user/{user_id}/accounts",
-		"userIntro": "/user/{user_id}/intro",
-		"userCollection": "/user/collection",
-		
-		"brand": "/brand/{brand_id}",
-		"brandMembers": "/brand/{brand_id}/members",
-		"brandAccounts": "/brand/{brand_id}/accounts",
-		"brandHolders": "/brand/{brand_id}/holders",		
-		"brandIntro": "/brand/{brand_id}/intro",
-		"brandCollection": "/brand/collection"		
-	},
+		"userCollection",
+		"brandCollection"		
+	],
 
 	"user": {		
-		"description": "Personal information for the authorized user.", 
+		"description": "Personal information for the authorized user.", 		
 		
 		"properties": {
-			"user_id": {
-				"type": "string"
-			},
-			
-			"name": {
-				"type": "string"
-			},
-			
-			"email": {
-				"type": "string"
-			},
-			
-			"password": {
-				"type": "string"
-			}
-		},
+			"required": ["@type", "@id", "user_id", "name", "email"],
+			"allowed": ["links", "actions", "userMemberships", "userAccounts"]
+		},	
 		
 		"actions": [{
 			"title": "Edit",
@@ -78,49 +42,36 @@
 			},
 			
 			"examples": [{
-				"heading": "Should allow edits to username",
+				"label": "should allow edits to username",
 				"target": "/user/21",
 				"method": "POST",
 				"inputs": {
 					"name": "esi-po---p"
 				},
-				"response_status": 200
+				"status": 200
 			},{
-				"heading": "Should not allow edits to registered date",
+				"label": "should not allow edits to registered date",
 				"target": "/user/21",
 				"method": "POST",
 				"inputs": {
 					"created": "esi-pop"
 				},
-				"response_status": 403
+				"status": 403
 			}]
 		},{
 			"title": "Deactivate",
 			"@type": "form",
 			"@id": "/forms#user-deactivate",
 			"method": "DELETE"
-		}],
-		
-		"required": ["@type", "@id", "user_id", "name", "email", "userMemberships", "userAccounts"],
-		"allowed": ["links", "actions"]
+		}]
 	},
 
 	"userMemberships": {
 		"description": "A user's list of memberships in brands, encoded as an array of brand member properties.",
-
+		
 		"properties": {
-			"user_id": {
-				
-			},
-			
-			"role": {
-				"type": "string",
-				"selection": ["admin", "regular"]
-			},
-			
-			"hours": {
-				"type": "number"
-			}
+			"required": ["@type", "@id", "user_id", "items"],
+			"allowed": ["links", "actions"]
 		},
 		
 		"actions": [{

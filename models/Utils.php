@@ -45,7 +45,7 @@ class Router {
 	}
 	
 	public static function getLinks() {
-		$map = json_decode(file_get_contents("definitions/tentativeLinks.json"),true);
+		$map = json_decode(file_get_contents("ref/tentativeLinks.json"),true);
 		
 		foreach($map AS $key=>&$val) {
 			if ($key=='definitions' || $key=='@type' || $key=='@id') {}

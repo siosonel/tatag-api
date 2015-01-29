@@ -1,0 +1,29 @@
+{
+	"user_id": {
+		"type": "string"
+	},
+	
+	"username": {
+		"type": "string"
+	},
+	
+	"email": {
+		"type": "string"
+	},
+	
+	"password": {
+		"type": "string"
+	},
+	
+	
+	"role": {
+		"type": "string",
+		"selection": ["admin", "regular"]
+	},
+	
+	"hours": {
+		"type": "number"
+	},
+	
+	
+},
