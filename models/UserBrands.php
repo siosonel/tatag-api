@@ -10,24 +10,32 @@ class UserBrands extends Base {
 		if (!Requester::isUser($this->user_id)) Error::http(401, "The requester must be logged in as the requested user.");
 		
 		$this->{"@id"} = "/user/$this->user_id/brands";
-		
+		$this->table = "members";
 		$this->cols = 'user_id,email,name,password,created,ended';
 		$this->idkey = 'user_id';
 		$this->init($data);
 		
-		$this->okToSet = array("ended","email","name","password");
-		$this->okToFilterBy =  array("user_id","email");	
+		$this->okToSet = array("hours");
+		$this->okToFilterBy =  array("member_id");	
 	}
 	
 	function add($data='') {
 		Error::http(403);
 	}
 	
-	function set() {		
-		$this->table = "members";
-		$markers = array_pad(array(), count($this->member_ids), "?");
-		$this->update("WHERE members_id IN ($markers)", $this->member_ids);
-		return $this->obj;
+	function set() {
+		$this->setFilters($_GET);
+		$sql = "SELECT user_id, member_id FROM members WHERE $this->filterCond";
+		$rows = DBquery::get($sql, $this->filterValArr);
+		
+		foreach($rows AS $r) {
+			if ($r['user_id'] != $this->user_id) 
+				Error::http(403, "The requester cannot set another member's information. 
+				Please check that requester (#$this->user_id) is filtering by his or her own member_id (#". $r['member_id'] .").");
+		}
+	
+		$this->update();
+		return array($this->obj);
 	}
 	
 	function get() {

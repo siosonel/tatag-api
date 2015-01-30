@@ -13,6 +13,8 @@ class Router {
 		$_url = trim($_GET['_url'], " \/\\\t\n\r\0\x0B");
 		if (!$_url) exit(json_encode(self::getLinks(), JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 		list(self::$resource, self::$id, self::$subresource) = explode("/", $_url);
+		unset($_GET['_url']);
+		
 		
 		if (self::$subresource=='collection' AND self::$id) Error::http(404, "A generic 'collection' subresource for ". self::$resource ." #". self::$id ." does not exist.");		
 		if (!self::$subresource AND !is_numeric(self::$id)) self::$subresource = self::$id;
@@ -178,7 +180,7 @@ class DBquery {
 			
 			if (!$result) {
 				$info = $statement->errorInfo();
-				Error::http(500, $info[2]);
+				Error::http(500, json_encode($info[2]));
 			}
 			
 			self::$statement = $statement;

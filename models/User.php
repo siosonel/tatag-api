@@ -25,8 +25,8 @@ class User extends Base {
 		Error::http(403);
 	}
 	
-	function set() {		
-		$this->update("WHERE user_id=?", array(Requester::$user_id));
+	function set() {	
+		$this->update(array("user_id" => $this->user_id));
 		return array($this);
 	}
 	

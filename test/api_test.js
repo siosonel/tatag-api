@@ -5,9 +5,8 @@ Q = require('q');
 var help = require('helpers/helpers.js');
 
 var api = require('helpers/ld-flat.js').api({
-	"entrance": {"_type": "root", "value": "/"}, 
-	'userid':'21', 'pass':'pass2', 'request': request,
-	'_id':'@id', '_type': '@type' //in case these property names were aliased
+	'userid': '21', 
+	'pass': 'pass2' 
 });
 
 
@@ -15,8 +14,10 @@ var api = require('helpers/ld-flat.js').api({
 
 
 describe('Definitions', function () {
-	it('provides contextual links', function (done) {
-		api.loadType('root').then(help.inspect(done), done);
+	it('provides contextual links at API root', function (done) {
+		// for hypermedia clients, the root path should be the only known path out-of-band, 
+		// all other resource locations are provided by API
+		api.init('/').then(help.inspect(done), done);
 	})
 	
 	it('provides definitions', function (done) {
@@ -30,8 +31,10 @@ describe('Definitions', function () {
 })
 
 
-function testResource(type) { 
-	if (type.search('#') == 0) return;	
+function testResource(type) {
+	var skip =[]; skip = ['brand', 'brandMembers', 'brandAccounts', 'brandHolders'];
+	if (type.search('#') == 0 || skip.indexOf(type)!=-1) return;	
+	
 	var formIDs, currResource;
 	
 	describe(type+' resource', function () {
@@ -41,7 +44,7 @@ function testResource(type) {
 		
 		it('should match '+type+" definitions", function (done) {
 			var defs = api.byType.definitions, props=defs[type].properties;
-			assert.equal(undefined, help.compareKeys(api.curr[type], props.required, props.allowed))
+			assert.equal(undefined, help.compareKeys(api.curr[type], props.required, props.optional))
 			done()
 		})
 
@@ -55,15 +58,16 @@ function testResource(type) {
 			})
 		})
 		
-		it('should follow documented action examples', function (done) {			
-			if (!formIDs || !formIDs.length) done();
+		it('should follow documented action examples', function (done) {
+			var skip = []; skip = ['user', 'userMemberships'];
+			if (!formIDs || !formIDs.length || skip.indexOf(currResource['@type'])!=-1) done();
 			else {
 				// this helper maintains the action context within each api request, simpler than Q.all approach?
 				help.wait.reset(api, done);
 				
 				formIDs.map(function (id) {
-					var form = api.byId[id];				
-					if (form && form.examples) form.examples.map(help.wait)
+					var form = api.byId[id];
+					if (form && form.examples) form.examples.map(help.wait); else console.log(form);
 				});
 			
 				help.wait.orNot();
@@ -79,35 +83,7 @@ function testResource(type) {
 	
 	/*		
 		
-		/*it('should allow a user to change his email', function (done) {
-			request.post('/user/21')
-				.auth('21','pass2')
-				.send({
-					email: "edited-email-"+Date.now()+"@email.org"
-				})
-				.expect(200)
-				.end(help.inspect(done));
-		});*/
-
-	/*describe('userIntro', function () {
-		it('should give general info about a user to a non-logged in user', function (done) {
-			request.get('/user/21/intro')
-				.expect(function (res) {
-					if (!res || !res.body) return;
-					var info = res.body.graph;
-				
-				if (
-						!info 
-						|| !Array.isArray(info.graph)
-						|| typeof info.numMemberships!='number' 
-						|| typeof info.totalHours!='number'
-						|| Array.isArray(info.memberships)
-					) return JSON.stringify(info);
-				})
-				.expect(200)
-				.end(help.inspect(done));
-		});
-	})
+	
 
 	describe.only('/user/collection', function () {	
 		it('should register a user', function (done) {

@@ -22,9 +22,18 @@ class UserAccounts extends Base {
 	
 	function set() {
 		$this->table = "holders";
-		$markers = array_pad(array(), count($this->holder_ids), "?");
-		$this->update("WHERE holder_id IN ($markers)", $this->holder_ids);
-		return $this->obj;
+		$this->setFilters($_GET);
+		$sql = "SELECT user_id, holder_id FROM $this->table WHERE $this->filterCond";
+		$rows = DBquery::get($sql, $this->filterValArr);
+		
+		foreach($rows AS $r) {
+			if ($r['user_id'] != $this->user_id) 
+				Error::http(403, "The requester cannot set another holder's information. 
+				Please check that requester (#$this->user_id) is filtering by his or her own holder_id (#". $r['holder_id'] .").");
+		}
+		
+		$this->update();
+		return array($this->obj);
 	}
 	
 	function get() {

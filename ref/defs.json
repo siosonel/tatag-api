@@ -4,8 +4,8 @@
 	
 	"resourceTypes": [
 		"user",
-		"#userMemberships",
-		"#userAccounts",
+		"userMemberships",
+		"userAccounts",
 		"#userFeed",
 		
 		"brand",
@@ -28,7 +28,7 @@
 		
 		"properties": {
 			"required": ["@type", "@id", "user_id", "name", "email"],
-			"allowed": ["links", "actions", "userMemberships", "userAccounts"]
+			"optional": ["links", "actions", "userMemberships", "userAccounts"]
 		},	
 		
 		"actions": [{
@@ -38,7 +38,7 @@
 			"method": "POST",
 			
 			"inputs": {
-				"allowed": ["name","email"],
+				"optional": ["name","email"],
 				"required": []
 			},
 			
@@ -47,7 +47,7 @@
 				"target": "/user/21",
 				"method": "POST",
 				"inputs": {
-					"name": "esi-po---p"
+					"name": "esoi-{xtime}"
 				},
 				"status": 200
 			},{
@@ -55,7 +55,7 @@
 				"target": "/user/21",
 				"method": "POST",
 				"inputs": {
-					"created": "esi-pop"
+					"created": "2015-01-01"
 				},
 				"status": 403
 			}]
@@ -72,7 +72,7 @@
 		
 		"properties": {
 			"required": ["@type", "@id", "user_id", "items"],
-			"allowed": ["links", "actions"]
+			"optional": ["links", "actions"]
 		},
 		
 		"actions": [{
@@ -80,13 +80,39 @@
 			"@type": "form",
 			"@id": "/forms#member-edit",
 			"method": "POST",
+			
 			"query": {
 				"required": ["member_id"],
-				"allowed": []				
+				"optional": []				
 			},
-			"inputs": [{
+			
+			"inputs": {
 				"required": ["hours"],
-				"allowed": []				
+				"optional": []	
+			},
+			
+			"examples": [{
+				"label": "should allow a member to edit his or her hours",
+				"target": "/user/21/brands",
+				"method": "POST",				
+				"query": {
+					"member_id": 53
+				},				
+				"inputs": {
+					"hours": "{random}"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow non-admin edits of another member's hours",
+				"target": "/user/21/brands",
+				"method": "POST",				
+				"query": {
+					"member_id": 54
+				},				
+				"inputs": {
+					"hours": "{random}"
+				},
+				"status": 403
 			}]
 		}]
 	},
@@ -96,7 +122,7 @@
 		
 		"properties": {
 			"required": ["@type", "@id", "user_id", "items"],
-			"allowed": ["links", "actions"]
+			"optional": ["links", "actions"]
 		},
 		
 		"actions": [{
@@ -104,9 +130,35 @@
 			"@type": "form",
 			"@id": "/forms#holder-edit",
 			"method": "POST",
-			"query": ["member_id"],
+			
+			"query": ["holder_id"],
+			
 			"inputs": [{
 				"alias": {"required": true}
+			}],
+			
+			"examples": [{
+				"label": "should allow a holder to edit the accountholding's alias",
+				"target": "/user/21/accounts",
+				"method": "POST",				
+				"query": {
+					"holder_id": 41
+				},				
+				"inputs": {
+					"alias": "nickname-{xtime}"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-holder to edit an account's alias",
+				"target": "/user/21/accounts",
+				"method": "POST",				
+				"query": {
+					"holder_id": 44
+				},				
+				"inputs": {
+					"alias": "nickname-{xtime}"
+				},
+				"status": 403
 			}]
 		}]
 	},
@@ -116,7 +168,7 @@
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "name", "mission", "description", "created", "tally"],
-			"allowed": ["links", "actions"]
+			"optional": ["links", "actions"]
 		},
 		
 		"actions": [{
@@ -125,10 +177,8 @@
 			"@id": "/forms#brand-edit",
 			"method": "POST",
 			"inputs": [{
-				"name": {"required": false},
-				"url": {"required": false},
-				"mission": {"required": false},
-				"description": {"required": false}
+				"required": [],
+				"optional": ["name", "url", "mission", "description"]
 			}]
 		}]
 	},
@@ -138,17 +188,17 @@
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
-			"allowed": ["links", "actions"]
+			"optional": ["links", "actions"]
 		},
 		
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#member-edit",
+			"@id": "/forms#admin-member-edit",
 			"method": "POST",
 			"inputs": [{
-				"role": {"required": false},
-				"hours": {"required": false}
+				"required": [],
+				"optional": ["role", "hours"]
 			}]
 		}]
 	},
@@ -158,13 +208,13 @@
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
-			"allowed": ["links", "actions"]
+			"optional": ["links", "actions"]
 		},
 		
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#account-edit",
+			"@id": "/forms#admin-account-edit",
 			"method": "POST",
 			"inputs": [{
 				"name": {"required": false},
@@ -178,19 +228,10 @@
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
-			"allowed": ["links", "actions"]
+			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/forms#holder-edit",
-			"method": "POST",
-			"inputs": [{
-				"name": {"required": false},
-				"authcode": {"required": false}
-			}]
-		}]
+		"actions": []
 	},
 	
 	"brandAbout": {

@@ -13,7 +13,7 @@ class Base {
 	protected $okToGet=array();
 	protected $okToFilterBy=array(); //parameters that may be used to filter the affected or returned rows
 	protected $idkey;
-	protected $filterVal;
+	protected $filters;
 	
 	protected $keyArr = array();
 	protected $valArr = array();
@@ -30,6 +30,7 @@ class Base {
 		$this->obj = $data;
 		
 		foreach($data AS $prop=>$val) $this->addKeyVal($prop, $val);		
+		$this->filters = $_GET;
 	}
 	
 	//generalize the handling of collection or instance identifier from a particular URL structure
@@ -80,42 +81,41 @@ class Base {
 		return $id;
 	}
 	
-	function update($filter="", $vars=array()) { 
-		if (!$filter) Error::http(500, "A filter key=value is required when updating $this->table.");
+	function update($arr=array()) { 		
+		if ($arr) $this->setFilters($arr);
+		if (!$this->filterCond OR !$this->filterValArr) Error::http(403, "A filter key=value is required when updating $this->table information.");
 		if ($bannedSet = array_diff($this->keyArr,$this->okToSet)) Error::http(403, "These parameters may not be set by the user: ". json_encode($bannedSet) .".");	
-		//if (!in_array($this->idkey,$this->okToFilterBy)) Error::halt("Invalid filter key: '$this->idkey'.");
 		
 		$keyValStr = implode(",", $this->keyMarkerArr);
-		$valArr = array_merge($this->valArr, $vars);
+		$valArr = array_merge($this->valArr, $this->filterValArr);
 		
 		//$sql = "UPDATE $this->table SET ($this->keyStr) VALUES ($this->valStr) WHERE $this->idkey IN ($this->filterVals)";
-		$sql = "UPDATE $this->table SET $keyValStr $filter";
+		$sql = "UPDATE $this->table SET $keyValStr WHERE $this->filterCond"; //exit(json_encode($sql .'... '. json_encode($valArr)));
 		$rowCount = DBquery::set($sql, $valArr);
 		if (!$rowCount) Error::http(500, "Affected rows=0.");	
 	}
 	
-	function getViewable($idKey="", $idVals=array(), $relkey='') {
-		if (!$idKey OR !$idVals) return array(); 
+	function setFilters($arr) {
+		$filterKeys = array_keys($arr);
+		$valArr = array();
+		$notOk = array_diff($filterKeys, $this->okToFilterBy);		
+		if ($notOk) Error::http(403, "Invalid filter keys: ". json_encode($notOk) .".");
 		
-		foreach($idVals AS $v) {
-			if (!is_numeric($v) OR !is_int(1*$v)) Error::http(500, "Queried IDs must be integers.");
+		foreach($arr AS $key=>$val) {
+			$filterVals = explode(",", $val);
+			$markers = implode(',', array_pad(array(), count($filterVals), "?"));
+			$cond[] = "$key IN ($markers)";
+			$valArr = array_merge($valArr, $filterVals);
 		}
 		
-		$idVals = implode(",", $idVals);
-		$cols = implode(",", $this->okToGet);
+		$this->filterCond = implode(' AND ', $cond);
+		$this->filterValArr = $valArr;
+	}
 	
-		$sql = "SELECT $cols FROM $this->table WHERE $idKey IN ($idVals)"; //echo "\n$sql\n";
-		$rows =  DBquery::get($sql);
-		
-		$rekeyed = array();
-		$relVals = array();
-		
-		foreach($rows AS &$r) {
-			$rekeyed["/$this->table/". $r[$this->idkey]] = $r;
-			if ($relkey AND is_numeric($r[$relkey])) $relVals[] = 1*$r[$relkey];
-		}
-		
-		return array($rekeyed, $relVals);
+	function getViewable($arr=array()) {	
+		$cols = implode(",", $this->okToGet);
+		$sql = "SELECT $cols FROM $this->table WHERE $this->filterCond"; 
+		return DBquery::get($sql, $this->$filterValArr);
 	}
 	
 	function setForms() { 
@@ -124,6 +124,7 @@ class Base {
 		if (!isset($this->actions)) $this->actions = array();
 		
 		foreach($actions AS $form) {
+			//unset($form->examples);
 			$link = $form->{'@id'};
 			if (!in_array($link, $this->actions)) $this->actions[] = $link;
 			
