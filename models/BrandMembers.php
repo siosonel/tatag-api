@@ -14,7 +14,7 @@ class BrandMembers extends Base {
 		$this->init($data); 
 		$this->okToAdd = array('brand_id','user_id','role','hours');
 		$this->okToSet = array("role", 'hours','ended');		 
-		$this->okToFilterBy = array("brand_id","member_id");
+		$this->okToFilterBy = array("member_id", "user_id");
 	}
 	
 	function add() {		
@@ -33,8 +33,8 @@ class BrandMembers extends Base {
 				Error::http(403, 'To prevent a brand from not having an admin, an admin cannot deactivate his own membership.');
 		}
 		
-		$this->update("WHERE member_id=?", array($this->member_id));
-		return $this;
+		$this->update($_GET);
+		return array($this);
 	}
 	
 	function get() {		
@@ -58,6 +58,17 @@ class BrandMembers extends Base {
 		$sql = "SELECT member_id FROM members WHERE user_id=$user_id AND brand_id=$brand_id AND ended IS NULL";
 		$row = DBquery::get($sql);
 		return $row[0]['member_id'];
+	}
+	
+	function setDetails() {		
+		$sql = "SELECT brand_id, user_id, role, hours, created FROM members WHERE member_id=? AND ended IS NULL";
+		$row = DBquery::get($sql, array($this->member_id));
+		
+		if ($row) { 
+			foreach($row[0] AS $key=>$val) $this->$key = $val;
+		}
+		
+		return;
 	}
 }
 

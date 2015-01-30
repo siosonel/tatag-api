@@ -15,7 +15,7 @@ class BrandHolders extends Base {
 		
 		$this->okToAdd = array("user_id", "account_id", "authcode", "limkey");	
 		$this->okToSet = array("authcode", "ended");	
-		$this->okToFilterBy = array("brand_id", "account_id", "user_id");
+		$this->okToFilterBy = array("brand_id", "account_id", "user_id", "holder_id");
 		$this->okToGet = array('holder_id', 'account_id', 'authcode');
 	}
 	
@@ -28,12 +28,9 @@ class BrandHolders extends Base {
 		return $this;
 	}
 	
-	function set() {
-		$info = $this->getInfo()[0];
-		
-		$this->update('WHERE holder_id=?', array($this->holder_id));
-		foreach($info AS $key=>$val) $this->$key = $val;
-		return $this;
+	function set() {		
+		$this->update($_GET);
+		return array($this);
 	}
 	
 	function get() {

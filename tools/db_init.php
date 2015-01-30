@@ -18,6 +18,7 @@ else if ($step=='upload') {
 	DBquery::init($dbs, array("tatagtest"));
 	DBquery::set(file_get_contents("tools/db_schema.sql"));
 	if (isset($_GET['data']) AND $data = $_GET['data']) DBquery::set(file_get_contents("tools/$data"));
+	exit('{"status":"ok"}');
 } 
 else exit("Invalid step='$step'.");
 

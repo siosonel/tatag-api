@@ -15,7 +15,6 @@ class Router {
 		list(self::$resource, self::$id, self::$subresource) = explode("/", $_url);
 		unset($_GET['_url']);
 		
-		
 		if (self::$subresource=='collection' AND self::$id) Error::http(404, "A generic 'collection' subresource for ". self::$resource ." #". self::$id ." does not exist.");		
 		if (!self::$subresource AND !is_numeric(self::$id)) self::$subresource = self::$id;
 		//if (!self::$subresource AND !self::$id) self::$subresource = 'links';

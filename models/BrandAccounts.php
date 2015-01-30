@@ -5,7 +5,6 @@ class BrandAccounts extends Base {
 		$this->brand_id = $this->getID();
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
 		
-		
 		$this->{"@type"} = 'brandAccounts';		
 		$this->{"@id"} = "/brand/$this->brand_id/accounts";
 		$this->table = "accounts";
@@ -29,8 +28,8 @@ class BrandAccounts extends Base {
 	}
 	
 	function set() {		
-		$this->update('WHERE account_id=?', array($this->account_id));
-		return $this;
+		$this->update($_GET);
+		return array($this);
 	}
 	
 	function get() {

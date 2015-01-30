@@ -13,15 +13,16 @@ class Brand extends Base {
 		
 		$this->cols = "brand_id,name,mission,description,rating_min,rating_formula,created";		
 		$this->okToSet = array("ended","mission","description");
+		$this->okToFilterBy = array("brand_id");
 	}
 	
 	function add() {
 		Error::http(403);
 	}
 	
-	function set() {
-		$this->update("WHERE brand_id=?", array($this->brand_id));
-		return $this->obj;
+	function set() {	
+		$this->update(array("brand_id"=>$this->brand_id));
+		return array($this->obj);
 	}
 	
 	function get() {

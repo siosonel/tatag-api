@@ -133,9 +133,10 @@
 			
 			"query": ["holder_id"],
 			
-			"inputs": [{
-				"alias": {"required": true}
-			}],
+			"inputs": {
+				"required": [],
+				"optional": ["alias", "limkey"]
+			},
 			
 			"examples": [{
 				"label": "should allow a holder to edit the accountholding's alias",
@@ -145,7 +146,8 @@
 					"holder_id": 41
 				},				
 				"inputs": {
-					"alias": "nickname-{xtime}"
+					"alias": "nickname-{xtime}",
+					"limkey": "xy-{random}"
 				},
 				"status": 200
 			},{
@@ -156,7 +158,8 @@
 					"holder_id": 44
 				},				
 				"inputs": {
-					"alias": "nickname-{xtime}"
+					"alias": "nickname-{xtime}",
+					"limkey": "xy-{random}"
 				},
 				"status": 403
 			}]
@@ -176,9 +179,32 @@
 			"@type": "form",
 			"@id": "/forms#brand-edit",
 			"method": "POST",
-			"inputs": [{
+			"inputs": {
 				"required": [],
 				"optional": ["name", "url", "mission", "description"]
+			},
+			
+			"examples": [{
+				"label": "should allow an admin to edit a brand's info",
+				"target": "/brand/104",
+				"method": "POST",
+				"inputs": {
+					"mission": "another mission -{xtime}",
+					"description": "another description -{xtime}"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-admin to edit a brand's alias",
+				"target": "/brand/105",
+				"method": "POST",				
+				"query": {
+					"holder_id": 44
+				},				
+				"inputs": {
+					"mission": "non-admin's brand mission -{xtime}",
+					"description": "non-admin's brand description -{xtime}"
+				},
+				"status": 403
 			}]
 		}]
 	},
@@ -196,9 +222,39 @@
 			"@type": "form",
 			"@id": "/forms#admin-member-edit",
 			"method": "POST",
+			
 			"inputs": [{
 				"required": [],
 				"optional": ["role", "hours"]
+			}],
+			
+			"examples": [{
+				"label": "should allow an admin to edit a member's info",
+				"target": "/brand/104/members",
+				"method": "POST",
+				
+				"query": {
+					"member_id": 55
+				},					
+				
+				"inputs": {
+					"role": "assistant -{xtime}",
+					"hours": "{random}"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-admin to edit a member's info",
+				"target": "/brand/105/members",
+				"method": "POST",				
+				"query": {
+					"member_id": 54
+				},					
+				
+				"inputs": {
+					"role": "assistant -{xtime}",
+					"hours": "{random}"
+				},
+				"status": 403
 			}]
 		}]
 	},
@@ -216,9 +272,39 @@
 			"@type": "form",
 			"@id": "/forms#admin-account-edit",
 			"method": "POST",
+			
 			"inputs": [{
 				"name": {"required": false},
 				"authcode": {"required": false}
+			}],
+			
+			"examples": [{
+				"label": "should allow an admin to edit an account's info",
+				"target": "/brand/104/accounts",
+				"method": "POST",
+				
+				"query": {
+					"account_id": 94
+				},					
+				
+				"inputs": {
+					"name": "personal -{xtime}",
+					"authcode": "ft -{random}"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-admin to edit an account's info",
+				"target": "/brand/105/accounts",
+				"method": "POST",				
+				"query": {
+					"account_id": 97
+				},					
+				
+				"inputs": {
+					"name": "personal -{xtime}",
+					"authcode": "{random}"
+				},
+				"status": 403
 			}]
 		}]
 	},
@@ -231,7 +317,44 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": []
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#admin-holder-edit",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["authcode"],
+				"optional": []
+			},		
+		
+			"examples": [{
+				"label": "should allow an admin to edit a holder's authcode",
+				"target": "/brand/104/holders",
+				"method": "POST",
+				
+				"query": {
+					"holder_id": 43
+				},					
+				
+				"inputs": {
+					"authcode": "{random}"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-admin to edit an account's info",
+				"target": "/brand/105/holders",
+				"method": "POST",				
+				"query": {
+					"holder_id": 44
+				},					
+				
+				"inputs": {
+					"name": "personal -{xtime}",
+					"authcode": "{random}"
+				},"status": 403
+			}]
+		}]
 	},
 	
 	"brandAbout": {

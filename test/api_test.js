@@ -10,7 +10,7 @@ var api = require('helpers/ld-flat.js').api({
 });
 
 
-//before(help.initDB);
+before(help.initDB);
 
 
 describe('Definitions', function () {
@@ -32,7 +32,7 @@ describe('Definitions', function () {
 
 
 function testResource(type) {
-	var skip =[]; skip = ['brand', 'brandMembers', 'brandAccounts', 'brandHolders'];
+	var skip =[]; skip = [];
 	if (type.search('#') == 0 || skip.indexOf(type)!=-1) return;	
 	
 	var formIDs, currResource;
@@ -59,7 +59,7 @@ function testResource(type) {
 		})
 		
 		it('should follow documented action examples', function (done) {
-			var skip = []; skip = ['user', 'userMemberships'];
+			var skip = []; //skip = ['user', 'userMemberships', 'userAccounts', 'brand', 'brandMembers', 'brandAccounts'];
 			if (!formIDs || !formIDs.length || skip.indexOf(currResource['@type'])!=-1) done();
 			else {
 				// this helper maintains the action context within each api request, simpler than Q.all approach?
@@ -67,7 +67,7 @@ function testResource(type) {
 				
 				formIDs.map(function (id) {
 					var form = api.byId[id];
-					if (form && form.examples) form.examples.map(help.wait); else console.log(form);
+					if (form && form.examples) form.examples.map(help.wait); //else console.log(form);
 				});
 			
 				help.wait.orNot();
