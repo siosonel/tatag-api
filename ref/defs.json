@@ -19,8 +19,8 @@
 		"#brandAbout",
 		"#brandWall",
 		
-		"#userCollection",
-		"#brandCollection"		
+		"userCollection",
+		"brandCollection"		
 	],
 
 	"user": {		
@@ -166,6 +166,52 @@
 		}]
 	},
 	
+	"userCollection": {
+		"description": "Default user collection resource, non-admin, non-self.",
+		
+		"properties": {
+			"required": ["@type", "@id", "numUsers", "earliest", "latest"],
+			"optional": ["links", "actions"]
+		},
+		
+		"actions": [{
+			"title": "User registration",
+			"@type": "form",
+			"@id": "/forms#user-registration",
+			"method": "POST",
+			
+			"query": ["holder_id"],
+			
+			"inputs": {
+				"required": ["email", "password", "name"],
+				"optional": []
+			},
+			
+			"examples": [{
+				"label": "should allow registration by a brand new user",
+				"target": "/user/collection",
+				"method": "POST",			
+				
+				"inputs": {
+					"email": "john-{xtime}@test.org",
+					"name": "John-{xtime}",
+					"password": "pass-2"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow user registration with missing email",
+				"target": "/user/collection",
+				"method": "POST",				
+						
+				"inputs": {
+					"name": "John-{xtime}",
+					"password": "pass-2"
+				},
+				"status": 403
+			}]
+		}]
+	},
+	
 	"brand": {
 		"description": "A budget-issuing organization.",
 
@@ -217,11 +263,17 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
+		"actions": [
+		{
 			"title": "Edit",
 			"@type": "form",
 			"@id": "/forms#admin-member-edit",
 			"method": "POST",
+			
+			"query": {
+				"required": ["member_id"],
+				"optional": []
+			},
 			
 			"inputs": [{
 				"required": [],
@@ -256,6 +308,41 @@
 				},
 				"status": 403
 			}]
+		},
+		{
+			"title": "Add a member",
+			"@type": "form",
+			"@id": "/forms#member-add",
+			"method": "POST",
+			
+			"inputs": [{
+				"required": ["user_id", "role", "hours"],
+				"optional": []
+			}],
+			
+			"examples": [{
+				"label": "should allow an admin to add a brand member",
+				"target": "/brand/104/members",
+				"method": "POST",
+				
+				"inputs": {
+					"user_id": 24,
+					"role": "dev-{xtime}",
+					"hours": "{random}"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-admin to add a member",
+				"target": "/brand/105/members",
+				"method": "POST",				
+				
+				"inputs": {
+					"user_id": 24,
+					"role": "dev-{xtime}",
+					"hours": "{random}"
+				},
+				"status": 403
+			}]
 		}]
 	},
 	
@@ -267,7 +354,8 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
+		"actions": [
+		{
 			"title": "Edit",
 			"@type": "form",
 			"@id": "/forms#admin-account-edit",
@@ -306,6 +394,41 @@
 				},
 				"status": 403
 			}]
+		},
+		{
+			"title": "Add an account",
+			"@type": "form",
+			"@id": "/forms#account-add",
+			"method": "POST",
+			
+			"inputs": [{
+				"required": ["name", "authcode", "unit", "sign"],
+				"optional": []
+			}],
+			
+			"examples": [{
+				"label": "should allow an admin to add a new account",
+				"target": "/brand/104/accounts",
+				"method": "POST",
+				
+				"inputs": {
+					"name": "test -{xtime}",
+					"authcode": "cftix",
+					"unit": "hour"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-admin to add a member",
+				"target": "/brand/105/accounts",
+				"method": "POST",				
+				
+				"inputs": {
+					"name": "test -{xtime}",
+					"authcode": "cftix",
+					"unit": "hour"
+				},
+				"status": 403
+			}]
 		}]
 	},
 	
@@ -317,7 +440,8 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
+		"actions": [
+		{
 			"title": "Edit",
 			"@type": "form",
 			"@id": "/forms#admin-holder-edit",
@@ -354,6 +478,41 @@
 					"authcode": "{random}"
 				},"status": 403
 			}]
+		},
+		{
+			"title": "Add an account holder",
+			"@type": "form",
+			"@id": "/forms#holder-add",
+			"method": "POST",
+			
+			"inputs": [{
+				"required": ["user_id", "account_id", "authcode"],
+				"optional": []
+			}],
+			
+			"examples": [{
+				"label": "should allow an admin to add a new accountholder",
+				"target": "/brand/104/holders",
+				"method": "POST",
+				
+				"inputs": {
+					"user_id": 24,
+					"account_id": 94,
+					"authcode": "cftix"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow an admin to add a new accountholder",
+				"target": "/brand/105/holders",
+				"method": "POST",
+				
+				"inputs": {
+					"user_id": 24,
+					"account_id": 96,
+					"authcode": "cftix"
+				},
+				"status": 403
+			}]
 		}]
 	},
 	
@@ -374,6 +533,51 @@
 				"regex": ""
 			}
 		}
+	},
+	
+	
+	"brandCollection": {
+		"description": "Default brand collection resource, non-admin, non-self.",
+		
+		"properties": {
+			"required": ["@type", "@id", "numBrands", "earliest", "latest"],
+			"optional": ["links", "actions"]
+		},
+		
+		"actions": [{
+			"title": "Brand registration",
+			"@type": "form",
+			"@id": "/forms#brand-registration",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["name", "mission", "description"],
+				"optional": []
+			},
+			
+			"examples": [{
+				"label": "should allow registration by a brand new user",
+				"target": "/brand/collection",
+				"method": "POST",			
+				
+				"inputs": {
+					"name": "abc-{xtime}.org",
+					"mission": "To be the first brand - {xtime}",
+					"description": "the third brand"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow user registration with missing mission",
+				"target": "/brand/collection",
+				"method": "POST",				
+							
+				"inputs": {
+					"name": "xyz-{xtime}.org",
+					"description": "the third brand"
+				},
+				"status": 403
+			}]
+		}]
 	},
 	
 	"": {

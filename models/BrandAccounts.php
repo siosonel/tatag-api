@@ -14,20 +14,23 @@ class BrandAccounts extends Base {
 		$this->init($data); 
 		
 		$this->okToGet = array("brand_id", "account_id", "name", "balance", "unit", "authcode");
-		$this->okToAdd = array('brand_id','name','authcode','unit','sign');
+		$this->okToAdd = array("brand_id", 'name','authcode','unit','sign');
 		
 		$this->okToSet = array("name","authcode");
 		$this->okToFilterBy = array("brand_id", "account_id");
 	}
 	
-	function add() {				
+	function add() {
+		$this->addKeyVal('brand_id', $this->brand_id);	
 		$this->addKeyVal('unit', 'hour', 'ifMissing');	
 		$this->addKeyVal('sign', 1, 'ifMissing');		
 		$this->account_id = $this->insert();
-		return $this;
+		return array($this);
 	}
 	
 	function set() {		
+		if (!$_GET) return $this->add();
+		
 		$this->update($_GET);
 		return array($this);
 	}

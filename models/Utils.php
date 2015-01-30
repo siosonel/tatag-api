@@ -49,9 +49,7 @@ class Router {
 		$map = json_decode(file_get_contents("ref/tentativeLinks.json"),true);
 		
 		foreach($map AS $key=>&$val) {
-			if ($key=='definitions' || $key=='@type' || $key=='@id') {}
-			else if (strpos($key, 'user')===false) unset($map[$key]);
-			else $val = str_replace("{user_id}", Requester::$user_id, $val);
+			$val = str_replace("{user_id}", Requester::$user_id, $val);
 		}
 	
 		return array("@context"=> "--test--", "@graph"=> array($map));

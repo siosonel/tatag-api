@@ -9,10 +9,5 @@
 		"userAbout": "/user/{user_id}/about",
 		"userCollection": "/user/collection",
 		
-		"brand": "/brand/{brand_id}",
-		"brandMembers": "/brand/{brand_id}/members",
-		"brandAccounts": "/brand/{brand_id}/accounts",
-		"brandHolders": "/brand/{brand_id}/holders",		
-		"brandAbout": "/brand/{brand_id}/about",
 		"brandCollection": "/brand/collection"		
 }

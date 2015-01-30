@@ -1,14 +1,16 @@
 <?php
 
-class Brands extends Base {
+class BrandCollection extends Base {
 	function __construct($data='') {
+		$this->{"@id"} = "/brand/collection";
+		$this->{'@type'} = "brandCollection";
 		$this->table = "brands";
 		$this->cols = "brand_id,name,mission,description,rating_min,rating_formula,created";
-		$this->brand_id = $this->getID();
-		$this->idkey = 'brand_id';
-		$this->okToGet = array("brand_id", "name", "mission", "description");
 		
 		$this->init($data);
+		
+		$this->okToGet = array("brand_id", "name", "mission", "description");
+		$this->okToAdd = array('name','mission','description','rating_min','rating_formula');
 	}
 	
 	function add() { 
@@ -16,7 +18,7 @@ class Brands extends Base {
 		include_once "models/Accounts.php";
 		include_once "models/Holders.php";
 		
-		$this->okToAdd = array('name','mission','description','rating_min','rating_formula');
+		$this->okToAdd = array('name','mission','description');
 		$Brand =  $this->obj;
 		$Brand->brand_id = $this->insert();		//print_r($Brand); print_r(Requester);
 				
@@ -61,71 +63,15 @@ class Brands extends Base {
 	}
 	
 	function get() { 
-		if (Requester::isBrandAdmin($this->brand_id)) return $this->getToAdmin();
-		else if (Requester::isMember($this->brand_id)) return $this->getToMember();
-		else return $this->getToAnon();
-	}
-	
-	function getToAdmin() {
-		$info = $this->getToAnon();
-		$info[0]['accounts'] = $this->getAccounts();
-		$info[0]['members'] = $this->getMembers();
-		//$info['carts'] = $this->getCarts();
-		return $info;
-	}
-	
-	function getToMember() {
-		$info = $this->getToAnon();
-		$info[0]['accounts'] = $this->getAccounts();
-		$info[0]['members'] = $this->getMembers();
-		//$info['carts'] = $this->getCarts();
-		return $info;
-	}
-	
-	
-	function getToAnon() {
-		return DBquery::get("CALL tally(?)", array($this->brand_id)); 
-	}
-	
-	
-	private function getAccounts() {
-		$sql = "SELECT accounts.account_id, name, sign*(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) AS balance
-		FROM accounts
-		LEFT JOIN (
-			SELECT from_acct, SUM(amount) AS amount 
-			FROM records 
-			JOIN accounts ON from_acct=accounts.account_id 
-			WHERE brand_id=:brand_id
-			GROUP BY from_acct
-		) f ON from_acct=account_id
-		LEFT JOIN (
-			SELECT to_acct, SUM(amount) AS amount 
-			FROM records
-			JOIN accounts ON to_acct=accounts.account_id
-			WHERE brand_id=:brand_id
-			GROUP BY to_acct
-		) t ON to_acct=account_id
-		WHERE brand_id=:brand_id
-		GROUP BY account_id";
+		$this->setForms();
 		
-		return DBquery::get($sql, array('brand_id'=>$this->brand_id));		
-	}
-	
-	private function getMembers() {
-		$sql = "SELECT members.created, member_id, users.created, users.user_id, email, role, hours
-			FROM members JOIN users ON members.user_id=users.user_id
-			WHERE brand_id=? AND members.ended IS NULL";
+		$sql = "SELECT COUNT(*) AS numBrands, MIN(created) AS earliest, MAX(created) AS latest FROM brands";
+		$row = DBquery::get($sql);		
+		if (!$row) return array($this);				
+		foreach($row[0] AS $key=>$val) $this->$key = $val;
 		
-		return DBquery::get($sql, array($this->brand_id));
+		return array($this);
 	}
-	
-	/*private function getCarts() {
-		$sql = "SELECT cart_id,
-			FROM carts JOIN users ON members.user_id=users.user_id
-			WHERE brand_id=$this->brand_id AND ended=NULL";
-		
-		return DBquery::select($sql);
-	}*/
 }
 
 ?>

@@ -12,29 +12,33 @@ class BrandMembers extends Base {
 		$this->idkey = 'member_id'; 
 		
 		$this->init($data); 
-		$this->okToAdd = array('brand_id','user_id','role','hours');
+		$this->okToAdd = array("brand_id",'user_id','role','hours');
 		$this->okToSet = array("role", 'hours','ended');		 
 		$this->okToFilterBy = array("member_id", "user_id");
 	}
 	
-	function add() {		
+	function add() {
 		if ($this->getMemberId()) Error::http(409, "User #$this->user_id is already a member of brand #$this->brand_id."); 
 		
+		$this->addKeyVal('brand_id', $this->brand_id);	
 		$Member = $this->obj;
 		$Member->member_id = $this->insert();
-		return $Member;
+		return array($Member);
 	}
 	
 	function set() {
-		if ($this->member_id) $this->setDetails();
-		
-		if ($this->user_id == Requester::$user_id) {			
-			if ($this->ended AND $this->user_id==Requester::$user_id) 
-				Error::http(403, 'To prevent a brand from not having an admin, an admin cannot deactivate his own membership.');
+		if (!$_GET) return $this->add();
+		else {
+			if ($this->member_id) $this->setDetails();
+			
+			if ($this->user_id == Requester::$user_id) {			
+				if ($this->ended AND $this->user_id==Requester::$user_id) 
+					Error::http(403, 'To prevent a brand from not having an admin, an admin cannot deactivate his own membership.');
+			}
+			
+			$this->update($_GET);
+			return array($this);
 		}
-		
-		$this->update($_GET);
-		return array($this);
 	}
 	
 	function get() {		

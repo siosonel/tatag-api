@@ -6,6 +6,7 @@ Public access to users collection
 class UserCollection extends Base {	
 	function __construct($data='') {
 		$this->{"@id"} = "/user/collection";
+		$this->{'@type'} = "userCollection";
 		$this->table = 'users';
 		$this->idkey = 'user_id';
 		$this->init($data);
@@ -20,16 +21,18 @@ class UserCollection extends Base {
 		$User = $this->obj;
 		$User->user_id = $this->insert();
 		unset($User->password); //no need to communicate this back for privacy
-		return $User;
-	}
-	
-	function set() {
-		Error::http(400);
+		return array($User);
 	}
 	
 	function get() {
+		$this->setForms();
+	
 		$sql = "SELECT COUNT(*) AS numUsers, MIN(created) AS earliest, MAX(created) AS latest FROM users";		
-		return DBquery::get($sql);
+		$row = DBquery::get($sql);		
+		if (!$row) return array($this);				
+		foreach($row[0] AS $key=>$val) $this->$key = $val;
+		
+		return array($this);
 	}
 }
 

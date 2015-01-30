@@ -67,13 +67,13 @@ class Base {
 	}
 	
 	function insert() {
-		if ($arr = array_diff($this->keyArr, $this->okToAdd)) Error::http(400, "Cannot insert values for these object properties: ". implode(",", $arr));
-		if ($arr = array_diff($this->okToAdd, $this->keyArr)) Error::http(400, "Missing object properties: ". implode(",", $arr));
+		if ($arr = array_diff($this->keyArr, $this->okToAdd)) Error::http(403, "Cannot insert values for these object properties: ". implode(",", $arr));
+		if ($arr = array_diff($this->okToAdd, $this->keyArr)) Error::http(403, "Missing object properties: ". implode(",", $arr));
 		
 		$keyStr = implode(",", $this->keyArr);
 		$valStr = implode(",", $this->paramMarker);
 		
-		$sql = "INSERT INTO $this->table ($keyStr,created) VALUES ($valStr,NOW())";
+		$sql = "INSERT INTO $this->table ($keyStr,created) VALUES ($valStr,NOW())"; 
 		$rowCount = DBquery::set($sql, $this->valArr);
 		if (!$rowCount) Error::http(500, "Error: database query to create brand failed.");
 		$id = DBquery::$conn->lastInsertId(); //echo " id=$id ";
