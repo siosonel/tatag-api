@@ -9,22 +9,17 @@ class Records extends Base {
 		$this->holder_id = $this->getID();
 		$this->idkey = 'holder_id';
 		$this->init($data);
+		
 		if ($this->from_acct == $this->to_acct) Error::http(403, "The from_acct and to_acct must have a different account id's.");
+		
+		$this->to_holder = Requester::isAccountHolder($this->toAcct);
+		if (!$this->to_holder) Error::http(401, 'Requester is not an account holder for account# $this->toAcct.'); 
+		
+		$this->okToAdd = array("from_acct", "from_user", "to_acct", "to_user", "amount", "comment", "cart_id");
 	}
 		
-	function add() {
-		$authAcct = ($this->amount < 0) ? $this->to_acct : $this->from_acct;
-	
-		if ($holder = Requester::isAccountHolder($authAcct)) {
-			array_push($this->okToAdd, "from_acct", "from_user", "to_acct", "to_user", "amount", "comment", "cart_id");
-			if ($this->amount < 0) $this->to_holder = $holder;
-			else $this->from_holder = $holder;
-		}
-		else Error::http(401, 'Requester is not an account holder.');
-		
-		if ($this->amount < 0) $this->addKeyVal('to_user', Requester::$user_id);
-		else $this->addKeyVal('from_user', Requester::$user_id);
-		
+	function add() {		
+		$this->addKeyVal('to_user', Requester::$user_id);		
 		$this->addKeyVal('comment', 'NULL', 'ifMissing');	
 		$this->addKeyVal('cart_id', 'NULL', 'ifMissing');	
 		
@@ -45,35 +40,22 @@ class Records extends Base {
 	
 	
 	function verifyOther() {
-		$otherAcct = ($this->amount < 0) ? $this->from_acct : $this->to_acct;
-		if (strpos($otherAcct,'-')) $this->setOtherByHolder($otherAcct);
-		else {
-			$holder = Requester::isAccountHolder($otherAcct);
-			if (!$holder) Error::http(401, 'The to_acct must be held by the Requester or submitted as encoded relay information.');
-			
-			$this->addKeyVal('to_user', Requester::$user_id);
-			
-			if ($this->amount < 0) $this->from_holder = $holder;
-			else $this->to_holder = $holder;
-		}
-	}
+		if (strpos($this->from_acct,'-')) {
+			list($holder_id,$limkey) = explode("-", $this->from_acct);
 	
-	function setOtherByHolder($otherAcct) {
-		list($holder_id,$limkey) = explode("-", $otherAcct);
-	
-		$sql = "SELECT user_id, account_id, limkey, authcode FROM holders WHERE holder_id=$holder_id";
-		$row = DBquery::get($sql);
-		if ($row[0]['limkey'] != $limkey) Error::http(401, 'Invalid limkey.');
-		
-		if ($this->amount < 0) {
+			$sql = "SELECT user_id, account_id, limkey, authcode FROM holders WHERE holder_id=$holder_id";
+			$row = DBquery::get($sql);
+			if ($row[0]['limkey'] != $limkey) Error::http(401, 'Invalid limkey.');
+			
 			$this->addKeyVal('from_acct', $row[0]['account_id']);
 			$this->addKeyVal('from_user', $row[0]['user_id']);
 			$this->from_holder = $row[0];
-		} 
-		else { 
-			$this->addKeyVal('to_acct', $row[0]['account_id']);
-			$this->addKeyVal('to_user', $row[0]['user_id']);
-			$this->to_holder = $row[0];
+		}
+		else {
+			$this->from_holder = Requester::isAccountHolder($this->from_acct);
+			if (!$holder) Error::http(401, 'The to_acct must be held by the Requester or submitted as encoded relay information.');
+			
+			$this->addKeyVal('from_user', Requester::$user_id);
 		}
 	}
 	
@@ -160,17 +142,8 @@ class Records extends Base {
 			$mssg = "Budgets may not be created using accounts from different brands.";
 		}
 		//only budget use is allowed between brands
-		else { 
-			//if (!$this->cart_id) $mssg = "Inter-entity budget use requires a cart_id. ";
-			//$mssg .= $this->verifyCartMatch($to['brand_id']);
-						
-			if ($this->amount>0) { 
-				if (strpos($from['authcode'],"x")===false) $mssg .= "The from-account #$this->from_acct is not authorized for external budget use. ";
-				if (strpos($this->from_holder['authcode'],"x")===false) $mssg .= "The from-acct-holder #$this->from_holder->user_id is not authorized to use budget externally using account #$this->from_acct.";
-				if (strpos($to['authcode'],"x")===false) $mssg .= "The to-account #$this->to_acct is not authorized for external budget use. ";
-				if (strpos($this->to_holder['authcode'],"x")===false) $mssg .= "The to-acct-holder #$this->to_holder->user_id is not authorized to use budget externally using account #$this->to_acct. ";
-			}	 
-			else if ($this->cart_id) $mssg .= $this->verifyPriceToAmount();
+		else if ($this->cart_id) {
+			$mssg .= $this->verifyPriceToAmount();
 		}
 		
 		return $mssg;

@@ -22,7 +22,7 @@ class Router {
 		
 		$method = strtolower($_SERVER['REQUEST_METHOD']);			
 		if ($method=='post') { //exit(json_encode(self::$resource ."---". self::$id ."---". self::$subresource));
-			if (self::$subresource=='collection') $method = 'add';
+			if (self::$subresource=='collection' OR strpos(self::$resource, 'budget')!==false) $method = 'add';
 			else $method = 'set';
 		}
 		
