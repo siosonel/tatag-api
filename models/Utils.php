@@ -52,11 +52,12 @@ class Router {
 			$val = str_replace("{user_id}", Requester::$user_id, $val);
 		}
 		
-		include_once "models/User.php";
+		/*include_once "models/User.php";
 		self::$id = Requester::$user_id;
 		$User = new User(json_decode('{"user_id":'.Requester::$user_id.'}'));
 		
-		return array("@context"=> "--test--", "@graph"=> array_merge(array($links), $User->get()));
+		return array("@context"=> "--test--", "@graph"=> array_merge(array($links), $User->get()));*/
+		return array("@context"=> "--test--", "@graph"=> array($links));
 	}
 }
 

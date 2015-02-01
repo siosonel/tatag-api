@@ -11,27 +11,29 @@ class BudgetIssued extends Base {
 		$this->brand_id = $this->getID();
 		$this->{'@id'} = "/budgets/$this->brand_id/issued";
 		$this->table = "records";
-		$this->cols = "from_acct,from_user,to_acct,to_user,amount,comment,created,cart_id";
+		$this->cols = "from_acct,from_user,to_acct,to_user,amount,note,created,cart_id";
 	
 		if (Router::$method != 'get') $this->verifier = new ForwardVerifier($data);
 		$this->init($data);
 		
-		$this->okToAdd = array("from_acct", "from_user", "to_acct", "to_user", "amount", "comment");
+		$this->okToAdd = array("from_acct", "from_user", "to_acct", "to_user", "amount", "note", "txntype");
 	}
 	
 	function get() {
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "Only admins of brand #$this->brand_id can view details of its budget issuance records.");
 	
-		$sql = "SELECT r.created, from_acct, from_user, to_acct, to_user, amount, `comment`
+		$sql = "SELECT r.created, from_acct, from_user, to_acct, to_user, amount, `note`
 		FROM records r JOIN accounts a ON (r.from_acct = a.account_id)
-		WHERE brand_id=? LIMIT 50";
+		WHERE brand_id=? AND txntype='np' 
+		ORDER BY record_id DESC LIMIT 50";
 		$this->items = DBquery::get($sql, array($this->brand_id));
 		$this->setForms();
 		return array($this);
 	}
 		
 	function add() {	
-		$this->addKeyVal('comment', 'NULL', 'ifMissing');	
+		$this->addKeyVal('note', 'NULL', 'ifMissing');	
+		$this->addKeyVal('txntype', $this->verifier->recordType, 'ifMissing');
 		
 		$this->catchError("", $this->verifyAuth());	
 		$this->record_id = $this->insert();
@@ -48,7 +50,7 @@ class BudgetIssued extends Base {
 		$mssg = $balErr . $authErr;
 		
 		if ($this->record_id AND $mssg) {
-			$sql = "UPDATE records SET status=10 WHERE entry_id=$this->record_id";
+			$sql = "UPDATE records SET status=10 WHERE record_id=$this->record_id";
 			$rowCount = DBquery::update($sql);
 			if (!$rowCount) Error::http(403, "Affected rows=0.");	
 		}

@@ -107,7 +107,7 @@ class Records extends Base {
 		$mssg = $balErr . $authErr;
 		
 		if ($this->record_id AND $mssg) {
-			$sql = "UPDATE records SET status=10 WHERE entry_id=$this->record_id";
+			$sql = "UPDATE records SET status=10 WHERE record_id=$this->record_id";
 			$rowCount = DBquery::update($sql);
 			if (!$rowCount) Error::http(403, "Affected rows=0.");	
 		}

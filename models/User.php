@@ -45,6 +45,8 @@ class User extends Base {
 		foreach($memberships AS $m) {
 			foreach($m->items AS $b) {
 				$this->links->budgetIssued[] = "/budget/".$b['brand_id']."/issued";
+				$this->links->budgetTransferred[] = "/budget/".$b['brand_id']."/transferred";
+				$this->links->budgetUsed[] = "/budget/".$b['brand_id']."/used";
 				if ($b['role']=='admin') $this->links->brand[] = '/brand/'. $b['brand_id'];
 			}
 		}

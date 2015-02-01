@@ -80,17 +80,18 @@ CREATE TABLE `members` (
 DROP TABLE IF EXISTS `records`;
 
 CREATE TABLE `records` (
-  `entry_id` int(11) NOT NULL AUTO_INCREMENT,
+  `record_id` int(11) NOT NULL AUTO_INCREMENT,
+	`txntype` varchar(5) DEFAULT NULL,
   `from_acct` int(11) DEFAULT NULL,
   `from_user` int(11) DEFAULT NULL,
   `to_acct` int(11) DEFAULT NULL,
   `to_user` int(11) DEFAULT NULL,
   `amount` decimal(9,2) DEFAULT NULL,
-  `comment` varchar(120) DEFAULT NULL,
+  `note` varchar(120) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `cart_id` int(11) DEFAULT NULL,
   `status` tinyint(3) unsigned DEFAULT '0',
-  PRIMARY KEY (`entry_id`)
+  PRIMARY KEY (`record_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
@@ -128,12 +129,12 @@ FROM accounts
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE from_acct=acctID AND entry_id > 0
+	WHERE from_acct=acctID AND record_id > 0
 ) f ON from_acct=account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE to_acct=acctID AND entry_id > 0
+	WHERE to_acct=acctID AND record_id > 0
 ) t ON to_acct=account_id
 WHERE account_id=acctID;
 
@@ -197,7 +198,7 @@ CREATE PROCEDURE `postBal`(
 	OUT mssg VARCHAR(255)
 )
 BEGIN
-	INSERT INTO records (from_acct,from_user,to_acct,to_user,amount,`comment`,cart_id,created,status)
+	INSERT INTO records (from_acct,from_user,to_acct,to_user,amount,`note`,cart_id,created,status)
 	VALUES (fromAcct, fromUser, toAcct, toUser, amt, note, cartID, NOW(), 0);
 
 	SELECT last_insert_id() into @entryID;
@@ -207,20 +208,20 @@ BEGIN
 	LEFT JOIN (
 		SELECT from_acct, SUM(amount) AS amount 
 		FROM records
-		WHERE from_acct IN (fromAcct, toAcct) AND entry_id <= @entryID
+		WHERE from_acct IN (fromAcct, toAcct) AND record_id <= @entryID
 		GROUP BY from_acct
 	) f ON from_acct=account_id
 	LEFT JOIN (
 		SELECT to_acct, SUM(amount) AS amount
 		FROM records
-		WHERE to_acct IN (fromAcct, toAcct) AND entry_id <= @entryID
+		WHERE to_acct IN (fromAcct, toAcct) AND record_id <= @entryID
 		GROUP BY to_acct
 	) t ON to_acct=account_id
 	WHERE account_id IN (fromAcct, toAcct)
 		AND balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0)) > 0;
 
 	IF @num IS NULL OR @num < 2 THEN 
-		DELETE FROM records WHERE entry_id=@entryID;
+		DELETE FROM records WHERE record_id=@entryID;
 		SET mssg="The transaction amount would cause a negative budget.";
 	ELSE 
 		SET mssg=@entryID;

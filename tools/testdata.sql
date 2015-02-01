@@ -26,15 +26,6 @@ INSERT INTO `accounts` VALUES (92,104,'Main Revenue','cftix','hour',0.00,-1,'201
 UNLOCK TABLES;
 
 --
--- Dumping data for table `advisors`
---
-
-LOCK TABLES `advisors` WRITE;
-/*!40000 ALTER TABLE `advisors` DISABLE KEYS */;
-/*!40000 ALTER TABLE `advisors` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `brands`
 --
 
@@ -44,14 +35,6 @@ INSERT INTO `brands` VALUES (104,'abc','to be the first brand','for testing',0,'
 /*!40000 ALTER TABLE `brands` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `carts`
---
-
-LOCK TABLES `carts` WRITE;
-/*!40000 ALTER TABLE `carts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `carts` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping data for table `changes`
@@ -60,15 +43,6 @@ UNLOCK TABLES;
 LOCK TABLES `changes` WRITE;
 /*!40000 ALTER TABLE `changes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `changes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `fills`
---
-
-LOCK TABLES `fills` WRITE;
-/*!40000 ALTER TABLE `fills` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fills` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -82,15 +56,6 @@ INSERT INTO `holders` VALUES (41,21,92,'cftix','2015-01-05 19:53:31',NULL,'abc',
 UNLOCK TABLES;
 
 --
--- Dumping data for table `items`
---
-
-LOCK TABLES `items` WRITE;
-/*!40000 ALTER TABLE `items` DISABLE KEYS */;
-/*!40000 ALTER TABLE `items` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `members`
 --
 
@@ -100,23 +65,6 @@ INSERT INTO `members` VALUES (53,104,21,'admin','0','2015-01-05 19:53:31',NULL),
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `orders`
---
-
-LOCK TABLES `orders` WRITE;
-/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `ratings`
---
-
-LOCK TABLES `ratings` WRITE;
-/*!40000 ALTER TABLE `ratings` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ratings` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping data for table `records`
@@ -124,7 +72,14 @@ UNLOCK TABLES;
 
 LOCK TABLES `records` WRITE;
 /*!40000 ALTER TABLE `records` DISABLE KEYS */;
-INSERT INTO `records` VALUES (30,92,21,93,21,1000.00,'first budget','2015-01-05 19:53:32',0,0),(31,93,21,94,21,35.87,'wages','2015-01-05 19:53:32',0,0),(32,94,21,92,21,2.05,'disounted employee purchase','2015-01-05 19:53:32',0,0),(33,95,22,96,22,1000.00,'first budget','2015-01-05 19:53:33',0,0),(34,96,22,92,21,9.37,'first external budget use','2015-01-05 19:53:33',0,0),(35,94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:13:00',0,0),(36,94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:29:57',0,0);
+INSERT INTO `records` VALUES 
+(30,'np',92,21,93,21,1000.00,'first budget','2015-01-05 19:53:32',0,0)
+,(31,'pp',93,21,94,21,35.87,'wages','2015-01-05 19:53:32',0,0)
+,(32,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-05 19:53:32',0,0)
+,(33,'np',95,22,96,22,1000.00,'first budget','2015-01-05 19:53:33',0,0)
+,(34,'pn',96,22,92,21,9.37,'first external budget use','2015-01-05 19:53:33',0,0)
+,(35,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:13:00',0,0)
+,(36,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:29:57',0,0);
 /*!40000 ALTER TABLE `records` ENABLE KEYS */;
 UNLOCK TABLES;
 

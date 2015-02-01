@@ -22,7 +22,9 @@
 		"userCollection",
 		"brandCollection",
 
-		"budgetIssued"
+		"budgetIssued",
+		"budgetTransferred",
+		"budgetUsed"
 	],
 
 	"user": {		
@@ -597,7 +599,7 @@
 			"method": "POST",
 			
 			"inputs": [{
-				"required": ["from", "to", "amount", "comment"],
+				"required": ["from", "to", "amount", "note"],
 				"optional": []
 			}],
 			
@@ -610,7 +612,7 @@
 					"from": "41-abc",
 					"to": "42-abc",
 					"amount": 200,
-					"comment": "test budget issuance"
+					"note": "test budget issuance"
 				},
 				"status": 200
 			},{
@@ -621,10 +623,80 @@
 				"inputs": {
 					"from": "41-abc",
 					"to": "43-abc",
-					"amount": 1000,
-					"comment": "test budget issuance"
+					"amount": 200,
+					"note": "test budget issuance"
 				},
 				"status": 403
+			}]
+		}]
+	},
+	
+	"budgetTransferred": {
+		"description": "The intermediate part of the budget lifecycle, with budgets being transferred between accounts of the same brand.",
+
+		"properties": {
+			"required": ["@type", "@id", "brand_id", "items"],
+			"optional": ["links", "actions"]
+		},
+		
+		"actions": [{
+			"title": "Assign budget",
+			"@type": "form",
+			"@id": "/forms#budget-transfer",
+			"method": "POST",
+			
+			"inputs": [{
+				"required": ["from", "to", "amount", "note"],
+				"optional": []
+			}],
+			
+			"examples": [{
+				"label": "should allow an originating accountholding with an 'f' and destination accountholding with a 't' authcode to transfer budgets.",
+				"target": "/budget/104/transferred",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "42-abc",
+					"to": "43-abc",
+					"amount": 22.00,
+					"note": "test budget transfer"
+				},
+				"status": 200
+			}]
+		}]
+	},
+	
+	"budgetUsed": {
+		"description": "The last part of the budget lifecycle, with credits getting cancelled with an equivalent amount of debits, mostly expected to be between brands.",
+
+		"properties": {
+			"required": ["@type", "@id", "brand_id", "items"],
+			"optional": ["links", "actions"]
+		},
+		
+		"actions": [{
+			"title": "Use budget",
+			"@type": "form",
+			"@id": "/forms#budget-use",
+			"method": "POST",
+			
+			"inputs": [{
+				"required": ["from", "to", "amount", "note"],
+				"optional": []
+			}],
+			
+			"examples": [{
+				"label": "should allow an accountholding with an 'x' to use budgets.",
+				"target": "/budget/104/used",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "42-abc",
+					"to": "44-abc",
+					"amount": 11.11,
+					"note": "test budget use"
+				},
+				"status": 200
 			}]
 		}]
 	}

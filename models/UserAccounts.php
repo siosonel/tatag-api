@@ -51,13 +51,13 @@ class UserAccounts extends Base {
 			LEFT JOIN (
 				SELECT from_acct, SUM(amount) AS amount 
 				FROM records
-				WHERE entry_id > 0
+				WHERE record_id > 0
 				GROUP BY from_acct
 			) f ON from_acct=a.account_id
 			LEFT JOIN (
 				SELECT to_acct, SUM(amount) AS amount 
 				FROM records
-				WHERE entry_id > 0
+				WHERE record_id > 0
 				GROUP BY to_acct
 			) t ON to_acct=a.account_id
 			GROUP BY a.account_id"; 
