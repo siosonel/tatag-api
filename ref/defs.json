@@ -20,7 +20,9 @@
 		"#brandWall",
 		
 		"userCollection",
-		"brandCollection"		
+		"brandCollection",
+
+		"budgetIssued"
 	],
 
 	"user": {		
@@ -580,20 +582,51 @@
 		}]
 	},
 	
-	"": {
-		"description": "",
-		"link": "",
+	"budgetIssued": {
+		"description": "The first part of the budget lifecycle, with the brand issuing equivalent debits and credits to its N and P-type accounts, respectively.",
 
 		"properties": {
-			"":	{
-				"type": "",
-				"regex": ""
-			}
+			"required": ["@type", "@id", "brand_id", "items"],
+			"optional": ["links", "actions"]
 		},
 		
-		"actions": {
-		
-		}
+		"actions": [{
+			"title": "Issue budget",
+			"@type": "form",
+			"@id": "/forms#budget-add",
+			"method": "POST",
+			
+			"inputs": [{
+				"required": ["from", "to", "amount", "comment"],
+				"optional": []
+			}],
+			
+			"examples": [{
+				"label": "should allow an accountholding with a 'c' authcode to issue budget",
+				"target": "/budget/104/issued",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "41-abc",
+					"to": "42-abc",
+					"amount": 200,
+					"comment": "test budget issuance"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow an accountholding without a 'c' authcode to issue budget",
+				"target": "/budget/104/issued",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "41-abc",
+					"to": "43-abc",
+					"amount": 1000,
+					"comment": "test budget issuance"
+				},
+				"status": 403
+			}]
+		}]
 	}
 }
 	

@@ -3,7 +3,7 @@
 require_once "models/Accounts.php";
 require_once "models/ForwardVerifier.php";
 
-class BudgetTransfer extends Base {
+class BudgetTransferred extends Base {
 	protected $verifier;
 
 	function __construct($data='') { 

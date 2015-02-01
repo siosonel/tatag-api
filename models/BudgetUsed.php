@@ -3,7 +3,7 @@
 require_once "models/Accounts.php";
 require_once "models/ForwardVerifier.php";
 
-class BudgetUse extends Base {
+class BudgetUsed extends Base {
 	protected $verifier;
 
 	function __construct($data='') { 
@@ -51,7 +51,7 @@ class BudgetUse extends Base {
 		if (1*$from['sign'] != 1) $mssg .= "When using budgets, the from-account must have a sign of 1 (a P-type account).";
 		if (1*$to['sign'] != -1) $mssg .= "When using budgets, the to-account must have a sign of -1 (an N-type account).";
 		
-		//external budget use
+		// external budget use
 		if ($from['brand_id'] != $to['brand_id']) {	
 			if (strpos($from['acct_auth'],"x")===false) $mssg .= "The from-account #$this->from_acct is not authorized for external budget use. ";
 			if (strpos($from['holder_auth'],"x")===false) $mssg .= "The from-acct-holder #$this->from_holder->user_id is not authorized to use budget externally using account #$this->from_acct.";

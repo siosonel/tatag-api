@@ -7,7 +7,7 @@
 		"userMemberships": "/user/{user_id}/brands",
 		"userAccounts": "/user/{user_id}/accounts",
 		"userAbout": "/user/{user_id}/about",
-		"userCollection": "/user/collection",
 		
-		"brandCollection": "/brand/collection"		
+		"userCollection": "/user/collection",		
+		"brandCollection": "/brand/collection"
 }

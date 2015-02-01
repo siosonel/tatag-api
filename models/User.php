@@ -6,7 +6,7 @@ Self access to user's information
 class User extends Base {	
 	function __construct($data='') {
 		$this->{"@type"} = 'user';
-		$this->user_id =  $this->getID();	
+		$this->user_id = $this->getID();	
 		if (!Requester::isUser($this->user_id)) Error::http(401, "The requester must be logged in as the requested user.");
 		
 		$this->{"@id"} = "/user/$this->user_id";		
@@ -30,20 +30,28 @@ class User extends Base {
 		return array($this);
 	}
 	
-	function get() {
+	function get() {		
 		$this->links = new stdClass();
 		$this->links->userMemberships = $this->{'@id'}."/brands";
 		$this->links->userAccounts = $this->{'@id'}."/accounts";
-		$this->links->adminOf = $this->getAdminLinks();
+		$this->links->brand = $this->getAdminLinks();
 		$this->setForms();	
 		
 		include_once "models/userBrands.php";		
 		include_once "models/userAccounts.php";
 		$obj = json_decode('{"user_id":' . $this->user_id .'}');	
 		
+		$memberships = (new UserBrands($obj))->get(); 
+		foreach($memberships AS $m) {
+			foreach($m->items AS $b) {
+				$this->links->budgetIssued[] = "/budget/".$b['brand_id']."/issued";
+				if ($b['role']=='admin') $this->links->brand[] = '/brand/'. $b['brand_id'];
+			}
+		}
+		
 		return array_merge(
 			array($this)
-			, (new UserBrands($obj))->get()
+			, $memberships
 			, (new UserAccounts($obj))->get()
 		);
 	}
