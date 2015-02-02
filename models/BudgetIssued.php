@@ -1,7 +1,5 @@
 ﻿<?php
-
 require_once "models/Accounts.php";
-require_once "models/ForwardVerifier.php";
 
 class BudgetIssued extends Base {
 	protected $verifier;
@@ -11,9 +9,14 @@ class BudgetIssued extends Base {
 		$this->brand_id = $this->getID();
 		$this->{'@id'} = "/budgets/$this->brand_id/issued";
 		$this->table = "records";
-		$this->cols = "from_acct,from_user,to_acct,to_user,amount,note,created,cart_id";
+		$this->cols = "from_acct,from_user,to_acct,to_user,amount,note,created,ref_id";
 	
-		if (Router::$method != 'get') $this->verifier = new ForwardVerifier($data);
+		if (Router::$method != 'get') {
+			$verClass =  $data->amount < 0 ? 'ReverseVerifier' : 'ForwardVerifier';
+			require_once "models/$verClass.php";
+			$this->verifier = new $verClass($data);
+		}
+		
 		$this->init($data);
 		
 		$this->okToAdd = array("from_acct", "from_user", "to_acct", "to_user", "amount", "note", "txntype");
@@ -33,10 +36,11 @@ class BudgetIssued extends Base {
 		
 	function add() {	
 		$this->addKeyVal('note', 'NULL', 'ifMissing');	
-		$this->addKeyVal('txntype', $this->verifier->recordType, 'ifMissing');
+		$this->addKeyVal('txntype', $this->verifier->txnType, 'ifMissing');
 		
 		$this->catchError("", $this->verifyAuth());	
 		$this->record_id = $this->insert();
+		if ($this->amount < 0) $this->reversal_id = $this->verifier->trackReversal($this->record_id);
 		
 		//no need to divulge to-endpoint information
 		foreach($this AS $key=>$val) {
@@ -73,6 +77,10 @@ class BudgetIssued extends Base {
 		
 		
 		if ($mssg) Error::http(403, $mssg);
+	}
+	
+	function verifyBals() {
+		if ($this->amount < 1 AND 1*$this->verifier->to_holder['balance'] < $this->amount) return "Account #$this->to_acct has insufficient balance. ";
 	}
 }
 

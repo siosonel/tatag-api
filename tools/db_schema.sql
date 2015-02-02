@@ -89,10 +89,27 @@ CREATE TABLE `records` (
   `amount` decimal(9,2) DEFAULT NULL,
   `note` varchar(120) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
-  `cart_id` int(11) DEFAULT NULL,
+  `ref_id` int(11) DEFAULT NULL,
   `status` tinyint(3) unsigned DEFAULT '0',
   PRIMARY KEY (`record_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+--
+-- Table structure for table `reversals`
+--
+
+DROP TABLE IF EXISTS `reversals`;
+
+CREATE TABLE `reversals` (
+  `orig_record_id` int(11) DEFAULT NULL,
+  `rev_record_id` decimal(7,2) DEFAULT '0.00',
+  `adjusted_amt` decimal(7,2) DEFAULT '0.00',
+  `note` varchar(160) DEFAULT NULL,
+	`txntype` varchar(2) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`orig_record_id`,`rev_record_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 --
@@ -198,7 +215,7 @@ CREATE PROCEDURE `postBal`(
 	OUT mssg VARCHAR(255)
 )
 BEGIN
-	INSERT INTO records (from_acct,from_user,to_acct,to_user,amount,`note`,cart_id,created,status)
+	INSERT INTO records (from_acct,from_user,to_acct,to_user,amount,`note`,ref_id,created,status)
 	VALUES (fromAcct, fromUser, toAcct, toUser, amt, note, cartID, NOW(), 0);
 
 	SELECT last_insert_id() into @entryID;

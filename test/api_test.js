@@ -32,7 +32,7 @@ describe('Definitions', function () {
 
 
 function testResource(type) {
-	var skip =[]; skip = ['userAccounts', 'userMemberships', 'userAccounts', 'brandMembers', "brandAccounts", "brandHolders",  "userCollection", "brandCollection"];
+	var skip =[]; //skip = ['userAccounts', 'userMemberships', 'userAccounts', 'brandMembers', "brandAccounts", "brandHolders",  "userCollection", "brandCollection"];
 	if (type.search('#') == 0 || skip.indexOf(type)!=-1) return;	
 	
 	var formIDs, currResource;
@@ -59,7 +59,7 @@ function testResource(type) {
 		})
 		
 		it('should follow documented action examples', function (done) {
-			var skip = []; skip = ['user', 'userAccounts', 'brand', 'brandMembers', "brandAccounts", 'brandHolders', 'userCollection',  'brancCollection'];
+			var skip = []; //skip = ['user', 'userAccounts', 'brand', 'brandMembers', "brandAccounts", 'brandHolders', 'userCollection',  'brancCollection'];
 			if (!formIDs || !formIDs.length || skip.indexOf(currResource['@type'])!=-1) done();
 			else {
 				// this helper maintains the action context within each api request, simpler than Q.all approach?

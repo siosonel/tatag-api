@@ -11,7 +11,7 @@ class ForwardVerifier {
 		$this->verifyHolder($data, 'to');				
 		if ($data->from_acct == $data->to_acct) Error::http(403, "The from_acct and to_acct must have a different account id's.");
 		
-		$this->setRecordType();
+		$this->setTxnType();
 	}
 	
 	function verifyHolder($data, $ft) {			
@@ -36,12 +36,12 @@ class ForwardVerifier {
 		if ($this->{$_holder}['holder_auth']=='*') $this->{$_holder}['holder_auth'] = $this->{$_holder}['acct_auth'];
 	}
 	
-	function setRecordType() {
+	function setTxnType() {
 		if ($this->from_holder['unit'] != $this->to_holder['unit']) Error::http(403, 'The accounts in a transaction must use the same unit.');
 		
 		$fromType = $this->from_holder['sign'] == -1 ? "n" : "p";
 		$toType = $this->to_holder['sign'] == -1 ? "n" : "p";
-		$this->recordType =  $fromType . $toType;
+		$this->txnType =  $fromType . $toType;
 	}	
 }
 

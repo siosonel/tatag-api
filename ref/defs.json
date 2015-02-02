@@ -627,9 +627,22 @@
 					"note": "test budget issuance"
 				},
 				"status": 403
+			},{
+				"label": "should allow reversal of issued budget",
+				"target": "/budget/104/issued",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "41-abc",
+					"to": "42-abc",
+					"amount": -20,
+					"note": "test issued budget reversal",
+					"orig_record_id": 30
+				},
+				"status": 200
 			}]
 		}]
-	},
+	},	
 	
 	"budgetTransferred": {
 		"description": "The intermediate part of the budget lifecycle, with budgets being transferred between accounts of the same brand.",
@@ -660,6 +673,19 @@
 					"to": "43-abc",
 					"amount": 22.00,
 					"note": "test budget transfer"
+				},
+				"status": 200
+			},{
+				"label": "should allow reversal of transferred budget",
+				"target": "/budget/104/transferred",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "42-abc",
+					"to": "43-abc",
+					"amount": -2.05,
+					"note": "test issued budget reversal",
+					"orig_record_id": 31
 				},
 				"status": 200
 			}]
@@ -695,6 +721,19 @@
 					"to": "44-abc",
 					"amount": 11.11,
 					"note": "test budget use"
+				},
+				"status": 200
+			},{
+				"label": "should allow reversal of used budget",
+				"target": "/budget/104/used",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "45-abc",
+					"to": "41-abc",
+					"amount": -1.01,
+					"note": "test issued budget reversal",
+					"orig_record_id": 34
 				},
 				"status": 200
 			}]
