@@ -8,7 +8,6 @@ class BrandAccounts extends Base {
 		$this->{"@type"} = 'brandAccounts';		
 		$this->{"@id"} = "/brand/$this->brand_id/accounts";
 		$this->table = "accounts";
-		$this->cols = "account_id,brand_id,name,authcode,unit,balance,sign,created";		
 		$this->idkey = 'account_id';
 		
 		$this->init($data); 

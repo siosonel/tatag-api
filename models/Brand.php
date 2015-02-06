@@ -10,8 +10,7 @@ class Brand extends Base {
 		$this->table = "brands";
 		
 		$this->init($data);
-		
-		$this->cols = "brand_id,name,mission,description,rating_min,rating_formula,created";		
+			
 		$this->okToSet = array("ended","mission","description");
 		$this->okToFilterBy = array("brand_id");
 	}

@@ -144,23 +144,6 @@ class Base {
 			}
 		} 
 	}
-	
-	function logChange($id='') {
-		if (in_array($this->table, array('records'))) return;
-	
-		$cols = str_replace('created','NOW()',$this->cols);
-		$idkey = $this->idkey;
-		$filterVal = $id ? $id : $this->$idkey;
-	
-		$sql = "INSERT INTO x_$this->table ($this->cols) SELECT $cols FROM $this->table WHERE $idkey IN ($filterVal)";
-		$rowCount = DBquery::insert($sql);
-		if (!$rowCount) Error::http(500, "Affected rows=0.");		
-		$this->logChange();
-	}
-	
-	function getChanges($from,$to) {
-		
-	}
 }
 
 ?>

@@ -5,9 +5,7 @@ class BrandAbout extends Base {
 		$this->brand_id = $this->getID();
 		$this->{"@type"} = 'brandHolders';	
 		
-		$this->table = "brands";
-		$this->cols = "brand_id,name,mission,description,rating_min,rating_formula,created";
-		
+		$this->table = "brands";		
 		$this->idkey = 'brand_id';
 		$this->okToGet = array("brand_id", "name", "mission", "description");
 		

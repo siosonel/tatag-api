@@ -8,7 +8,6 @@ class UserAbout extends Base {
 		$id =  $this->getID();	
 		$this->{"@id"} = "/users/$id";
 		$this->table = 'users';
-		$this->cols = 'user_id,email,name,password,created,ended';
 		$this->user_id = $id;
 		$this->idkey = 'user_id';
 		$this->init($data);

@@ -11,7 +11,6 @@ class User extends Base {
 		
 		$this->{"@id"} = "/user/$this->user_id";		
 		$this->table = 'users';
-		$this->cols = 'user_id,email,name,password,created,ended';
 		$this->idkey = 'user_id';
 		$this->init($data);
 		

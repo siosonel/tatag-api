@@ -3,7 +3,6 @@
 class Accounts extends Base {
 	function __construct($data='') {
 		$this->table = "accounts";
-		$this->cols = "account_id,brand_id,name,authcode,unit,balance,sign,created";
 		$this->account_id = $this->getID();
 		$this->idkey = 'account_id';
 		$this->okToGet = array("brand_id", "account_id", "name", "balance", "unit", "authcode");

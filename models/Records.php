@@ -5,7 +5,6 @@ require_once "models/Accounts.php";
 class Records extends Base {
 	function __construct($data='') { 
 		$this->table = "records";
-		$this->cols = "from_acct,from_user,to_acct,to_user,amount,comment,created,cart_id";
 		$this->holder_id = $this->getID();
 		$this->idkey = 'holder_id';
 		$this->init($data);

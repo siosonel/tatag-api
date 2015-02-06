@@ -7,8 +7,7 @@ class BrandHolders extends Base {
 		
 		$this->{"@type"} = 'brandHolders';			
 		$this->{"@id"} = "/brand/$this->brand_id/holders";
-		$this->table = "holders";
-		$this->cols = "holder_id,user_id,account_id,authcode,created";		
+		$this->table = "holders";	
 		$this->idkey = 'holder_id';
 		
 		$this->init($data);

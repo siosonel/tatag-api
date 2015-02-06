@@ -3,7 +3,6 @@
 class Holders extends Base {
 	function __construct($data='') { 
 		$this->table = "holders";
-		$this->cols = "holder_id,user_id,account_id,authcode,created";
 		$this->holder_id = $this->getID();
 		$this->idkey = 'holder_id';
 		$this->okToGet = array('holder_id', 'account_id', 'authcode');

@@ -5,7 +5,6 @@ class BrandCollection extends Base {
 		$this->{"@id"} = "/brand/collection";
 		$this->{'@type'} = "brandCollection";
 		$this->table = "brands";
-		$this->cols = "brand_id,name,mission,description,rating_min,rating_formula,created";
 		
 		$this->init($data);
 		

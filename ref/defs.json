@@ -596,10 +596,10 @@
 			"@id": "/forms#budget-add",
 			"method": "POST",
 			
-			"inputs": [{
+			"inputs": {
 				"required": ["from", "to", "amount", "note"],
 				"optional": []
-			}],
+			},
 			
 			"examples": [{
 				"label": "should allow an accountholding with a 'c' authcode to issue budget",
@@ -656,10 +656,10 @@
 			"@id": "/forms#budget-transfer",
 			"method": "POST",
 			
-			"inputs": [{
+			"inputs": {
 				"required": ["from", "to", "amount", "note"],
 				"optional": []
-			}],
+			},
 			
 			"examples": [{
 				"label": "should allow an originating accountholding with an 'f' and destination accountholding with a 't' authcode to transfer budgets.",
@@ -704,10 +704,10 @@
 			"@id": "/forms#budget-use",
 			"method": "POST",
 			
-			"inputs": [{
+			"inputs": {
 				"required": ["from", "to", "amount", "note"],
 				"optional": []
-			}],
+			},
 			
 			"examples": [{
 				"label": "should allow an accountholding with an 'x' to use budgets.",

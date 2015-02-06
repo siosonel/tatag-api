@@ -7,11 +7,11 @@ class BrandMembers extends Base {
 		
 		$this->{"@type"} = 'brandMembers';			
 		$this->{"@id"} = "/brand/$this->brand_id/members";
-		$this->table = "members";
-		$this->cols = "member_id,brand_id,user_id,role,hours,created";		
+		$this->table = "members";	
 		$this->idkey = 'member_id'; 
 		
 		$this->init($data); 
+		
 		$this->okToAdd = array("brand_id",'user_id','role','hours');
 		$this->okToSet = array("role", 'hours','ended');		 
 		$this->okToFilterBy = array("member_id", "user_id");

@@ -3,9 +3,8 @@
 class Members extends Base {
 	function __construct($data='') {
 		$this->table = "members";
-		$this->cols = "member_id,brand_id,user_id,role,hours,created";
 		$this->member_id = $this->getID();
-		$this->idkey = 'member_id'; //print_r($this);		
+		$this->idkey = 'member_id'; 
 		if (isset($data->ended) AND $data->ended + 300 > time()) $data->ended = date("Y-m-d H:i:s", $data->ended);
 		
 		$this->okToGet = array("brand_id", "member_id", "created AS joined", "role", "hours");		
