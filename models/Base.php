@@ -34,8 +34,15 @@ class Base {
 	}
 	
 	//generalize the handling of collection or instance identifier from a particular URL structure
-	function getID() {
-		if (!isset(Router::$id) OR !is_numeric(Router::$id)) return;
+	function getID($paramAlt="") {
+		if (!isset(Router::$id) OR !is_numeric(Router::$id)) {
+			if ($paramAlt AND isset($_GET[$paramAlt]) AND $_GET[$paramAlt]) {
+				Router::$id = $_GET[$paramAlt];
+				unset($_GET[$paramAlt]);
+			}
+			else return;
+		}
+		
 		return str_replace("-",",",Router::$id);
 	}
 	
@@ -118,17 +125,20 @@ class Base {
 		return DBquery::get($sql, $this->$filterValArr);
 	}
 	
-	function setForms() { 
-		$actions = Requester::$defs->{$this->{'@type'}}->actions;
+	function setForms($type='') { 
+		if (!$type) $type = $this->{'@type'};
+	
+		$actions = Requester::$defs->$type->actions;
 		if (!$actions) return;
 		if (!isset($this->actions)) $this->actions = array();
 		
 		foreach($actions AS $form) {
 			//unset($form->examples);
 			$link = $form->{'@id'};
-			if (!in_array($link, $this->actions)) $this->actions[] = $link;
+			if ($type==$this->{'@type'} AND !in_array($link, $this->actions)) $this->actions[] = $link;
 			
-			if (!Requester::$graphRefs[$link]) {				
+			if (!Requester::$graphRefs[$link]) {			
+				//unset($form->examples);
 				Requester::$graph[] = $form;
 				Requester::$graphRefs[$link]++;
 			}

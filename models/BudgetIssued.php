@@ -6,7 +6,7 @@ class BudgetIssued extends Base {
 
 	function __construct($data='') { 
 		$this->{"@type"} = "budgetIssued";
-		$this->brand_id = $this->getID();
+		$this->brand_id = $this->getID('brand_id');
 		$this->{'@id'} = "/budgets/$this->brand_id/issued";
 		$this->table = "records";
 		$this->cols = "from_acct,from_user,to_acct,to_user,amount,note,created,ref_id";

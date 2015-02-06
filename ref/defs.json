@@ -150,8 +150,7 @@
 					"holder_id": 41
 				},				
 				"inputs": {
-					"alias": "nickname-{xtime}",
-					"limkey": "xy-{random}"
+					"alias": "nickname-{xtime}"
 				},
 				"status": 200
 			},{
@@ -162,8 +161,7 @@
 					"holder_id": 44
 				},				
 				"inputs": {
-					"alias": "nickname-{xtime}",
-					"limkey": "xy-{random}"
+					"alias": "nickname-{xtime}"
 				},
 				"status": 403
 			}]
@@ -466,7 +464,7 @@
 				},					
 				
 				"inputs": {
-					"authcode": "{random}"
+					"authcode": "ftix -{random}"
 				},
 				"status": 200
 			},{

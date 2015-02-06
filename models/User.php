@@ -34,7 +34,6 @@ class User extends Base {
 		$this->links = new stdClass();
 		$this->links->userMemberships = $this->{'@id'}."/brands";
 		$this->links->userAccounts = $this->{'@id'}."/accounts";
-		$this->links->brand = $this->getAdminLinks();
 		$this->setForms();	
 		
 		include_once "models/userBrands.php";		
@@ -56,14 +55,6 @@ class User extends Base {
 			, $memberships
 			, (new UserAccounts($obj))->get()
 		);
-	}
-	
-	function getAdminLinks() {
-		$sql = "SELECT CONCAT('/brand/',brand_id) AS link FROM members WHERE user_id IN (?)";
-		$rows = DBquery::get($sql, array($this->user_id));
-		$vals = array();		
-		foreach($rows AS $r) $vals[] = $r['link'];	
-		return $vals;
 	}
 }
 

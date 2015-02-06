@@ -16,7 +16,10 @@ if ($step=='dump') {
 }
 else if ($step=='upload') { 
 	DBquery::init($dbs, array("tatagtest"));
-	DBquery::set(file_get_contents("tools/db_schema.sql"));
+	$schema = file_get_contents("tools/db_schema.sql");
+	if (SITE=='dev') $schema = str_replace("InnoDB", "MEMORY", $schema);
+	
+	DBquery::set($schema);
 	if (isset($_GET['data']) AND $data = $_GET['data']) DBquery::set(file_get_contents("tools/$data"));
 	exit('{"status":"ok"}');
 } 

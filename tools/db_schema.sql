@@ -31,7 +31,7 @@ CREATE TABLE `brands` (
   `brand_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `mission` varchar(255) DEFAULT NULL,
-  `description` text,
+  `description` varchar(255) DEFAULT NULL,
   `rating_min` float DEFAULT NULL,
   `rating_formula` varchar(255) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,

@@ -6,7 +6,7 @@ class BudgetTransferred extends Base {
 
 	function __construct($data='') { 
 		$this->{"@type"} = "budgetTransferred";
-		$this->brand_id = $this->getID();
+		$this->brand_id = $this->getID('brand_id');
 		$this->{'@id'} = "/budgets/$this->brand_id/transferred";
 		$this->table = "records";
 		$this->cols = "from_acct,from_user,to_acct,to_user,amount,note,created,ref_id";
@@ -71,9 +71,9 @@ class BudgetTransferred extends Base {
 		if (1*$from['sign'] != 1*$to['sign']) $mssg .= "The from- and to-accounts must have the same sign in a budget transfer (both P-type or both N-type accounts).";
 		if ($from['brand_id'] != $to['brand_id']) $mssg .= " Budgets may not be transferred using accounts from different brands.";
 		if (strpos($from['acct_auth'],"f")===false) $mssg = "The from-account #$this->from_acct is not authorized to originate budget transfers. ";
-		if (strpos($from['holder_auth'],"f")===false) $mssg .= "The from-acct-holder #$this->from_holder->user_id is not authorized to originate budget transfers using account #$this->from_acct.";
+		if (strpos($from['holder_auth'],"f")===false) $mssg .= "The from-acct-holder #".$this->from_holder->user_id ." is not authorized to originate budget transfers using account #$this->from_acct.";
 		if (strpos($to['acct_auth'],"t")===false) $mssg .= "The to-account #$this->to_acct is not authorized to receive budget transfers.";
-		if (strpos($to['holder_auth'],"t")===false) $mssg .= "The to-acct-holder #$this->to_holder->user_id is not authorized to receive budget transfers using account #$this->to_acct. ";
+		if (strpos($to['holder_auth'],"t")===false) $mssg .= "The to-acct-holder #".$this->to_holder->user_id." is not authorized to receive budget transfers using account #$this->to_acct. ";
 		
 		if ($mssg) Error::http(403, $mssg);
 	}
