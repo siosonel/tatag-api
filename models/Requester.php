@@ -83,7 +83,7 @@ class Requester {
 	}
 	
 	static function isAccountHolder($account_id) { 	
-		$sql = "SELECT holder_id, authcode FROM holders WHERE account_id IN (?) AND user_id IN (?)";
+		$sql = "SELECT holder_id, holders.authcode AS authcode, brand_id, limkey FROM holders JOIN accounts USING (account_id) WHERE account_id IN (?) AND user_id IN (?)";
 		$row = DBquery::get($sql, array($account_id, self::$user_id));
 		if ($row) self::$holder_id=$row[0]['holder_id'];
 		

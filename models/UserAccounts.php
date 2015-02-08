@@ -77,22 +77,24 @@ class UserAccounts extends Base {
 			$row['relay']['default'] = $row['holder_id']."-".$row['limkey'];
 			
 			if (strpos($auth,"c")) {
-				if ($row['sign']==1) $row['relay']['add-budget'] = $row['holder_id']."-".$row['limkey']."-c";
-				else $row['links']['add-budget'] = "/forms#budget-add";
+				if ($row['sign']==1) $row['relay']['budget-add'] = $row['holder_id']."-".$row['limkey']."-c";
+				else $row['links']['budget-add'] = "/forms#budget-add";
 			}
 
-			if (strpos($auth,"f")) $row['links']['transfer-budget'] = "/forms#budget-transfer";
-			if (strpos($auth,"t")) $row['relay']['transfer-budget'] = $row['holder_id']."-".$row['limkey']."-t";
+			if (strpos($auth,"f")) $row['links']['budget-transfer'] = "/forms#budget-transfer";
+			if (strpos($auth,"t")) $row['relay']['budget-transfer'] = $row['holder_id']."-".$row['limkey']."-t";
 			
 			if (strpos($auth,"i") OR strpos($auth,"x")) {
-				if ($row['sign']==-1) $row['relay']['use-budget'] = $row['holder_id']."-".$row['limkey']."-ix";
-				else $row['links']['use-budget'] = "/forms#budget-use";
+				if ($row['sign']==-1) $row['relay']['budget-use'] = $row['holder_id']."-".$row['limkey']."-ix";
+				else $row['links']['budget-use'] = "/forms#budget-use";
 			}
+			
+			$row['links']['accountRecords'] = "/account/". $row['account_id'] ."/records";
 		}
 		
-		$this->setForms('budgetIssued');
-		$this->setForms('budgetTransferred');
-		$this->setForms('budgetUsed');
+		//$this->setForms('budgetIssued');
+		//$this->setForms('budgetTransferred');
+		//$this->setForms('budgetUsed');
 		
 		return array($this);
 	}

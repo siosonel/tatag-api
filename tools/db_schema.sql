@@ -318,4 +318,32 @@ GROUP BY brand_id;
 
 END;
 
+CREATE PROCEDURE `tatagtest`.`accountRecords` (
+	IN acctID INT,
+	IN minRecordID INT,
+	IN maxRecordID INT
+)
+BEGIN
+
+SELECT record_id, txntype, 'to' AS direction, 
+	a.brand_id, b.name AS brand_name, amount, r.created, `status`, note 
+FROM records r 
+JOIN accounts a ON a.account_id = r.to_acct
+JOIN brands b ON a.brand_id = b.brand_id
+WHERE from_acct=acctID AND record_id > minRecordID AND record_id < maxRecordID
+
+UNION ALL 
+
+SELECT record_id, txntype, 'from' AS direction,
+	a.brand_id, b.name AS brand_name, amount, r.created, `status`, note
+FROM records r 
+JOIN accounts a ON a.account_id = r.from_acct
+JOIN brands b ON a.brand_id = b.brand_id
+WHERE to_acct=acctID AND record_id > minRecordID AND record_id < maxRecordID
+
+ORDER BY record_id DESC LIMIT 50;
+
+END;
+
+
 -- Dump completed on 2014-12-26 20:00:04

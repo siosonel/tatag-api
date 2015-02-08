@@ -165,7 +165,13 @@
 				},
 				"status": 403
 			}]
-		}]
+		}],
+		
+		"relatedActions": {
+			"budgetIssued": ["/forms#budget-add"],
+			"budgetTransferred": ["/forms#budget-transfer"],
+			"budgetUsed": ["/forms#budget-use"]
+		}
 	},
 	
 	"userCollection": {
@@ -536,8 +542,7 @@
 			}
 		}
 	},
-	
-	
+		
 	"brandCollection": {
 		"description": "Default brand collection resource, non-admin, non-self.",
 		
@@ -590,7 +595,8 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
+		"actions": [
+		{
 			"title": "Issue budget",
 			"@type": "form",
 			"@id": "/forms#budget-add",
@@ -625,7 +631,20 @@
 					"note": "test budget issuance"
 				},
 				"status": 403
-			},{
+			}]
+		},
+		{
+			"title": "Reverse issued budget",
+			"@type": "form",
+			"@id": "/forms#budget-unadd",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["from", "to", "amount", "note", "orig_record_id"],
+				"optional": []
+			},
+		
+			"examples": [{
 				"label": "should allow reversal of issued budget",
 				"target": "/budget/104/issued",
 				"method": "POST",
@@ -650,8 +669,9 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
-			"title": "Assign budget",
+		"actions": [
+		{
+			"title": "Transfer budget",
 			"@type": "form",
 			"@id": "/forms#budget-transfer",
 			"method": "POST",
@@ -673,7 +693,20 @@
 					"note": "test budget transfer"
 				},
 				"status": 200
-			},{
+			}]
+		},
+		{
+			"title": "Reverse transferred budget",
+			"@type": "form",
+			"@id": "/forms#budget-untransfer",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["from", "to", "amount", "note", "orig_record_id"],
+				"optional": []
+			},
+			
+			"examples": [{
 				"label": "should allow reversal of transferred budget",
 				"target": "/budget/104/transferred",
 				"method": "POST",
@@ -682,11 +715,11 @@
 					"from": "42-abc",
 					"to": "43-abc",
 					"amount": -2.05,
-					"note": "test issued budget reversal",
+					"note": "test transferred budget reversal",
 					"orig_record_id": 31
 				},
 				"status": 200
-			}]
+			}]			
 		}]
 	},
 	
@@ -698,7 +731,8 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
+		"actions": [
+		{
 			"title": "Use budget",
 			"@type": "form",
 			"@id": "/forms#budget-use",
@@ -721,7 +755,20 @@
 					"note": "test budget use"
 				},
 				"status": 200
-			},{
+			}]
+		},
+		{
+			"title": "Reverse used budget",
+			"@type": "form",
+			"@id": "/forms#budget-unuse",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["from", "to", "amount", "note", "orig_record_id"],
+				"optional": []
+			},
+			
+			"examples": [{
 				"label": "should allow reversal of used budget",
 				"target": "/budget/104/used",
 				"method": "POST",
@@ -730,12 +777,27 @@
 					"from": "45-abc",
 					"to": "41-abc",
 					"amount": -1.01,
-					"note": "test issued budget reversal",
+					"note": "test used budget reversal",
 					"orig_record_id": 34
 				},
 				"status": 200
 			}]
 		}]
+	},
+	
+	"accountRecords": {
+		"description": "The last part of the budget lifecycle, with credits getting cancelled with an equivalent amount of debits, mostly expected to be between brands.",
+
+		"properties": {
+			"required": ["@type", "@id", "account_id", "brand_id", "items"],
+			"optional": ["links", "actions"]
+		},
+		
+		"relatedActions": {
+			"budgetIssued": ["/forms#budget-unadd"],
+			"budgetTransferred": ["/forms#budget-untransfer"],
+			"budgetUsed": ["/forms#budget-unuse"]
+		}
 	}
 }
 	
