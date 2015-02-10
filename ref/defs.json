@@ -24,7 +24,9 @@
 
 		"budgetIssued",
 		"budgetTransferred",
-		"budgetUsed"
+		"budgetUsed",
+		
+		"accountRecords"
 	],
 
 	"user": {		
@@ -135,7 +137,10 @@
 			"@id": "/forms#holder-edit",
 			"method": "POST",
 			
-			"query": ["holder_id"],
+			"query": {
+				"required": ["holder_id"],
+				"optional": []
+			},
 			
 			"inputs": {
 				"required": [],
@@ -599,8 +604,14 @@
 		{
 			"title": "Issue budget",
 			"@type": "form",
-			"@id": "/forms#budget-add",
+			"@id": "/forms#budget-add",			
 			"method": "POST",
+			"target": "/budget/issued",
+			
+			"query": {
+				"required": ["brand_id"],
+				"optional": []				
+			},
 			
 			"inputs": {
 				"required": ["from", "to", "amount", "note"],
@@ -638,6 +649,12 @@
 			"@type": "form",
 			"@id": "/forms#budget-unadd",
 			"method": "POST",
+			"target": "/budget/issued",
+			
+			"query": {
+				"required": ["brand_id"],
+				"optional": []				
+			},
 			
 			"inputs": {
 				"required": ["from", "to", "amount", "note", "orig_record_id"],
@@ -675,6 +692,12 @@
 			"@type": "form",
 			"@id": "/forms#budget-transfer",
 			"method": "POST",
+			"target": "/budget/transferred",
+			
+			"query": {
+				"required": ["brand_id"],
+				"optional": []				
+			},
 			
 			"inputs": {
 				"required": ["from", "to", "amount", "note"],
@@ -700,6 +723,12 @@
 			"@type": "form",
 			"@id": "/forms#budget-untransfer",
 			"method": "POST",
+			"target": "/budget/transferred",
+			
+			"query": {
+				"required": ["brand_id"],
+				"optional": []				
+			},
 			
 			"inputs": {
 				"required": ["from", "to", "amount", "note", "orig_record_id"],
@@ -737,6 +766,12 @@
 			"@type": "form",
 			"@id": "/forms#budget-use",
 			"method": "POST",
+			"target": "/budget/used",
+			
+			"query": {
+				"required": ["brand_id"],
+				"optional": []				
+			},
 			
 			"inputs": {
 				"required": ["from", "to", "amount", "note"],
@@ -762,6 +797,12 @@
 			"@type": "form",
 			"@id": "/forms#budget-unuse",
 			"method": "POST",
+			"target": "/budget/used",
+			
+			"query": {
+				"required": ["brand_id"],
+				"optional": []				
+			},
 			
 			"inputs": {
 				"required": ["from", "to", "amount", "note", "orig_record_id"],
@@ -797,7 +838,111 @@
 			"budgetIssued": ["/forms#budget-unadd"],
 			"budgetTransferred": ["/forms#budget-untransfer"],
 			"budgetUsed": ["/forms#budget-unuse"]
-		}
+		},
+		
+		"actions": [
+		{
+			"title": "Hold transaction (disable auto-approval)",
+			"@type": "form",
+			"@id": "/forms#record-hold",
+			"method": "POST",
+			
+			"query": {
+				"required": ["record_id"],
+				"optional": []				
+			},
+			
+			"inputs": {
+				"required": ["status"],
+				"optional": [],
+				"valueRestrictions": {
+					"status": [5]
+				}
+			},
+			
+			"examples": [{
+				"label": "should allow putting record on hold",
+				"target": "/account/92/records",
+				"method": "POST",
+				
+				"query": {
+					"record_id": 30
+				},
+				
+				"inputs": {
+					"status": 5
+				},
+				"status": 200
+			}]
+		},
+		{
+			"title": "Manually approve transaction",
+			"@type": "form",
+			"@id": "/forms#record-approve",
+			"method": "POST",
+			
+			"query": {
+				"required": ["record_id"],
+				"optional": []				
+			},
+			
+			"inputs": {
+				"required": ["status"],
+				"optional": [],
+				"valueRestrictions": {
+					"status": [7]
+				}
+			},
+			
+			"examples": [{
+				"label": "should allow record approval",
+				"target": "/account/92/records",
+				"method": "POST",
+				
+				"query": {
+					"record_id": 30
+				},
+				
+				"inputs": {
+					"status": 7
+				},
+				"status": 200
+			}]
+		},
+		{
+			"title": "Manually reject transaction",
+			"@type": "form",
+			"@id": "/forms#record-reject",
+			"method": "POST",
+			
+			"query": {
+				"required": ["record_id"],
+				"optional": []				
+			},
+			
+			"inputs": {
+				"required": ["status"],
+				"optional": [],
+				"valueRestrictions": {
+					"status": [-10]
+				}
+			},
+			
+			"examples": [{
+				"label": "should allow record rejection",
+				"target": "/account/92/records",
+				"method": "POST",
+				
+				"query": {
+					"record_id": 30
+				},
+				
+				"inputs": {
+					"status": -10
+				},
+				"status": 200
+			}]
+		}]
 	}
 }
 	

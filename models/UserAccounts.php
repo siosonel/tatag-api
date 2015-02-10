@@ -51,13 +51,13 @@ class UserAccounts extends Base {
 			LEFT JOIN (
 				SELECT from_acct, SUM(amount) AS amount 
 				FROM records
-				WHERE record_id > 0
+				WHERE status > -1
 				GROUP BY from_acct
 			) f ON from_acct=a.account_id
 			LEFT JOIN (
 				SELECT to_acct, SUM(amount) AS amount 
 				FROM records
-				WHERE record_id > 0
+				WHERE status > -1
 				GROUP BY to_acct
 			) t ON to_acct=a.account_id
 			GROUP BY a.account_id"; 
@@ -66,6 +66,7 @@ class UserAccounts extends Base {
 		$this->setForms();
 		
 		foreach($this->items AS &$row) {	
+			$row['@type'] = 'userAccount';
 			$row['@id'] = $this->{'@id'} ."?holder_id=". $row['holder_id']; 	
 			$row["_brand"] = "/brand/".$row['brand_id'] ."/about";
 			
@@ -90,6 +91,7 @@ class UserAccounts extends Base {
 			}
 			
 			$row['links']['accountRecords'] = "/account/". $row['account_id'] ."/records";
+			$row['links']['holder-edit'] = "/forms#holder-edit";
 		}
 		
 		//$this->setForms('budgetIssued');

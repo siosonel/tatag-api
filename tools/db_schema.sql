@@ -90,7 +90,7 @@ CREATE TABLE `records` (
   `note` varchar(120) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `ref_id` int(11) DEFAULT NULL,
-  `status` tinyint(3) unsigned DEFAULT '0',
+  `status` tinyint(3) DEFAULT '0',
   PRIMARY KEY (`record_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -103,7 +103,7 @@ DROP TABLE IF EXISTS `reversals`;
 
 CREATE TABLE `reversals` (
   `orig_record_id` int(11) DEFAULT NULL,
-  `rev_record_id` decimal(7,2) DEFAULT '0.00',
+  `rev_record_id` int(11) DEFAULT 0,
   `adjusted_amt` decimal(7,2) DEFAULT '0.00',
   `note` varchar(160) DEFAULT NULL,
 	`txntype` varchar(2) DEFAULT NULL,
@@ -146,12 +146,12 @@ FROM accounts
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE from_acct=acctID AND record_id > 0
+	WHERE from_acct=acctID AND status > -1
 ) f ON from_acct=account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE to_acct=acctID AND record_id > 0
+	WHERE to_acct=acctID AND status > -1
 ) t ON to_acct=account_id
 WHERE account_id=acctID;
 
@@ -168,13 +168,13 @@ FROM accounts
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE from_acct IN (fromAcct, toAcct) 
+	WHERE from_acct IN (fromAcct, toAcct) AND status > -1
 	GROUP BY from_acct
 ) f ON from_acct=account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE to_acct IN (fromAcct, toAcct) 
+	WHERE to_acct IN (fromAcct, toAcct) AND status > -1
 	GROUP BY to_acct
 ) t ON to_acct=account_id
 WHERE account_id IN (fromAcct, toAcct);
@@ -192,11 +192,13 @@ FROM accounts a
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
+	WHERE status > -1
 	GROUP BY from_acct
 ) f ON from_acct=account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records 
+	WHERE status > -1
 	GROUP BY to_acct
 ) t ON to_acct=account_id
 JOIN holders h ON (h.account_id=a.account_id)
@@ -225,13 +227,13 @@ BEGIN
 	LEFT JOIN (
 		SELECT from_acct, SUM(amount) AS amount 
 		FROM records
-		WHERE from_acct IN (fromAcct, toAcct) AND record_id <= @entryID
+		WHERE from_acct IN (fromAcct, toAcct) AND record_id <= @entryID AND status > -1
 		GROUP BY from_acct
 	) f ON from_acct=account_id
 	LEFT JOIN (
 		SELECT to_acct, SUM(amount) AS amount
 		FROM records
-		WHERE to_acct IN (fromAcct, toAcct) AND record_id <= @entryID
+		WHERE to_acct IN (fromAcct, toAcct) AND record_id <= @entryID AND status > -1
 		GROUP BY to_acct
 	) t ON to_acct=account_id
 	WHERE account_id IN (fromAcct, toAcct)
@@ -257,27 +259,28 @@ LEFT JOIN ( -- budget created
 	FROM records r
 	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN (brandID) AND f.sign=-1
 	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN (brandID) AND t.sign=1
+	WHERE status > -1
 ) C ON brands.brand_id=C.brand_id
 LEFT JOIN ( -- intrause
 	SELECT SUM(amount) AS intrause, f.brand_id
 	FROM records r
 	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN (brandID) AND f.sign=1
 	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN (brandID) AND t.sign=-1
-	WHERE r.status<10
+	WHERE r.status > -1
 ) I ON brands.brand_id=C.brand_id
 LEFT JOIN ( -- inflow
 	SELECT SUM(amount) AS inflow, t.brand_id
 	FROM records r
 	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id NOT IN (brandID) -- AND f.sign=1
 	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN (brandID) -- AND t.sign=-1
-	WHERE r.status<10
+	WHERE r.status > -1
 ) flowin ON brands.brand_id=C.brand_id
 LEFT JOIN ( -- outflow
 	SELECT SUM(amount) AS outflow, f.brand_id
 	FROM records r
 	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN (brandID) -- AND f.sign=1
 	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id NOT IN (brandID) -- AND t.sign=-1
-	WHERE r.status<10
+	WHERE r.status > -1
 ) flowout ON brands.brand_id=C.brand_id
 LEFT JOIN (
 	SELECT COUNT(*) AS numMembers, SUM(hours) AS totalMemberHours, brand_id FROM members WHERE brand_id IN (brandID) 
@@ -288,12 +291,12 @@ LEFT JOIN (
 	LEFT JOIN (
 		SELECT from_acct, SUM(amount) AS amount 
 		FROM records r
-		JOIN accounts a ON a.account_id=r.from_acct AND a.sign=-1 AND a.brand_id IN (brandID) AND r.status<10
+		JOIN accounts a ON a.account_id=r.from_acct AND a.sign=-1 AND a.brand_id IN (brandID) AND r.status > -1
 	) f ON from_acct=account_id
 	LEFT JOIN (
 		SELECT to_acct, SUM(amount) AS amount 
 		FROM records r
-		JOIN accounts a ON a.account_id=r.to_acct AND a.sign=-1 AND brand_id IN (brandID) AND r.status<10
+		JOIN accounts a ON a.account_id=r.to_acct AND a.sign=-1 AND brand_id IN (brandID) AND r.status > -1
 	) t ON to_acct=account_id	
 	WHERE brand_id IN (brandID)
 ) N ON brands.brand_id=N.brand_id
@@ -303,12 +306,12 @@ LEFT JOIN (
 	LEFT JOIN (
 		SELECT from_acct, SUM(amount) AS amount 
 		FROM records r
-		JOIN accounts a ON a.account_id=r.from_acct AND a.sign=1 AND a.brand_id IN (brandID) AND r.status<10
+		JOIN accounts a ON a.account_id=r.from_acct AND a.sign=1 AND a.brand_id IN (brandID) AND r.status > -1
 	) f ON from_acct=account_id
 	LEFT JOIN (
 		SELECT to_acct, SUM(amount) AS amount 
 		FROM records r
-		JOIN accounts a ON a.account_id=r.to_acct AND a.sign=1 AND brand_id IN (brandID) AND r.status<10
+		JOIN accounts a ON a.account_id=r.to_acct AND a.sign=1 AND brand_id IN (brandID) AND r.status > -1
 	) t ON to_acct=account_id
 	WHERE brand_id IN (brandID)
 ) P ON brands.brand_id=P.brand_id

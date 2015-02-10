@@ -13,8 +13,18 @@ class AccountRecords extends Base {
 		$this->{'@id'} = "/account/$this->account_id/records";
 		$this->table = "records";
 		$this->idkey = 'account_id';
-		$this->okToGet = array("brand_id", "account_id", "name", "balance", "unit", "authcode");
+		
 		$this->init($data);
+		
+		$this->okToGet = array("brand_id", "account_id", "name", "balance", "unit", "authcode");
+		$this->okToSet = array("status");
+		$this->okToFilterBy =  array("record_id");	
+	}
+	
+	function set() {
+		$this->setFilters($_GET);
+		$sql = $this->update();
+		return array($this->obj);
 	}
 	
 	function get() {
@@ -28,6 +38,9 @@ class AccountRecords extends Base {
 		
 		
 		foreach($this->items AS &$r) {
+			$r['@type'] = 'accountRecord';
+			$r['@id'] = $this->{'@id'} .'?record_id='. $r['record_id'];
+		
 			if ($r['brand_id']==$this->brand_id) {
 				$r['other'] = $r['other_acct'];
 			}
@@ -36,7 +49,10 @@ class AccountRecords extends Base {
 				$r['other'] = $r['brand_name'];
 			}
 			
-			if ($r['amount'] > 0) {
+			$status = $r['status'];
+			$amount = $r['amount'];
+			
+			if ($amount > 0 AND $status==7) {
 				$action = $actions[$r['txntype']];
 				$r['orig_record_id'] = $r['record_id'];
 				
@@ -44,6 +60,12 @@ class AccountRecords extends Base {
 				else $r['relay']["budget-un$action"] = $this->holder_id ."-". $this->limkey ."-". $r['txntype'];
 				
 				$r['relay']["default"] = $this->holder_id ."-". $this->limkey;
+			}
+			
+			if ($status>=0 AND $status<7 AND (($r['direction']=='from' AND $amount>0) OR ($r['direction']=='to' AND $amount<0))) {
+				if ($status==0) $r['links']['record-hold']="/forms#record-hold";
+				$r['links']['record-approve']="/forms#record-approve";
+				$r['links']['record-reject']="/forms#record-reject";
 			}
 		}
 		

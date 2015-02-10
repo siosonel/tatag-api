@@ -70,13 +70,13 @@ class ReverseVerifier {
 		}
 		
 		$this->adjusted_amt = $remaining_amount + $amount; //reversal amount is expressed as a negative amount
-		if ($this->adjusted_amt < 0) Error::http(403, "The reversal amount ($amount) exceeds the previous amount that can be reversed ($remaining_amount.");		
+		if ($this->adjusted_amt < 0) Error::http(403, "The reversal amount ($amount) exceeds the previous amount that can be reversed ($remaining_amount).");		
 		if ($txntype != $this->txnType) Error::http(403, "The accounts ($txntype) to be used in a reversal must match the account types of those used in the original transaction ($this->txnType).");
 	}
 	
 	function trackReversal($rev_record_id) {
 		$sql = "INSERT INTO reversals (orig_record_id, rev_record_id, adjusted_amt, txntype, created)
-		VALUES ($this->orig_record_id, $rev_record_id, $this->adjusted_amt, '$this->txntype', NOW())";
+		VALUES ($this->orig_record_id, $rev_record_id, $this->adjusted_amt, '$this->txnType', NOW())";
 		
 		$rowCount = DBquery::set($sql);
 		if (!$rowCount) Error::http(500, "Error: insert query failed.");

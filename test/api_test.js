@@ -76,7 +76,7 @@ function testResource(type) {
 		
 		it('may have dereferenceable links', function (done) {
 			if (!currResource.links) done();
-			else api.deref(currResource.links).then(help.inspect(done), done)
+			else api.deref(currResource.links).then(help.inspect(done), done)			
 		})
 	})
 }
