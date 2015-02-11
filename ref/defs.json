@@ -828,9 +828,10 @@
 	
 	"accountRecords": {
 		"description": "The last part of the budget lifecycle, with credits getting cancelled with an equivalent amount of debits, mostly expected to be between brands.",
-
+		"testURL": "/account/92/records",
+		
 		"properties": {
-			"required": ["@type", "@id", "account_id", "brand_id", "items"],
+			"required": ["@type", "@id", "account_id", "brand_id", "items", "holder_id", "limkey"],
 			"optional": ["links", "actions"]
 		},
 		

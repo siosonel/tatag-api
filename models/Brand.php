@@ -51,6 +51,14 @@ class Brand extends Base {
 		$row = DBquery::get($sql, array($this->brand_id));
 		if ($row[0]) {
 			foreach($row[0] AS $key=>$val) $this->$key = $val;
+			
+			$this->links = array(
+				"brandMembers" => "/brand/$this->brand_id/members",
+				"brandAccounts" => "/brand/$this->brand_id/accounts",				
+				"budgetIssued" => "/budget/$this->brand_id/issued",
+				"budgetTransferred" => "/budget/$this->brand_id/transferred",
+				"budgetUsed" => "/budget/$this->brand_id/used"
+			);
 		}
 	}
 	

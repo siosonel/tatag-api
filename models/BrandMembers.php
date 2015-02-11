@@ -42,7 +42,12 @@ class BrandMembers extends Base {
 	}
 	
 	function get() {		
-		$sql = "SELECT member_id, brand_id, user_id, role, hours, created FROM members WHERE brand_id=? AND ended IS NULL";
+		$sql = "SELECT member_id, brand_id, m.user_id, role, hours, m.created, u.name
+			FROM members m
+			JOIN users u ON u.user_id=m.user_id 
+			WHERE brand_id=? 
+			AND m.ended IS NULL
+			ORDER BY member_id DESC";
 		$this->items = DBquery::get($sql, array($this->brand_id));
 		$this->setForms();
 		return array($this);

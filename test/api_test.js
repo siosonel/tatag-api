@@ -36,14 +36,16 @@ function testResource(type) {
 	if (type.search('#') == 0 || skip.indexOf(type)!=-1) return;	
 	
 	var formIDs, currResource;
+	var currDef = api.byType.definitions[type];
 	
 	describe(type+' resource', function () {
 		it('should provide '+ type +' resource', function (done) {
-			api.loadType(type).then(help.inspect(done), done)
+			if (currDef.testURL) api.loadId(currDef.testURL).then(help.inspect(done), done);
+			else api.loadType(type).then(help.inspect(done), done)
 		})
 		
 		it('should match '+type+" definitions", function (done) { //if (type=='budgetIssued') console.log(api.curr[type]);
-			var defs = api.byType.definitions, props=defs[type].properties;
+			var props= currDef.properties;
 			assert.equal(undefined, help.compareKeys(api.curr[type], props.required, props.optional))
 			done()
 		})

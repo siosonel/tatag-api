@@ -137,6 +137,7 @@ CREATE TABLE `users` (
 --
 DROP PROCEDURE IF EXISTS `accountInfo`;
 
+
 CREATE PROCEDURE `accountInfo`(IN acctID INT)
 BEGIN
 
@@ -146,16 +147,18 @@ FROM accounts
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE from_acct=acctID AND status > -1
+	WHERE from_acct=acctID AND  (status=7 OR (status > -1 AND amount>0))
 ) f ON from_acct=account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE to_acct=acctID AND status > -1
+	WHERE to_acct=acctID AND (status=7 OR (status > -1 AND amount<0))
 ) t ON to_acct=account_id
 WHERE account_id=acctID;
 
 END;
+
+
 
 CREATE PROCEDURE `acctAuthBals`(
 	IN fromAcct INT,
@@ -168,18 +171,20 @@ FROM accounts
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE from_acct IN (fromAcct, toAcct) AND status > -1
+	WHERE from_acct IN (fromAcct, toAcct) AND (status=7 OR (status > -1 AND amount>0))
 	GROUP BY from_acct
 ) f ON from_acct=account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE to_acct IN (fromAcct, toAcct) AND status > -1
+	WHERE to_acct IN (fromAcct, toAcct) AND (status=7 OR (status > -1 AND amount<0))
 	GROUP BY to_acct
 ) t ON to_acct=account_id
 WHERE account_id IN (fromAcct, toAcct);
 
 END;
+
+
 
 CREATE PROCEDURE `holderAccts`(IN userID INT)
 BEGIN
@@ -192,19 +197,21 @@ FROM accounts a
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE status > -1
+	WHERE status=7 OR (status > -1 AND amount>0)
 	GROUP BY from_acct
 ) f ON from_acct=account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records 
-	WHERE status > -1
+	WHERE status=7 OR (status > -1 AND amount<0)
 	GROUP BY to_acct
 ) t ON to_acct=account_id
 JOIN holders h ON (h.account_id=a.account_id)
 WHERE user_id=userID;
 
 END;
+
+
 
 CREATE PROCEDURE `postBal`(
 	IN fromAcct INT,
@@ -227,13 +234,13 @@ BEGIN
 	LEFT JOIN (
 		SELECT from_acct, SUM(amount) AS amount 
 		FROM records
-		WHERE from_acct IN (fromAcct, toAcct) AND record_id <= @entryID AND status > -1
+		WHERE from_acct IN (fromAcct, toAcct) AND record_id <= @entryID AND (status=7 OR (status > -1 AND amount>0))
 		GROUP BY from_acct
 	) f ON from_acct=account_id
 	LEFT JOIN (
 		SELECT to_acct, SUM(amount) AS amount
 		FROM records
-		WHERE to_acct IN (fromAcct, toAcct) AND record_id <= @entryID AND status > -1
+		WHERE to_acct IN (fromAcct, toAcct) AND record_id <= @entryID AND (status=7 OR (status > -1 AND amount<0))
 		GROUP BY to_acct
 	) t ON to_acct=account_id
 	WHERE account_id IN (fromAcct, toAcct)
@@ -247,6 +254,8 @@ BEGIN
 	END IF;
 
 END;
+
+
 
 CREATE PROCEDURE `tally`(IN brandID INT)
 BEGIN
@@ -285,33 +294,47 @@ LEFT JOIN ( -- outflow
 LEFT JOIN (
 	SELECT COUNT(*) AS numMembers, SUM(hours) AS totalMemberHours, brand_id FROM members WHERE brand_id IN (brandID) 
 ) m ON brands.brand_id=m.brand_id
+
 LEFT JOIN ( 
 	SELECT brand_id, SUM(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) AS revBudget
 	FROM accounts
 	LEFT JOIN (
 		SELECT from_acct, SUM(amount) AS amount 
 		FROM records r
-		JOIN accounts a ON a.account_id=r.from_acct AND a.sign=-1 AND a.brand_id IN (brandID) AND r.status > -1
+		JOIN accounts a ON a.account_id=r.from_acct 
+			AND a.sign=-1 
+			AND a.brand_id IN (brandID) 
+			AND (status=7 OR (status > -1 AND amount>0))
 	) f ON from_acct=account_id
 	LEFT JOIN (
 		SELECT to_acct, SUM(amount) AS amount 
 		FROM records r
-		JOIN accounts a ON a.account_id=r.to_acct AND a.sign=-1 AND brand_id IN (brandID) AND r.status > -1
+		JOIN accounts a ON a.account_id=r.to_acct 
+			AND a.sign=-1 
+			AND brand_id IN (brandID) 
+			AND (status=7 OR (status > -1 AND amount<0))
 	) t ON to_acct=account_id	
 	WHERE brand_id IN (brandID)
 ) N ON brands.brand_id=N.brand_id
+
 LEFT JOIN (
 	SELECT brand_id, SUM(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) AS expBudget
 	FROM accounts
 	LEFT JOIN (
 		SELECT from_acct, SUM(amount) AS amount 
 		FROM records r
-		JOIN accounts a ON a.account_id=r.from_acct AND a.sign=1 AND a.brand_id IN (brandID) AND r.status > -1
+		JOIN accounts a ON a.account_id=r.from_acct 
+			AND a.sign=1 
+			AND a.brand_id IN (brandID) 
+			AND (status=7 OR (status > -1 AND amount>0))
 	) f ON from_acct=account_id
 	LEFT JOIN (
 		SELECT to_acct, SUM(amount) AS amount 
 		FROM records r
-		JOIN accounts a ON a.account_id=r.to_acct AND a.sign=1 AND brand_id IN (brandID) AND r.status > -1
+		JOIN accounts a ON a.account_id=r.to_acct 
+			AND a.sign=1 
+			AND brand_id IN (brandID) 
+			AND (status=7 OR (status > -1 AND amount<0))
 	) t ON to_acct=account_id
 	WHERE brand_id IN (brandID)
 ) P ON brands.brand_id=P.brand_id
@@ -320,6 +343,8 @@ GROUP BY brand_id;
 
 
 END;
+
+
 
 CREATE PROCEDURE `tatagtest`.`accountRecords` (
 	IN acctID INT,
@@ -348,5 +373,66 @@ ORDER BY record_id DESC LIMIT 50;
 
 END;
 
+
+
+CREATE DEFINER=`npxer`@`localhost` PROCEDURE `holderCheck`(
+	IN holderID INT
+)
+BEGIN
+
+SELECT holder_id, user_id, limkey, h.authcode AS holder_auth, 
+	a.brand_id, a.account_id, a.authcode AS acct_auth, sign,	
+	balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0)) AS balance, unit	
+FROM (
+	SELECT * FROM holders WHERE holder_id = holderID AND ended IS NULL
+) h 
+JOIN accounts a ON a.account_id=h.account_id
+LEFT JOIN (
+	SELECT from_acct, SUM(amount) AS amount 
+	FROM records
+	WHERE status=7 OR (status > -1 AND amount>0)
+	GROUP BY from_acct
+) f ON from_acct = h.account_id
+LEFT JOIN (
+	SELECT to_acct, SUM(amount) AS amount 
+	FROM records
+	WHERE status=7 OR (status > -1 AND amount<0)
+	GROUP BY to_acct
+) t ON to_acct = h.account_id;
+
+END;
+
+
+
+CREATE PROCEDURE `tatagtest`.`userAccounts` (
+	IN userID INT
+)
+BEGIN
+
+SELECT a.account_id AS account_id, 
+	a.name AS account_name, alias,
+	h.user_id, a.brand_id AS brand_id, b.name AS brand_name, 			
+	sign, balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0)) AS balance, unit,
+	holder_id, limkey, a.authcode as account_authcode, h.authcode as holder_authcode,
+	m.role As role
+FROM accounts a
+JOIN brands b ON a.brand_id = b.brand_id
+JOIN holders h ON a.account_id=h.account_id AND h.user_id=userID
+JOIN members m ON m.brand_id = a.brand_id
+LEFT JOIN (
+	SELECT from_acct, SUM(amount) AS amount 
+	FROM records
+	WHERE status=7 OR (status > -1 AND amount>0)
+	GROUP BY from_acct
+) f ON from_acct=a.account_id
+LEFT JOIN (
+	SELECT to_acct, SUM(amount) AS amount 
+	FROM records
+	WHERE status=7 OR (status > -1 AND amount<0)
+	GROUP BY to_acct
+) t ON to_acct=a.account_id
+GROUP BY a.account_id;
+
+END
 
 -- Dump completed on 2014-12-26 20:00:04

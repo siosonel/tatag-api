@@ -37,7 +37,7 @@ class BrandAccounts extends Base {
 	function get() {
 		$sql = "SELECT accounts.account_id, name, 
 			sign*(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) AS balance,
-			unit, authcode			
+			unit, authcode, created			
 		FROM accounts
 		LEFT JOIN (
 			SELECT from_acct, SUM(amount) AS amount 
@@ -54,7 +54,8 @@ class BrandAccounts extends Base {
 			GROUP BY to_acct
 		) t ON to_acct=account_id
 		WHERE brand_id=?
-		GROUP BY account_id";
+		GROUP BY account_id
+		ORDER BY account_id ASC";
 		
 		$this->items = DBquery::get($sql, array($this->brand_id, $this->brand_id, $this->brand_id));
 		$this->setForms();

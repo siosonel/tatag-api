@@ -24,7 +24,7 @@ class BudgetUsed extends Base {
 	function get() {
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "Only admins of brand #$this->brand_id can view details of its budget issuance records.");
 	
-		$sql = "SELECT r.created, from_acct, from_user, to_acct, to_user, amount, `note`
+		$sql = "SELECT r.record_id, r.created, from_acct, from_user, to_acct, to_user, amount, `note`
 		FROM records r JOIN accounts a ON (r.from_acct = a.account_id)
 		WHERE brand_id=? AND txntype='pn' 
 		ORDER BY record_id DESC LIMIT 50";
