@@ -283,15 +283,10 @@
 			"@id": "/forms#admin-member-edit",
 			"method": "POST",
 			
-			"query": {
-				"required": ["member_id"],
-				"optional": []
-			},
-			
-			"inputs": [{
+			"inputs": {
 				"required": [],
 				"optional": ["role", "hours"]
-			}],
+			},
 			
 			"examples": [{
 				"label": "should allow an admin to edit a member's info",
@@ -328,10 +323,10 @@
 			"@id": "/forms#member-add",
 			"method": "POST",
 			
-			"inputs": [{
+			"inputs": {
 				"required": ["user_id", "role", "hours"],
 				"optional": []
-			}],
+			},
 			
 			"examples": [{
 				"label": "should allow an admin to add a brand member",
@@ -374,10 +369,10 @@
 			"@id": "/forms#admin-account-edit",
 			"method": "POST",
 			
-			"inputs": [{
-				"name": {"required": false},
-				"authcode": {"required": false}
-			}],
+			"inputs": {
+				"required": [],
+				"optional": ["name", "authcode"]
+			},
 			
 			"examples": [{
 				"label": "should allow an admin to edit an account's info",

@@ -48,7 +48,13 @@ class BrandMembers extends Base {
 			WHERE brand_id=? 
 			AND m.ended IS NULL
 			ORDER BY member_id DESC";
-		$this->items = DBquery::get($sql, array($this->brand_id));
+		
+		$this->items = DBquery::get($sql, array($this->brand_id));		
+		foreach($this->items AS &$r) {
+			$r['@id'] = $this->{"@id"} ."?member_id=". $r['member_id'];
+			$r['links']['accounts'] = "/member/". $r['member_id'] ."/accounts";
+		}
+		
 		$this->setForms();
 		return array($this);
 	}

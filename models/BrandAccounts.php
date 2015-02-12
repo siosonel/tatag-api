@@ -58,6 +58,11 @@ class BrandAccounts extends Base {
 		ORDER BY account_id ASC";
 		
 		$this->items = DBquery::get($sql, array($this->brand_id, $this->brand_id, $this->brand_id));
+		foreach($this->items AS &$r) {
+			$r['@id'] = $this->{"@id"} ."?account_id=". $r['account_id'];
+			$r['links']['holders'] = "/account/". $r['account_id'] ."/holders";
+		}
+		
 		$this->setForms();
 		
 		return array($this);
