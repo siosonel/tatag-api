@@ -11,7 +11,11 @@
 		"brand",
 		"brandMembers",
 		"brandAccounts",
+		
 		"brandHolders",
+		"memberAccounts",
+		"accountHolders",
+		
 		"#brandFeed",
 		
 		"#userAbout",
@@ -26,7 +30,8 @@
 		"budgetTransferred",
 		"budgetUsed",
 		
-		"accountRecords"
+		"accountRecords",
+		"budgetRecords"
 	],
 
 	"user": {		
@@ -238,6 +243,7 @@
 			"@type": "form",
 			"@id": "/forms#brand-edit",
 			"method": "POST",
+			
 			"inputs": {
 				"required": [],
 				"optional": ["name", "url", "mission", "description"]
@@ -525,23 +531,113 @@
 		}]
 	},
 	
-	"brandAbout": {
-		"description": "",
-		"link": "",
+	"memberAccounts": {
+		"description": "A brand's accountholdings, filtered for a specific member_id.",
+		"testURL": "/member/53/accounts",
 
 		"properties": {
-			"":	{
-				"type": "",
-				"regex": ""
-			}
+			"required": ["@type", "@id", "brand_id", "items", "member_id", "role", "created", "hours", "user_id"],
+			"optional": ["links", "actions"]
 		},
 		
-		"actions": {
-			"":	{
-				"type": "",
-				"regex": ""
-			}
-		}
+		"relatedActions": {
+			"brandHolders": ["/forms#admin-holder-edit", "forms#holder-add"]
+		},
+		
+		"actions": [
+		{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#admin-holder-edit",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["authcode"],
+				"optional": []
+			},		
+		
+			"examples": [{
+				"label": "should allow an admin to edit a holder's authcode",
+				"target": "/member/56/accounts?holder_id=46",
+				"method": "POST",
+				
+				"inputs": {
+					"authcode": "ftix -{random}"					
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-admin to edit an account's info",
+				"target": "/member/54/accounts?holder_id=45",
+				"method": "POST",					
+				"inputs": {
+					"name": "personal -{xtime}",
+					"authcode": "{random}"
+				},
+				"status": 403
+			}]
+		},
+		{
+			"title": "Add an account holder",
+			"@type": "form",
+			"@id": "/forms#holder-add",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["user_id", "account_id", "authcode"],
+				"optional": []
+			},
+			
+			"examples": [{
+				"label": "should allow an admin to add a new accountholder",
+				"target": "/member/56/accounts",
+				"method": "POST",
+				
+				"inputs": {
+					"user_id": 24,
+					"account_id": 92,
+					"authcode": "cftix"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-admin to add a new accountholder",
+				"target": "/member/54/accounts",
+				"method": "POST",
+				
+				"inputs": {
+					"user_id": 22,
+					"account_id": 92,
+					"authcode": "cftix"
+				},
+				"status": 403
+			}]
+		}]
+	},
+	
+	"accountHolders": {
+		"description": "A brand's accountholders, filtered for a specific account_id.",
+		"testURL": "/account/92/holders",
+
+		"properties": {
+			"required": ["@type", "@id", "brand_id", "items", "account_id"],
+			"optional": ["links", "actions"]
+		},
+		
+		"relatedActions": {
+			"brandHolders": ["/forms#admin-holder-edit", "forms#holder-add"]
+		},
+		
+		"actions": []
+	},
+	
+	"brandAbout": {
+		"description": "General infomration about a brand.",
+
+		"properties": {
+			"required": ["name", "mission", "description"],
+			"optional": []
+		},
+		
+		"actions": {}
 	},
 		
 	"brandCollection": {
@@ -590,7 +686,8 @@
 	
 	"budgetIssued": {
 		"description": "The first part of the budget lifecycle, with the brand issuing equivalent debits and credits to its N and P-type accounts, respectively.",
-
+		"testURL": "/budget/104/issued",
+		
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
 			"optional": ["links", "actions"]
@@ -676,7 +773,8 @@
 	
 	"budgetTransferred": {
 		"description": "The intermediate part of the budget lifecycle, with budgets being transferred between accounts of the same brand.",
-
+		"testURL": "/budget/104/transferred",
+	
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
 			"optional": ["links", "actions"]
@@ -750,7 +848,8 @@
 	
 	"budgetUsed": {
 		"description": "The last part of the budget lifecycle, with credits getting cancelled with an equivalent amount of debits, mostly expected to be between brands.",
-
+		"testURL": "/budget/104/used",
+		
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
 			"optional": ["links", "actions"]
@@ -823,7 +922,7 @@
 	},
 	
 	"accountRecords": {
-		"description": "The last part of the budget lifecycle, with credits getting cancelled with an equivalent amount of debits, mostly expected to be between brands.",
+		"description": "An accounts transaction activity.",
 		"testURL": "/account/92/records",
 		
 		"properties": {
@@ -940,6 +1039,18 @@
 				"status": 200
 			}]
 		}]
+	},
+
+	"budgetRecords": {
+		"description": "Transaction records of a brand, by transaction type.",
+		"testURL": "/account/92/records",
+		
+		"properties": {
+			"required": ["@type", "@id", "brand_id"],
+			"optional": ["links", "actions", "subtype", "txntype"]
+		},
+		
+		"actions": []
 	}
 }
 	

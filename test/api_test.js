@@ -44,7 +44,7 @@ function testResource(type) {
 			else api.loadType(type).then(help.inspect(done), done)
 		})
 		
-		it('should match '+type+" definitions", function (done) { //if (type=='budgetIssued') console.log(api.curr[type]);
+		it('should match '+type+" definitions", function (done) {
 			var props= currDef.properties;
 			assert.equal(undefined, help.compareKeys(api.curr[type], props.required, props.optional))
 			done()

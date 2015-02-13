@@ -11,7 +11,7 @@ class Brand extends Base {
 		
 		$this->init($data);
 			
-		$this->okToSet = array("ended","mission","description");
+		$this->okToSet = array("name", "ended","mission","description");
 		$this->okToFilterBy = array("brand_id");
 	}
 	
@@ -55,7 +55,8 @@ class Brand extends Base {
 			$this->links = array(
 				"brandMembers" => "/brand/$this->brand_id/members",
 				"brandAccounts" => "/brand/$this->brand_id/accounts",				
-				"budgetRecords" => "/budget/$this->brand_id/records"
+				"budgetRecords" => "/budget/$this->brand_id/records",
+				"brandAbout" => "/brand/$this->brand_id/about"
 			);
 		}
 	}
