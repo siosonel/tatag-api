@@ -409,10 +409,10 @@
 			"@id": "/forms#account-add",
 			"method": "POST",
 			
-			"inputs": [{
+			"inputs": {
 				"required": ["name", "authcode", "unit", "sign"],
 				"optional": []
-			}],
+			},
 			
 			"examples": [{
 				"label": "should allow an admin to add a new account",
@@ -484,7 +484,8 @@
 				"inputs": {
 					"name": "personal -{xtime}",
 					"authcode": "{random}"
-				},"status": 403
+				},
+				"status": 403
 			}]
 		},
 		{
@@ -493,10 +494,10 @@
 			"@id": "/forms#holder-add",
 			"method": "POST",
 			
-			"inputs": [{
+			"inputs": {
 				"required": ["user_id", "account_id", "authcode"],
 				"optional": []
-			}],
+			},
 			
 			"examples": [{
 				"label": "should allow an admin to add a new accountholder",

@@ -55,9 +55,7 @@ class Brand extends Base {
 			$this->links = array(
 				"brandMembers" => "/brand/$this->brand_id/members",
 				"brandAccounts" => "/brand/$this->brand_id/accounts",				
-				"budgetIssued" => "/budget/$this->brand_id/issued",
-				"budgetTransferred" => "/budget/$this->brand_id/transferred",
-				"budgetUsed" => "/budget/$this->brand_id/used"
+				"budgetRecords" => "/budget/$this->brand_id/records"
 			);
 		}
 	}

@@ -1,6 +1,8 @@
 <?php
 
-class MemberAccounts extends Base {
+require_once "models/BrandHolders.php";
+
+class MemberAccounts extends BrandHolders {
 	function __construct($data='') {		
 		$this->member_id = $this->getID();
 		$this->setDetails();
@@ -13,6 +15,7 @@ class MemberAccounts extends Base {
 		
 		$this->init($data);
 		
+		$this->okToAdd = array("user_id", "account_id", "authcode", "limkey");
 		$this->okToGet = array("holder_id", "holder_auth", "brand_id", "account_id", "name", "account_auth");
 		$this->okToSet = array("authcode", "ended");
 		$this->okToFilterBy =  array("holder_id");	
@@ -27,12 +30,6 @@ class MemberAccounts extends Base {
 		}
 		
 		return;
-	}
-	
-	function set() {
-		$this->setFilters($_GET);
-		$sql = $this->update();
-		return array($this->obj);
 	}
 	
 	function get() {
