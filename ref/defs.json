@@ -42,6 +42,10 @@
 			"optional": ["links", "actions", "userMemberships", "userAccounts"]
 		},	
 		
+		"relatedActions": {
+			"brandCollection": ["/forms#brand-registration"]
+		},
+		
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
@@ -651,8 +655,9 @@
 		"actions": [{
 			"title": "Brand registration",
 			"@type": "form",
-			"@id": "/forms#brand-registration",
+			"@id": "/forms#brand-registration",			
 			"method": "POST",
+			"target": "/brand/collection",
 			
 			"inputs": {
 				"required": ["name", "mission", "description"],

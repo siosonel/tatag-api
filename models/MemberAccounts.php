@@ -37,9 +37,10 @@ class MemberAccounts extends BrandHolders {
 			FROM holders h
 			JOIN accounts a ON h.account_id=a.account_id
 			JOIN members m ON h.user_id=m.user_id AND a.brand_id=m.brand_id
-			WHERE h.user_id=?";
+			WHERE h.user_id=? AND a.brand_id=?
+			GROUP BY h.holder_id, h.account_id, h.user_id";
 		
-		$this->items = DBquery::get($sql, array($this->user_id)); print_r($rows);
+		$this->items = DBquery::get($sql, array($this->user_id, $this->brand_id)); //print_r($rows);
 		
 		foreach($this->items AS &$r) {
 			$r['@id'] = $this->{'@id'} ."?holder_id=". $r['holder_id'];

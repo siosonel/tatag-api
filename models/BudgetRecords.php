@@ -12,7 +12,7 @@ class BudgetRecords extends Base {
 		
 		$this->{"@type"} = "budgetRecords";
 		$this->brand_id = $this->getID();
-		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "Only admins of brand #$this->brand_id can view details of its budget issuance records.");
+		if (!Requester::isMember($this->brand_id)) Error::http(403, "Only members or admins of brand #$this->brand_id can view details of its budget activity.");
 		
 		$this->{'@id'} = "/budget/$this->brand_id/records";
 		$this->table = "records";		

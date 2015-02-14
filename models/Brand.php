@@ -15,10 +15,6 @@ class Brand extends Base {
 		$this->okToFilterBy = array("brand_id");
 	}
 	
-	function add() {
-		Error::http(403);
-	}
-	
 	function set() {	
 		$this->update(array("brand_id"=>$this->brand_id));
 		return array($this->obj);
@@ -60,17 +56,6 @@ class Brand extends Base {
 			);
 		}
 	}
-	
-	/*
-	
-	
-	private function getMembers() {
-		$sql = "SELECT members.created, member_id, users.created, users.user_id, email, role, hours
-			FROM members JOIN users ON members.user_id=users.user_id
-			WHERE brand_id=? AND members.ended IS NULL";
-		
-		return DBquery::get($sql, array($this->brand_id));
-	}*/
 }
 
 ?>

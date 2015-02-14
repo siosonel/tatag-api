@@ -42,6 +42,7 @@ class User extends Base {
 		$memberships = (new UserBrands($obj))->get(); 
 		foreach($memberships AS $m) {
 			foreach($m->items AS $b) {
+				$this->links->team[] = '/team/'. $b['brand_id'];
 				if ($b['role']=='admin') $this->links->brand[] = '/brand/'. $b['brand_id'];
 			}
 		}

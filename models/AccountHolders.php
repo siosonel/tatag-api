@@ -36,7 +36,8 @@ class AccountHolders extends BrandHolders {
 			JOIN accounts a ON h.account_id=a.account_id
 			LEFT JOIN members m ON h.user_id=m.user_id
 			LEFT JOIN users u ON u.user_id=h.user_id 
-			WHERE h.account_id=?";
+			WHERE h.account_id=?
+			GROUP BY h.holder_id, h.account_id, h.user_id";
 		
 		$this->items = DBquery::get($sql, array($this->account_id)); print_r($rows);
 		
