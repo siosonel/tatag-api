@@ -13,7 +13,10 @@ class Base {
 	protected $okToGet=array();
 	protected $okToFilterBy=array(); //parameters that may be used to filter the affected or returned rows
 	protected $idkey;
+	
 	protected $filters;
+	protected $filterCond;
+	protected $filterValArr;
 	
 	protected $keyArr = array();
 	protected $valArr = array();

@@ -20,15 +20,23 @@ class Router {
 		//if (!self::$subresource AND !self::$id) self::$subresource = 'links';
 		
 		
-		$method = strtolower($_SERVER['REQUEST_METHOD']);			
+		$method = strtolower($_SERVER['REQUEST_METHOD']);
+		if (SITE=='dev' AND isset($_GET['method'])) {$method=$_GET['method']; unset($_GET['method']);}
+		
 		if ($method=='post') { //exit(json_encode(self::$resource ."---". self::$id ."---". self::$subresource));
-			if (self::$subresource=='collection' OR strpos(self::$resource, 'budget')!==false) $method = 'add';
+			if (
+				self::$subresource=='collection' 
+				OR strpos(self::$resource, 'budget')!==false 
+				OR (self::$resource=='token' AND !self::$id) 
+			) $method = 'add';
 			else $method = 'set';
 		}
 		
-		self::$method = $method;		
+		self::$method = $method;				
+		$src = "php://input";
+		if (SITE=='dev' AND isset($_GET['file']) AND file_exists("_exclude/". $_GET['file'] .".json")) $src= "_exclude/". $_GET['file'] .".json";
 		
-		$data = ($method=='get') ? json_decode(json_encode(array("id"=>self::$id))) : json_decode(trim(file_get_contents("php://input")));
+		$data = ($method=='get') ? json_decode(json_encode(array("id"=>self::$id))) : json_decode(trim(file_get_contents($src)));
 		if (gettype($data)!='object') Error::http(400, "Bad Request");
 		
 		$ObjClass = ucfirst(self::$resource) . ucfirst(self::$subresource); 

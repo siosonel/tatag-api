@@ -54,5 +54,3 @@ class User extends Base {
 		);
 	}
 }
-
-?>

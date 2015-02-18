@@ -15,7 +15,9 @@ class Requester {
 	
 	public static $graph=array();
 	public static $graphRefs=array();
-	
+	public static $consumer_id=0;
+	public static $token_id=0;
+	public static $otk;
 	
 	static function init() {
 		//@header("Content-Type: text/plain");
@@ -35,7 +37,9 @@ class Requester {
 		self::$email = self::$user_id ? "" : "$user";
 		$pwd = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : "";  //exit('"'. self::$user_id ." ". $pwd ."---".  self::$email. '---"');
 		
-		self::login($pwd);
+		if (strpos($user, "consumer-")!==false) self::consumer_login($user, $pwd);
+		else if (strpos($user, "token-")!==false) self::token_login($user, $pwd);
+		else self::login($pwd);
 	}
 	
 	static function login($pwd) {
@@ -49,6 +53,28 @@ class Requester {
 		self::$user_id=$user['user_id'];
 		self::$name=$user['name'];
 		self::$email=$user['email'];
+	}
+	
+	static function consumer_login($user, $pwd) {
+		list($label, self::$consumer_id) = explode("-", $user); 
+		if (!self::$consumer_id) Error::http(400, "Missing or invalid consumer id.");
+		
+		$sql = "SELECT secret FROM consumers WHERE consumer_id=?";
+		$row = DBquery::get($sql, array(self::$consumer_id));
+		if (!$row) Error::http(401, "Invalid credentials for consumer ID='". self::$consumer_id ."'.");
+		if (!password_verify($pwd, $row[0]['secret'])) Error::http(401, "Invalid credentials for consumer ID='". self::$consumer_id ."'.");
+	}
+	
+	static function token_login($user, $pwd) {
+		list($label, self::$token_id) = explode("-", $user); 
+		if (!self::$token_id) Error::http(400, "Missing or invalid token id.");
+		
+		$sql = "SELECT user_id FROM tokens WHERE token_id=? AND ((token_val='0' AND otk=?) OR (token_val!=0 AND token_val=?))";
+		$row = DBquery::get($sql, array(self::$token_id, $pwd, $pwd));
+		if (!$row) Error::http(401, "Invalid credentials for token ID='". self::$token_id ."'. $sql $user $pwd");
+		
+		self::$user_id = $row[0]['user_id'];
+		self::$otk = $pwd;
 	}
 	
 	static function isUser($user_id) {
