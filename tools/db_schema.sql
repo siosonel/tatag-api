@@ -58,7 +58,7 @@ CREATE TABLE `consumers` (
   `secret` varchar(80) DEFAULT NULL,
   `redirect_url` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`consumer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Machine consumers of the API';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Machine consumers of the API';
 
 
 
@@ -144,10 +144,11 @@ CREATE TABLE `tokens` (
   `token_id` int(11) NOT NULL AUTO_INCREMENT,
   `consumer_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `otk` varchar(45) DEFAULT NULL,
+  `otk` varchar(45) DEFAULT '0',
+	`token_val` varchar(45) DEFAULT '0',
   `created` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`token_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Used by users to authorize API consumers '$$
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Used by users to authorize API consumers ';
 
 
 
@@ -164,14 +165,10 @@ CREATE TABLE `users` (
   `password` varchar(80) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
-  `profileImg` varchar(255) DEFAULT NULL,
+	`fb_id` varchar(24) DEFAULT '0',
+  `gp_id` varchar(24) DEFAULT '0',
+	`profileImg` varchar(255) DEFAULT NULL,
   `bannerImg` varchar(255) DEFAULT NULL,
-	`fb_id` int(11) DEFAULT NULL,
-  `fb_name` varchar(45) DEFAULT NULL,
-  `fb_email` varchar(45) DEFAULT NULL,
-  `gp_id` int(11) DEFAULT NULL,
-  `gp_name` varchar(45) DEFAULT NULL,
-  `gp_email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

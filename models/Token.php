@@ -62,13 +62,13 @@ class Token extends Base {
 	}
 	
 	function get() {		
-		$sql = "SELECT token_val FROM tokens WHERE token=? AND otk=?";
+		$sql = "SELECT token_val FROM tokens WHERE token_id=? AND otk=?";
 		$row = DBquery::get($sql, array($this->token_id, Requester::$otk));
 	}
 	
 	
 	function getByOauthID($info) {
-		$gp_id = dechex(1*$info->user_id);
+		$gp_id = "".$info->user_id;
 	
 		$sql = "SELECT user_id FROM users WHERE gp_id=?";
 		$row = DBquery::get($sql, array($gp_id));
@@ -82,6 +82,7 @@ class Token extends Base {
 			"gp_id": "'. $gp_id .'"
 		}'));
 		
-		return $Users->add();
+		$arr = $Users->add();
+		return $arr[0]->user_id;
 	}
 }

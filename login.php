@@ -23,11 +23,11 @@
 		var g_np;
 		var baseURI = window.location.origin;
 		var params={};
-		var queryStr = window.location.search.substr(1).split('&').map(function (p) {var arr=p.split("="); params[arr[0]]=arr[1]}); console.log(params); console.log(decodeURIComponent(params.next));
+		var queryStr = window.location.search.substr(1).split('&').map(function (p) {var arr=p.split("="); params[arr[0]]=arr[1]});
 	
 		 
 		 function signinCallback(authResult) { console.log(authResult); //return;
-			if (authResult['error'] || !authResult['status']['signed_in']) {alert('There was an error: ' + authResult['error']); return;}
+			if (authResult['error'] || !authResult['status']['signed_in']) {console.log('There was an error: ' + authResult['error']); return;}
 			
 			if (authResult['status']['signed_in']) {
 				// Update the app to reflect a signed in user
@@ -42,8 +42,9 @@
 						"Authorization": "Basic " + btoa('token-'+params.token_id + ":" + params.otk)
 					},
 					data: JSON.stringify({access_token:authResult['access_token']}),
-					success: function (resp) { console.log(resp); console.log(decodeURIComponent(params.next));					
-						//window.location.href = decodeURIComponent(params.next);
+					success: function (resp) { console.log(resp); //console.log(decodeURIComponent(params.next));					
+						var token = resp['@graph'][0];
+						window.location.href = decodeURIComponent(params.next) +'?token_id='+ token.token_id+'&otk='+ token.otk;
 					}, 
 					error: function (xhr, status, text) {
 						console.log(status+' '+text)
@@ -51,30 +52,6 @@
 				})
 			} 
 		}
-
-
-		function handleResponse(response) { console.log(response); return;
-			if (response.objectType!='person') {alert("The logged-in google profile must belong to a person."); return;}
-			
-			$.ajax({
-				url: baseURI + "/tatag/token/" + params.token_id,
-				type: "POST",
-				dataType: 'json',
-				contentType: 'json',
-				headers: {
-					"Authorization": "Basic " + btoa('token-'+params.token_id + ":" + params.otk)
-				},
-				data: JSON.stringify({user_id:response.id}),
-				success: function (resp) { console.log(resp); console.log(decodeURIComponent(params.next));					
-					//window.location.href = decodeURIComponent(params.next);
-				}, 
-				error: function (xhr, status, text) {
-					console.log(status+' '+text)
-				}
-			})
-		}
-		
-		//handleResponse({id:"5bb40e75eb61a8000", objectType: 'person'});
 	</script>
 	
 	<script>
