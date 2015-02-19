@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div style='width:100%; text-align: center;'>
-		<h2>Log-In to Tatag Using</h2>
+		<h2>Register or Log-In to Tatag Using</h2>
 		<span id="signinButton">
 			<span
 				class="g-signin"
@@ -24,7 +24,10 @@
 			<fb:login-button scope="public_profile,email" data-size='large' onlogin="checkLoginState();"></fb:login-button>
 		</div>
 		<br /><br />
-		<a href='login_twitter.php?<?php echo $_SERVER['QUERY_STRING'];?>'><img src='https://g.twimg.com/Twitter_logo_blue.png' style='width: 25px;'/> Twitter sign-in</a>
+		<a href='login_twitter.php?<?php echo $_SERVER['QUERY_STRING'];?>' style='text-decoration: none; font-size:18px;'>
+			<img src='https://g.twimg.com/Twitter_logo_blue.png' style='width: 22px;'/>
+			<span style='vertical-align:top;'>Sign-in</span>
+		</a>
 	</div>
 
 	<script type="text/javascript">	
@@ -38,7 +41,7 @@
 		};
 	
 		
-		function getTatagTokenVal(auth, providerName) { console.log(auth); return;
+		function getTatagTokenVal(auth, providerName) { //console.log(auth); return;
 			var provider = idProvider[providerName]; //console.log(auth[provider.tokenName]+' '+provider.idType); return;
 			var data = {access_token:auth[provider.tokenName], id_type: provider.idType};
 			if (data.id_type=='fb_id') data.fb_id = auth.userID;
