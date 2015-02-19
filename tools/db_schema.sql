@@ -167,6 +167,7 @@ CREATE TABLE `users` (
   `ended` timestamp NULL DEFAULT NULL,
 	`fb_id` varchar(24) DEFAULT '0',
   `gp_id` varchar(24) DEFAULT '0',
+	`tw_id` varchar(24) DEFAULT '0',
 	`profileImg` varchar(255) DEFAULT NULL,
   `bannerImg` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`),

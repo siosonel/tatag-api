@@ -8,15 +8,19 @@ class Base {
 	protected $table;
 	protected $id;
 	protected $cols;
+	
 	protected $okToAdd=array();
 	protected $okToSet=array(); //values that may be set by an admin or user
 	protected $okToGet=array();
 	protected $okToFilterBy=array(); //parameters that may be used to filter the affected or returned rows
+	
 	protected $idkey;
 	
 	protected $filters;
 	protected $filterCond;
 	protected $filterValArr;
+	
+	protected $removeFromInput=array();
 	
 	protected $keyArr = array();
 	protected $valArr = array();
@@ -61,6 +65,8 @@ class Base {
 		if ($restrict=='ifMissing' AND in_array($key, $this->keyArr)) return;
 		
 		$this->$key = $val;
+		if (in_array($key, $this->removeFromInput)) return;
+		
 		$keypos = array_search($key, $this->keyArr);	
 			
 		if ($keypos!==false) {
