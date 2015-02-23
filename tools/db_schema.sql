@@ -90,6 +90,8 @@ CREATE TABLE `members` (
   `hours` varchar(45) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
+	`joined` timestamp NULL DEFAULT NULL,
+  `revoked` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`member_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

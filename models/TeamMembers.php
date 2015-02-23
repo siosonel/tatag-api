@@ -12,14 +12,16 @@ class TeamMembers extends Base {
 		$this->idkey = 'member_id'; 
 		
 		$this->init($data); 
+		$this->okToSet = array("role", 'hours','ended');		 
+		$this->okToFilterBy = array("member_id", "user_id");
 	}
 	
 	function get() {		
-		$sql = "SELECT member_id, brand_id, m.user_id, role, hours, m.created, u.name
+		$sql = "SELECT member_id, brand_id, m.user_id, role, hours, m.created, u.name, m.joined, m.revoked
 			FROM members m
 			JOIN users u ON u.user_id=m.user_id 
 			WHERE brand_id=? 
-			AND m.ended IS NULL
+			AND m.ended IS NULL AND m.revoked IS NULL 
 			ORDER BY member_id DESC";
 		
 		$this->items = DBquery::get($sql, array($this->brand_id));		

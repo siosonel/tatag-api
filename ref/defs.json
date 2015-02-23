@@ -91,7 +91,7 @@
 		},
 		
 		"actions": [{
-			"title": "Edit",
+			"title": "Accept or Rescind Membership",
 			"@type": "form",
 			"@id": "/forms#member-edit",
 			"method": "POST",
@@ -102,23 +102,23 @@
 			},
 			
 			"inputs": {
-				"required": ["hours"],
-				"optional": []	
+				"required": [],
+				"optional": ["joined","revoked"]	
 			},
 			
 			"examples": [{
-				"label": "should allow a member to edit his or her hours",
+				"label": "should allow a member to edit joined or revoked date",
 				"target": "/user/21/brands",
 				"method": "POST",				
 				"query": {
 					"member_id": 53
 				},				
 				"inputs": {
-					"hours": "{random}"
+					"joined": "{xtime}"
 				},
 				"status": 200
 			},{
-				"label": "should NOT allow non-admin edits of another member's hours",
+				"label": "should NOT allow non-admin edits of a member's hours",
 				"target": "/user/21/brands",
 				"method": "POST",				
 				"query": {
@@ -1056,6 +1056,64 @@
 		},
 		
 		"actions": []
+	},
+	
+	"team": {
+		"description": "A budget-issuing organization.",
+
+		"properties": {
+			"required": ["@type", "@id", "brand_id", "name", "mission", "description", "created", "tally"],
+			"optional": ["links", "actions"]
+		},
+		
+		"actions": [
+		{
+			"title": "Accept Membership",
+			"@type": "form",
+			"@id": "/forms#member-accept",
+			"method": "POST",
+			
+			"query": {
+				"required": ["member_id"],
+				"optional": []				
+			},
+			
+			"inputs": {
+				"required": ["joined"],
+				"optional": []	
+			},
+			
+			"examples": [{
+				"label": "should allow a member to accept membership by providing a joined date",
+				"target": "/team/104/?member_id=53",
+				"method": "POST",				
+				"query": {
+					"member_id": 53
+				},				
+				"inputs": {
+					"joined": "{xtime}"
+				},
+				"status": 200
+			}]
+		},
+		{
+			"title": "Revoke Membership",
+			"@type": "form",
+			"@id": "/forms#member-revoke",
+			"method": "POST",
+			
+			"query": {
+				"required": ["member_id"],
+				"optional": []				
+			},
+			
+			"inputs": {
+				"required": ["revoked"],
+				"optional": []	
+			},
+			
+			"examples": []
+		}]
 	}
 }
 	

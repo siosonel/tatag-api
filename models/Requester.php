@@ -119,6 +119,6 @@ class Requester {
 	static function isMember($brand_id) {
 		$sql = "SELECT member_id FROM members WHERE brand_id IN (?) AND user_id IN (?) LIMIT 1";
 		$row = DBquery::get($sql, array($brand_id, self::$user_id));
-		if ($row) return 1; 
+		if ($row) return $row[0]['member_id']; 
 	}
 }

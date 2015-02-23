@@ -7,19 +7,40 @@ class Team extends Base {
 	
 		$this->{"@type"} = 'team';
 		$this->{"@id"} = "/team/$this->brand_id";
-		$this->table = "brands";
+		$this->table = "members";
 		
 		$this->init($data);			
-		$this->okToFilterBy = array("brand_id");
+		$this->okToFilterBy = array("brand_id", "member_id");
+		$this->okToSet = array("joined","revoked");
+	}
+	
+	function set() {
+		$this->setFilters($_GET);
+		$sql = "SELECT user_id, member_id FROM members WHERE $this->filterCond";
+		$rows = DBquery::get($sql, $this->filterValArr);
+		
+		foreach($rows AS $r) {
+			if ($r['user_id'] != Requester::$user_id) 
+				Error::http(403, "The requester cannot set another member's information. 
+				Please check that requester (#$this->user_id) is filtering by his or her own member_id (#". $r['member_id'] .").");
+		}
+		
+		$this->update();
+		return array($this->obj);
 	}
 	
 	function get() {
+		$this->getRole();
+		
 		$this->getInfo();
 		$tally = DBquery::get("CALL tally(?)", array($this->brand_id))[0];
 		
 		if (!$tally) return array(null);
 		
 		$this->tally = array_merge(array("@type" => "budgetTally"),$tally);
+		$this->setForms(); 
+		if ($this->joined) $this->actions = array_values(array_diff($this->actions, array("/forms#member-accept")));
+		
 		
 		include_once "models/TeamMembers.php";
 		include_once "models/TeamAccounts.php";
@@ -45,6 +66,25 @@ class Team extends Base {
 				"teamAbout" => "/brand/$this->brand_id/about"
 			);
 		}
+	}
+	
+	function getRole() {		
+		$sql = "SELECT member_id, role, hours, m.created, u.name, m.joined, m.revoked
+			FROM members m
+			JOIN users u ON u.user_id=m.user_id 
+			WHERE brand_id=? AND m.user_id=?
+			AND m.ended IS NULL AND m.revoked IS NULL 
+			ORDER BY member_id DESC";
+		
+		$row = DBquery::get($sql, array($this->brand_id, Requester::$user_id));
+		
+		if ($row) {
+			foreach($row AS $r) {
+				foreach($r AS $k=>$v) $this->$k = $v; 
+			}
+		}
+		
+		return array($this);
 	}
 }
 
