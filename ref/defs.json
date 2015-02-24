@@ -932,7 +932,7 @@
 		
 		"properties": {
 			"required": ["@type", "@id", "account_id", "brand_id", "items", "holder_id", "limkey"],
-			"optional": ["links", "actions"]
+			"optional": ["links", "actions", "advisor"]
 		},
 		
 		"relatedActions": {

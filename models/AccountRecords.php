@@ -30,12 +30,11 @@ class AccountRecords extends Base {
 	function get() {
 		$actions = array("pn"=>"use", "np"=>"add", "pp"=>"transfer", "nn"=>"transfer");
 		
+		$advisory = array();
 		$minRecordID = (isset($_GET['minRecordID']) AND $_GET['minRecordID']) ? $_GET['minRecordID'] : 0;
 		$maxRecordID = (isset($_GET['maxRecordID']) AND $_GET['maxRecordID']) ? $_GET['maxRecordID'] : 99999999;  
 		$sql = "CALL accountRecords($this->account_id, $minRecordID, $maxRecordID)";
-		$this->items = DBquery::get($sql); 
-		
-		
+		$this->items = DBquery::get($sql); 		
 		
 		foreach($this->items AS &$r) {
 			$r['@type'] = 'accountRecord';
@@ -66,11 +65,40 @@ class AccountRecords extends Base {
 				if ($status==0) $r['links']['record-hold']="/forms#record-hold";
 				$r['links']['record-approve']="/forms#record-approve";
 				$r['links']['record-reject']="/forms#record-reject";
+				
+				if ($r['brand_id']!=$this->brand_id) {
+					if (!isset($this->advisor)) $this->advisor = $this->getAdvisor();
+					if (!isset($advisory[$r['brand_id']])) $advisory[$r['brand_id']] = $this->getAdvisory($r['brand_id']);
+					$r['advisory'] = $advisory[$r['brand_id']];
+				}
 			}
 		}
 		
 		$this->setForms();
 		
 		return array($this);
+	}
+	
+	function getAdvisor() {
+		$sql = "SELECT advisor FROM brands WHERE brand_id=?";
+		$row = DBquery::get($sql, array($this->brand_id));
+		return $row[0]['advisor'];
+	}
+	
+	function getAdvisory($brand_id) {
+		$tally = DBquery::get("CALL tally(?)", array($brand_id))[0];
+		$url = $this->advisor; // http://localhost/advisor/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}	
+		
+		if ($pos = strpos($url,'{?')) {
+		  $params = substr($url, $pos+2, -1);
+			foreach(explode(",", $params) AS $k) $p[] = "$k=". $tally[$k];
+			$url = substr($url,0,$pos) ."?". implode("&", $p);
+		}
+		else {
+			foreach($tally AS $k=>$v) $url = str_replace("{".$k."}", $v, $url);  
+		}
+		
+		$advisory = json_decode(file_get_contents($url));
+		return $advisory ? $advisory->{"@graph"}[0] : new stdClass();
 	}
 }

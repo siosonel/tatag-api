@@ -42,7 +42,9 @@ CREATE TABLE `brands` (
   `rating_min` float DEFAULT NULL,
   `rating_formula` varchar(255) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
+	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
+	`advisor` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`brand_id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
