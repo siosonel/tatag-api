@@ -229,13 +229,13 @@
 					"name": "John-{xtime}",
 					"password": "pass-2"
 				},
-				"status": 403
+				"status": 400
 			}]
 		}]
 	},
 	
 	"brand": {
-		"description": "A budget-issuing organization.",
+		"description": "An admin's view of a budget-issuing organization.",
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "name", "mission", "description", "created", "tally"],
@@ -1055,11 +1055,13 @@
 			"optional": ["links", "actions", "subtype", "txntype"]
 		},
 		
+		"readOnly": true,
+		
 		"actions": []
 	},
 	
 	"team": {
-		"description": "A budget-issuing organization.",
+		"description": "A member's non-admin view of a budget-issuing organization.",
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "name", "mission", "description", "created", "tally"],

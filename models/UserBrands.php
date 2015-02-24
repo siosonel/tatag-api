@@ -14,8 +14,8 @@ class UserBrands extends Base {
 		$this->idkey = 'user_id';
 		$this->init($data);
 		
-		$this->okToSet = array("hours");
-		$this->okToSet = array("joined","revoked");	
+		$this->okToSet = array("joined","revoked");			
+		$this->okToFilterBy = array("member_id");
 	}
 	
 	function add($data='') {

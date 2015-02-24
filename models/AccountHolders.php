@@ -39,7 +39,7 @@ class AccountHolders extends BrandHolders {
 			WHERE h.account_id=?
 			GROUP BY h.holder_id, h.account_id, h.user_id";
 		
-		$this->items = DBquery::get($sql, array($this->account_id)); print_r($rows);
+		$this->items = DBquery::get($sql, array($this->account_id));
 		
 		foreach($this->items AS &$r) {
 			$r['@id'] = $this->{'@id'} ."?holder_id=". $r['holder_id'];

@@ -54,7 +54,7 @@ function testResource(type) {
 			api.loadType(type).then(function (resource) {
 				var mssg='';
 				currResource = resource;
-				if (!resource.actions) mssg = 'No '+resource['@type']+' actions.';
+				if (!resource.actions && !currDef.relatedActions && !currDef.readOnly) mssg = 'No '+resource['@type']+' actions.';
 				formIDs = resource.actions;
 				done(mssg ? new Error(mssg) : null);
 			})
