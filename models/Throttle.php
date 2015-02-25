@@ -10,7 +10,7 @@ class Throttle extends Base {
 		
 		$this->init($data);
 			
-		$this->okToSet = array("holder_id", "period", "by_all", "by_brand", "by_user", "ended");
+		$this->okToSet = array("period", "by_all", "by_brand", "by_user", "ended");
 		$this->okToFilterBy = array("throttle_id");
 	}
 	
@@ -24,14 +24,17 @@ class Throttle extends Base {
 	
 	function get($filters=array()) {
 		$this->setDetails($filters['throttle_id']);
-		if (!$_GET['brand_id'] AND !$filters) return array($this);
+		if (!$_GET['brand_id'] AND !$filters) {
+			$this->setForms();
+			return array($this);
+		}
 		
 		if ($filters) return $this->asApplied($filters);
 		else return $this->asApplied($_GET);
 	}	
 	
 	function setDetails($throttle_id=0) {
-		$sql = "SELECT * FROM $this->table WHERE throttle_id=?";
+		$sql = "SELECT * FROM $this->table WHERE throttle_id=? AND ended IS NULL";
 		$row = DBquery::get($sql, array($throttle_id ? $throttle_id : $this->throttle_id));
 		if (!$row) Error::http(404, "No details were found for throttle #'$this->throttle_id'.");
 		

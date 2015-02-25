@@ -32,13 +32,15 @@ class Brand extends Base {
 		include_once "models/BrandMembers.php";
 		include_once "models/BrandAccounts.php";
 		include_once "models/BrandHolders.php";
+		include_once "models/BrandThrottles.php";
 		$obj = json_decode('{"brand_id":' . $this->brand_id .'}');
 		
 		return array_merge(
 			array($this),
 			(new BrandMembers($obj))->get(),
 			(new BrandAccounts($obj))->get(),
-			(new BrandHolders($obj))->get()
+			(new BrandHolders($obj))->get(),
+			(new BrandThrottles($obj))->get()
 		);
 	}	
 	
@@ -52,7 +54,8 @@ class Brand extends Base {
 				"brandMembers" => "/brand/$this->brand_id/members",
 				"brandAccounts" => "/brand/$this->brand_id/accounts",				
 				"budgetRecords" => "/budget/$this->brand_id/records",
-				"brandAbout" => "/brand/$this->brand_id/about"
+				"brandAbout" => "/brand/$this->brand_id/about",
+				"brandThrottles" => "/brand/$this->brand_id/throttles"
 			);
 		}
 	}

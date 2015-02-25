@@ -164,7 +164,7 @@ CREATE TABLE `throttles` (
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
-	`link` varchar(255) DEFAULT NULL,
+	`productURL` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`throttle_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

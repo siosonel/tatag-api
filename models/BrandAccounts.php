@@ -37,7 +37,7 @@ class BrandAccounts extends Base {
 	function get() {
 		$sql = "SELECT accounts.account_id, name, 
 			sign*(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) AS balance,
-			unit, authcode, created			
+			unit, authcode, created, throttle_id			
 		FROM accounts
 		LEFT JOIN (
 			SELECT from_acct, SUM(amount) AS amount 

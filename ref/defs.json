@@ -31,7 +31,12 @@
 		"budgetUsed",
 		
 		"accountRecords",
-		"budgetRecords"
+		"budgetRecords",
+		
+		"team",
+		
+		"brandThrottles",
+		"throttle"
 	],
 
 	"user": {		
@@ -381,7 +386,7 @@
 			
 			"inputs": {
 				"required": [],
-				"optional": ["name", "authcode"]
+				"optional": ["name", "authcode", "throttle_id"]
 			},
 			
 			"examples": [{
@@ -529,6 +534,58 @@
 					"user_id": 24,
 					"account_id": 96,
 					"authcode": "cftix"
+				},
+				"status": 403
+			}]
+		}]
+	},
+	
+	"brandThrottles": {
+		"description": "The inflow throttles administered by a brand.",
+
+		"properties": {
+			"required": ["@type", "@id", "brand_id", "items"],
+			"optional": ["links", "actions"]
+		},
+		
+		"relatedActions": {
+			"throttle": ["/forms#admin-throttle-edit"]
+		},
+		
+		"actions": [
+		{
+			"title": "Add an inflow throttle",
+			"@type": "form",
+			"@id": "/forms#throttle-add",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["period", "by_all", "by_brand", "by_user"],
+				"optional": []
+			},
+			
+			"examples": [{
+				"label": "should allow an admin to add a new throttle",
+				"target": "/brand/104/throttles",
+				"method": "POST",
+				
+				"inputs": {
+					"period": "360000",
+					"by_all": "100",
+					"by_brand": "20",
+					"by_user": "2"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-admin to add a throttle",
+				"target": "/brand/105/throttles",
+				"method": "POST",				
+				
+				"inputs": {
+					"period": "360000",
+					"by_all": "100",
+					"by_brand": "20",
+					"by_user": "2"
 				},
 				"status": 403
 			}]
@@ -1064,7 +1121,10 @@
 		"description": "A member's non-admin view of a budget-issuing organization.",
 
 		"properties": {
-			"required": ["@type", "@id", "brand_id", "name", "mission", "description", "created", "tally"],
+			"required": [
+				"@type", "@id", "brand_id", "name", "mission", "description", "created", "tally",
+				"member_id", "role", "hours", "joined", "revoked"
+			],
 			"optional": ["links", "actions"]
 		},
 		
@@ -1115,6 +1175,39 @@
 			},
 			
 			"examples": []
+		}]
+	},
+	
+	"throttle": {	
+		"description": "An item in the brandthrottles collection.",
+		"testURL": "/throttle/1",
+		
+		"properties": {
+			"required": ["@type", "@id", "brand_id", "throttle_id", "period", "by_all", "by_brand", "by_user", "created", "updated", "ended", "productURL"],
+			"optional": ["links", "actions"]
+		},
+		
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#admin-throttle-edit",
+			"method": "POST",
+			
+			"inputs": {
+				"required": [],
+				"optional": ["period", "by_all", "by_brand", "by_user"]
+			},
+			
+			"examples": [{
+				"label": "should allow an admin to edit a throttle's specifications",
+				"target": "/throttle/1",
+				"method": "POST",
+				
+				"inputs": {
+					"period": "99999999"
+				},
+				"status": 200
+			}]
 		}]
 	}
 }
