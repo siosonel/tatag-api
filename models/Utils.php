@@ -26,6 +26,7 @@ class Router {
 		if ($method=='post') { //exit(json_encode(self::$resource ."---". self::$id ."---". self::$subresource));
 			if (
 				self::$subresource=='collection' 
+				OR self::$subresource=='throttles' 
 				OR strpos(self::$resource, 'budget')!==false 
 				OR (self::$resource=='token' AND !self::$id) 
 			) $method = 'add';
@@ -39,13 +40,13 @@ class Router {
 		$data = ($method=='get') ? json_decode(json_encode(array("id"=>self::$id))) : json_decode(trim(file_get_contents($src)));
 		if (gettype($data)!='object') Error::http(400, "Bad Request");
 		
-		$ObjClass = ucfirst(self::$resource) . ucfirst(self::$subresource); 
+		$ObjClass = ucfirst(self::$resource) . ucfirst(self::$subresource);
 		if (!self::$resource OR !file_exists("models/$ObjClass.php")) Error::http(404, self::getLinks());
 				
 		require_once "models/$ObjClass.php";
-		self::$Resource = new $ObjClass($data);
+		self::$Resource = new $ObjClass($data); 
 		
-		if (!method_exists(self::$Resource,$method)) Error::http(405, "The method='$method' is not supported by resource='". self::$resource ."'.");		
+		if (!method_exists(self::$Resource,$method)) Error::http(405, "The method='$method' is not supported by resource='$ObjClass'.");		
 		
 		exit(json_encode(array(
 			"@context"=> "--test--",

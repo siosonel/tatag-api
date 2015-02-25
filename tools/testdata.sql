@@ -101,6 +101,23 @@ INSERT INTO `records` VALUES
 /*!40000 ALTER TABLE `records` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+--
+-- Dumping data for table `throttles`
+--
+
+LOCK TABLES `throttles` WRITE;
+/*!40000 ALTER TABLE `throttles` DISABLE KEYS */;
+INSERT INTO `throttles` VALUES 
+(1,104,41,'xyz',172800,100,20,2,'2015-02-24 10:48:00',NULL,NULL,NULL),
+(2,104,41,'xyz',3600,10,2,1,'2015-02-24 10:48:00',NULL,NULL,NULL),
+(3,104,41,'xyz',9999999,100,20,2,'2015-02-24 10:48:00',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `throttles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+
 --
 -- Dumping data for table `users`
 --

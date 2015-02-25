@@ -73,7 +73,7 @@ CREATE TABLE `holders` (
   `authcode` varchar(12) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
-  `limkey` varchar(12) DEFAULT NULL,
+  `limkey` varchar(16) DEFAULT NULL,
   `alias` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`holder_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -116,6 +116,7 @@ CREATE TABLE `records` (
   `created` timestamp NULL DEFAULT NULL,
   `ref_id` int(11) DEFAULT NULL,
   `status` tinyint(3) DEFAULT '0',
+	`throttle_id` int(11) DEFAULT '0',
   PRIMARY KEY (`record_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -136,6 +137,27 @@ CREATE TABLE `reversals` (
   PRIMARY KEY (`orig_record_id`,`rev_record_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+--
+-- Table structure for table `throttles`
+--
+
+CREATE TABLE `throttles` (
+  `throttle_id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand_id` int(11) DEFAULT '0',
+	`holder_id` int(11) DEFAULT '0',
+	`limkey` varchar(16) DEFAULT NULL,
+  `period` int(11) DEFAULT '0',
+  `by_all` float DEFAULT '0',
+  `by_brand` float DEFAULT '0',
+  `by_user` float DEFAULT '0',
+  `created` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
+  `ended` timestamp NULL DEFAULT NULL,
+	`link` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`throttle_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 --
