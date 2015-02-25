@@ -15,7 +15,7 @@ class BrandAccounts extends Base {
 		$this->okToGet = array("brand_id", "account_id", "name", "balance", "unit", "authcode");
 		$this->okToAdd = array("brand_id", 'name','authcode','unit','sign');
 		
-		$this->okToSet = array("name","authcode");
+		$this->okToSet = array("name","authcode","throttle_id");
 		$this->okToFilterBy = array("brand_id", "account_id");
 	}
 	

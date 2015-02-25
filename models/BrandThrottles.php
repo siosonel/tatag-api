@@ -10,14 +10,13 @@ class BrandThrottles extends Base {
 		
 		$this->init($data);
 			
-		$this->okToAdd = array("brand_id", "holder_id", "limkey", "period", "by_all", "by_brand", "by_user");
+		$this->okToAdd = array("brand_id", "period", "by_all", "by_brand", "by_user");
 		$this->okToFilterBy = array("throttle_id");
 	}
 	
 	function add() {
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "Only brand #$this->brand_id admins can add throttling specifications.");
 		$this->addKeyVal('brand_id', $this->brand_id);
-		$this->addKeyVal("limkey", mt_rand(0, 9999999), "ifMissing");		
 		
 		$this->throttle_id = $this->insert();
 		$this->setDetails();

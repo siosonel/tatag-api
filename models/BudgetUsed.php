@@ -18,7 +18,7 @@ class BudgetUsed extends Base {
 		
 		$this->init($data);
 		
-		$this->okToAdd = array("from_acct", "from_user", "to_acct", "to_user", "amount", "note", "txntype");
+		$this->okToAdd = array("from_acct", "from_user", "to_acct", "to_user", "amount", "note", "txntype", "throttle_id");
 	}
 	
 	function get() {
@@ -36,6 +36,7 @@ class BudgetUsed extends Base {
 	function add() {	
 		$this->addKeyVal('note', 'NULL', 'ifMissing');	
 		$this->addKeyVal('txntype', $this->verifier->txnType, 'ifMissing');
+		$this->addKeyVal('throttle_id', $this->verifier->to_holder['throttle_id']);
 		
 		$this->catchError($this->verifyBals(), $this->verifyAuth());	
 		$this->record_id = $this->insert();
@@ -51,11 +52,13 @@ class BudgetUsed extends Base {
 	}	
 	
 	function catchError($balErr, $authErr='') {		
-		$mssg = $balErr . $authErr;
+		$mssg = $balErr . $authErr; 
+		
+		if ($this->record_id AND method_exists($this->verifier, 'throttleCheck')) $mssg .= $this->verifier->throttleCheck($this->amount);
 		
 		if ($this->record_id AND $mssg) {
-			$sql = "UPDATE records SET status=-1 WHERE entry_id=$this->record_id";
-			$rowCount = DBquery::update($sql);
+			$sql = "UPDATE records SET status=-1 WHERE record_id=$this->record_id";
+			$rowCount = DBquery::set($sql);
 			if (!$rowCount) Error::http(403, "Affected rows=0.");	
 		}
 		

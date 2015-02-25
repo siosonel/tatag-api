@@ -10,14 +10,13 @@ class Throttle extends Base {
 		
 		$this->init($data);
 			
-		$this->okToSet = array("holder_id", "limkey", "period", "by_all", "by_brand", "by_user", "ended");
+		$this->okToSet = array("holder_id", "period", "by_all", "by_brand", "by_user", "ended");
 		$this->okToFilterBy = array("throttle_id");
 	}
 	
 	function set() {	
 		$this->setDetails();
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
-		$this->addKeyVal("limkey", mt_rand(0, 9999999), "ifMissing");
 		
 		$this->update(array("throttle_id" => $this->throttle_id));
 		return array($this->obj);
@@ -44,13 +43,13 @@ class Throttle extends Base {
 		if (!$filters['brand_id']) 
 			Error::http(400, "An array of brand_id values are required when testing the applicability of throttle #$this->throttle_id.");
 		
-		$currtime = time(); $this->throttle_id=0;		
+		$currtime = time(); 
 		$throttle_id = $filters['throttle_id'] ? $filters['throttle_id'] : $this->throttle_id;
 		
 		$sql = "SELECT a.brand_id, from_user, amount, r.created
 			FROM records r
 			JOIN accounts a ON a.account_id=from_acct
-			WHERE throttle_id=? AND r.status>-1 AND r.txntype='pn' AND $currtime - UNIX_TIMESTAMP(r.created) < $this->period;";
+			WHERE r.throttle_id=? AND r.status>-1 AND r.txntype='pn' AND $currtime - UNIX_TIMESTAMP(r.created) < $this->period;";
 		
 		$rows = DBquery::get($sql, array($throttle_id));
 		

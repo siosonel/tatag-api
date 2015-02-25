@@ -25,8 +25,10 @@ CREATE TABLE `accounts` (
   `unit` varchar(24) DEFAULT NULL,
   `balance` decimal(9,2) DEFAULT '0.00',
   `sign` tinyint(4) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
+	`throttle_id` int(11) DEFAULT '0',
   PRIMARY KEY (`account_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -41,7 +43,7 @@ CREATE TABLE `brands` (
   `description` varchar(255) DEFAULT NULL,
   `rating_min` float DEFAULT NULL,
   `rating_formula` varchar(255) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
 	`advisor` varchar(255) DEFAULT NULL,
@@ -59,6 +61,9 @@ CREATE TABLE `consumers` (
   `type` varchar(45) DEFAULT NULL,
   `secret` varchar(80) DEFAULT NULL,
   `redirect_url` varchar(45) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` timestamp NULL DEFAULT NULL,
+  `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`consumer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Machine consumers of the API';
 
@@ -71,7 +76,8 @@ CREATE TABLE `holders` (
   `user_id` int(11) DEFAULT NULL,
   `account_id` int(11) DEFAULT NULL,
   `authcode` varchar(12) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   `limkey` varchar(16) DEFAULT NULL,
   `alias` varchar(255) DEFAULT NULL,
@@ -90,7 +96,8 @@ CREATE TABLE `members` (
   `user_id` int(11) DEFAULT NULL,
   `role` varchar(120) DEFAULT NULL,
   `hours` varchar(45) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
 	`joined` timestamp NULL DEFAULT NULL,
   `revoked` timestamp NULL DEFAULT NULL,
@@ -113,7 +120,8 @@ CREATE TABLE `records` (
   `to_user` int(11) DEFAULT NULL,
   `amount` decimal(9,2) DEFAULT NULL,
   `note` varchar(120) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` timestamp NULL DEFAULT NULL,
   `ref_id` int(11) DEFAULT NULL,
   `status` tinyint(3) DEFAULT '0',
 	`throttle_id` int(11) DEFAULT '0',
@@ -133,7 +141,8 @@ CREATE TABLE `reversals` (
   `adjusted_amt` decimal(7,2) DEFAULT '0.00',
   `note` varchar(160) DEFAULT NULL,
 	`txntype` varchar(2) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`orig_record_id`,`rev_record_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -143,17 +152,17 @@ CREATE TABLE `reversals` (
 -- Table structure for table `throttles`
 --
 
+DROP TABLE IF EXISTS `throttles`;
+
 CREATE TABLE `throttles` (
   `throttle_id` int(11) NOT NULL AUTO_INCREMENT,
   `brand_id` int(11) DEFAULT '0',
-	`holder_id` int(11) DEFAULT '0',
-	`limkey` varchar(16) DEFAULT NULL,
   `period` int(11) DEFAULT '0',
   `by_all` float DEFAULT '0',
   `by_brand` float DEFAULT '0',
   `by_user` float DEFAULT '0',
-  `created` timestamp NULL DEFAULT NULL,
-  `updated` timestamp NULL DEFAULT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
 	`link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`throttle_id`)
@@ -172,7 +181,8 @@ CREATE TABLE `tokens` (
   `user_id` int(11) DEFAULT NULL,
   `otk` varchar(45) DEFAULT '0',
 	`token_val` varchar(45) DEFAULT '0',
-  `created` timestamp NULL DEFAULT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`token_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Used by users to authorize API consumers ';
 
@@ -189,7 +199,8 @@ CREATE TABLE `users` (
   `email` varchar(120) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(80) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
 	`fb_id` varchar(24) DEFAULT '0',
   `gp_id` varchar(24) DEFAULT '0',
@@ -422,7 +433,7 @@ CREATE PROCEDURE `tatagtest`.`accountRecords` (
 )
 BEGIN
 
-SELECT record_id, txntype, 'to' AS direction, 
+SELECT record_id, txntype, 'to' AS direction, r.throttle_id,
 	a.brand_id, b.name AS brand_name, amount, r.created, `status`, note 
 FROM records r 
 JOIN accounts a ON a.account_id = r.to_acct
@@ -450,7 +461,7 @@ CREATE DEFINER=`npxer`@`localhost` PROCEDURE `holderCheck`(
 BEGIN
 
 SELECT holder_id, user_id, limkey, h.authcode AS holder_auth, 
-	a.brand_id, a.account_id, a.authcode AS acct_auth, sign,	
+	a.brand_id, a.account_id, a.authcode AS acct_auth, sign, a.throttle_id,
 	balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0)) AS balance, unit	
 FROM (
 	SELECT * FROM holders WHERE holder_id = holderID AND ended IS NULL
@@ -483,7 +494,7 @@ SELECT a.account_id AS account_id,
 	h.user_id, a.brand_id AS brand_id, b.name AS brand_name, 			
 	sign, balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0)) AS balance, unit,
 	holder_id, limkey, a.authcode as account_authcode, h.authcode as holder_authcode,
-	m.role As role
+	m.role As role, a.throttle_id
 FROM accounts a
 JOIN brands b ON a.brand_id = b.brand_id
 JOIN holders h ON a.account_id=h.account_id AND h.user_id=userID
