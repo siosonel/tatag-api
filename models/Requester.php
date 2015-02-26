@@ -1,6 +1,7 @@
 <?php
 
 include_once "models/Utils.php";
+include_once "models/Router.php";
 include_once "models/Base.php";
 
 class Requester {

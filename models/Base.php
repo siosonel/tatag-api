@@ -108,7 +108,7 @@ class Base {
 		//$sql = "UPDATE $this->table SET ($this->keyStr) VALUES ($this->valStr) WHERE $this->idkey IN ($this->filterVals)";
 		$sql = "UPDATE $this->table SET $keyValStr, updated=NOW() WHERE $this->filterCond"; //exit(json_encode($sql .'... '. json_encode($valArr)));
 		$rowCount = DBquery::set($sql, $valArr);
-		if (!$rowCount) Error::http(500, "Affected rows=0.");	
+		//if (!$rowCount) Error::http(500, "Affected rows=0.");	
 	}
 	
 	function setFilters($arr) {

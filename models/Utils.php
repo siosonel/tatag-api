@@ -1,73 +1,18 @@
 <?php
 
-//$DEF = json_decode();
-
-class Router {
-	public static $resource;
-	public static $id;
-	public static $method; 
-	public static $Resource;
-	public static $subresource;
+class PhlatMedia {	
+	public static function write($output, $error="") {
+		$wrapper = new stdClass();
+		
+		$wrapper->{"@context"}= "--test--";
+		
+		if ($error) $wrapper->error = $error;		
+		$graph = $output;
+		
+		$wrapper->{"@graph"} = $output;
 	
-	public static function run() {	
-		$_url = trim($_GET['_url'], " \/\\\t\n\r\0\x0B");
-		if (!$_url) exit(json_encode(self::getLinks(), JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-		list(self::$resource, self::$id, self::$subresource) = explode("/", $_url);
-		unset($_GET['_url']);
-		
-		if (self::$subresource=='collection' AND self::$id) Error::http(404, "A generic 'collection' subresource for ". self::$resource ." #". self::$id ." does not exist.");		
-		if (!self::$subresource AND !is_numeric(self::$id)) self::$subresource = self::$id;
-		//if (!self::$subresource AND !self::$id) self::$subresource = 'links';
-		
-		
-		$method = strtolower($_SERVER['REQUEST_METHOD']);
-		if (SITE=='dev' AND isset($_GET['method'])) {$method=$_GET['method']; unset($_GET['method']);}
-		
-		if ($method=='post') { //exit(json_encode(self::$resource ."---". self::$id ."---". self::$subresource));
-			if (
-				self::$subresource=='collection' 
-				OR self::$subresource=='throttles' 
-				OR strpos(self::$resource, 'budget')!==false 
-				OR (self::$resource=='token' AND !self::$id) 
-			) $method = 'add';
-			else $method = 'set';
-		}
-		
-		self::$method = $method;				
-		$src = "php://input";
-		if (SITE=='dev' AND isset($_GET['file']) AND file_exists("_exclude/". $_GET['file'] .".json")) $src= "_exclude/". $_GET['file'] .".json";
-		
-		$data = ($method=='get') ? json_decode(json_encode(array("id"=>self::$id))) : json_decode(trim(file_get_contents($src)));
-		if (gettype($data)!='object') Error::http(400, "Bad Request");
-		
-		$ObjClass = ucfirst(self::$resource) . ucfirst(self::$subresource);
-		if (!self::$resource OR !file_exists("models/$ObjClass.php")) Error::http(404, self::getLinks());
-				
-		require_once "models/$ObjClass.php";
-		self::$Resource = new $ObjClass($data); 
-		
-		if (!method_exists(self::$Resource,$method)) Error::http(405, "The method='$method' is not supported by resource='$ObjClass'.");		
-		
-		exit(json_encode(array(
-			"@context"=> "--test--",
-			"@graph"=> array_merge(self::$Resource->$method(), Requester::$graph)
-		), JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-	}
-	
-	public static function getLinks() {
-		$links = json_decode(file_get_contents("ref/tentativeLinks.json"),true);
-		
-		foreach($links AS $key=>&$val) {
-			$val = str_replace("{user_id}", Requester::$user_id, $val);
-		}
-		
-		/*include_once "models/User.php";
-		self::$id = Requester::$user_id;
-		$User = new User(json_decode('{"user_id":'.Requester::$user_id.'}'));
-		
-		return array("@context"=> "--test--", "@graph"=> array_merge(array($links), $User->get()));*/
-		return array("@context"=> "--test--", "@graph"=> array($links));
-	}
+		exit(json_encode($wrapper, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+	}	
 }
 
 class Error {
@@ -80,34 +25,11 @@ class Error {
 	
 	}
 	
-	//
-	static function message($message,$method="") {    
-		//if (!$method) 
-			return $message;
-		//else 
-			//return $method ."(". $message .")";    
-	}
-	
-	//
-	static function halt($message,$method="") {     
-		@header("Content-Type: text/plain");
-		if (self::$codePath) {
-			include self::$codePath;
-			$codeNum = $map[$method];
-			$status = $codes[$codeNum];
-			exit(json_encode(array("code"=>$codeNum,"status"=>$status,"message"=>$message)));
-		}
-		else if (!self::$debug) exit(json_encode(array("status"=>"Error","message"=>$message)));
-		else exit(json_encode(array("status"=>"Error","message"=>$method ."(". $message .")")));   
-	}  
-	
-	
-	static function http($numCode, $mssg="", $debugMssg="") {
+	static function http($numCode, $errorMssg="", $output=array()) {
 		if (function_exists("http_response_code")) http_response_code($numCode);
 		else header("HTTP/1.1 $numCode");
 		
-		if (self::$debug) $mssg .= " [". $debugMssg ."]";			
-		exit(json_encode($mssg, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+		exit(PhlatMedia::write($output, $errorMssg));
 	}
 }
 
@@ -154,7 +76,7 @@ class DBquery {
 	}
 	
 	static function select_db($alias) { 
-		if (!isset(self::$dbs[$alias])) Error::halt("Missing connection alias.","DBquery->select_db");
+		if (!isset(self::$dbs[$alias])) Error::http(500, "Missing connection alias.");
 		self::$conn = self::$dbs[$alias]['conn'];
 	}
 	
