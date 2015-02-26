@@ -34,8 +34,11 @@
 		"budgetRecords",
 		
 		"team",
+		"teamMembers",
+		"teamAccounts",
+		"teamThrottles",
 		
-		"brandThrottles",
+		"budgetThrottles",
 		"throttle"
 	],
 
@@ -540,7 +543,7 @@
 		}]
 	},
 	
-	"brandThrottles": {
+	"budgetThrottles": {
 		"description": "The inflow throttles administered by a brand.",
 
 		"properties": {
@@ -566,7 +569,7 @@
 			
 			"examples": [{
 				"label": "should allow an admin to add a new throttle",
-				"target": "/brand/104/throttles",
+				"target": "/budget/104/throttles",
 				"method": "POST",
 				
 				"inputs": {
@@ -578,7 +581,7 @@
 				"status": 200
 			},{
 				"label": "should NOT allow a non-admin to add a throttle",
-				"target": "/brand/105/throttles",
+				"target": "/budget/105/throttles",
 				"method": "POST",				
 				
 				"inputs": {
@@ -1176,6 +1179,36 @@
 			
 			"examples": []
 		}]
+	},
+
+	"teamMembers": {
+		"description": "Non-admin view of all users that are current members of a brand.",
+		"readOnly": 1,
+		
+		"properties": {
+			"required": ["@type", "@id", "brand_id", "items"],
+			"optional": ["links", "actions"]
+		}
+	},
+	
+	"teamAccounts": {
+		"description": "Non-admin view of the current accounts of a brand.",
+		"readOnly": 1,
+		
+		"properties": {
+			"required": ["@type", "@id", "brand_id", "items"],
+			"optional": ["links", "actions"]
+		}
+	},
+	
+	"teamThrottles": {
+		"description": "The inflow throttles administered by a brand.",
+		"readOnly": 1,
+
+		"properties": {
+			"required": ["@type", "@id", "brand_id", "items"],
+			"optional": ["links", "actions"]
+		}
 	},
 	
 	"throttle": {	

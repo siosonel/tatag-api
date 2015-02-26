@@ -1,11 +1,11 @@
 <?php
 
-class BrandThrottles extends Base {
+class BudgetThrottles extends Base {
 	function __construct($data='') {
 		$this->brand_id = $this->getID();
 		
-		$this->{"@type"} = 'brandThrottles';
-		$this->{"@id"} = "/brand/$this->brand_id/throttles";
+		$this->{"@type"} = 'budgetThrottles';
+		$this->{"@id"} = "/budget/$this->brand_id/throttles";
 		$this->table = "throttles";
 		
 		$this->init($data);
