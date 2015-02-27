@@ -3,6 +3,7 @@
 include_once "models/Utils.php";
 include_once "models/Router.php";
 include_once "models/Base.php";
+include_once "models/Collection.php";
 
 class Requester {
 	public static $user_id=0;

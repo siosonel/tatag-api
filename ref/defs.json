@@ -291,7 +291,7 @@
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
-			"optional": ["links", "actions"]
+			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
 		"actions": [
@@ -377,7 +377,7 @@
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
-			"optional": ["links", "actions"]
+			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
 		"actions": [
@@ -463,7 +463,7 @@
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
-			"optional": ["links", "actions"]
+			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
 		"actions": [
@@ -601,7 +601,7 @@
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items", "member_id", "role", "created", "hours", "user_id"],
-			"optional": ["links", "actions"]
+			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
 		"relatedActions": {
@@ -683,7 +683,7 @@
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items", "account_id"],
-			"optional": ["links", "actions"]
+			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
 		"relatedActions": {
@@ -708,8 +708,8 @@
 		"description": "Default brand collection resource, non-admin, non-self.",
 		
 		"properties": {
-			"required": ["@type", "@id", "numBrands", "earliest", "latest"],
-			"optional": ["links", "actions"]
+			"required": ["@type", "@id", "items",	"numBrands", "earliest", "latest"],
+			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
 		"actions": [{
@@ -992,7 +992,7 @@
 		
 		"properties": {
 			"required": ["@type", "@id", "account_id", "brand_id", "items", "holder_id", "limkey"],
-			"optional": ["links", "actions", "advisor"]
+			"optional": ["links", "actions", "advisor", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
 		"relatedActions": {
@@ -1187,7 +1187,7 @@
 		
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
-			"optional": ["links", "actions"]
+			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		}
 	},
 	
@@ -1197,7 +1197,7 @@
 		
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
-			"optional": ["links", "actions"]
+			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		}
 	},
 	

@@ -18,7 +18,7 @@ class BudgetRecords extends Base {
 		$this->table = "records";		
 		$this->init($data);		
 	}
-	
+		
 	function get() {
 		if (!$this->txntype) {
 			$this->links = array(
@@ -53,7 +53,8 @@ class BudgetRecords extends Base {
 		JOIN accounts a ON r.from_acct = a.account_id OR r.to_acct = a.account_id
 		WHERE brand_id=? AND txntype=?
 		GROUP BY record_id
-		ORDER BY record_id DESC LIMIT 50";
+		ORDER BY record_id DESC 
+		LIMIT 50";
 		$items = DBquery::get($sql, array($this->brand_id, $txntype));
 		
 		if ($txntype=='np') $type = "issued";

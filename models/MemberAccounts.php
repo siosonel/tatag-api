@@ -37,8 +37,10 @@ class MemberAccounts extends BrandHolders {
 			FROM holders h
 			JOIN accounts a ON h.account_id=a.account_id
 			JOIN members m ON h.user_id=m.user_id AND a.brand_id=m.brand_id
-			WHERE h.user_id=? AND a.brand_id=?
-			GROUP BY h.holder_id, h.account_id, h.user_id";
+			WHERE h.user_id=? AND a.brand_id=? AND holder_id $this->ltgt $this->limitID
+			GROUP BY h.holder_id, h.account_id, h.user_id
+			ORDER BY holder_id $this->pageOrder
+			LIMIT $this->itemsLimit";
 		
 		$this->items = DBquery::get($sql, array($this->user_id, $this->brand_id)); //print_r($rows);
 		
@@ -46,7 +48,7 @@ class MemberAccounts extends BrandHolders {
 			$r['@id'] = $this->{'@id'} ."?holder_id=". $r['holder_id'];
 		}
 		
-		$this->setForms();
+		$this->paginate('holder_id');
 		return array($this);
 	}
 }

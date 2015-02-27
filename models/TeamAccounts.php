@@ -1,6 +1,6 @@
 <?php
 
-class TeamAccounts extends Base {
+class TeamAccounts extends Collection {
 	function __construct($data='') {		
 		$this->brand_id = $this->getID();
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
@@ -34,15 +34,17 @@ class TeamAccounts extends Base {
 			WHERE brand_id=?
 			GROUP BY to_acct
 		) t ON to_acct=account_id
-		WHERE brand_id=?
+		WHERE brand_id=? AND account_id $this->ltgt $this->limitID
 		GROUP BY account_id
-		ORDER BY account_id ASC";
+		ORDER BY account_id $this->pageOrder
+		LIMIT $this->itemsLimit";
 		
 		$this->items = DBquery::get($sql, array($this->brand_id, $this->brand_id, $this->brand_id));
 		foreach($this->items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?account_id=". $r['account_id'];
 		}
 		
+		$this->paginate('account_id');
 		return array($this);
 	}
 }

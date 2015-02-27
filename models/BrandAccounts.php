@@ -1,6 +1,6 @@
 <?php
 
-class BrandAccounts extends Base {
+class BrandAccounts extends Collection {
 	function __construct($data='') {		
 		$this->brand_id = $this->getID();
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
@@ -34,7 +34,7 @@ class BrandAccounts extends Base {
 		return array($this);
 	}
 	
-	function get() {
+	function get() {	
 		$sql = "SELECT accounts.account_id, name, 
 			sign*(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) AS balance,
 			unit, authcode, created, throttle_id			
@@ -53,18 +53,20 @@ class BrandAccounts extends Base {
 			WHERE brand_id=?
 			GROUP BY to_acct
 		) t ON to_acct=account_id
-		WHERE brand_id=?
+		WHERE brand_id=? AND account_id $this->ltgt ?
 		GROUP BY account_id
-		ORDER BY account_id ASC";
+		ORDER BY account_id $this->pageOrder
+		LIMIT $this->itemsLimit";
 		
-		$this->items = DBquery::get($sql, array($this->brand_id, $this->brand_id, $this->brand_id));
+		$this->items = DBquery::get($sql, array($this->brand_id, $this->brand_id, $this->brand_id, $this->limitID));
 		foreach($this->items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?account_id=". $r['account_id'];
 			$r['links']['holders'] = "/account/". $r['account_id'] ."/holders";
 		}
 		
-		$this->setForms();
-		
+		//the paginate function will call setForms() when there are no next/prev pages to set
+		//that is, only embed forms in the first page
+		$this->paginate('account_id');		
 		return array($this);
 	}
 }

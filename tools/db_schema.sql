@@ -429,7 +429,8 @@ END;
 CREATE PROCEDURE `tatagtest`.`accountRecords` (
 	IN acctID INT,
 	IN minRecordID INT,
-	IN maxRecordID INT
+	IN maxRecordID INT,
+	IN itemsLimit INT
 )
 BEGIN
 
@@ -438,7 +439,7 @@ SELECT record_id, txntype, 'to' AS direction, r.throttle_id,
 FROM records r 
 JOIN accounts a ON a.account_id = r.to_acct
 JOIN brands b ON a.brand_id = b.brand_id
-WHERE from_acct=acctID AND record_id > minRecordID AND record_id < maxRecordID
+WHERE from_acct=acctID AND record_id < maxRecordID
 
 UNION ALL 
 
@@ -447,9 +448,10 @@ SELECT record_id, txntype, 'from' AS direction,
 FROM records r 
 JOIN accounts a ON a.account_id = r.from_acct
 JOIN brands b ON a.brand_id = b.brand_id
-WHERE to_acct=acctID AND record_id > minRecordID AND record_id < maxRecordID
+WHERE to_acct=acctID AND record_id < maxRecordID
 
-ORDER BY record_id DESC LIMIT 50;
+ORDER BY record_id DESC 
+LIMIT itemsLimit;
 
 END;
 

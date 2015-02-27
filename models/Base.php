@@ -29,6 +29,7 @@ class Base {
 	protected $keyMarkerArr = array();
 	
 	protected $forms = array();
+	protected $embedForms = true;
 	
 	function init($data) {		
 		if (!$data) return;  
@@ -38,6 +39,9 @@ class Base {
 		
 		foreach($data AS $prop=>$val) $this->addKeyVal($prop, $val);		
 		$this->filters = $_GET;
+		
+		//for collections
+		if (method_exists($this, 'setLimitID')) $this->setLimitID();
 	}
 	
 	//generalize the handling of collection or instance identifier from a particular URL structure
@@ -148,7 +152,7 @@ class Base {
 				if (!$relatedForms OR in_array($link,$relatedForms)) { 
 					if (!$relatedType AND !in_array($link, $this->actions)) $this->actions[] = $link; 
 					
-					if (!Requester::$graphRefs[$link]) {
+					if ($this->embedForms AND !Requester::$graphRefs[$link]) {
 						Requester::$graph[] = $form;
 						Requester::$graphRefs[$link]++;
 					}

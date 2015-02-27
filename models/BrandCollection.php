@@ -1,6 +1,6 @@
 <?php
 
-class BrandCollection extends Base {
+class BrandCollection extends Collection {
 	function __construct($data='') {
 		$this->{"@id"} = "/brand/collection";
 		$this->{'@type'} = "brandCollection";
@@ -61,14 +61,22 @@ class BrandCollection extends Base {
 		exit(json_encode($Brand));
 	}
 	
-	function get() { 
-		$this->setForms();
-		
+	function get() { 		
 		$sql = "SELECT COUNT(*) AS numBrands, MIN(created) AS earliest, MAX(created) AS latest FROM brands";
 		$row = DBquery::get($sql);		
 		if (!$row) return array($this);				
 		foreach($row[0] AS $key=>$val) $this->$key = $val;
+	
+		$sql = "SELECT brand_id, name, created, updated, ended 
+			FROM brands 
+			WHERE brand_id $this->ltgt $this->limitID
+			ORDER BY brand_id $this->pageOrder
+			LIMIT $this->itemsLimit";
+	
+		$this->items = DBquery::get($sql);
+		foreach($this->items AS &$b) $b['@id'] = "/brand/". $b['brand_id'] ."/about";
 		
+		$this->paginate("brand_id");
 		return array($this);
 	}
 }

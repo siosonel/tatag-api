@@ -1,6 +1,6 @@
 ﻿<?php
 
-class BrandHolders extends Base {
+class BrandHolders extends Collection {
 	function __construct($data='') { 
 		$this->brand_id = $this->getID();
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
@@ -34,13 +34,15 @@ class BrandHolders extends Base {
 		return array($this);
 	}
 	
-	function get() {
-		$sql = "SELECT user_id, h.account_id, h.authcode, a.authcode, alias, h.created
+	function get() {		
+		$sql = "SELECT holder_id, user_id, h.account_id, h.authcode, a.authcode, alias, h.created
 			FROM holders h JOIN accounts a ON h.account_id=a.account_id
-			WHERE brand_id=?";
+			WHERE brand_id=? AND holder_id $this->ltgt $this->limitID
+			ORDER BY holder_id $this->pageOrder
+			LIMIT $this->itemsLimit";
 		
 		$this->items = DBquery::get($sql, array($this->brand_id));
-		$this->setForms();		
+		$this->paginate('holder_id');
 		return array($this);
 	}
 	

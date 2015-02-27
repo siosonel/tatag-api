@@ -1,6 +1,6 @@
 <?php
 
-class AccountRecords extends Base {
+class AccountRecords extends Collection {
 	function __construct($data='') {		
 		$this->account_id = $this->getID();
 		
@@ -13,6 +13,8 @@ class AccountRecords extends Base {
 		$this->{'@id'} = "/account/$this->account_id/records";
 		$this->table = "records";
 		$this->idkey = 'account_id';
+		
+		$this->pageOrder = "desc"; //prevents being reset
 		
 		$this->init($data);
 		
@@ -29,11 +31,10 @@ class AccountRecords extends Base {
 	
 	function get() {
 		$actions = array("pn"=>"use", "np"=>"add", "pp"=>"transfer", "nn"=>"transfer");
+		$advisory = array();		
 		
-		$advisory = array();
-		$minRecordID = (isset($_GET['minRecordID']) AND $_GET['minRecordID']) ? $_GET['minRecordID'] : 0;
-		$maxRecordID = (isset($_GET['maxRecordID']) AND $_GET['maxRecordID']) ? $_GET['maxRecordID'] : 99999999;  
-		$sql = "CALL accountRecords($this->account_id, $minRecordID, $maxRecordID)";
+		//only desc order, no option to order asc
+		$sql = "CALL accountRecords($this->account_id, $this->limitID, $this->itemsLimit)";
 		$this->items = DBquery::get($sql); 		
 		
 		foreach($this->items AS &$r) {
@@ -74,8 +75,7 @@ class AccountRecords extends Base {
 			}
 		}
 		
-		$this->setForms();
-		
+		$this->paginate('record_id');
 		return array($this);
 	}
 	

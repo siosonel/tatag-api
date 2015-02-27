@@ -1,6 +1,6 @@
 ﻿<?php
 
-class BrandMembers extends Base {
+class BrandMembers extends Collection {
 	function __construct($data='') {
 		$this->brand_id = $this->getID();
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
@@ -41,13 +41,13 @@ class BrandMembers extends Base {
 		}
 	}
 	
-	function get() {		
+	function get() {
 		$sql = "SELECT member_id, brand_id, m.user_id, role, hours, m.created, u.name, m.joined, m.revoked
 			FROM members m
 			JOIN users u ON u.user_id=m.user_id 
-			WHERE brand_id=? 
-			AND m.ended IS NULL AND m.revoked IS NULL
-			ORDER BY member_id DESC";
+			WHERE brand_id=? AND m.ended IS NULL AND m.revoked IS NULL AND member_id $this->ltgt $this->limitID
+			ORDER BY member_id $this->pageOrder
+			LIMIT $this->itemsLimit";
 		
 		$this->items = DBquery::get($sql, array($this->brand_id));		
 		foreach($this->items AS &$r) {
@@ -55,7 +55,7 @@ class BrandMembers extends Base {
 			$r['links']['accounts'] = "/member/". $r['member_id'] ."/accounts";
 		}
 		
-		$this->setForms();
+		$this->paginate('member_id');
 		return array($this);
 	}
 	

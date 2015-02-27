@@ -1,6 +1,6 @@
 <?php
 
-class Brand extends Base {
+class Brand extends Base {	
 	function __construct($data='') {
 		$this->brand_id = $this->getID();		
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
