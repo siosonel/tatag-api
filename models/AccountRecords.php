@@ -24,8 +24,14 @@ class AccountRecords extends Collection {
 	}
 	
 	function set() {
-		$this->setFilters($_GET);
-		$sql = $this->update();
+		if (!$_GET['record_id']) Error::http(403, 'Missing record_id GET query parameter value, which is required for updating the record status.');
+	
+		if ($this->status==7) $row = DBquery::get("CALL approveRecord(". $_GET['record_id'] .")");
+		else {
+			$this->setFilters($_GET);		
+			$row = $this->update();
+		}
+		
 		return array($this->obj);
 	}
 	

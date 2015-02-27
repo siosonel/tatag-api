@@ -227,18 +227,19 @@ FROM accounts
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE from_acct=acctID AND  (status=7 OR (status > -1 AND amount>0))
+	WHERE from_acct=acctID AND status BETWEEN 0 AND 6 AND amount>0
 ) f ON from_acct=account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE to_acct=acctID AND (status=7 OR (status > -1 AND amount<0))
+	WHERE to_acct=acctID AND status BETWEEN 0 AND 6 AND amount<0
 ) t ON to_acct=account_id
 WHERE account_id=acctID;
 
 END;
 
 
+DROP PROCEDURE IF EXISTS `acctAuthBals`;
 
 CREATE PROCEDURE `acctAuthBals`(
 	IN fromAcct INT,
@@ -251,13 +252,13 @@ FROM accounts
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE from_acct IN (fromAcct, toAcct) AND (status=7 OR (status > -1 AND amount>0))
+	WHERE from_acct IN (fromAcct, toAcct) AND status BETWEEN 0 AND 6 AND amount>0
 	GROUP BY from_acct
 ) f ON from_acct=account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE to_acct IN (fromAcct, toAcct) AND (status=7 OR (status > -1 AND amount<0))
+	WHERE to_acct IN (fromAcct, toAcct) AND status BETWEEN 0 AND 6 AND amount<0
 	GROUP BY to_acct
 ) t ON to_acct=account_id
 WHERE account_id IN (fromAcct, toAcct);
@@ -265,6 +266,8 @@ WHERE account_id IN (fromAcct, toAcct);
 END;
 
 
+
+DROP PROCEDURE IF EXISTS `holderAccts`;
 
 CREATE PROCEDURE `holderAccts`(IN userID INT)
 BEGIN
@@ -277,13 +280,13 @@ FROM accounts a
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE status=7 OR (status > -1 AND amount>0)
+	WHERE status BETWEEN 0 AND 6 AND amount>0
 	GROUP BY from_acct
 ) f ON from_acct=account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records 
-	WHERE status=7 OR (status > -1 AND amount<0)
+	WHERE status BETWEEN 0 AND 6 AND amount<0
 	GROUP BY to_acct
 ) t ON to_acct=account_id
 JOIN holders h ON (h.account_id=a.account_id)
@@ -292,6 +295,8 @@ WHERE user_id=userID;
 END;
 
 
+
+DROP PROCEDURE IF EXISTS `postBal`;
 
 CREATE PROCEDURE `postBal`(
 	IN fromAcct INT,
@@ -314,13 +319,13 @@ BEGIN
 	LEFT JOIN (
 		SELECT from_acct, SUM(amount) AS amount 
 		FROM records
-		WHERE from_acct IN (fromAcct, toAcct) AND record_id <= @entryID AND (status=7 OR (status > -1 AND amount>0))
+		WHERE from_acct IN (fromAcct, toAcct) AND record_id <= @entryID AND status BETWEEN 0 AND 6 AND amount>0
 		GROUP BY from_acct
 	) f ON from_acct=account_id
 	LEFT JOIN (
 		SELECT to_acct, SUM(amount) AS amount
 		FROM records
-		WHERE to_acct IN (fromAcct, toAcct) AND record_id <= @entryID AND (status=7 OR (status > -1 AND amount<0))
+		WHERE to_acct IN (fromAcct, toAcct) AND record_id <= @entryID AND status BETWEEN 0 AND 6 AND amount<0
 		GROUP BY to_acct
 	) t ON to_acct=account_id
 	WHERE account_id IN (fromAcct, toAcct)
@@ -336,6 +341,7 @@ BEGIN
 END;
 
 
+DROP PROCEDURE IF EXISTS `tally`;
 
 CREATE PROCEDURE `tally`(IN brandID INT)
 BEGIN
@@ -384,7 +390,7 @@ LEFT JOIN (
 		JOIN accounts a ON a.account_id=r.from_acct 
 			AND a.sign=-1 
 			AND a.brand_id IN (brandID) 
-			AND (status=7 OR (status > -1 AND amount>0))
+			AND status BETWEEN 0 AND 6 AND amount>0
 	) f ON from_acct=account_id
 	LEFT JOIN (
 		SELECT to_acct, SUM(amount) AS amount 
@@ -392,7 +398,7 @@ LEFT JOIN (
 		JOIN accounts a ON a.account_id=r.to_acct 
 			AND a.sign=-1 
 			AND brand_id IN (brandID) 
-			AND (status=7 OR (status > -1 AND amount<0))
+			AND status BETWEEN 0 AND 6 AND amount>0
 	) t ON to_acct=account_id	
 	WHERE brand_id IN (brandID)
 ) N ON brands.brand_id=N.brand_id
@@ -406,7 +412,7 @@ LEFT JOIN (
 		JOIN accounts a ON a.account_id=r.from_acct 
 			AND a.sign=1 
 			AND a.brand_id IN (brandID) 
-			AND (status=7 OR (status > -1 AND amount>0))
+			AND status BETWEEN 0 AND 6 AND amount<0
 	) f ON from_acct=account_id
 	LEFT JOIN (
 		SELECT to_acct, SUM(amount) AS amount 
@@ -414,7 +420,7 @@ LEFT JOIN (
 		JOIN accounts a ON a.account_id=r.to_acct 
 			AND a.sign=1 
 			AND brand_id IN (brandID) 
-			AND (status=7 OR (status > -1 AND amount<0))
+			AND status BETWEEN 0 AND 6 AND amount<0
 	) t ON to_acct=account_id
 	WHERE brand_id IN (brandID)
 ) P ON brands.brand_id=P.brand_id
@@ -425,10 +431,10 @@ GROUP BY brand_id;
 END;
 
 
+DROP PROCEDURE IF EXISTS `accountRecords`;
 
 CREATE PROCEDURE `tatagtest`.`accountRecords` (
 	IN acctID INT,
-	IN minRecordID INT,
 	IN maxRecordID INT,
 	IN itemsLimit INT
 )
@@ -443,7 +449,7 @@ WHERE from_acct=acctID AND record_id < maxRecordID
 
 UNION ALL 
 
-SELECT record_id, txntype, 'from' AS direction,
+SELECT record_id, txntype, 'from' AS direction, r.throttle_id,
 	a.brand_id, b.name AS brand_name, amount, r.created, `status`, note
 FROM records r 
 JOIN accounts a ON a.account_id = r.from_acct
@@ -456,6 +462,8 @@ LIMIT itemsLimit;
 END;
 
 
+
+DROP PROCEDURE IF EXISTS `holderCheck`;
 
 CREATE DEFINER=`npxer`@`localhost` PROCEDURE `holderCheck`(
 	IN holderID INT
@@ -472,19 +480,21 @@ JOIN accounts a ON a.account_id=h.account_id
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE status=7 OR (status > -1 AND amount>0)
+	WHERE status BETWEEN 0 AND 6 AND amount>0
 	GROUP BY from_acct
 ) f ON from_acct = h.account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE status=7 OR (status > -1 AND amount<0)
+	WHERE status BETWEEN 0 AND 6 AND amount<0
 	GROUP BY to_acct
 ) t ON to_acct = h.account_id;
 
 END;
 
 
+
+DROP PROCEDURE IF EXISTS `userAccounts`;
 
 CREATE PROCEDURE `tatagtest`.`userAccounts` (
 	IN userID INT
@@ -504,17 +514,42 @@ JOIN members m ON m.brand_id = a.brand_id
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE status=7 OR (status > -1 AND amount>0)
+	WHERE status BETWEEN 0 AND 6 AND amount>0
 	GROUP BY from_acct
 ) f ON from_acct=a.account_id
 LEFT JOIN (
 	SELECT to_acct, SUM(amount) AS amount 
 	FROM records
-	WHERE status=7 OR (status > -1 AND amount<0)
+	WHERE status BETWEEN 0 AND 6 AND amount<0
 	GROUP BY to_acct
 ) t ON to_acct=a.account_id
 GROUP BY a.account_id;
 
-END
+END;
+
+
+DROP PROCEDURE IF EXISTS `approveRecord`;
+
+CREATE PROCEDURE `tatagtest`.`approveRecord` (
+	IN $record_id INT
+)
+
+BEGIN
+
+START TRANSACTION;
+
+SELECT from_acct, to_acct, amount INTO @f, @t, @amount
+FROM records
+WHERE record_id=$record_id;
+
+UPDATE records SET status=7 WHERE record_id=$record_id;
+
+UPDATE accounts SET balance = balance-@amount WHERE account_id=@f;
+
+UPDATE accounts SET balance = balance+@amount WHERE account_id=@t;
+
+COMMIT;
+
+END;
 
 -- Dump completed on 2014-12-26 20:00:04

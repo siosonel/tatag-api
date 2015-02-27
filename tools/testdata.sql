@@ -22,11 +22,11 @@
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
 INSERT INTO `accounts` VALUES 
-(92,104,'Main Revenue','cftix','hour',0.00,-1,'2015-01-05 19:53:31',NULL,NULL,0),
-(93,104,'Main Expense','cftix','hour',0.00,1,'2015-01-05 19:53:31',NULL,NULL,0),
-(94,104,'Personal Expense','ti','hour',0.00,1,'2015-01-05 19:53:32',NULL,NULL,0),
-(95,105,'Main Revenue','cftix','hour',0.00,-1,'2015-01-05 19:53:33',NULL,NULL,0),
-(96,105,'Main Expense','cftix','hour',0.00,1,'2015-01-05 19:53:33',NULL,NULL,0),
+(92,104,'Main Revenue','cftix','hour',1000.00,-1,'2015-01-05 19:53:31',NULL,NULL,0),
+(93,104,'Main Expense','cftix','hour',964.13,1,'2015-01-05 19:53:31',NULL,NULL,0),
+(94,104,'Personal Expense','ti','hour',35.87,1,'2015-01-05 19:53:32',NULL,NULL,0),
+(95,105,'Main Revenue','cftix','hour',1000.00,-1,'2015-01-05 19:53:33',NULL,NULL,0),
+(96,105,'Main Expense','cftix','hour',1000.00,1,'2015-01-05 19:53:33',NULL,NULL,0),
 (97,104,'Test Expense','ftix','hour',0.00,1,'2015-01-05 19:53:33',NULL,NULL,0);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -94,7 +94,7 @@ INSERT INTO `records` VALUES
 (30,'np',92,21,93,21,1000.00,'first budget','2015-01-05 19:53:32',NULL,0,7,0)
 ,(31,'pp',93,21,94,21,35.87,'wages','2015-01-05 19:53:32',NULL,0,7,0)
 ,(32,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-05 19:53:32',NULL,0,0,0)
-,(33,'np',95,22,96,22,1000.00,'first budget','2015-01-05 19:53:33',NULL,0,0,0)
+,(33,'np',95,22,96,22,1000.00,'first budget','2015-01-05 19:53:33',NULL,0,7,0)
 ,(34,'pn',96,22,92,21,9.37,'first external budget use','2015-01-05 19:53:33',NULL,0,0,0)
 ,(35,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:13:00',NULL,0,0,0)
 ,(36,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:29:57',NULL,0,0,0);
