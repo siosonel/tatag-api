@@ -30,14 +30,15 @@ class Team extends Base {
 	}
 	
 	function get() {
-		$this->getRole();
-		
+		$this->getRole();		
 		$this->getInfo();
-		$tally = DBquery::get("CALL tally(?)", array($this->brand_id))[0];
 		
+		$startDate = "2015-01-01 00:00:00";
+		$endDate = "2015-12-31 11:59:59";
+		$tally = DBquery::get("CALL tally($this->brand_id, '$startDate', '$endDate')")[0];
 		if (!$tally) return array(null);
-		
 		$this->tally = array_merge(array("@type" => "budgetTally"),$tally);
+		
 		$this->setForms(); 
 		if ($this->joined) $this->actions = array_values(array_diff($this->actions, array("/forms#member-accept")));
 		

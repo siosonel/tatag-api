@@ -341,95 +341,6 @@ BEGIN
 END;
 
 
-DROP PROCEDURE IF EXISTS `tally`;
-
-CREATE PROCEDURE `tally`(IN brandID INT)
-BEGIN
-SELECT brands.brand_id, 
-	C.addedBudget, I.intrause, inflow, outflow, revBudget, expBudget,
-	numMembers, totalMemberHours
-FROM brands
-LEFT JOIN ( -- budget created
-	SELECT SUM(amount) AS addedBudget, f.brand_id
-	FROM records r
-	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN (brandID) AND f.sign=-1
-	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN (brandID) AND t.sign=1
-	WHERE status > -1
-) C ON brands.brand_id=C.brand_id
-LEFT JOIN ( -- intrause
-	SELECT SUM(amount) AS intrause, f.brand_id
-	FROM records r
-	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN (brandID) AND f.sign=1
-	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN (brandID) AND t.sign=-1
-	WHERE r.status > -1
-) I ON brands.brand_id=C.brand_id
-LEFT JOIN ( -- inflow
-	SELECT SUM(amount) AS inflow, t.brand_id
-	FROM records r
-	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id NOT IN (brandID) -- AND f.sign=1
-	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN (brandID) -- AND t.sign=-1
-	WHERE r.status > -1
-) flowin ON brands.brand_id=C.brand_id
-LEFT JOIN ( -- outflow
-	SELECT SUM(amount) AS outflow, f.brand_id
-	FROM records r
-	JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN (brandID) -- AND f.sign=1
-	JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id NOT IN (brandID) -- AND t.sign=-1
-	WHERE r.status > -1
-) flowout ON brands.brand_id=C.brand_id
-LEFT JOIN (
-	SELECT COUNT(*) AS numMembers, SUM(hours) AS totalMemberHours, brand_id FROM members WHERE brand_id IN (brandID) 
-) m ON brands.brand_id=m.brand_id
-
-LEFT JOIN ( 
-	SELECT brand_id, SUM(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) AS revBudget
-	FROM accounts
-	LEFT JOIN (
-		SELECT from_acct, SUM(amount) AS amount 
-		FROM records r
-		JOIN accounts a ON a.account_id=r.from_acct 
-			AND a.sign=-1 
-			AND a.brand_id IN (brandID) 
-			AND status BETWEEN 0 AND 6 AND amount>0
-	) f ON from_acct=account_id
-	LEFT JOIN (
-		SELECT to_acct, SUM(amount) AS amount 
-		FROM records r
-		JOIN accounts a ON a.account_id=r.to_acct 
-			AND a.sign=-1 
-			AND brand_id IN (brandID) 
-			AND status BETWEEN 0 AND 6 AND amount>0
-	) t ON to_acct=account_id	
-	WHERE brand_id IN (brandID)
-) N ON brands.brand_id=N.brand_id
-
-LEFT JOIN (
-	SELECT brand_id, SUM(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) AS expBudget
-	FROM accounts
-	LEFT JOIN (
-		SELECT from_acct, SUM(amount) AS amount 
-		FROM records r
-		JOIN accounts a ON a.account_id=r.from_acct 
-			AND a.sign=1 
-			AND a.brand_id IN (brandID) 
-			AND status BETWEEN 0 AND 6 AND amount<0
-	) f ON from_acct=account_id
-	LEFT JOIN (
-		SELECT to_acct, SUM(amount) AS amount 
-		FROM records r
-		JOIN accounts a ON a.account_id=r.to_acct 
-			AND a.sign=1 
-			AND brand_id IN (brandID) 
-			AND status BETWEEN 0 AND 6 AND amount<0
-	) t ON to_acct=account_id
-	WHERE brand_id IN (brandID)
-) P ON brands.brand_id=P.brand_id
-WHERE brands.brand_id IN (brandID)
-GROUP BY brand_id;
-
-
-END;
-
 
 DROP PROCEDURE IF EXISTS `accountRecords`;
 
@@ -441,6 +352,7 @@ CREATE PROCEDURE `tatagtest`.`accountRecords` (
 BEGIN
 
 SELECT record_id, txntype, 'to' AS direction, r.throttle_id,
+	to_acct AS other_acct,
 	a.brand_id, b.name AS brand_name, amount, r.created, `status`, note 
 FROM records r 
 JOIN accounts a ON a.account_id = r.to_acct
@@ -450,6 +362,7 @@ WHERE from_acct=acctID AND record_id < maxRecordID
 UNION ALL 
 
 SELECT record_id, txntype, 'from' AS direction, r.throttle_id,
+	from_acct AS other_acct,
 	a.brand_id, b.name AS brand_name, amount, r.created, `status`, note
 FROM records r 
 JOIN accounts a ON a.account_id = r.from_acct
@@ -530,26 +443,231 @@ END;
 
 DROP PROCEDURE IF EXISTS `approveRecord`;
 
-CREATE PROCEDURE `tatagtest`.`approveRecord` (
+CREATE DEFINER=`npxer`@`localhost` PROCEDURE `approveRecord`(
 	IN $record_id INT
+)
+BEGIN
+
+SELECT from_acct, to_acct, amount INTO @f, @t, @amount
+FROM records
+WHERE record_id=$record_id AND status BETWEEN 0 AND 6;
+
+IF @f!=0 AND @t!=0 THEN BEGIN
+	START TRANSACTION;
+	UPDATE records SET status=7 WHERE record_id=$record_id;
+	UPDATE accounts SET balance = balance-sign*@amount WHERE account_id=@f;
+	UPDATE accounts SET balance = balance+sign*@amount WHERE account_id=@t;
+	COMMIT;
+	END; 
+END IF;
+END;
+
+
+
+DROP PROCEDURE IF EXISTS `brandAccountsAsc`;
+
+CREATE PROCEDURE `tatagtest`.`brandAccountsAsc` (
+	IN $brandID INT,
+	IN $maxAccountID INT,
+	IN $itemsLimit INT
+)
+BEGIN
+
+SELECT accounts.account_id, name, 
+	sign*(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) AS balance,
+	unit, authcode, created, throttle_id			
+FROM accounts
+LEFT JOIN (
+	SELECT from_acct, SUM(amount) AS amount 
+	FROM records 
+	JOIN accounts ON from_acct=accounts.account_id 
+	WHERE brand_id=$brandID
+		AND records.status BETWEEN 0 AND 6 
+		AND amount > 0
+	GROUP BY from_acct
+) f ON from_acct=account_id
+LEFT JOIN (
+	SELECT to_acct, SUM(amount) AS amount 
+	FROM records
+	JOIN accounts ON to_acct=accounts.account_id
+	WHERE brand_id=$brandID 
+		AND records.status BETWEEN 0 AND 6 
+		AND amount < 0
+	GROUP BY to_acct
+) t ON to_acct=account_id
+WHERE brand_id=$brandID AND account_id > $maxAccountID
+GROUP BY account_id
+ORDER BY account_id ASC
+LIMIT $itemsLimit;
+
+END;
+
+
+
+DROP PROCEDURE IF EXISTS `tallyAdded`;
+
+CREATE PROCEDURE `tatagtest`.`tallyAdded` (
+	IN $brandID INT,
+	IN $startDate TIMESTAMP,
+	IN $endDate TIMESTAMP,
+	OUT $added DECIMAL(9,2)
+)
+BEGIN
+
+SELECT SUM(amount) INTO $added
+FROM records r
+JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN ($brandID) AND f.sign=-1
+JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN ($brandID) AND t.sign=1
+WHERE f.brand_id = $brandID
+	AND txntype='np'
+	AND status>-1
+	AND r.created BETWEEN $startDate AND $endDate;
+
+END
+
+
+
+
+DROP PROCEDURE IF EXISTS `tallyIntrause`;
+
+CREATE PROCEDURE `tatagtest`.`tallyIntrause` (
+	IN $brandID INT,
+	IN $startDate TIMESTAMP,
+	IN $endDate TIMESTAMP,
+	OUT $intrause DECIMAL(9,2)
 )
 
 BEGIN
 
-START TRANSACTION;
-
-SELECT from_acct, to_acct, amount INTO @f, @t, @amount
-FROM records
-WHERE record_id=$record_id;
-
-UPDATE records SET status=7 WHERE record_id=$record_id;
-
-UPDATE accounts SET balance = balance-@amount WHERE account_id=@f;
-
-UPDATE accounts SET balance = balance+@amount WHERE account_id=@t;
-
-COMMIT;
+SELECT SUM(amount) INTO $intrause
+FROM records r
+JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN ($brandID)
+JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN ($brandID)
+WHERE t.brand_id = $brandID
+	AND txntype='pn'
+	AND status>-1
+	AND r.created BETWEEN $startDate AND $endDate;
 
 END;
 
--- Dump completed on 2014-12-26 20:00:04
+
+
+DROP PROCEDURE IF EXISTS `tallyInflow`;
+
+CREATE PROCEDURE `tatagtest`.`tallyInflow` (
+	IN $brandID INT,
+	IN $startDate TIMESTAMP,
+	IN $endDate TIMESTAMP,
+	OUT $inflow DECIMAL(9,2)
+)
+BEGIN
+
+SELECT SUM(amount) INTO $inflow
+FROM records r
+JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id NOT IN ($brandID)
+JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN ($brandID)
+WHERE t.brand_id = $brandID
+	AND txntype='pn'
+	AND status>-1
+	AND r.created BETWEEN $startDate AND $endDate;
+
+END
+
+
+
+
+DROP PROCEDURE IF EXISTS `tallyOutflow`;
+
+CREATE PROCEDURE `tatagtest`.`tallyOutflow` (
+	IN $brandID INT,
+	IN $startDate TIMESTAMP,
+	IN $endDate TIMESTAMP,
+	OUT $outflow DECIMAL(9,2)
+)
+
+BEGIN
+
+SELECT SUM(amount) INTO $outflow
+FROM records r
+JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN ($brandID)
+JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id NOT IN ($brandID)
+WHERE t.brand_id = $brandID
+	AND txntype='pn'
+	AND status>-1
+	AND r.created BETWEEN $startDate AND $endDate;
+
+END;
+
+
+
+
+DROP PROCEDURE IF EXISTS `budgetTotal`;
+
+
+CREATE PROCEDURE `tatagtest`.`budgetTotal` (
+	IN $brandID INT,
+	IN $sign INT,
+	OUT $budget DECIMAL(9,2)
+)
+BEGIN
+
+SELECT SUM(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) INTO $budget
+FROM accounts
+LEFT JOIN (
+	SELECT from_acct, SUM(amount) AS amount 
+	FROM records r
+	JOIN accounts a ON a.account_id=r.from_acct 
+		AND a.sign=$sign
+		AND a.brand_id=$brandID
+		AND status BETWEEN 0 AND 6 AND amount>0
+) f ON from_acct=account_id
+LEFT JOIN (
+	SELECT to_acct, SUM(amount) AS amount 
+	FROM records r
+	JOIN accounts a ON a.account_id=r.to_acct 
+		AND a.sign=$sign
+		AND brand_id=$brandID
+		AND status BETWEEN 0 AND 6 AND amount<0
+) t ON to_acct=account_id	
+WHERE brand_id=$brandID AND sign=$sign;
+
+END;
+
+
+
+
+DROP PROCEDURE IF EXISTS `tally`;
+
+CREATE DEFINER=`npxer`@`localhost` PROCEDURE `tally`(
+	IN $brandID INT,
+	IN $startDate TIMESTAMP,
+	IN $endDate TIMESTAMP
+)
+BEGIN
+
+call tallyAdded($brandID, $startDate, $endDate, @added);
+call tallyIntrause($brandID, $startDate, $endDate, @intrause);
+call tallyInflow($brandID, $startDate, $endDate, @inflow);
+call tallyOutflow($brandID, $startDate, $endDate, @outflow);
+
+call budgetTotal($brandID,-1,@rev);
+call budgetTotal($brandID,1,@exp);
+
+
+SELECT COUNT(*), SUM(hours) 
+INTO @numMembers, @totalMemberHours
+FROM members 
+WHERE brand_id=$brandID;
+
+select 
+	@added AS added, 
+	@intrause AS intrause, 
+	@inflow AS inflow, 
+	@outflow AS outflow,
+	@rev AS revBudget,
+	@exp AS expBudget,
+	@numMembers AS numMembers,
+	@totalMemberHours AS totalMemberHours;
+
+
+END;

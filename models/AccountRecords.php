@@ -92,7 +92,10 @@ class AccountRecords extends Collection {
 	}
 	
 	function getAdvisory($brand_id) {
-		$tally = DBquery::get("CALL tally(?)", array($brand_id))[0];
+		$startDate = "2015-01-01 00:00:00";
+		$endDate = "2015-12-31 11:59:59";
+	
+		$tally = DBquery::get("CALL tally($brand_id, '$startDate', '$endDate')")[0];
 		$url = $this->advisor; // http://localhost/advisor/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}	
 		
 		if ($pos = strpos($url,'{?')) {

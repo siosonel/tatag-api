@@ -6,7 +6,6 @@
 		"user",
 		"userMemberships",
 		"userAccounts",
-		"#userFeed",
 		
 		"brand",
 		"brandMembers",
@@ -16,12 +15,8 @@
 		"memberAccounts",
 		"accountHolders",
 		
-		"#brandFeed",
-		
 		"#userAbout",
-		"#userWall",
 		"#brandAbout",
-		"#brandWall",
 		
 		"userCollection",
 		"brandCollection",
