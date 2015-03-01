@@ -71,6 +71,10 @@ class Router {
 			$val = str_replace("{user_id}", Requester::$user_id, $val);
 		}
 		
+		$links['user_id'] = Requester::$user_id;
+		$links['name'] = Requester::$name;
+		$links['login_provider'] = Requester::$login_provider;
+		
 		return array($links);
 	}
 }

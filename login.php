@@ -1,4 +1,9 @@
-﻿<?php include "config.php"; ?><!DOCTYPE html>
+﻿<?php 
+
+include "config.php"; 
+$provider = isset($_GET['provider']) ? $_GET['provider'] : '';
+
+?><!DOCTYPE html>
 <html>
 <head>
 <title>Login</title>
@@ -8,7 +13,11 @@
 </head>
 <body>
 	<div style='width:100%; text-align: center;'>
+		<br />
 		<h2>Register or Log-In to Tatag Using</h2>
+		<br />
+		
+		<?php if (!$provider OR $provider=="gp") { ?>
 		<span id="signinButton">
 			<span
 				class="g-signin"
@@ -20,14 +29,21 @@
 			</span>
 		</span>
 		<br /><br />
+		<?php } ?>
+		
+		<?php if (!$provider OR $provider=="fb") { ?>
 		<div id="fb-root" style='display: inline-block;'>
 			<fb:login-button scope="public_profile,email" data-size='large' onlogin="checkLoginState();"></fb:login-button>
 		</div>
 		<br /><br />
+		<?php } ?>
+		
+		<?php if (!$provider OR $provider=="tw") { ?>
 		<a href='login_twitter.php?<?php echo $_SERVER['QUERY_STRING'];?>' style='text-decoration: none; font-size:18px;'>
 			<img src='https://g.twimg.com/Twitter_logo_blue.png' style='width: 22px;'/>
 			<span style='vertical-align:top;'>Sign-in</span>
 		</a>
+		<?php } ?>
 	</div>
 
 	<script type="text/javascript">	

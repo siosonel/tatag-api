@@ -9,12 +9,17 @@ class Tokengp extends Token {
 		if ($info->error) Error::http(500, "Error retrieving information for access_token='$this->access_token': [$info->error].");
 		if ($info->audience != GAPI_CLIENT_ID) Error::http(401, "An invalid client_id was retrieved for access_token='$this->access_token'.");
 		
-		$this->okToSet = array("otk","user_id");		
+		$this->okToSet = array("otk","user_id", "login_provider");		
 		$this->user_id = $this->getByOauthID($info);
-		$this->addKeyVal('user_id',$this->user_id);
-		
+		$this->addKeyVal('user_id',$this->user_id);		
 		$this->addKeyVal('otk', mt_rand(1, 99999999));
-		$this->update(array("token_id" => $this->token_id, "otk"=> Requester::$otk, "token_val"=>'0'));
+		$this->addKeyVal('login_provider', 'gp');
+		
+		$this->update(array(
+			"token_id" => $this->token_id, 
+			"otk"=> Requester::$otk, 
+			"token_val"=>'0'
+		));
 		return array($this);
 	}
 	
@@ -30,7 +35,8 @@ class Tokengp extends Token {
 			"email": "'. $info->email .'",
 			"name": "'. $info->name .'",
 			"password": "'. mt_rand(5,99999999) .'",
-			"gp_id": "'. $gp_id .'"
+			"gp_id": "'. $gp_id .'",
+			"login_provider": "gp"
 		}'));
 		
 		$arr = $Users->add();

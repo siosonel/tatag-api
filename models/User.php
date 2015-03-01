@@ -18,6 +18,8 @@ class User extends Base {
 		$this->email = Requester::$email;		
 		$this->okToSet = array("ended","email","name","password");
 		$this->okToFilterBy =  array("user_id","email");	
+		
+		$this->login_provider = Requester::$login_provider;
 	}
 	
 	function add($data='') {

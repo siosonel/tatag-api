@@ -15,14 +15,15 @@ class Token extends Base {
 		$this->removeFromInput = array("access_token", "id_type", "fb_id");		
 		$this->init($data);
 		
-		$this->okToAdd = array("consumer_id", "otk");
-		
+		$this->okToSet = array("user_id", "otk", "token_val", "login_provider");
 		$this->okToFilterBy =  array("token_id","otk","token_val");	
 	}
 	
 	function add($data='') {
+		$this->okToAdd = array("consumer_id", "otk", 'login_provider'); 
 		$this->addKeyVal("otk", mt_rand(1, 1000000));
 		$this->addKeyVal('consumer_id', Requester::$consumer_id);
+		$this->addKeyVal('login_provider', 0, "ifMissing");
 		
 		$this->token_id = $this->insert();
 		return array($this);

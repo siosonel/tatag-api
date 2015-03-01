@@ -183,6 +183,7 @@ CREATE TABLE `tokens` (
 	`token_val` varchar(45) DEFAULT '0',
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated` timestamp NULL DEFAULT NULL,
+	`login_provider` varchar(2) DEFAULT NULL,
   PRIMARY KEY (`token_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Used by users to authorize API consumers ';
 
@@ -202,6 +203,7 @@ CREATE TABLE `users` (
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
+	`login_provider` varchar(2) DEFAULT NULL,
 	`fb_id` varchar(24) DEFAULT '0',
   `gp_id` varchar(24) DEFAULT '0',
 	`tw_id` varchar(24) DEFAULT '0',
@@ -523,7 +525,7 @@ WHERE f.brand_id = $brandID
 	AND status>-1
 	AND r.created BETWEEN $startDate AND $endDate;
 
-END
+END;
 
 
 
@@ -571,7 +573,7 @@ WHERE t.brand_id = $brandID
 	AND status>-1
 	AND r.created BETWEEN $startDate AND $endDate;
 
-END
+END;
 
 
 

@@ -20,6 +20,7 @@ class Requester {
 	public static $consumer_id=0;
 	public static $token_id=0;
 	public static $otk;
+	public static $login_provider;
 	
 	static function init() {
 		//@header("Content-Type: text/plain");
@@ -45,7 +46,7 @@ class Requester {
 	}
 	
 	static function login($pwd) {
-		$sql = "SELECT user_id, name, password, email FROM users WHERE (user_id=? OR email=?)";
+		$sql = "SELECT user_id, name, password, email, login_provider FROM users WHERE (user_id=? OR email=?)";
 		$row = DBquery::get($sql, array(self::$user_id, self::$email));
 		if (!$row) Error::http(401, "Invalid user ID/email or password. User ID: ". self::$user_id .", Email: ". self::$email);
 		
@@ -55,6 +56,7 @@ class Requester {
 		self::$user_id=$user['user_id'];
 		self::$name=$user['name'];
 		self::$email=$user['email'];
+		self::$login_provider = $row[0]['login_provider'];
 	}
 	
 	static function consumer_login($user, $pwd) {
@@ -71,12 +73,16 @@ class Requester {
 		list($label, self::$token_id) = explode("-", $user); 
 		if (!self::$token_id) Error::http(400, "Missing or invalid token id.");
 		
-		$sql = "SELECT user_id FROM tokens WHERE token_id=? AND ((token_val='0' AND otk=?) OR (token_val!=0 AND token_val=?))";
+		$sql = "SELECT tokens.user_id, users.name, tokens.login_provider 
+			FROM tokens LEFT JOIN users ON tokens.user_id=users.user_id
+			WHERE token_id=? AND ((token_val='0' AND otk=?) OR (token_val!=0 AND token_val=?))";
 		$row = DBquery::get($sql, array(self::$token_id, $pwd, $pwd));
 		if (!$row) Error::http(401, "Invalid credentials for token ID='". self::$token_id ."'. $sql $user $pwd");
 		
 		self::$user_id = $row[0]['user_id'];
+		self::$name = $row[0]['name'];
 		self::$otk = $pwd;
+		self::$login_provider = $row[0]['login_provider'];
 	}
 	
 	static function isUser($user_id) {

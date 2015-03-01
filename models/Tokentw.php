@@ -1,4 +1,5 @@
 <?php
+require_once "models/Router.php";
 require_once "models/Token.php";
 require "../twitteroauth/autoload.php";
 use Abraham\TwitterOAuth\TwitterOAuth;
@@ -12,14 +13,20 @@ class Tokentw extends Token {
 		if (!$info) Error::http(400, "No information was retrieved after using Twitter's oauth_verifier token.");
 		if (isset($info['error'])) Error::http(500, "Error retrieving information using oauth_verifier token: [". $info['error']."]");
 		
-		$this->okToSet = array("otk","user_id");		
+		$this->okToSet = array("otk", "user_id", "login_provider");		
 		$this->user_id = $this->getByOauthID($info);
 		
 		if (!isset($_SESSION['TATAG_TOKEN_ID'])) Error::http(500, "Missing values for token_id and/or otk in the GET param query string."); 
 		
 		$this->addKeyVal('user_id',$this->user_id);		
 		$this->addKeyVal('otk', mt_rand(1, 99999999));
-		$this->update(array("token_id" => $_SESSION['TATAG_TOKEN_ID'], "otk"=> $_SESSION['TATAG_OTK'], "token_val"=>'0'));
+		$this->addKeyVal('login_provider', 'tw');
+		
+		$this->update(array(
+			"token_id" => $_SESSION['TATAG_TOKEN_ID'], 
+			"otk"=> $_SESSION['TATAG_OTK'], 
+			"token_val"=>'0'
+		));
 		
 		header('Location: '. $_SESSION['TATAG_NEXT'] .'?token_id='. $_SESSION['TATAG_TOKEN_ID'] .'&otk='. $this->otk);
 	}
@@ -35,7 +42,8 @@ class Tokentw extends Token {
 		$Users = new UserCollection(json_decode('{
 			"name": "'. $info['screen_name'] .'",
 			"password": "'. mt_rand(5,99999999) .'",
-			"tw_id": "'. $tw_id .'"
+			"tw_id": "'. $tw_id .'",
+			"login_provider": "tw"
 		}'));
 		
 		$arr = $Users->add();
