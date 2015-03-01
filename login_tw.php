@@ -1,8 +1,8 @@
 <?php
-require "config.php";
-include_once "models/Utils.php";
-include_once "models/Base.php";
-include_once "models/Tokentw.php";
+require_once "config.php";
+require_once "models/Utils.php";
+require_once "models/Base.php";
+require_once "models/Tokentw.php";
 
 session_start();
 global $dbs;
