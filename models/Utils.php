@@ -19,6 +19,7 @@ class Error {
 	public static $test_mode;
 	public static $codePath;
 	public static $debug=0;
+	public static $log="";
 	
 	//
 	static function log() {
@@ -29,6 +30,7 @@ class Error {
 		if (function_exists("http_response_code")) http_response_code($numCode);
 		else header("HTTP/1.1 $numCode");
 		
+		if (self::$log) file_put_contents(self::$log, $errorMssg, FILE_APPEND);
 		exit(PhlatMedia::write($output, $errorMssg));
 	}
 }

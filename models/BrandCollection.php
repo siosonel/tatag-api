@@ -58,7 +58,7 @@ class BrandCollection extends Collection {
 			"authcode": "cftix"
 		}')))->add();
 		
-		exit(json_encode($Brand));
+		return array($Brand);
 	}
 	
 	function get() { 		

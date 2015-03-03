@@ -72,7 +72,7 @@ class Members extends Base {
 		
 		$sql = "SELECT member_id FROM members WHERE user_id=$user_id AND brand_id=$brand_id AND ended IS NULL";
 		$row = DBquery::get($sql);
-		return $row[0]['member_id'];
+		if ($row) return $row[0]['member_id'];
 	}
 	
 	function setDetails() {		

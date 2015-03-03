@@ -10,7 +10,7 @@ class Collection extends Base {
 	
 	function setLimitID() {		
 		//will not reset pageOrder if child class has set pageOrder
-		if (!$this->pageOrder) $this->pageOrder = $_GET['pageOrder'] ? strtolower($_GET['pageOrder']) : "asc";
+		if (!isset($this->pageOrder)) $this->pageOrder = isset($_GET['pageOrder']) ? strtolower($_GET['pageOrder']) : "asc";
 		$this->ltgt = $this->pageOrder=="desc" ? "<" : ">";
 		
 		if (isset($_GET['itemsLimit']) AND is_numeric($_GET['itemsLimit'])) {
