@@ -4,6 +4,7 @@ class SimPerson {
 	protected $cycleNum;
 	protected $currTick=-1;
 	protected $offer;
+	protected $coIDs;
 	
 	function __construct($data) {		
 		$name = (mt_rand(0,99) . microtime(true));
@@ -17,7 +18,10 @@ class SimPerson {
 		$arr = $Users->add();
 		$this->user_id = $arr[0]->user_id;
 		$this->create_brand();
-		$this->offer = new stdClass();		
+		
+		$this->offer = new stdClass();
+		$this->offer->from_user = $this->user_id;
+		$this->offer->from_acct = $this->expId;		
 	}
 	
 	function create_brand() {
@@ -38,13 +42,32 @@ class SimPerson {
 			else if ($a->name=='Main Expense') {$this->expId = $a->account_id; $this->expBal = 0;}
 		}
 	}
-	
-	function addBudget($cycleNum) {
-		$this->cycleNum=0;
-		$amount = !$cycleNum ? mt_rand(50,100) : $this->getCycleInflow();
 		
-		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount) 
-			VALUES ('np',$this->revId,$this->user_id,$this->expId,$this->user_id,$amount)";
+	function startCycle($cycleNum) {
+		$this->cycleNum=$cycleNum;
+		if (!$cycleNum) $this->seedCoIDs();
+		$this->addBudget();
+	}
+	
+	
+	function seedCoIDs() {
+		$coIDs = range(0,NUM_PERSONS-1);
+		shuffle($coIDs);
+		
+		foreach($coIDs AS $k=>$i) {
+			$this->coIDs[] = $i;
+			for($j=0; $j<$k; $j++) $this->coIDs[] = $i;
+		} 
+		
+		shuffle($this->coIDs); //echo json_encode($this->coIDs) ."\n";
+		$this->coIDs = array_slice($this->coIDs, 0, round(count($this->coIDs)/5));
+	}
+	
+	function addBudget() {		
+		$amount = !$this->cycleNum ? mt_rand(50,100) : $this->getCycleInflow();		
+		
+		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id) 
+			VALUES ('np',$this->revId,$this->user_id,$this->expId,$this->user_id,$amount,$this->cycleNum)";
 		
 		if (DBquery::set($sql)) {
 			$this->revBal += -1*$amount;
@@ -53,27 +76,36 @@ class SimPerson {
 	}
 	
 	function getCycleInflow() {
-		$sql = "SELECT SUM(AMOUNT) as inflow FROM records WHERE to_acct=$this->revId AND from_acct!=$this->expId HAVING inflow > 0";
+		$sql = "SELECT SUM(AMOUNT) as inflow 
+			FROM records 
+			WHERE to_acct=$this->revId AND from_acct!=$this->expId AND ref_id=$this->cycleNum-1
+			HAVING inflow > 0";
 		$rows = DBquery::get($sql);
 		if (!$rows) return 1;
-		return $rows[0]['inflow'];
+		return round((10*$rows[0]['inflow'])/mt_rand(8,11));
 	}
 	
 	function useBudget($cycleNum, $tickNum) {
-		$this->offer->from_user = $this->user_id;
-		$this->offer->from_acct = $this->expId;
-		$this->offer->amount = mt_rand(1, round($this->expBal/($tickNum+1))); 
-		if ($this->offer->amount <= 0) return;
+		if ($this->expBal <= 0) return;
 		
-		$coId = mt_rand(0,NUM_PERSONS-1);
+		$this->offer->amount = mt_rand(1, max(2,round($this->expBal/(TICK_MAX-$tickNum)))); 
+		if ($this->offer->amount <= 0 OR $this->offer->amount > $this->expBal) return;
+		
+		$this->cycleNum=$cycleNum;
+		
+		$coId = $this->coIDs[ mt_rand(0,count($this->coIDs)-1) ];
+		//global $sharedCoIDs; $coId = $sharedCoIDs[ mt_rand(0,count($this->coIDs)-1) ];
+		
 		global $Persons;
-		if ($Persons[$coId]->evalTxnOffer($this->offer)) $this->expBal += -1*$amount;
+		if ($Persons[$coId]->evalTxnOffer($this->offer)) $this->expBal += -1*$this->offer->amount;
+		//else $this->declined[] = array($coId, $this->offer->amount);
 	}
 	
 	function evalTxnOffer($offer) {
-		if ($offer->amount > -1*$this->revBal) {echo "--insuff=".json_encode($offer)."--\n"; return false;}
-		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount) 
-			VALUES ('pn', $offer->from_acct, $offer->from_user, $this->revId, $this->user_id, $offer->amount)";
+		if ($offer->amount > -1*$this->revBal) {return false;}
+		
+		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id) 
+			VALUES ('pn', $offer->from_acct, $offer->from_user, $this->revId, $this->user_id, $offer->amount,$this->cycleNum)";
 			
 		if (DBquery::set($sql)) {
 			$this->revBal += $offer->amount;

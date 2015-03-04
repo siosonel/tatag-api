@@ -19,9 +19,10 @@ DBquery::set($schema);
 
 
 //settings
-require_once "tools/sim/settings_0.php";
+require_once "tools/sim/settings_1.php";
 
 //create users and brands
+//$sharedCoIDs = seedCoIDs();
 $Brands = array();
 $Persons = array();
 for($p=0; $p<NUM_PERSONS; $p++) $Persons[] = new SimPerson(new stdClass());
@@ -30,7 +31,7 @@ for($p=0; $p<NUM_PERSONS; $p++) $Persons[] = new SimPerson(new stdClass());
 $userIDs = range(0, NUM_PERSONS-1);
 for($c=0; $c<CYCLE_MAX; $c++) {
 	shuffle($userIDs);	
-	for($u=0; $u<NUM_PERSONS; $u++) $Persons[$userIDs[$u]]->addBudget($c);	
+	for($u=0; $u<NUM_PERSONS; $u++) $Persons[$userIDs[$u]]->startCycle($c);	
 	
 	for($t=0; $t<TICK_MAX; $t++) {
 		shuffle($userIDs);	
@@ -39,5 +40,17 @@ for($c=0; $c<CYCLE_MAX; $c++) {
 }
 
 print_r(json_decode(json_encode($Persons)));
-exit();
+
+function seedCoIDs() {
+	$IDs = range(0,NUM_PERSONS-1);
+	shuffle($IDs);
+	
+	foreach($IDs AS $k=>$i) {
+		$coIDs[] = $i;
+		for($j=0; $j<$k; $j++) $coIDs[] = $i;
+	} 
+	
+	shuffle($coIDs); //echo json_encode($this->coIDs) ."\n";
+	return $coIDs;
+}
 
