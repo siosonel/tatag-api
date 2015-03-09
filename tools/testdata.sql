@@ -38,8 +38,8 @@ UNLOCK TABLES;
 LOCK TABLES `brands` WRITE;
 /*!40000 ALTER TABLE `brands` DISABLE KEYS */;
 INSERT INTO `brands` VALUES 
-(104,'abc','to be the first brand','for testing',0,'0','2015-01-05 19:53:31',NULL,NULL,"http://localhost/tatag/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}"),
-(105,'def','to be the second brand','for testing',0,'0','2015-01-05 19:53:33',NULL,NULL,"http://localhost/tatag/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}");
+(104,'abc','to be the first brand','for testing',0,'0','2015-01-05 19:53:31',NULL,NULL,"http://localhost/tatag/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}","USA",206,"for-profit",9,NULL),
+(105,'def','to be the second brand','for testing',0,'0','2015-01-05 19:53:33',NULL,NULL,"http://localhost/tatag/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}","USA",206,"for-profit",9,NULL);
 /*!40000 ALTER TABLE `brands` ENABLE KEYS */;
 UNLOCK TABLES;
 

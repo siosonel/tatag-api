@@ -47,6 +47,11 @@ CREATE TABLE `brands` (
 	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
 	`advisor` varchar(255) DEFAULT NULL,
+  `country_code` varchar(8) DEFAULT NULL,
+  `area_code` varchar(8) DEFAULT NULL,
+  `type_system` varchar(16) DEFAULT NULL,
+  `type_id` int(11) DEFAULT NULL,
+  `subtype_id` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`brand_id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

@@ -9,7 +9,6 @@ class BrandCollection extends Collection {
 		$this->init($data);
 		
 		$this->okToGet = array("brand_id", "name", "mission", "description");
-		$this->okToAdd = array('name','mission','description','rating_min','rating_formula');
 	}
 	
 	function add() { 
@@ -17,7 +16,7 @@ class BrandCollection extends Collection {
 		include_once "models/Accounts.php";
 		include_once "models/Holders.php";
 		
-		$this->okToAdd = array('name','mission','description');
+		$this->okToAdd = array('name','mission','description','type_system','type_id','country_code','area_code');
 		$Brand =  $this->obj;
 		$Brand->brand_id = $this->insert();		//print_r($Brand); print_r(Requester);
 				

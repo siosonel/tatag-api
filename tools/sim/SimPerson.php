@@ -26,12 +26,19 @@ class SimPerson {
 	
 	function create_brand() {
 		Requester::$user_id = $this->user_id;
+		$types = array("gov", "for-profit", "nonprofit");
+		$distribution = array(0,1,2,0,1,2,2,2);
+		$area_codes = array(206,425,253,415,650,408);
 		
 		$input = json_decode('{
 			"name": "brand #'. $this->user_id .'",
 			"mission": "To be a brand of '. $this->name .'",
-			"description": "a brand of '. $this->name .'"
-		}');
+			"description": "a brand of '. $this->name .'",
+			"country_code": "USA",
+			"area_code": '. $area_codes[mt_rand(0,5)] .',
+			"type_system": "'. $types[$distribution[mt_rand(0,7)]] .'",
+			"type_id": '. mt_rand(1,10) .'
+		}'); 
 		
 		$BrandCollection = new BrandCollection($input);
 		$brand = $BrandCollection->add()[0];
@@ -55,11 +62,13 @@ class SimPerson {
 		shuffle($coIDs);
 		
 		foreach($coIDs AS $k=>$i) {
-			$this->coIDs[] = $i;
-			for($j=0; $j<$k; $j++) $this->coIDs[] = $i;
-		} 
+			if ($i != $this->user_id) {
+				$this->coIDs[] = $i;
+				for($j=0; $j<$k; $j++) $this->coIDs[] = $i;
+			} 
+		}
 		
-		shuffle($this->coIDs); //echo json_encode($this->coIDs) ."\n";
+		shuffle($this->coIDs); 
 		$this->coIDs = array_slice($this->coIDs, 0, round(count($this->coIDs)/5));
 	}
 	
@@ -93,7 +102,7 @@ class SimPerson {
 		
 		$this->cycleNum=$cycleNum;
 		
-		$coId = $this->coIDs[ mt_rand(0,count($this->coIDs)-1) ];
+		$coId = $this->coIDs[ mt_rand(0,count($this->coIDs)-1) ]; if ($coId==$this->user_id) echo "[$coId]";
 		//global $sharedCoIDs; $coId = $sharedCoIDs[ mt_rand(0,count($this->coIDs)-1) ];
 		
 		global $Persons;
@@ -103,9 +112,12 @@ class SimPerson {
 	
 	function evalTxnOffer($offer) {
 		if ($offer->amount > -1*$this->revBal) {return false;}
+		$date = date( "Y-m-d", strtotime("2015W". sprintf("%02u", $this->cycleNum+10) ."1") );
+		$created = "$date 12:00:00"; 
+		$updated = "$date 12:00:05";
 		
-		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id) 
-			VALUES ('pn', $offer->from_acct, $offer->from_user, $this->revId, $this->user_id, $offer->amount,$this->cycleNum)";
+		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id,created,updated) 
+			VALUES ('pn', $offer->from_acct, $offer->from_user, $this->revId, $this->user_id, $offer->amount, $this->cycleNum, '$created', '$updated')";
 			
 		if (DBquery::set($sql)) {
 			$this->revBal += $offer->amount;
