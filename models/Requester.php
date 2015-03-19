@@ -27,6 +27,8 @@ class Requester {
 		@header("Content-Type: application/json");
 		error_reporting(error_reporting() & ~E_NOTICE);
 		
+		self::define_SITE();
+		
 		global $dbs;
 		include_once "config.php";
 		DBquery::init($dbs, array("tatagtest"));
@@ -128,5 +130,16 @@ class Requester {
 		$sql = "SELECT member_id FROM members WHERE brand_id IN (?) AND user_id IN (?) LIMIT 1";
 		$row = DBquery::get($sql, array($brand_id, self::$user_id));
 		if ($row) return $row[0]['member_id']; 
+	}
+	
+	static function define_SITE() {
+		// detect from most secure to least, and if not detected default to most secure site
+		$SN = $_SERVER['SERVER_NAME'];
+		$PATH = $_SERVER['PHP_SELF'];
+		$ADDR = $_SERVER['SERVER_ADDR'];
+		
+		if (substr($SN,-4)==".dev" OR $SN=='localhost') define("SITE", "dev");
+		else if ($SN=='tatag.cc') define('SITE', 'live');
+		else define('SITE', 'live');
 	}
 }

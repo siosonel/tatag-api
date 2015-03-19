@@ -37,8 +37,8 @@ class User extends Base {
 		$this->links->userAccounts = $this->{'@id'}."/accounts";
 		$this->setForms();	
 		
-		include_once "models/userBrands.php";		
-		include_once "models/userAccounts.php";
+		include_once "models/UserBrands.php";		
+		include_once "models/UserAccounts.php";
 		$obj = json_decode('{"user_id":' . $this->user_id .'}');	
 		
 		$memberships = (new UserBrands($obj))->get(); 

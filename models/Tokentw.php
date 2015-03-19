@@ -58,7 +58,7 @@ class Tokentw extends Token {
 		$oauth = new TwitterOAuth(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
 		
 		$token = $oauth->oauth(
-			"oauth/request_token", array("oauth_callback"=>'http://localhost/tatag/login_tw.php')
+			"oauth/request_token", array("oauth_callback"=>HOME.'/login_tw.php')
 		);
 		
 		if (!$token OR ! $token['oauth_token']) Error::http(500, json_encode($requestToken));
