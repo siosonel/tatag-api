@@ -15,9 +15,14 @@ if [[ "$USER" == "" ]]; then USER="root"; fi
 case $AUDIENCE in
 		public)		
 				# build_delete="php/config-internal.php php/config-experts.php php/mortFileSha1.php README.txt"
-		
+				if [[ "$ENV" == "stage" ]]; then
+					SERVER=tatag.cc
+					REMOTE_DIR=/var/www/stage/$APP
+					URL="http://stage.tatag.cc/$APP"
+					xhome="~/builds/"				
+				
         # for integration testing of new features, debugged code				
-				if [[ "$ENV" == "live" ]]; then
+				elif [[ "$ENV" == "live" ]]; then
 					SERVER=tatag.cc
 					REMOTE_DIR=/var/www/html/api
 					URL="http://tatag.cc/api/"

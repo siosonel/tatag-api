@@ -139,6 +139,7 @@ class Requester {
 		$ADDR = $_SERVER['SERVER_ADDR'];
 		
 		if (substr($SN,-4)==".dev" OR $SN=='localhost') define("SITE", "dev");
+		else if ($SN=='stage.tatag.cc') define('SITE','stage');
 		else if ($SN=='tatag.cc') define('SITE', 'live');
 		else define('SITE', 'live');
 	}

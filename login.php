@@ -33,7 +33,7 @@ if ($provider=='tw') {require_once "login_tw.php";	exit();}
 			if (data.id_type=='fb_id') data.fb_id = auth.userID;
 			
 			$.ajax({
-				url: baseURI + "/tatag/token"+ providerName +"/" + params.token_id,
+				url: "./token"+ providerName +"/" + params.token_id,
 				type: "POST",
 				dataType: 'json',
 				contentType: 'json',
