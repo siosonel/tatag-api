@@ -20,6 +20,7 @@ class Error {
 	public static $codePath;
 	public static $debug=0;
 	public static $log="";
+	public static $format='';
 	
 	//
 	static function log() {
@@ -27,11 +28,22 @@ class Error {
 	}
 	
 	static function http($numCode, $errorMssg="", $output=array()) {
-		if (function_exists("http_response_code")) http_response_code($numCode);
-		else header("HTTP/1.1 $numCode");
-		
-		if (self::$log) file_put_contents(self::$log, $errorMssg, FILE_APPEND);
-		exit(PhlatMedia::write($output, $errorMssg));
+		if (self::$format=='sms') self::sms($errorMssg);
+		else {
+			if (function_exists("http_response_code")) http_response_code($numCode);
+			else header("HTTP/1.1 $numCode");
+			
+			if (self::$log) file_put_contents(self::$log, $errorMssg, FILE_APPEND);
+			exit(PhlatMedia::write($output, $errorMssg));
+		}
+	}
+	
+	static function sms($mssg) {
+	 header("content-type: text/xml");
+	 exit('<?xml version="1.0" encoding="UTF-8"?>
+		<Response>
+			<Message>'. $mssg .'</Message>
+		</Response>');	
 	}
 }
 

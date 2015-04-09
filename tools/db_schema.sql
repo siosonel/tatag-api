@@ -206,17 +206,20 @@ CREATE TABLE `users` (
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(80) DEFAULT NULL,
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-	`updated` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
-	`login_provider` varchar(2) DEFAULT NULL,
-	`fb_id` varchar(24) DEFAULT '0',
+  `login_provider` varchar(16) DEFAULT NULL,
+  `fb_id` varchar(24) DEFAULT '0',
   `gp_id` varchar(24) DEFAULT '0',
-	`tw_id` varchar(24) DEFAULT '0',
-	`profileImg` varchar(255) DEFAULT NULL,
+  `tw_id` varchar(24) DEFAULT '0',
+  `phone` int(24) unsigned DEFAULT NULL,
+  `profileImg` varchar(255) DEFAULT NULL,
   `bannerImg` varchar(255) DEFAULT NULL,
+  `wallet` int(11) DEFAULT '2',
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `profileImg_UNIQUE` (`profileImg`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 
 --
