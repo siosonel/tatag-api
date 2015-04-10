@@ -15,6 +15,8 @@ if [[ "$USER" == "" ]]; then USER="root"; fi
 case $AUDIENCE in
 		public)		
 				# build_delete="php/config-internal.php php/config-experts.php php/mortFileSha1.php README.txt"
+				build_append="ref/area_codes/*"
+				
 				if [[ "$ENV" == "stage" ]]; then
 					SERVER=tatag.cc
 					REMOTE_DIR=/var/www/stage/$APP

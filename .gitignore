@@ -3,8 +3,6 @@ _exclude/*
 config*
 config/*
 
-ref/area_codes/*
-
 resources/*
 lib/*
 
