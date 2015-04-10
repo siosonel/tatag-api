@@ -3,7 +3,7 @@ error_reporting(error_reporting() & ~ E_NOTICE);
 
 require_once "config.php";
 require_once "models/Requester.php";
-require_once "models/TokenSms.php"; require_once "/_exclude/data_tokenSms.php"; //echo HOME; exit();
+require_once "models/TokenSms.php"; //require_once "/_exclude/data_tokenSms.php"; //echo HOME; exit();
 
 Error::$format = 'sms';
 DBquery::init($dbs, array("tatagtest"));

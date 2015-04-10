@@ -42,7 +42,7 @@
 		
 		"properties": {
 			"required": ["@type", "@id", "user_id", "name", "email"],
-			"optional": ["links", "actions", "userMemberships", "userAccounts"]
+			"optional": ["links", "actions", "userMemberships", "userAccounts", "login_provider"]
 		},	
 		
 		"relatedActions": {
@@ -253,7 +253,7 @@
 			
 			"inputs": {
 				"required": [],
-				"optional": ["name", "url", "mission", "description"]
+				"optional": ["name", "url", "mission", "description", "type_system", "type_id", "country_code", "area_code"]
 			},
 			
 			"examples": [{
@@ -689,11 +689,11 @@
 	},
 	
 	"brandAbout": {
-		"description": "General infomration about a brand.",
+		"description": "General information about a brand.",
 
 		"properties": {
 			"required": ["name", "mission", "description"],
-			"optional": []
+			"optional": ["type_system", "type_id", "country_code", "area_code"]
 		},
 		
 		"actions": {}
@@ -716,7 +716,7 @@
 			
 			"inputs": {
 				"required": ["name", "mission", "description"],
-				"optional": []
+				"optional": ["type_system", "type_id", "country_code", "area_code"]
 			},
 			
 			"examples": [{
@@ -726,7 +726,7 @@
 				
 				"inputs": {
 					"name": "abc-{xtime}.org",
-					"mission": "To be the first brand - {xtime}",
+					"mission": "To be the third brand - {xtime}",
 					"description": "the third brand"
 				},
 				"status": 200

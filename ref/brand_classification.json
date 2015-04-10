@@ -1,0 +1,85 @@
+{
+	"gov": {
+		"types": [
+			{"id": 1, "type": "multi-national government body"},
+			{"id": 2, "type": "national executive"},
+			{"id": 3, "type": "national legislative"},
+			{"id": 4, "type": "national judiciary"},
+			{"id": 5, "type": "state or provincial executive"},
+			{"id": 6, "type": "state or provincial legislative"},
+			{"id": 7, "type": "state or provincial judiciary"},			
+			{"id": 8, "type": "county or metro-area government"},
+			{"id": 9, "type": "city, town, or village government"},
+			{"id": 10, "type": "neighborhood government"},
+		]
+	},
+
+	"for-profit": {
+		"source": "Global Industry Classification Standard",
+		"url" : "http://en.wikipedia.org/wiki/Global_Industry_Classification_Standard",
+		"types": [
+			{"id": 1, "code": 10, "type": "Energy"},
+			
+			{"id": 2, "code": 15, "type": "Materials"},
+			
+			{"id": 3, "code": 20, "type": "Industrials", "subtypes": [
+				"capital goods", 
+				"commercial/professional services", 
+				"transportation"
+			]},
+			
+			{"id": 4, "code": 25, "type": "Consumer Discretionary", "subtypes": [
+				"Automobiles and components", 
+				"Consumer durables and apparels",
+				"Consumer services",
+				"Media",
+				"Retailing"
+			]},
+			
+			{"id": 5, "code": 30, "type": "Consumer Staples", "subtypes": [
+				"Food and staples retailing",
+				"Food, beverage, and tobacco",
+				"Household and personal products"
+			]},
+			
+			{"id": 6, "code": 35, "type": "Healthcare", "subtypes": [
+				"Healthcare equipment and services",
+				"Pharmaceuticals, biotechnology, and life sciences"
+			]},
+			
+			{"id": 7, "code": 40, "type": "Financials", "subtypes": [
+				"Banks",
+				"Diversified financials",
+				"insurance",
+				"Real estate"
+			]},
+			
+			{"id": 8, "code": 45, "type": "Information Technology", "subtypes": [
+				"Software and services",
+				"Technology hardware and equipment",
+				"Semiconductors and semiconductor equipment"
+			]},
+			
+			{"id": 9, "code": 50, "type": "Telecommunication Services"},
+			
+			{"id": 10, "code": 55, "type": "Utilities"}
+		]
+	},
+
+	"nonprofit": {
+		"source": "National Taxonomy of Exempt Entities",
+		"url" : "http://nccs.urban.org/classification/NTEE.cfm",
+		"types": [
+			{"id": 1, "type": "Arts, Culture, and Humanities"},
+			{"id": 2, "type": "Education"},
+			{"id": 3, "type": "Environment and Animals"},
+			{"id": 4, "type": "Health"},
+			{"id": 5, "type": "Human Services"},
+			{"id": 6, "type": "International, Foreign Affairs"},
+			{"id": 7, "type": "Public, Societal Benefit"},
+			{"id": 8, "type": "Religion Related"},
+			{"id": 9, "type": "Mutual/Membership Benefit"},
+			{"id": 10, "type": "Unknown, Unclassified"}	
+		]
+	}
+}

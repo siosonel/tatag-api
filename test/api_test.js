@@ -6,7 +6,8 @@ var help = require('helpers/helpers.js');
 
 var api = require('helpers/ld-flat.js').api({
 	'userid': '21', 
-	'pass': 'pass2' 
+	'pass': 'pass2',
+	'request': request
 });
 
 

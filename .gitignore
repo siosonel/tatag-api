@@ -3,7 +3,7 @@ _exclude/*
 config*
 config/*
 
-specs/*
+ref/area_codes/*
 
 resources/*
 lib/*
