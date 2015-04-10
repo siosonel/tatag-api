@@ -60,10 +60,12 @@ class Team extends Base {
 	}	
 	
 	function getInfo() {
-		$sql = "SELECT name, description, mission, created FROM brands WHERE brand_id=?";
+		$sql = "SELECT name, description, mission, created, url, advisor, type_system, type_id, country_code, area_code FROM brands WHERE brand_id=?";
 		$row = DBquery::get($sql, array($this->brand_id));
 		if ($row[0]) {
 			foreach($row[0] AS $key=>$val) $this->$key = $val;
+			$area_codes = json_decode(file_get_contents("ref/area_codes/". $row[0]['country_code'] .".json"));
+			foreach($area_codes AS $loc=>$num) $this->area_codes[$num] = $loc;
 			
 			$this->links = array(
 				"teamMembers" => "/team/$this->brand_id/members",

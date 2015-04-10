@@ -71,7 +71,7 @@ class BrandCollection extends Collection {
 		if (!$row) return array($this);				
 		foreach($row[0] AS $key=>$val) $this->$key = $val;
 	
-		$sql = "SELECT brand_id, name, created, updated, ended 
+		$sql = "SELECT brand_id, name, description, created, updated, ended, url, advisor, type_system, type_id, country_code, area_code  
 			FROM brands 
 			WHERE brand_id $this->ltgt $this->limitID
 			ORDER BY brand_id $this->pageOrder

@@ -46,6 +46,7 @@ CREATE TABLE `brands` (
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
+	`url` varchar(255) DEFAULT NULL,
 	`advisor` varchar(255) DEFAULT NULL,
   `country_code` varchar(8) DEFAULT NULL,
   `area_code` varchar(8) DEFAULT NULL,
@@ -388,7 +389,7 @@ END;
 
 DROP PROCEDURE IF EXISTS `holderCheck`;
 
-CREATE DEFINER=`npxer`@`localhost` PROCEDURE `holderCheck`(
+CREATE PROCEDURE `holderCheck`(
 	IN holderID INT
 )
 BEGIN
@@ -453,7 +454,7 @@ END;
 
 DROP PROCEDURE IF EXISTS `approveRecord`;
 
-CREATE DEFINER=`npxer`@`localhost` PROCEDURE `approveRecord`(
+CREATE PROCEDURE `approveRecord`(
 	IN $record_id INT
 )
 BEGIN
@@ -648,7 +649,7 @@ END;
 
 DROP PROCEDURE IF EXISTS `tally`;
 
-CREATE DEFINER=`npxer`@`localhost` PROCEDURE `tally`(
+CREATE PROCEDURE `tally`(
 	IN $brandID INT,
 	IN $startDate TIMESTAMP,
 	IN $endDate TIMESTAMP

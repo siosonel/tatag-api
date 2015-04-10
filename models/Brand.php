@@ -11,7 +11,7 @@ class Brand extends Base {
 		
 		$this->init($data);
 			
-		$this->okToSet = array("name", "ended","mission","description", "type_system", "type_id", "country_code", "area_code");
+		$this->okToSet = array("name", "ended","mission","description", "url", "advisor", "type_system", "type_id", "country_code", "area_code");
 		$this->okToFilterBy = array("brand_id");
 	}
 	
@@ -48,7 +48,7 @@ class Brand extends Base {
 	}	
 	
 	function getInfo() {
-		$sql = "SELECT name, description, mission, created, type_system, type_id, country_code, area_code FROM brands WHERE brand_id=?";
+		$sql = "SELECT name, description, mission, created, url, advisor, type_system, type_id, country_code, area_code FROM brands WHERE brand_id=?";
 		$row = DBquery::get($sql, array($this->brand_id));
 		if ($row[0]) {
 			foreach($row[0] AS $key=>$val) $this->$key = $val;
