@@ -65,7 +65,9 @@ class Team extends Base {
 		if ($row[0]) {
 			foreach($row[0] AS $key=>$val) $this->$key = $val;
 			$area_codes = json_decode(file_get_contents("ref/area_codes/". $row[0]['country_code'] .".json"));
-			foreach($area_codes AS $loc=>$num) $this->area_codes[$num] = $loc;
+			foreach($area_codes AS $loc=>$num) {
+				if ($num==$row[0]['area_code']) {$this->area_name = $loc; break;}
+			}
 			
 			$this->links = array(
 				"teamMembers" => "/team/$this->brand_id/members",
