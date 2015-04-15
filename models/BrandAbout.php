@@ -15,7 +15,9 @@ class BrandAbout extends Base {
 	
 	function get() {
 		$this->getInfo();
-		$tally = DBquery::get("CALL tally(?)", array($this->brand_id))[0];
+		$startDate = "2015-01-01 00:00:00";
+		$endDate = "2015-12-31 11:59:59";
+		$tally = DBquery::get("CALL tally($this->brand_id, '$startDate', '$endDate')")[0];
 		
 		if ($tally) {
 			$this->tally = array_merge(array("@type" => "budgetTally"),$tally);
@@ -27,7 +29,7 @@ class BrandAbout extends Base {
 		
 	
 	function getInfo() {
-		$sql = "SELECT name, description, mission, created FROM brands WHERE brand_id=?";
+		$sql = "SELECT name, description, mission, created, url, advisor, type_system, type_id, country_code, area_code  FROM brands WHERE brand_id=?";
 		$row = DBquery::get($sql, array($this->brand_id));
 		if ($row[0]) {
 			foreach($row[0] AS $key=>$val) $this->$key = $val;

@@ -21,6 +21,7 @@ class Requester {
 	public static $token_id=0;
 	public static $otk;
 	public static $login_provider;
+	public static $db_default="tatagtest";
 	
 	static function init() {
 		//@header("Content-Type: text/plain");
@@ -28,12 +29,11 @@ class Requester {
 		error_reporting(error_reporting() & ~E_NOTICE);
 		
 		self::define_SITE();
-		
 		global $dbs;
-		include_once "config.php";
-		DBquery::init($dbs, array("tatagtest"));
+		include_once "config.php";		
 		
-		self::$defs = json_decode(file_get_contents("ref/defs.json")); //print_r(self::$defs); exit();
+		self::setAccess();		
+		self::$defs = json_decode(file_get_contents("ref/defs.json")); //print_r(self::$defs); exit();		
 		
 		if (!isset($_SERVER['PHP_AUTH_USER'])) Error::http(401, "The header must include basic auth information.");
 		 
@@ -42,9 +42,26 @@ class Requester {
 		self::$email = self::$user_id ? "" : "$user";
 		$pwd = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : "";  //exit('"'. self::$user_id ." ". $pwd ."---".  self::$email. '---"');
 		
-		if (strpos($user, "consumer-")!==false) self::consumer_login($user, $pwd);
+	
+		if (self::$db_default=='tatagsim') {}
+		else if (strpos($user, "consumer-")!==false) self::consumer_login($user, $pwd);
 		else if (strpos($user, "token-")!==false) self::token_login($user, $pwd);
 		else self::login($pwd);
+	}
+	
+	static function setAccess() {
+		$url = explode("/", trim($_GET['_url'], " \/\\\t\n\r\0\x0B"));
+		$path = array_slice($url, 0, 3);
+		$openAccess = array("collection", "about", "ts", "ranks", "flow", "inflow", "outflow", "added", "intrause");
+		
+		if (count($openAccess) > count(array_diff($openAccess, $path)) AND !isset($_SERVER['PHP_AUTH_USER'])) {
+			$_SERVER['PHP_AUTH_USER'] = OPEN_ACCESS_USER;
+			$_SERVER['PHP_AUTH_PW'] = OPEN_ACCESS_PW;
+		} 
+		
+		global $dbs;
+		self::$db_default = (isset($_GET['db']) AND $_GET['db']) ? $_GET['db'] : 'tatagtest';
+		DBquery::init($dbs, array(self::$db_default));
 	}
 	
 	static function login($pwd) {

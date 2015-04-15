@@ -154,6 +154,30 @@ CREATE TABLE `reversals` (
 
 
 
+
+
+DROP TABLE IF EXISTS `reversals`;
+
+CREATE TABLE `tallies` (
+  `tally_id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand_id` int(11) DEFAULT NULL,
+  `p_start_bal` decimal(7,2) DEFAULT NULL,
+  `n_start_bal` decimal(7,2) DEFAULT NULL,
+  `issued` decimal(7,2) DEFAULT NULL,
+  `intrause` decimal(7,2) DEFAULT NULL,
+  `inflow` decimal(7,2) DEFAULT NULL,
+  `outflow` decimal(7,2) DEFAULT NULL,
+  `num_members` int(11) DEFAULT NULL,
+  `member_hours` float DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
+  `week` tinyint(4) DEFAULT '0',
+  `year` smallint(6) DEFAULT '2015',
+  PRIMARY KEY (`tally_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+
+
 --
 -- Table structure for table `throttles`
 --
@@ -226,8 +250,11 @@ CREATE TABLE `users` (
 --
 -- Dumping routines for database 
 --
-DROP PROCEDURE IF EXISTS `accountInfo`;
 
+
+DELIMITER ;;
+
+DROP PROCEDURE IF EXISTS `accountInfo`;;
 
 CREATE PROCEDURE `accountInfo`(IN acctID INT)
 BEGIN
@@ -247,10 +274,10 @@ LEFT JOIN (
 ) t ON to_acct=account_id
 WHERE account_id=acctID;
 
-END;
+END;;
 
 
-DROP PROCEDURE IF EXISTS `acctAuthBals`;
+DROP PROCEDURE IF EXISTS `acctAuthBals`;;
 
 CREATE PROCEDURE `acctAuthBals`(
 	IN fromAcct INT,
@@ -274,11 +301,11 @@ LEFT JOIN (
 ) t ON to_acct=account_id
 WHERE account_id IN (fromAcct, toAcct);
 
-END;
+END;;
 
 
 
-DROP PROCEDURE IF EXISTS `holderAccts`;
+DROP PROCEDURE IF EXISTS `holderAccts`;;
 
 CREATE PROCEDURE `holderAccts`(IN userID INT)
 BEGIN
@@ -303,11 +330,11 @@ LEFT JOIN (
 JOIN holders h ON (h.account_id=a.account_id)
 WHERE user_id=userID;
 
-END;
+END;;
 
 
 
-DROP PROCEDURE IF EXISTS `postBal`;
+DROP PROCEDURE IF EXISTS `postBal`;;
 
 CREATE PROCEDURE `postBal`(
 	IN fromAcct INT,
@@ -349,13 +376,13 @@ BEGIN
 		SET mssg=@entryID;
 	END IF;
 
-END;
+END;;
 
 
 
-DROP PROCEDURE IF EXISTS `accountRecords`;
+DROP PROCEDURE IF EXISTS `accountRecords`;;
 
-CREATE PROCEDURE `tatagtest`.`accountRecords` (
+CREATE PROCEDURE `accountRecords` (
 	IN acctID INT,
 	IN maxRecordID INT,
 	IN itemsLimit INT
@@ -383,11 +410,11 @@ WHERE to_acct=acctID AND record_id < maxRecordID
 ORDER BY record_id DESC 
 LIMIT itemsLimit;
 
-END;
+END;;
 
 
 
-DROP PROCEDURE IF EXISTS `holderCheck`;
+DROP PROCEDURE IF EXISTS `holderCheck`;;
 
 CREATE PROCEDURE `holderCheck`(
 	IN holderID INT
@@ -414,13 +441,13 @@ LEFT JOIN (
 	GROUP BY to_acct
 ) t ON to_acct = h.account_id;
 
-END;
+END;;
 
 
 
-DROP PROCEDURE IF EXISTS `userAccounts`;
+DROP PROCEDURE IF EXISTS `userAccounts`;;
 
-CREATE PROCEDURE `tatagtest`.`userAccounts` (
+CREATE PROCEDURE `userAccounts` (
 	IN userID INT
 )
 BEGIN
@@ -449,10 +476,12 @@ LEFT JOIN (
 ) t ON to_acct=a.account_id
 GROUP BY a.account_id;
 
-END;
+END;;
 
 
-DROP PROCEDURE IF EXISTS `approveRecord`;
+
+
+DROP PROCEDURE IF EXISTS `approveRecord`;;
 
 CREATE PROCEDURE `approveRecord`(
 	IN $record_id INT
@@ -471,13 +500,14 @@ IF @f!=0 AND @t!=0 THEN BEGIN
 	COMMIT;
 	END; 
 END IF;
-END;
+END;;
 
 
 
-DROP PROCEDURE IF EXISTS `brandAccountsAsc`;
 
-CREATE PROCEDURE `tatagtest`.`brandAccountsAsc` (
+DROP PROCEDURE IF EXISTS `brandAccountsAsc`;;
+
+CREATE PROCEDURE `brandAccountsAsc` (
 	IN $brandID INT,
 	IN $maxAccountID INT,
 	IN $itemsLimit INT
@@ -511,13 +541,13 @@ GROUP BY account_id
 ORDER BY account_id ASC
 LIMIT $itemsLimit;
 
-END;
+END;;
 
 
 
-DROP PROCEDURE IF EXISTS `tallyAdded`;
+DROP PROCEDURE IF EXISTS `tallyAdded`;;
 
-CREATE PROCEDURE `tatagtest`.`tallyAdded` (
+CREATE PROCEDURE `tallyAdded` (
 	IN $brandID INT,
 	IN $startDate TIMESTAMP,
 	IN $endDate TIMESTAMP,
@@ -525,7 +555,7 @@ CREATE PROCEDURE `tatagtest`.`tallyAdded` (
 )
 BEGIN
 
-SELECT SUM(amount) INTO $added
+SELECT COALESCE(SUM(amount),0) INTO $added
 FROM records r
 JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN ($brandID) AND f.sign=-1
 JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN ($brandID) AND t.sign=1
@@ -534,14 +564,14 @@ WHERE f.brand_id = $brandID
 	AND status>-1
 	AND r.created BETWEEN $startDate AND $endDate;
 
-END;
+END;;
 
 
 
 
-DROP PROCEDURE IF EXISTS `tallyIntrause`;
+DROP PROCEDURE IF EXISTS `tallyIntrause`;;
 
-CREATE PROCEDURE `tatagtest`.`tallyIntrause` (
+CREATE PROCEDURE `tallyIntrause` (
 	IN $brandID INT,
 	IN $startDate TIMESTAMP,
 	IN $endDate TIMESTAMP,
@@ -550,7 +580,7 @@ CREATE PROCEDURE `tatagtest`.`tallyIntrause` (
 
 BEGIN
 
-SELECT SUM(amount) INTO $intrause
+SELECT COALESCE(SUM(amount),0) INTO $intrause
 FROM records r
 JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN ($brandID)
 JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN ($brandID)
@@ -559,13 +589,13 @@ WHERE t.brand_id = $brandID
 	AND status>-1
 	AND r.created BETWEEN $startDate AND $endDate;
 
-END;
+END;;
 
 
 
-DROP PROCEDURE IF EXISTS `tallyInflow`;
+DROP PROCEDURE IF EXISTS `tallyInflow`;;
 
-CREATE PROCEDURE `tatagtest`.`tallyInflow` (
+CREATE PROCEDURE `tallyInflow` (
 	IN $brandID INT,
 	IN $startDate TIMESTAMP,
 	IN $endDate TIMESTAMP,
@@ -573,7 +603,7 @@ CREATE PROCEDURE `tatagtest`.`tallyInflow` (
 )
 BEGIN
 
-SELECT SUM(amount) INTO $inflow
+SELECT COALESCE(SUM(amount),0) INTO $inflow
 FROM records r
 JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id NOT IN ($brandID)
 JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id IN ($brandID)
@@ -582,14 +612,14 @@ WHERE t.brand_id = $brandID
 	AND status>-1
 	AND r.created BETWEEN $startDate AND $endDate;
 
-END;
+END;;
 
 
 
 
-DROP PROCEDURE IF EXISTS `tallyOutflow`;
+DROP PROCEDURE IF EXISTS `tallyOutflow`;;
 
-CREATE PROCEDURE `tatagtest`.`tallyOutflow` (
+CREATE PROCEDURE `tallyOutflow` (
 	IN $brandID INT,
 	IN $startDate TIMESTAMP,
 	IN $endDate TIMESTAMP,
@@ -598,24 +628,21 @@ CREATE PROCEDURE `tatagtest`.`tallyOutflow` (
 
 BEGIN
 
-SELECT SUM(amount) INTO $outflow
+SELECT COALESCE(SUM(amount),0) INTO $outflow
 FROM records r
 JOIN accounts f ON r.from_acct=f.account_id AND f.brand_id IN ($brandID)
 JOIN accounts t ON r.to_acct=t.account_id AND t.brand_id NOT IN ($brandID)
-WHERE t.brand_id = $brandID
+WHERE f.brand_id = $brandID
 	AND txntype='pn'
 	AND status>-1
 	AND r.created BETWEEN $startDate AND $endDate;
 
-END;
+END;;
 
 
+DROP PROCEDURE IF EXISTS `budgetTotal`;;
 
-
-DROP PROCEDURE IF EXISTS `budgetTotal`;
-
-
-CREATE PROCEDURE `tatagtest`.`budgetTotal` (
+CREATE PROCEDURE `budgetTotal` (
 	IN $brandID INT,
 	IN $sign INT,
 	OUT $budget DECIMAL(9,2)
@@ -642,12 +669,12 @@ LEFT JOIN (
 ) t ON to_acct=account_id	
 WHERE brand_id=$brandID AND sign=$sign;
 
-END;
+END;;
 
 
 
 
-DROP PROCEDURE IF EXISTS `tally`;
+DROP PROCEDURE IF EXISTS `tally`;;
 
 CREATE PROCEDURE `tally`(
 	IN $brandID INT,
@@ -681,4 +708,4 @@ select
 	@totalMemberHours AS totalMemberHours;
 
 
-END;
+END;;

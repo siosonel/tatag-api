@@ -48,6 +48,9 @@ class SimPerson {
 			if ($a->name=='Main Revenue') { $this->revId = $a->account_id; $this->revBal = 0;}
 			else if ($a->name=='Main Expense') {$this->expId = $a->account_id; $this->expBal = 0;}
 		}
+		
+		$sql = "UPDATE brands SET created='2015-03-01 00:00:00'";
+		DBquery::set($sql);
 	}
 		
 	function startCycle($cycleNum) {
@@ -73,10 +76,13 @@ class SimPerson {
 	}
 	
 	function addBudget() {		
-		$amount = !$this->cycleNum ? mt_rand(50,100) : $this->getCycleInflow();		
+		$amount = !$this->cycleNum ? mt_rand(50,100) : $this->getCycleInflow();
+		$date = date( "Y-m-d", strtotime("2015W". sprintf("%02u", $this->cycleNum+10) ."1") );
+		$created = "$date 12:00:00"; 
+		$updated = "$date 12:00:05";
 		
-		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id) 
-			VALUES ('np',$this->revId,$this->user_id,$this->expId,$this->user_id,$amount,$this->cycleNum)";
+		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id,status,created,updated) 
+			VALUES ('np',$this->revId,$this->user_id,$this->expId,$this->user_id,$amount,$this->cycleNum,7,'$created','$updated')";
 		
 		if (DBquery::set($sql)) {
 			$this->revBal += -1*$amount;
@@ -116,8 +122,8 @@ class SimPerson {
 		$created = "$date 12:00:00"; 
 		$updated = "$date 12:00:05";
 		
-		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id,created,updated) 
-			VALUES ('pn', $offer->from_acct, $offer->from_user, $this->revId, $this->user_id, $offer->amount, $this->cycleNum, '$created', '$updated')";
+		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id,created,updated,status) 
+			VALUES ('pn', $offer->from_acct, $offer->from_user, $this->revId, $this->user_id, $offer->amount, $this->cycleNum, '$created', '$updated', 7)";
 			
 		if (DBquery::set($sql)) {
 			$this->revBal += $offer->amount;
