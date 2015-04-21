@@ -88,7 +88,8 @@ class AccountRecords extends Collection {
 	function getAdvisor() {
 		$sql = "SELECT advisor FROM brands WHERE brand_id=?";
 		$row = DBquery::get($sql, array($this->brand_id));
-		return $row[0]['advisor'];
+		if (!$row[0]['advisor']) return HOME ."/advisor.php{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}";
+		return str_replace('http://tatag.dev/api', HOME, $row[0]['advisor']);
 	}
 	
 	function getAdvisory($brand_id) {
@@ -96,7 +97,7 @@ class AccountRecords extends Collection {
 		$endDate = "2015-12-31 11:59:59";
 	
 		$tally = DBquery::get("CALL tally($brand_id, '$startDate', '$endDate')")[0];
-		$url = $this->advisor; // http://localhost/advisor/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}	
+		$url = $this->advisor; 
 		
 		if ($pos = strpos($url,'{?')) {
 		  $params = substr($url, $pos+2, -1);

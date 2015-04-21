@@ -16,7 +16,7 @@ class BrandCollection extends Collection {
 		include_once "models/Accounts.php";
 		include_once "models/Holders.php";
 		
-		$this->okToAdd = array('name','mission','description','type_system','type_id','country_code','area_code');
+		$this->okToAdd = array('name','mission','description','type_system','type_id','country_code','area_code','url','advisor');
 		$this->addKeyVal("type_system", "nonprofit", "ifMissing");		
 		$this->addKeyVal("type_id", 10, "ifMissing");
 		$this->addKeyVal("country_code", "USA", "ifMissing");
