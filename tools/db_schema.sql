@@ -53,6 +53,7 @@ CREATE TABLE `brands` (
   `type_system` varchar(16) DEFAULT NULL,
   `type_id` int(11) DEFAULT NULL,
   `subtype_id` varchar(8) DEFAULT NULL,
+	`logo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`brand_id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -454,7 +455,7 @@ BEGIN
 
 SELECT a.account_id AS account_id, 
 	a.name AS account_name, alias,
-	h.user_id, a.brand_id AS brand_id, b.name AS brand_name, 			
+	h.user_id, a.brand_id AS brand_id, b.name AS brand_name, b.logo AS brand_logo,
 	sign, balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0)) AS balance, unit,
 	holder_id, limkey, a.authcode as account_authcode, h.authcode as holder_authcode,
 	m.role As role, a.throttle_id

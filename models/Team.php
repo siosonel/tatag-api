@@ -64,7 +64,9 @@ class Team extends Base {
 		$row = DBquery::get($sql, array($this->brand_id));
 		if ($row[0]) {
 			foreach($row[0] AS $key=>$val) $this->$key = $val;
-			$area_codes = json_decode(file_get_contents("ref/area_codes/". $row[0]['country_code'] .".json"));
+			$this->brand_name = $this->name;
+			
+			$area_codes = json_decode(file_get_contents("ref/area_codes/". $row[0]['country_code'] .".json"));			
 			foreach($area_codes AS $loc=>$num) {
 				if ($num==$row[0]['area_code']) {$this->area_name = $loc; break;}
 			}

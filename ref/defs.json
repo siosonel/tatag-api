@@ -242,7 +242,7 @@
 
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "name", "mission", "description", "created", "tally"],
-			"optional": ["links", "actions", "url", "advisor", "type_system", "type_id", "country_code", "area_code"]
+			"optional": ["links", "actions", "url", "advisor", "type_system", "type_id", "country_code", "area_code", "logo", "brand_name"]
 		},
 		
 		"actions": [{
@@ -253,7 +253,7 @@
 			
 			"inputs": {
 				"required": [],
-				"optional": ["name", "url", "mission", "description", "url", "advisor", "type_system", "type_id", "country_code", "area_code"]
+				"optional": ["name", "url", "mission", "description", "url", "advisor", "type_system", "type_id", "country_code", "area_code", "logo"]
 			},
 			
 			"examples": [{
@@ -1123,7 +1123,7 @@
 				"@type", "@id", "brand_id", "name", "mission", "description", "created", "tally",
 				"member_id", "role", "hours", "joined", "revoked", "url", "advisor"
 			],
-			"optional": ["links", "actions", "type_system", "type_id", "country_code", "area_code", "area_name"]
+			"optional": ["links", "actions", "type_system", "type_id", "country_code", "area_code", "area_name", "brand_name"]
 		},
 		
 		"actions": [
