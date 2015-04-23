@@ -10,7 +10,7 @@
 			{"id": 7, "type": "state or provincial judiciary"},			
 			{"id": 8, "type": "county or metro-area government"},
 			{"id": 9, "type": "city, town, or village government"},
-			{"id": 10, "type": "neighborhood government"},
+			{"id": 10, "type": "neighborhood government"}
 		]
 	},
 

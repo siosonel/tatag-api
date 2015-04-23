@@ -35,6 +35,23 @@ class BrandAbout extends Base {
 			foreach($row[0] AS $key=>$val) $this->$key = $val;
 		}
 	}
+	
+	function getMetaVals() {
+		$area_codes = json_decode(file_get_contents("ref/area_codes/$this->country_code.json"));			
+		foreach($area_codes AS $loc=>$num) {
+			if ($num==$this->area_code) {$this->area_name = $loc; break;}
+		}
+		
+		$countries = json_decode(file_get_contents("ref/countries.json"));
+		foreach($countries AS $arr) {
+			if ($arr[3]==$this->country_code) {$this->country_name = $arr[0]; break;}
+		}
+		
+		$types = json_decode(file_get_contents("ref/brand_classification.json"));
+		foreach($types->{$this->type_system}->types AS $obj) {
+			if ($obj->id == $this->type_id) {$this->type = $obj->type; break;}
+		}
+	}
 }
 
 ?>

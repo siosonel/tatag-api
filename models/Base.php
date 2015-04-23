@@ -109,7 +109,6 @@ class Base {
 		$keyValStr = implode(",", $this->keyMarkerArr);
 		$valArr = array_merge($this->valArr, $this->filterValArr);
 		
-		//$sql = "UPDATE $this->table SET ($this->keyStr) VALUES ($this->valStr) WHERE $this->idkey IN ($this->filterVals)";
 		$sql = "UPDATE $this->table SET $keyValStr, updated=NOW() WHERE $this->filterCond"; //exit(json_encode($sql .'... '. json_encode($valArr)));
 		$rowCount = DBquery::set($sql, $valArr);
 		//if (!$rowCount) Error::http(500, "Affected rows=0.");	
@@ -119,7 +118,7 @@ class Base {
 		$filterKeys = array_keys($arr);
 		$valArr = array();
 		$notOk = array_diff($filterKeys, $this->okToFilterBy);		
-		if ($notOk) Error::http(403, "Invalid filter keys: ". json_encode($notOk) .".");
+		if ($notOk) Error::http(403, "These filter keys are not allowed: ". json_encode($notOk) .".");
 		
 		foreach($arr AS $key=>$val) {
 			$filterVals = explode(",", $val);
@@ -135,7 +134,7 @@ class Base {
 	function getViewable($arr=array()) {	
 		$cols = implode(",", $this->okToGet);
 		$sql = "SELECT $cols FROM $this->table WHERE $this->filterCond"; 
-		return DBquery::get($sql, $this->$filterValArr);
+		return DBquery::get($sql, $this->filterValArr);
 	}
 	
 	function setForms($relatedType='', $relatedForms=array()) { 
