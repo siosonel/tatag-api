@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class BrandMembers extends Collection {
 	function __construct($data='') {

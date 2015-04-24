@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once "models/Accounts.php";
 
 class BudgetTransferred extends Base {

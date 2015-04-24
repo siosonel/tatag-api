@@ -1148,7 +1148,7 @@
 			
 			"examples": [{
 				"label": "should allow a member to accept membership by providing a joined date",
-				"target": "/team/104/?member_id=53",
+				"target": "/team/104/",
 				"method": "POST",				
 				"query": {
 					"member_id": 53

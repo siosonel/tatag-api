@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class ForwardVerifier {
 	public $from_holder;

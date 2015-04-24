@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class ReverseVerifier {
 	public $from_holder;

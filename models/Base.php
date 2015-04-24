@@ -115,6 +115,7 @@ class Base {
 	}
 	
 	function setFilters($arr) {
+		$cond = array();
 		$filterKeys = array_keys($arr);
 		$valArr = array();
 		$notOk = array_diff($filterKeys, $this->okToFilterBy);		
