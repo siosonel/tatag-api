@@ -15,8 +15,8 @@
 		"memberAccounts",
 		"accountHolders",
 		
-		"#userAbout",
-		"#brandAbout",
+		"userAbout",
+		"brandAbout",
 		
 		"userCollection",
 		"brandCollection",
@@ -34,7 +34,10 @@
 		"teamThrottles",
 		
 		"budgetThrottles",
-		"throttle"
+		"throttle",
+		
+		"holderRelays",
+		"relay"
 	],
 
 	"user": {		
@@ -1233,6 +1236,73 @@
 				
 				"inputs": {
 					"period": "99999999"
+				},
+				"status": 200
+			}]
+		}]
+	},
+	
+	"holderRelays": {	
+		"description": "An accountholder's collection of relay information.",
+		"testURL": "/holder/41/relays",
+		
+		"properties": {
+			"required": ["@type", "@id", "items", "holder_id"],
+			"optional": ["links", "actions", "pageOrder", "itemsLimit"]
+		},
+		
+		"actions": [{
+			"title": "Add",
+			"@type": "form",
+			"@id": "/forms#holder-relays-add",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["holder_id"]
+			},
+			
+			"examples": [{
+				"label": "should allow an accountholder to add a relay specification",
+				"target": "/holder/41/relays",
+				"method": "POST",
+				
+				"inputs": {
+					"amount_min": 0,
+					"amount_max": "{random}"
+				},
+				"status": 200
+			}]
+		}]
+	},
+	
+	"relay": {	
+		"description": "An accountholder's relay information.",
+		"testURL": "/relay/1",
+		
+		"properties": {
+			"required": ["@id", "@type", "relay_id", "holder_id", "amount_min", "amount_max", "redirect", "tag", "secret", "txntype"],
+			"optional": ["links", "actions", "user_id", "account_id", "created", "updated"]
+		},
+		
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#relay-edit",
+			"method": "POST",
+			
+			"inputs": {
+				"required": [],
+				"optional": ["amount_min", "amount_max", "redirect", "tag", "secret", "txntype", "ended"]
+			},
+			
+			"examples": [{
+				"label": "should allow an accountholder to edit a relay specification",
+				"target": "/relay/1",
+				"method": "POST",
+				
+				"inputs": {
+					"amount_min": 0,
+					"amount_max": "{random}"
 				},
 				"status": 200
 			}]

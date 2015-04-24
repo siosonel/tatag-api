@@ -1,5 +1,5 @@
 assert = require('assert');
-request = require('supertest')('http://localhost/tatag');
+request = require('supertest')('http://tatag.dev/api');
 Q = require('q');
 
 var help = require('helpers/helpers.js');
@@ -7,6 +7,7 @@ var help = require('helpers/helpers.js');
 var api = require('helpers/ld-flat.js').api({
 	'userid': '21', 
 	'pass': 'pass2',
+	'baseURL': '',
 	'request': request
 });
 
@@ -19,16 +20,16 @@ describe('Definitions', function () {
 		// for hypermedia clients, the root path should be the only known path out-of-band, 
 		// all other resource locations are provided by API
 		api.init('/').then(help.inspect(done), done);
-	})
+	});
 	
 	it('provides definitions', function (done) {
 		api.loadType('definitions').then(help.inspect(done), done)
-	})
+	});
 	
 	it('provides testable resource views and actions', function (done) {
 		api.byType.definitions.resourceTypes.map(testResource);
 		done();
-	})
+	});
 })
 
 

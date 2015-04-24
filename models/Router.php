@@ -40,12 +40,14 @@ class Router {
 			else $method = 'set';
 		}
 		
+		unset($_GET['method']);
 		self::$method = $method;
 	}
 	
 	public static function getData() {
 		$src = "php://input";
 		if ((SITE=='dev' OR SITE=='stage') AND isset($_GET['file']) AND file_exists("_exclude/". $_GET['file'] .".json")) $src= "_exclude/". $_GET['file'] .".json";
+		unset($_GET['file']);
 		
 		$data = (self::$method=='get') ? json_decode(json_encode(array("id"=>self::$id))) : json_decode(trim(file_get_contents($src)));
 		if (gettype($data)!='object') Error::http(400, "Bad Request - unable to retriev or decode submitted data.");

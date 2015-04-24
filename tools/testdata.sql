@@ -38,8 +38,8 @@ UNLOCK TABLES;
 LOCK TABLES `brands` WRITE;
 /*!40000 ALTER TABLE `brands` DISABLE KEYS */;
 INSERT INTO `brands` VALUES 
-(104,'abc','to be the first brand','for testing',0,'0','2015-01-05 19:53:31',NULL,NULL,NULL,"http://tatag.dev/tatag/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}","USA",206,"for-profit",9,NULL,NULL),
-(105,'def','to be the second brand','for testing',0,'0','2015-01-05 19:53:33',NULL,NULL,NULL,"http://tatag.dev/tatag/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}","USA",206,"for-profit",9,NULL,NULL);
+(104,'abc','to be the first brand','for testing',0,'0','2015-01-05 19:53:31',NULL,NULL,NULL,"http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}","USA",206,"for-profit",9,NULL,NULL),
+(105,'def','to be the second brand','for testing',0,'0','2015-01-05 19:53:33',NULL,NULL,NULL,"http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}","USA",206,"for-profit",9,NULL,NULL);
 /*!40000 ALTER TABLE `brands` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,6 +100,18 @@ INSERT INTO `records` VALUES
 ,(36,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:29:57',NULL,0,0,0);
 /*!40000 ALTER TABLE `records` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+
+
+LOCK TABLES `relays` WRITE;
+/*!40000 ALTER TABLE `relays` DISABLE KEYS */;
+INSERT INTO `relays` (relay_id,holder_id,amount_min,amount_max,tag,created) VALUES 
+(1, 41, 0.00, 100.00, 'test','2015-01-01 00:00:00')
+, (2, 41, 5.00, 10.00, 'test','2015-01-01 00:00:00');
+/*!40000 ALTER TABLE `relays` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 
 --

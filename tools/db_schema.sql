@@ -136,6 +136,27 @@ CREATE TABLE `records` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+
+
+DROP TABLE IF EXISTS `relays`;
+
+CREATE TABLE `relays` (
+  `relay_id` int(11) NOT NULL AUTO_INCREMENT,
+  `holder_id` int(11) DEFAULT NULL,
+  `secret` varchar(45) DEFAULT NULL,
+  `amount_min` decimal(9,2) DEFAULT '0.00',
+  `amount_max` decimal(9,2) DEFAULT '999999.99',
+  `redirect` varchar(255) DEFAULT NULL,
+  `tag` varchar(255) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
+  `ended` timestamp NULL DEFAULT NULL,
+  `txntype` varchar(5) DEFAULT 'pn',
+  PRIMARY KEY (`relay_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 --
 -- Table structure for table `reversals`
 --
@@ -155,9 +176,7 @@ CREATE TABLE `reversals` (
 
 
 
-
-
-DROP TABLE IF EXISTS `reversals`;
+DROP TABLE IF EXISTS `tallies`;
 
 CREATE TABLE `tallies` (
   `tally_id` int(11) NOT NULL AUTO_INCREMENT,
