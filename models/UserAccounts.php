@@ -9,7 +9,7 @@ class UserAccounts extends Base {
 		$this->user_id =  $this->getID();	
 		if (!Requester::isUser($this->user_id)) Error::http(401, "The requester must be logged in as the requested user.");
 		
-		$this->{"@id"} = "/user/$this->user_id/accounts";
+		$this->{"@id"} = "$this->root/user/$this->user_id/accounts";
 		$this->init($data);
 		
 		$this->okToSet = array("alias", "limkey");
@@ -46,7 +46,7 @@ class UserAccounts extends Base {
 		foreach($this->items AS &$row) {	
 			$row['@type'] = 'userAccount';
 			$row['@id'] = $this->{'@id'} ."?holder_id=". $row['holder_id']; 	
-			$row["_brand"] = "/brand/".$row['brand_id'] ."/about";
+			$row["_brand"] = "$this->root/brand/".$row['brand_id'] ."/about";
 			
 			if (strpos($row['holder_authcode'],"*")!==false) $row['authcode'] = $row['account_authcode'];
 			else $row['authcode'] = implode("", array_intersect(str_split($row['holder_authcode']), str_split($row['account_authcode'])));
@@ -57,19 +57,19 @@ class UserAccounts extends Base {
 			
 			if (strpos($auth,"c")) {
 				if ($row['sign']==1) $row['relay']['budget-add'] = $row['holder_id']."-".$row['limkey']."-c";
-				else $row['links']['budget-add'] = "/forms#budget-add";
+				else $row['links']['budget-add'] = "$this->root/forms#budget-add";
 			}
 
-			if (strpos($auth,"f")) $row['links']['budget-transfer'] = "/forms#budget-transfer";
+			if (strpos($auth,"f")) $row['links']['budget-transfer'] = "$this->root/forms#budget-transfer";
 			if (strpos($auth,"t")) $row['relay']['budget-transfer'] = $row['holder_id']."-".$row['limkey']."-t";
 			
 			if (strpos($auth,"i") OR strpos($auth,"x")) {
 				if ($row['sign']==-1) $row['relay']['budget-use'] = $row['holder_id']."-".$row['limkey']."-ix";
-				else $row['links']['budget-use'] = "/forms#budget-use";
+				else $row['links']['budget-use'] = "$this->root/forms#budget-use";
 			}
 			
-			$row['links']['accountRecords'] = "/account/". $row['account_id'] ."/records";
-			$row['links']['holder-edit'] = "/forms#holder-edit";
+			$row['links']['accountRecords'] = "$this->root/account/". $row['account_id'] ."/records";
+			$row['links']['holder-edit'] = "$this->root/forms#holder-edit";
 		}
 		
 		//$this->setForms('budgetIssued');

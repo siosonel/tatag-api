@@ -4,7 +4,7 @@ class BrandAbout extends Base {
 	function __construct($data='') {		
 		$this->brand_id = $this->getID();
 		$this->{"@type"} = 'brandAbout';	
-		$this->{"@id"} = "/brand/$this->brand_id/about";
+		$this->{"@id"} = "$this->root/brand/$this->brand_id/about";
 		
 		$this->table = "brands";		
 		$this->idkey = 'brand_id';

@@ -7,7 +7,7 @@ class BudgetTransferred extends Base {
 	function __construct($data='') { 
 		$this->{"@type"} = "budgetTransferred";
 		$this->brand_id = $this->getID('brand_id');
-		$this->{'@id'} = "/budgets/$this->brand_id/transferred";
+		$this->{'@id'} = "$this->root/budgets/$this->brand_id/transferred";
 		$this->table = "records";
 		
 		if (Router::$method != 'get') {

@@ -14,7 +14,7 @@ class BudgetRecords extends Base {
 		$this->brand_id = $this->getID();
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "Only members or admins of brand #$this->brand_id can view details of its budget activity.");
 		
-		$this->{'@id'} = "/budget/$this->brand_id/records";
+		$this->{'@id'} = "$this->root/budget/$this->brand_id/records";
 		$this->table = "records";		
 		$this->init($data);		
 	}
@@ -63,7 +63,7 @@ class BudgetRecords extends Base {
 		
 		return array(array(
 			"@type" => $type,
-			"@id" => "/budget/$this->brand_id/records?txntype=$txntype",
+			"@id" => "$this->root/budget/$this->brand_id/records?txntype=$txntype",
 			"items" => $items
 		));
 	}
@@ -80,7 +80,7 @@ class BudgetRecords extends Base {
 		
 		return array(array(
 			"@type" => "intrause",
-			"@id" => "/budget/$this->brand_id/records?txntype=pn&subtype=intrause",
+			"@id" => "$this->root/budget/$this->brand_id/records?txntype=pn&subtype=intrause",
 			"items" => $items
 		));
 	}
@@ -98,7 +98,7 @@ class BudgetRecords extends Base {
 		
 		return array(array(
 			"@type" => "inflow",
-			"@id" => "/budget/$this->brand_id/records?txntype=pn&subtype=inflow",
+			"@id" => "$this->root/budget/$this->brand_id/records?txntype=pn&subtype=inflow",
 			"items" => $items
 		));
 	}
@@ -116,7 +116,7 @@ class BudgetRecords extends Base {
 		
 		return array(array(
 			"@type" => "outflow",
-			"@id" => "/budget/$this->brand_id/records?txntype=pn&subtype=outflow",
+			"@id" => "$this->root/budget/$this->brand_id/records?txntype=pn&subtype=outflow",
 			"items" => $items
 		));
 	}

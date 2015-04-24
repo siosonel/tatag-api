@@ -9,7 +9,7 @@ class User extends Base {
 		$this->user_id = $this->getID();	
 		if (!Requester::isUser($this->user_id)) Error::http(401, "The requester must be logged in as the requested user.");
 		
-		$this->{"@id"} = "/user/$this->user_id";		
+		$this->{"@id"} = "$this->root/user/$this->user_id";		
 		$this->table = 'users';
 		$this->idkey = 'user_id';
 		$this->init($data);

@@ -11,6 +11,7 @@ class Router {
 		self::parseURL();		
 		self::setMethod();
 		$output = self::getResource(self::getData());
+		DBquery::$conn = NULL;
 		PhlatMedia::write($output);
 	}
 	
@@ -80,3 +81,4 @@ class Router {
 		return array($links);
 	}
 }
+

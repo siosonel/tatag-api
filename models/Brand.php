@@ -6,7 +6,7 @@ class Brand extends Base {
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
 	
 		$this->{"@type"} = 'brand';
-		$this->{"@id"} = "/brand/$this->brand_id";
+		$this->{"@id"} = "$this->root/brand/$this->brand_id";
 		$this->table = "brands";
 		
 		$this->init($data);
@@ -55,11 +55,11 @@ class Brand extends Base {
 			$this->brand_name = $this->name;
 			
 			$this->links = array(
-				"brandMembers" => "/brand/$this->brand_id/members",
-				"brandAccounts" => "/brand/$this->brand_id/accounts",
-				"brandAbout" => "/brand/$this->brand_id/about",
-				"budgetRecords" => "/budget/$this->brand_id/records",				
-				"budgetThrottles" => "/budget/$this->brand_id/throttles"
+				"brandMembers" => "$this->root/brand/$this->brand_id/members",
+				"brandAccounts" => "$this->root/brand/$this->brand_id/accounts",
+				"brandAbout" => "$this->root/brand/$this->brand_id/about",
+				"budgetRecords" => "$this->root/budget/$this->brand_id/records",				
+				"budgetThrottles" => "$this->root/budget/$this->brand_id/throttles"
 			);
 		}
 	}

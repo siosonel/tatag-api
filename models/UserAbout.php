@@ -6,7 +6,7 @@ Public access to user information
 class UserAbout extends Base {	
 	function __construct($data='') {
 		$id =  $this->getID();	
-		$this->{"@id"} = "/users/$id";
+		$this->{"@id"} = "$this->root/users/$id";
 		$this->table = 'users';
 		$this->user_id = $id;
 		$this->idkey = 'user_id';

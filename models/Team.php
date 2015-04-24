@@ -6,7 +6,7 @@ class Team extends Base {
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "The '/team/$this->brand_id' resource is only viewable by members of brand #$this->brand_id.");
 	
 		$this->{"@type"} = 'team';
-		$this->{"@id"} = "/team/$this->brand_id";
+		$this->{"@id"} = "$this->root/team/$this->brand_id";
 		$this->table = "members";
 		
 		$this->init($data);			
@@ -41,9 +41,9 @@ class Team extends Base {
 		
 		$this->setForms();
 		if (!$this->member_id OR $this->revoked) 
-			$this->actions = array_values(array_diff($this->actions, array("/forms#member-revoke")));
+			$this->actions = array_values(array_diff($this->actions, array("$this->root/forms#member-revoke")));
 		if ($this->joined) 
-			$this->actions = array_values(array_diff($this->actions, array("/forms#member-accept")));
+			$this->actions = array_values(array_diff($this->actions, array("$this->root/forms#member-accept")));
 		
 		
 		include_once "models/TeamMembers.php";
@@ -72,11 +72,11 @@ class Team extends Base {
 			}
 			
 			$this->links = array(
-				"teamMembers" => "/team/$this->brand_id/members",
-				"teamAccounts" => "/team/$this->brand_id/accounts",							
-				"teamThrottles" => "/team/$this->brand_id/throttles",
-				"budgetRecords" => "/budget/$this->brand_id/records",	
-				"teamAbout" => "/brand/$this->brand_id/about"
+				"teamMembers" => "$this->root/team/$this->brand_id/members",
+				"teamAccounts" => "$this->root/team/$this->brand_id/accounts",							
+				"teamThrottles" => "$this->root/team/$this->brand_id/throttles",
+				"budgetRecords" => "$this->root/budget/$this->brand_id/records",	
+				"teamAbout" => "$this->root/brand/$this->brand_id/about"
 			);
 		}
 	}

@@ -7,7 +7,7 @@ class HolderRelays extends Collection {
 		
 		$this->{"@type"} = "holderRelays";
 		$params = $_GET ? '?'. http_build_query($_GET) : '';
-		$this->{'@id'} = "/holder/$this->holder_id/relays". $params;
+		$this->{'@id'} = "$this->root/holder/$this->holder_id/relays". $params;
 		$this->table = "relays";
 		$this->idkey = 'relay_id';
 		

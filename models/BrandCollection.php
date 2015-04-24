@@ -2,7 +2,7 @@
 
 class BrandCollection extends Collection {
 	function __construct($data='') {
-		$this->{"@id"} = "/brand/collection";
+		$this->{"@id"} = "$this->root/brand/collection";
 		$this->{'@type'} = "brandCollection";
 		$this->table = "brands";
 		
@@ -11,7 +11,7 @@ class BrandCollection extends Collection {
 		$this->okToGet = array("brand_id", "name", "mission", "description");
 	}
 	
-	function add() { 
+	function add() {
 		include_once "models/Members.php";
 		include_once "models/Accounts.php";
 		include_once "models/Holders.php";
@@ -22,6 +22,9 @@ class BrandCollection extends Collection {
 		$this->addKeyVal("country_code", "USA", "ifMissing");
 		$this->addKeyVal("area_code", 206, "ifMissing");
 		$this->addKeyVal("logo", 'NULL', "ifMissing");
+		//$this->addKeyVal("mission", 'NULL', "ifMissing");
+		$this->addKeyVal("url", 'NULL', "ifMissing");
+		$this->addKeyVal("advisor", 'NULL', "ifMissing");
 		
 		$Brand =  $this->obj;
 		$Brand->brand_id = $this->insert();		//print_r($Brand); print_r(Requester);
@@ -79,7 +82,7 @@ class BrandCollection extends Collection {
 			LIMIT $this->itemsLimit";
 	
 		$this->items = DBquery::get($sql);
-		foreach($this->items AS &$b) $b['@id'] = "/brand/". $b['brand_id'] ."/about";
+		foreach($this->items AS &$b) $b['@id'] = "$this->root/brand/". $b['brand_id'] ."/about";
 		
 		$this->paginate("brand_id");
 		return array($this);

@@ -7,7 +7,7 @@ class TeamMembers extends Collection {
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "The '/team/$this->brand_id/members' resource is only viewable by members of brand #$this->brand_id.");
 		
 		$this->{"@type"} = 'teamMembers';			
-		$this->{"@id"} = "/team/$this->brand_id/members";
+		$this->{"@id"} = "$this->root/team/$this->brand_id/members";
 		$this->table = "members";	
 		$this->idkey = 'member_id'; 
 		

@@ -10,7 +10,7 @@ class AccountRecords extends Collection {
 		$this->limkey = $info['limkey'];
 		
 		$this->{"@type"} = "accountRecords";		
-		$this->{'@id'} = "/account/$this->account_id/records";
+		$this->{'@id'} = "$this->root/account/$this->account_id/records";
 		$this->table = "records";
 		$this->idkey = 'account_id';
 		
@@ -62,16 +62,16 @@ class AccountRecords extends Collection {
 				$action = $actions[$r['txntype']];
 				$r['orig_record_id'] = $r['record_id'];
 				
-				if ($r['direction']=='from') $r['links']["budget-un$action"] = "/forms#budget-un$action";
+				if ($r['direction']=='from') $r['links']["budget-un$action"] = "$this->root/forms#budget-un$action";
 				else $r['relay']["budget-un$action"] = $this->holder_id ."-". $this->limkey ."-". $r['txntype'];
 				
 				$r['relay']["default"] = $this->holder_id ."-". $this->limkey;
 			}
 			
 			if ($status>=0 AND $status<7 AND (($r['direction']=='from' AND $amount>0) OR ($r['direction']=='to' AND $amount<0))) {
-				if ($status==0) $r['links']['record-hold']="/forms#record-hold";
-				$r['links']['record-approve']="/forms#record-approve";
-				$r['links']['record-reject']="/forms#record-reject";
+				if ($status==0) $r['links']['record-hold']="$this->root/forms#record-hold";
+				$r['links']['record-approve']="$this->root/forms#record-approve";
+				$r['links']['record-reject']="$this->root/forms#record-reject";
 				
 				if ($r['brand_id']!=$this->brand_id) {
 					if (!isset($this->advisor)) $this->advisor = $this->getAdvisor();

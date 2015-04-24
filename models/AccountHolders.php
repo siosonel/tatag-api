@@ -9,7 +9,7 @@ class AccountHolders extends BrandHolders {
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "Only brand admins can access member accounts resource.");
 				
 		$this->{"@type"} = "accountHolders";		
-		$this->{'@id'} = "/account/$this->account_id/holders";
+		$this->{'@id'} = "$this->root/account/$this->account_id/holders";
 		$this->table = "holders";
 		$this->idkey = 'holder_id';
 		

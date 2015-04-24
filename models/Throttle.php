@@ -5,7 +5,7 @@ class Throttle extends Base {
 		$this->throttle_id = $this->getID();
 	
 		$this->{"@type"} = 'throttle';
-		$this->{"@id"} = "/throttle/$this->throttle_id";
+		$this->{"@id"} = "$this->root/throttle/$this->throttle_id";
 		$this->table = "throttles";
 		
 		$this->init($data);

@@ -7,7 +7,7 @@ class Token extends Base {
 	function __construct($data='') {
 		$this->{"@type"} = 'token';
 		$this->token_id = $this->getID();			
-		if ($this->token_id) $this->{"@id"} = "/token/$this->token_id" ;		
+		if ($this->token_id) $this->{"@id"} = "$this->root/token/$this->token_id" ;		
 		
 		$this->table = 'tokens';
 		$this->idkey = 'token_id';

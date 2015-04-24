@@ -15,8 +15,8 @@
 		"memberAccounts",
 		"accountHolders",
 		
-		"userAbout",
-		"brandAbout",
+		"#userAbout",
+		"#brandAbout",
 		
 		"userCollection",
 		"brandCollection",

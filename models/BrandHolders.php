@@ -6,7 +6,7 @@ class BrandHolders extends Collection {
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
 		
 		$this->{"@type"} = 'brandHolders';			
-		$this->{"@id"} = "/brand/$this->brand_id/holders";
+		$this->{"@id"} = "$this->root/brand/$this->brand_id/holders";
 		$this->table = "holders";	
 		$this->idkey = 'holder_id';
 		

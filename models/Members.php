@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class Members extends Base {
 	function __construct($data='') {

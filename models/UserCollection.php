@@ -5,7 +5,7 @@ Public access to users collection
 
 class UserCollection extends Base {	
 	function __construct($data='') {
-		$this->{"@id"} = "/user/collection";
+		$this->{"@id"} = "$this->root/user/collection";
 		$this->{'@type'} = "userCollection";
 		$this->table = 'users';
 		$this->idkey = 'user_id';

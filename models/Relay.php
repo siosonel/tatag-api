@@ -6,7 +6,7 @@ class Relay extends Base {
 		//if (!$this->isHolder()) Error::http(403, "The requester is not the user for this accountholding='$this->holder_id'.");
 		
 		$this->{"@type"} = "relay";
-		$this->{'@id'} = "/relay/$this->relay_id";
+		$this->{'@id'} = "$this->root/relay/$this->relay_id";
 		$this->table = "relays";
 		$this->idkey = 'relay_id';
 		

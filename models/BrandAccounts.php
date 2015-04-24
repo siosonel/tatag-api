@@ -6,7 +6,7 @@ class BrandAccounts extends Collection {
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
 		
 		$this->{"@type"} = 'brandAccounts';		
-		$this->{"@id"} = "/brand/$this->brand_id/accounts";
+		$this->{"@id"} = "$this->root/brand/$this->brand_id/accounts";
 		$this->table = "accounts";
 		$this->idkey = 'account_id';
 		
@@ -40,7 +40,7 @@ class BrandAccounts extends Collection {
 		
 		foreach($this->items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?account_id=". $r['account_id'];
-			$r['links']['holders'] = "/account/". $r['account_id'] ."/holders";
+			$r['links']['holders'] = "$this->root/account/". $r['account_id'] ."/holders";
 		}
 		
 		//the paginate function will call setForms() when there are no next/prev pages to set

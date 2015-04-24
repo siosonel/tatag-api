@@ -6,7 +6,7 @@ class BrandMembers extends Collection {
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
 		
 		$this->{"@type"} = 'brandMembers';			
-		$this->{"@id"} = "/brand/$this->brand_id/members";
+		$this->{"@id"} = "$this->root/brand/$this->brand_id/members";
 		$this->table = "members";	
 		$this->idkey = 'member_id'; 
 		
@@ -52,7 +52,7 @@ class BrandMembers extends Collection {
 		$this->items = DBquery::get($sql, array($this->brand_id));		
 		foreach($this->items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?member_id=". $r['member_id'];
-			$r['links']['accounts'] = "/member/". $r['member_id'] ."/accounts";
+			$r['links']['accounts'] = "$this->root/member/". $r['member_id'] ."/accounts";
 		}
 		
 		$this->paginate('member_id');

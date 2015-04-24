@@ -10,7 +10,7 @@ class PhlatMedia {
 		$graph = $output;
 		
 		$wrapper->{"@graph"} = $output;
-	
+		
 		exit(json_encode($wrapper, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 	}	
 }

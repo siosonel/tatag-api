@@ -6,7 +6,7 @@ class TeamAccounts extends Collection {
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
 		
 		$this->{"@type"} = 'teamAccounts';		
-		$this->{"@id"} = "/team/$this->brand_id/accounts";
+		$this->{"@id"} = "$this->root/team/$this->brand_id/accounts";
 		$this->table = "accounts";
 		$this->idkey = 'account_id';
 		

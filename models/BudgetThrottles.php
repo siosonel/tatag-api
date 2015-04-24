@@ -5,7 +5,7 @@ class BudgetThrottles extends Base {
 		$this->brand_id = $this->getID();
 		
 		$this->{"@type"} = 'budgetThrottles';
-		$this->{"@id"} = "/budget/$this->brand_id/throttles";
+		$this->{"@id"} = "$this->root/budget/$this->brand_id/throttles";
 		$this->table = "throttles";
 		
 		$this->init($data);
@@ -28,7 +28,7 @@ class BudgetThrottles extends Base {
 	
 		$sql = "SELECT * FROM $this->table WHERE brand_id=? AND ended IS NULL"; 		
 		$this->items = DBquery::get($sql, array($this->brand_id));
-		foreach($this->items AS &$t) $t['@id'] = "/throttle/". $t['throttle_id'];
+		foreach($this->items AS &$t) $t['@id'] = "$this->root/throttle/". $t['throttle_id'];
 		
 		$this->setForms();
 		return array($this);

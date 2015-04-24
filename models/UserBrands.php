@@ -9,7 +9,7 @@ class UserBrands extends Base {
 		$this->user_id =  $this->getID();	
 		if (!Requester::isUser($this->user_id)) Error::http(401, "The requester must be logged in as the requested user.");
 		
-		$this->{"@id"} = "/user/$this->user_id/brands";
+		$this->{"@id"} = "$this->root/user/$this->user_id/brands";
 		$this->table = "members";
 		$this->idkey = 'user_id';
 		$this->init($data);
@@ -50,11 +50,11 @@ class UserBrands extends Base {
 		
 		foreach($this->items AS &$row) {
 			$row['@id'] = $this->{'@id'} ."?member_id=". $row['member_id']; 
-			$row["_brand"] = "/brands/".$row['brand_id']."/about";			
+			$row["_brand"] = "$this->root/brands/".$row['brand_id'] ."/about";			
 			$this->setForms();
 			
 			/*if ($row['role']=='admin') {
-				$row["_adminViews"] = array("/member/".$row['member_id'], "/brand/".$row['brand_id']);
+				$row["_adminViews"] = array("$this->root/member/".$row['member_id'], "$this->root/brand/".$row['brand_id']);
 			}*/
 		}
 		
