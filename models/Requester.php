@@ -149,6 +149,21 @@ class Requester {
 		if ($row) return $row[0]['member_id']; 
 	}
 	
+	static function holderIDs() {
+		$sql = "SELECT holder_id FROM holders WHERE user_id=?";
+		$rows = DBquery::get($sql, array(self::$user_id));
+		$holderIDs = array();
+		foreach($rows AS $r) $holderIDs[] = $r['holder_id'];
+		return $holderIDs; 
+	}
+	
+	static function isRelayHolder($relay_id) {
+		$sql = "SELECT user_id FROM relays JOIN holders USING (holder_id) WHERE relay_id=? LIMIT 1";
+		$rows = DBquery::get($sql, array($relay_id));
+		if (!$rows OR $rows[0]['user_id'] != self::$user_id) return false;
+		return true;
+	}
+	
 	static function define_SITE() {
 		// detect from most secure to least, and if not detected default to most secure site
 		$SN = $_SERVER['SERVER_NAME'];

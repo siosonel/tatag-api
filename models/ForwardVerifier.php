@@ -4,7 +4,7 @@ class ForwardVerifier {
 	public $from_holder;
 	public $to_holder;
 
-	function __construct($data) { 		
+	function __construct($data) {
 		$this->verifyHolder($data, 'from');
 		if ($this->from_holder['user_id'] != Requester::$user_id) Error::http(401, "The from-account's user_id must match the Requester's user_id in a non-reversal transaction."); 
 		
@@ -12,9 +12,10 @@ class ForwardVerifier {
 		if ($data->from_acct == $data->to_acct) Error::http(403, "The from_acct and to_acct must have a different account id's.");
 		
 		$this->setTxnType();
-	}
+	}	
 	
 	function verifyHolder($data, $ft) {
+		if (!strpos($data->$ft,"-") OR strpos($data->$ft, ".")) $data->$ft = $this->relayToHolderInfo($data->$ft);  
 		list($holder_id, $limkey) = explode("-", $data->$ft);
 	
 		$sql = "CALL holderCheck(?)";			
@@ -32,6 +33,20 @@ class ForwardVerifier {
 		
 		//if account holder authcode is wildcard, override with account authcode value
 		if ($this->{$_holder}['holder_auth']=='*') $this->{$_holder}['holder_auth'] = $this->{$_holder}['acct_auth'];
+	}
+	
+	
+	function relayToHolderInfo($relay) {
+		list($relay_id,$secret) = explode(".", $relay);
+	
+		$sql = "SELECT secret, r.holder_id, limkey, txntype FROM relays r JOIN holders USING (holder_id) WHERE relay_id=? AND r.ended IS NULL";
+		$rows = DBquery::get($sql, array($relay_id));
+		if (!$rows) Error::http(403, "Relay id# '$relay id' is not active.");
+		$r = $rows[0];
+		if ($r['secret'] AND $r['secret'] != $secret) Error::http(403, "Invalid relay credentials='$relay'. [$secret]". $r['secret']);
+		
+		$this->relayTxnType = $r['txntype'];
+		return $r['holder_id'] ."-". $r['limkey'];
 	}
 	
 	function throttleCheck($amount) {
@@ -56,6 +71,8 @@ class ForwardVerifier {
 		$fromType = $this->from_holder['sign'] == -1 ? "n" : "p";
 		$toType = $this->to_holder['sign'] == -1 ? "n" : "p";
 		$this->txnType =  $fromType . $toType;
+		if (isset($this->relayTxnType) AND $this->relayTxnType AND $this->txnType != $this->relayTxnType)
+			Error::http(403, "The relay credential is not authorized for the detected transaction type of '$this->txntype'.");
 	}	
 }
 

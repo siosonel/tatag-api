@@ -10,6 +10,8 @@ $r = isset($_GET['r']) ? explode(',', $_GET['r']) : array();
 $n = isset($_GET['n']) ? explode(',', $_GET['n']) : array(); //optional test-example index matcher
 
 $contents = file_get_contents("ref/defs.json");
+
+$contents = str_replace("{hex}", dechex(mt_rand(16,1000)),$contents);
 $contents = str_replace("{random}", 1*substr("".(time()/100), -6),$contents);
 $contents = str_replace("{xtime}", date('Y-m-d h:i:s'),$contents);
 $defs = json_decode($contents);
@@ -40,7 +42,7 @@ foreach($defs->resourceTypes AS $resourceName) {
 		}
 		else {
 			foreach($defs->$resourceName->actions AS $a) {	
-				$out .= "[ $a->title ]\n";
+				$out .= "\n[ $a->title ]\n";
 				$out .= "Method: $a->method\n";
 				
 				if (isset($a->examples)) {
@@ -63,8 +65,8 @@ foreach($defs->resourceTypes AS $resourceName) {
 	}
 }
 
-echo "\n\n\nRESULTS:\n     Warnings: $warnings\n     Failed: $failed\n     Passed: $passed\n";
-echo "\n\n\n\nDETAILS:\n$out";
+echo "\n\n\nRESULTS:\n\n     Warnings: $warnings\n     Failed: $failed\n     Passed: $passed\n";
+echo "\n\n\nDETAILS:\n$out";
 
 function request($url,$method,$q) {	
 	global $warnings; global $failed; global $passed; global $out;

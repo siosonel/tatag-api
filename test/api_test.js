@@ -44,13 +44,13 @@ function testResource(type) {
 		it('should provide '+ type +' resource', function (done) {
 			if (currDef.testURL) api.loadId(currDef.testURL).then(help.inspect(done), done);
 			else api.loadType(type).then(help.inspect(done), done)
-		})
+		});
 		
 		it('should match '+type+" definitions", function (done) {
 			var props= currDef.properties;
 			assert.equal(undefined, help.compareKeys(api.curr[type], props.required, props.optional))
 			done()
-		})
+		});
 
 		it('should provide '+type+' actions', function (done) {
 			api.loadType(type).then(function (resource) {
@@ -60,7 +60,7 @@ function testResource(type) {
 				formIDs = resource.actions;
 				done(mssg ? new Error(mssg) : null);
 			})
-		})
+		});
 		
 		it('should follow documented action examples', function (done) {
 			var skip = []; //skip = ['user', 'userAccounts', 'brand', 'brandMembers', "brandAccounts", 'brandHolders', 'userCollection',  'brancCollection'];
@@ -76,12 +76,12 @@ function testResource(type) {
 			
 				help.wait.orNot();
 			}
-		})
+		});
 		
 		it('may have dereferenceable links', function (done) {
 			if (!currResource.links) done();
 			else api.deref(currResource.links).then(help.inspect(done), done)			
-		})
+		});
 	})
 }
 	

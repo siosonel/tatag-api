@@ -74,12 +74,12 @@ class Base {
 		$keypos = array_search($key, $this->keyArr);	
 			
 		if ($keypos!==false) {
-			$this->valArr[$keypos] = $val;
+			$this->valArr[$keypos] =($val=='NULL') ? NULL : $val;
 			$this->quotedValArr[$keypos] = ($val=='NULL') ? $val : DBquery::$conn->quote($val);
 		}
 		else {
 			$this->keyArr[] = $key;
-			$this->valArr[] = $val; 
+			$this->valArr[] = ($val=='NULL') ? NULL : $val; 
 			$this->quotedValArr[] = ($val=='NULL') ? $val : DBquery::$conn->quote($val);
 			$this->paramMarker[] = "?";
 			$this->keyMarkerArr[] = "$key=?";
@@ -109,7 +109,7 @@ class Base {
 		$keyValStr = implode(",", $this->keyMarkerArr);
 		$valArr = array_merge($this->valArr, $this->filterValArr);
 		
-		$sql = "UPDATE $this->table SET $keyValStr, updated=NOW() WHERE $this->filterCond"; //exit(json_encode($sql .'... '. json_encode($valArr)));
+		$sql = "UPDATE $this->table SET $keyValStr, updated=NOW() WHERE $this->filterCond"; exit(json_encode($sql .'... '. json_encode($valArr)));
 		$rowCount = DBquery::set($sql, $valArr);
 		//if (!$rowCount) Error::http(500, "Affected rows=0.");	
 	}

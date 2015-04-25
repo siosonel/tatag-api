@@ -21,7 +21,8 @@ class ReverseVerifier {
 		unset($data->orig_record_id);
 	}
 	
-	function verifyHolder($data, $ft) {			
+	function verifyHolder($data, $ft) {
+		if (!strpos($data->$ft,"-") OR strpos($data->$ft, ".")) $data->$ft = $this->relayToHolderInfo($data->$ft); 			
 		list($holder_id,$limkey) = explode("-", $data->$ft); 
 	
 		$sql = "CALL holderCheck(?)";			
@@ -41,6 +42,18 @@ class ReverseVerifier {
 		
 		//if account holder authcode is wildcard, override with account authcode value
 		if ($this->{$_holder}['holder_auth']=='*') $this->{$_holder}['holder_auth'] = $this->{$_holder}['acct_auth'];
+	}
+	
+	function relayToHolderInfo($relay) {
+		list($relay_id,$secret) = explode(".", $relay);
+	
+		$sql = "SELECT secret, r.holder_id, limkey FROM relays r JOIN holders USING (holder_id) WHERE relay_id=? AND r.ended IS NULL";
+		$rows = DBquery::get($sql, array($relay_id));
+		if (!$rows) Error::http(403, "Relay id# '$relay id' is not active.");
+		$r = $rows[0];
+		if ($r['secret'] AND $r['secret'] != $secret) Error::http(403, "Invalid relay credentials='$relay'.");
+		
+		return $r['holder_id'] ."-". $r['limkey'];
 	}
 	
 	function setTxnType() {

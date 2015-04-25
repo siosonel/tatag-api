@@ -948,6 +948,18 @@
 					"note": "test budget use"
 				},
 				"status": 200
+			},{
+				"label": "should allow the use of a valid relay credential to authorize a transaction.",
+				"target": "/budget/104/used",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "42-abc",
+					"to": "3",
+					"amount": 11.11,
+					"note": "test budget use"
+				},
+				"status": 200
 			}]
 		},
 		{
@@ -1271,6 +1283,16 @@
 					"amount_max": "{random}"
 				},
 				"status": 200
+			},{
+				"label": "should NOT allow a non-accountholder to add a relay specification",
+				"target": "/holder/44/relays",
+				"method": "POST",
+				
+				"inputs": {
+					"amount_min": 0,
+					"amount_max": "{random}"
+				},
+				"status": 403
 			}]
 		}]
 	},
@@ -1301,10 +1323,20 @@
 				"method": "POST",
 				
 				"inputs": {
-					"amount_min": 0,
+					"secret": "{hex}",
 					"amount_max": "{random}"
 				},
 				"status": 200
+			},{
+				"label": "should NOT allow a non-accountholder to edit a relay specification",
+				"target": "/relay/3",
+				"method": "POST",
+				
+				"inputs": {
+					"secret": "{hex}",
+					"amount_max": "{random}"
+				},
+				"status": 403
 			}]
 		}]
 	}

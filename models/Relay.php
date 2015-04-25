@@ -3,7 +3,10 @@
 class Relay extends Base {
 	function __construct($data='') { 		
 		$this->relay_id = $this->getID();
-		//if (!$this->isHolder()) Error::http(403, "The requester is not the user for this accountholding='$this->holder_id'.");
+		
+		if (!Requester::isRelayHolder($this->relay_id)) Error::http(
+			403, "The user does not have access to this accountholder's information."
+		);
 		
 		$this->{"@type"} = "relay";
 		$this->{'@id'} = "$this->root/relay/$this->relay_id";
@@ -33,8 +36,9 @@ class Relay extends Base {
 			
 		$rows = DBquery::get($sql, array($this->relay_id));
 		if (!$rows) return array(new stdClass());
-		if (1*$rows[0]['user_id'] != Requester::$user_id) Error::http(403, 
-			"The user is not the accountholder of this relay and does not have accees to its details.");
+		if (1*$rows[0]['user_id'] != Requester::$user_id) Error::http(
+			403, "The user is not the accountholder of this relay and does not have accees to its details."
+		);
 		
 		
 		$this->setForms();
