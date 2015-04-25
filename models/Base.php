@@ -4,6 +4,7 @@ Inherited class of common methods, including enforced input validation
 */
 
 class Base {
+	protected $root='';
 	protected $obj;
 	protected $table;
 	protected $id;
@@ -109,7 +110,7 @@ class Base {
 		$keyValStr = implode(",", $this->keyMarkerArr);
 		$valArr = array_merge($this->valArr, $this->filterValArr);
 		
-		$sql = "UPDATE $this->table SET $keyValStr, updated=NOW() WHERE $this->filterCond"; exit(json_encode($sql .'... '. json_encode($valArr)));
+		$sql = "UPDATE $this->table SET $keyValStr, updated=NOW() WHERE $this->filterCond"; //exit(json_encode($sql .'... '. json_encode($valArr)));
 		$rowCount = DBquery::set($sql, $valArr);
 		//if (!$rowCount) Error::http(500, "Affected rows=0.");	
 	}

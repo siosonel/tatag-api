@@ -18,10 +18,11 @@ class Relay extends Base {
 	}
 	
 	function set() {
-		$this->okToSet = array('secret','amount_min','amount_max','tag','redirect','ended');				
+		$this->okToSet = array('secret','amount_min','amount_max','tag','redirect','ended','txntype');				
 		$this->addKeyVal('secret','NULL','ifMissing');		
 		$this->addKeyVal('redirect','NULL','ifMissing');			
-		$this->addKeyVal('tag','NULL','ifMissing');
+		$this->addKeyVal('tag','NULL','ifMissing');			
+		$this->addKeyVal('txntype','pn','ifMissing');
 		
 		$_GET['holder_id'] = $this->holder_id;
 		$this->update(array('relay_id'=>$this->relay_id));

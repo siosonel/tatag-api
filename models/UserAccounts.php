@@ -70,6 +70,7 @@ class UserAccounts extends Base {
 			
 			$row['links']['accountRecords'] = "$this->root/account/". $row['account_id'] ."/records";
 			$row['links']['holder-edit'] = "$this->root/forms#holder-edit";
+			$row['links']['relays'] = "$this->root/holder/". $row['holder_id'] ."/relays";
 		}
 		
 		//$this->setForms('budgetIssued');

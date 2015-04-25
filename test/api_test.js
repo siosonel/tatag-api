@@ -42,17 +42,20 @@ function testResource(type) {
 	
 	describe(type+' resource', function () {
 		it('should provide '+ type +' resource', function (done) {
+			this.timeout(5000);
 			if (currDef.testURL) api.loadId(currDef.testURL).then(help.inspect(done), done);
 			else api.loadType(type).then(help.inspect(done), done)
 		});
 		
 		it('should match '+type+" definitions", function (done) {
+			this.timeout(5000);
 			var props= currDef.properties;
 			assert.equal(undefined, help.compareKeys(api.curr[type], props.required, props.optional))
 			done()
 		});
 
 		it('should provide '+type+' actions', function (done) {
+			this.timeout(5000);
 			api.loadType(type).then(function (resource) {
 				var mssg='';
 				currResource = resource;
@@ -63,6 +66,7 @@ function testResource(type) {
 		});
 		
 		it('should follow documented action examples', function (done) {
+			this.timeout(5000);
 			var skip = []; //skip = ['user', 'userAccounts', 'brand', 'brandMembers', "brandAccounts", 'brandHolders', 'userCollection',  'brancCollection'];
 			if (!formIDs || !formIDs.length || skip.indexOf(currResource['@type'])!=-1) done();
 			else {
@@ -79,6 +83,7 @@ function testResource(type) {
 		});
 		
 		it('may have dereferenceable links', function (done) {
+			this.timeout(5000);
 			if (!currResource.links) done();
 			else api.deref(currResource.links).then(help.inspect(done), done)			
 		});

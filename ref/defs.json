@@ -1263,6 +1263,10 @@
 			"optional": ["links", "actions", "pageOrder", "itemsLimit"]
 		},
 		
+		"relatedActions": {
+			"relay": ["/forms#relay-edit"]
+		},
+		
 		"actions": [{
 			"title": "Add",
 			"@type": "form",
@@ -1270,7 +1274,8 @@
 			"method": "POST",
 			
 			"inputs": {
-				"required": ["holder_id"]
+				"required": [],
+				"optional": ["amount_min", "amount_max", "redirect", "tag", "secret", "txntype", "ended"]
 			},
 			
 			"examples": [{

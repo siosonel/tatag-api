@@ -41,9 +41,10 @@ class HolderRelays extends Collection {
 	function get() {		
 		$_GET['r.holder_id'] = $this->holder_id;
 		unset($_GET['holder_id']);
-		$this->setFilters($_GET);
+		$this->setFilters($_GET);		
+		unset($_GET['r.holder_id']);
 		
-		$sql = "SELECT relay_id, r.holder_id, user_id, account_id, amount_min, amount_max, redirect, secret, tag, r.created, r.updated
+		$sql = "SELECT relay_id, r.holder_id, user_id, account_id, amount_min, amount_max, redirect, secret, tag, txntype, r.created, r.updated
 			FROM relays r
 			JOIN holders h ON h.holder_id=r.holder_id
 			WHERE $this->filterCond AND r.relay_id < $this->limitID
@@ -56,10 +57,13 @@ class HolderRelays extends Collection {
 			if ($r['user_id'] != Requester::$user_id) Error::http(403, 
 				"The user is not the accountholder of this relay and does not have accees to its details.");
 			
-			$r['@id'] = $this->{"@id"} ."?relay_id=". $r['relay_id'];
+			$r['@id'] = "$this->root/relay/". $r['relay_id'];
+			$r['@type'] = 'relay';
+			$r['links']['relay-edit'] = '/forms#relay-edit';
 		}
 		
 		$this->paginate('relay_id');
+		$this->links['relay-add'] = "/forms#holder-relays-add";
 		return array($this);
 	}
 }

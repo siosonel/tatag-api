@@ -27,6 +27,7 @@ if (!$r) {
 $warnings = 0;
 $failed = 0;
 $passed = 0;
+$total = 0;
 $out = "";
 echo "\nRESOURCES:\n";
 
@@ -39,6 +40,7 @@ foreach($defs->resourceTypes AS $resourceName) {
 			$warnings++;
 			echo "\n-   No defined actions.\n";
 			$out .= "\n-   No defined actions.";
+			$total++;
 		}
 		else {
 			foreach($defs->$resourceName->actions AS $a) {	
@@ -58,6 +60,8 @@ foreach($defs->resourceTypes AS $resourceName) {
 							$out .= "    expected: $q->status\n"; //. json_encode();
 							$out .= "    actual: ". request($url, $a->method, $q) ."\n\n";
 						}
+						
+						$total++;
 					}
 				}
 			}
@@ -65,7 +69,7 @@ foreach($defs->resourceTypes AS $resourceName) {
 	}
 }
 
-echo "\n\n\nRESULTS:\n\n     Warnings: $warnings\n     Failed: $failed\n     Passed: $passed\n";
+echo "\n\n\nRESULTS:\n\n     Warnings: $warnings\n     Failed: $failed\n     Passed: $passed\n     Total: $total\n";
 echo "\n\n\nDETAILS:\n$out";
 
 function request($url,$method,$q) {	
