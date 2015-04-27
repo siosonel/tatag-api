@@ -712,7 +712,7 @@ call budgetTotal($brandID,-1,@rev);
 call budgetTotal($brandID,1,@exp);
 
 
-SELECT COUNT(*), SUM(hours) 
+SELECT COUNT(*), COALESCE(SUM(hours),0) 
 INTO @numMembers, @totalMemberHours
 FROM members 
 WHERE brand_id=$brandID;
