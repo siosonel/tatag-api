@@ -40,7 +40,12 @@ class BudgetTransferred extends Base {
 		$this->catchError($this->verifyBals(), $this->verifyAuth());	
 		$this->record_id = $this->insert();
 		$this->catchError($this->verifyBals()); //void transaction record as needed
+		
 		if ($this->amount < 0) $this->reversal_id = $this->verifier->trackReversal($this->record_id);		
+		if ($this->from_user == $this->to_user) {
+			$row = DBquery::get("CALL approveRecord($this->record_id)");
+			$this->status = 7;
+		}
 		
 		//no need to divulge to-endpoint information
 		foreach($this AS $key=>$val) {

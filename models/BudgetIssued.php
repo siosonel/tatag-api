@@ -40,6 +40,10 @@ class BudgetIssued extends Base {
 		$this->catchError("", $this->verifyAuth());	
 		$this->record_id = $this->insert();
 		if ($this->amount < 0) $this->reversal_id = $this->verifier->trackReversal($this->record_id);
+		if ($this->from_user == $this->to_user) {
+			$row = DBquery::get("CALL approveRecord($this->record_id)");
+			$this->status = 7;
+		}
 		
 		//no need to divulge to-endpoint information
 		foreach($this AS $key=>$val) {
