@@ -221,9 +221,9 @@
 				"method": "POST",			
 				
 				"inputs": {
-					"email": "john-{xtime}@test.org",
-					"name": "John-{xtime}",
-					"password": "pass-2"
+					"email": "john-{random}@test.org",
+					"name": "John-{random}",
+					"password": "pass2"
 				},
 				"status": 200
 			},{
@@ -232,8 +232,8 @@
 				"method": "POST",				
 						
 				"inputs": {
-					"name": "John-{xtime}",
-					"password": "pass-2"
+					"name": "John-{random}",
+					"password": "pass2"
 				},
 				"status": 400
 			}]

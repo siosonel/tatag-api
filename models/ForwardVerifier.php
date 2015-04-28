@@ -15,7 +15,7 @@ class ForwardVerifier {
 	}	
 	
 	function verifyHolder($data, $ft) {
-		if (!strpos($data->$ft,"-") OR strpos($data->$ft, ".")) $data->$ft = $this->relayToHolderInfo($data->$ft);  
+		if (strpos($data->$ft,"-")==false OR strpos($data->$ft, ".")) $data->$ft = $this->relayToHolderInfo($data->$ft);  
 		list($holder_id, $limkey) = explode("-", $data->$ft);
 	
 		$sql = "CALL holderCheck(?)";			

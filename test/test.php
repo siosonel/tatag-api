@@ -13,6 +13,7 @@ $contents = file_get_contents("ref/defs.json");
 
 $contents = str_replace("{hex}", dechex(mt_rand(16,1000)),$contents);
 $contents = str_replace("{random}", 1*substr("".(time()/100), -6),$contents);
+$contents = str_replace("-{xtime}", dechex(1*substr("".time(), -6)),$contents);
 $contents = str_replace("{xtime}", date('Y-m-d h:i:s'),$contents);
 $defs = json_decode($contents);
 
