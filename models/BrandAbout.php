@@ -1,6 +1,8 @@
 <?php
 
 class BrandAbout extends Base {
+	public $url;
+
 	function __construct($data='') {		
 		$this->brand_id = $this->getID();
 		$this->{"@type"} = 'brandAbout';	
@@ -32,7 +34,10 @@ class BrandAbout extends Base {
 		$sql = "SELECT name, description, mission, created, url, advisor, type_system, type_id, country_code, area_code  FROM brands WHERE brand_id=?";
 		$row = DBquery::get($sql, array($this->brand_id));
 		if ($row[0]) {
-			foreach($row[0] AS $key=>$val) $this->$key = $val;
+			foreach($row[0] AS $key=>$val) {
+				if ($key=='url' AND !$val) $val = "http://tatag.cc/$this->brand_id";
+				$this->$key = $val;
+			}
 		}
 	}
 	

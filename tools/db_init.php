@@ -20,7 +20,7 @@ else if ($step=='upload') {
 	if (SITE=='dev') $schema = str_replace("InnoDB", "MEMORY", $schema);
 	
 	DBquery::set($schema);
-	if (isset($_GET['data']) AND $data = $_GET['data']) DBquery::set(file_get_contents("tools/$data"));
+	if (SITE != 'live' AND isset($_GET['data']) AND $data = $_GET['data']) DBquery::set(file_get_contents("tools/$data"));
 	exit('{"status":"ok"}');
 } 
 else exit("Invalid step='$step'.");
