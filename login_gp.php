@@ -19,7 +19,7 @@
 <br /><br />
 <script type="text/javascript" src="https://apis.google.com/js/client:plusone.js?"></script>
 <script>		
-	 function signinCallback(authResult) { console.log(authResult); //return;
+	 function signinCallback(authResult) { //console.log(authResult); //return;
 		if (authResult['error'] || !authResult['status']['signed_in']) {console.log('There was an error: ' + authResult['error']); return;}
 		
 		if (authResult['status']['signed_in']) {

@@ -43,7 +43,9 @@ if ($provider=='tw') {require_once "login_tw.php";	exit();}
 				data: JSON.stringify(data),
 				success: function (resp) { console.log(resp); //console.log(decodeURIComponent(params.next));					
 					var token = resp['@graph'][0];
-					window.location.href = decodeURIComponent(params.next) +'?token_id='+ token.token_id+'&otk='+ token.otk;
+					var url = decodeURIComponent(params.next);
+					var separator = url.search("/\?/")!=-1 ? "&" : "?"; 
+					window.location.href = url + separator + 'token_id='+ token.token_id+'&otk='+ token.otk;
 				}, 
 				error: function (xhr, status, text) {
 					console.log(status+' '+text)

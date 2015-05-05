@@ -28,7 +28,9 @@ class Tokentw extends Token {
 			"token_val"=>'0'
 		));
 		
-		header('Location: '. $_SESSION['TATAG_NEXT'] .'?token_id='. $_SESSION['TATAG_TOKEN_ID'] .'&otk='. $this->otk);
+		$separator = strpos($_SESSION['TATAG_NEXT'], '?')!==false ? "&" : '?';
+		
+		header('Location: '. $_SESSION['TATAG_NEXT'] . $separator .'token_id='. $_SESSION['TATAG_TOKEN_ID'] .'&otk='. $this->otk);
 	}
 	
 	function getByOauthID($info) {
