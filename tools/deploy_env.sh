@@ -32,5 +32,25 @@ case $AUDIENCE in
 					
 				fi
 				;;
+		
+		sim)
+				# build_delete="php/config-internal.php php/config-experts.php php/mortFileSha1.php README.txt"
+				build_append="ref/area_codes/*"
 				
+				if [[ "$ENV" == "stage" ]]; then
+					SERVER=sim-stage.tatag.cc
+					REMOTE_DIR=/var/www/sim-stage/$APP
+					URL="http://sim-stage.tatag.cc/$APP"
+					xhome="~/builds/"				
+				
+        # for integration testing of new features, debugged code				
+				elif [[ "$ENV" == "live" ]]; then
+					SERVER=sim-stage.tatag.cc
+					REMOTE_DIR=/var/www/sim/api
+					URL="http://sim.tatag.cc/api/"
+					xhome="~/builds/"
+					
+				fi
+				;;
+		
 esac

@@ -29,8 +29,11 @@ class Requester {
 		error_reporting(error_reporting() & ~E_NOTICE);
 		
 		self::define_SITE();
+		if (SITE=="live")	error_reporting(0);
+		
+		$audience = self::detect_AUDIENCE();
 		global $dbs;
-		include_once "config.php";		
+		include_once "config-$audience.php";		
 		
 		self::setAccess();		
 		self::$defs = json_decode(file_get_contents("ref/defs.json")); //print_r(self::$defs); exit();		
@@ -54,13 +57,13 @@ class Requester {
 		$path = array_slice($url, 0, 3);
 		$openAccess = array("collection", "about", "ts", "ranks", "tally", "flow", "inflow", "outflow", "added", "intrause");
 		
-		if (count($openAccess) > count(array_diff($openAccess, $path)) AND !isset($_SERVER['PHP_AUTH_USER'])) {
+		if ($_SERVER['PHP_SELF']=='/api/login.php' OR count($openAccess) > count(array_diff($openAccess, $path)) AND !isset($_SERVER['PHP_AUTH_USER'])) {
 			$_SERVER['PHP_AUTH_USER'] = OPEN_ACCESS_USER;
 			$_SERVER['PHP_AUTH_PW'] = OPEN_ACCESS_PW;
-		} 
+		}
 		
 		global $dbs;
-		self::$db_default = (isset($_GET['db']) AND $_GET['db']) ? $_GET['db'] : 'tatagtest';
+		self::$db_default = 'tatagtest';
 		DBquery::init($dbs, array(self::$db_default));
 	}
 	
@@ -171,8 +174,16 @@ class Requester {
 		$ADDR = $_SERVER['SERVER_ADDR'];
 		
 		if (substr($SN,-4)==".dev" OR $SN=='localhost') define("SITE", "dev");
-		else if ($SN=='stage.tatag.cc') define('SITE','stage');
+		else if ($SN=='stage.tatag.cc' OR $SN=='sim-stage.tatag.cc') define('SITE','stage');
 		else if ($SN=='tatag.cc') define('SITE', 'live');
 		else define('SITE', 'live');
+	}
+	
+	static function detect_AUDIENCE() {
+		// detect from most secure to least, and if not detected default to most secure site
+		$SN = $_SERVER['SERVER_NAME'];
+		
+		if (substr($SN,0,4)=="sim." OR substr($SN,0,4)=="sim-") return "sim";
+		else return "public";
 	}
 }

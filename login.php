@@ -1,6 +1,9 @@
 ﻿<?php 
 
-require_once "config.php"; 
+require_once "models/Requester.php"; 
+Requester::init();
+header("content-type: text/html");
+
 $provider = isset($_GET['provider']) ? $_GET['provider'] : '';
 if ($provider=='tw') {require_once "login_tw.php";	exit();}
 

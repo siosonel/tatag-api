@@ -3,7 +3,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 header('content-type: text/plain');
 chdir("../../");
 
-require_once "config.php";
+require_once "config-sim.php";
 require_once "models/Requester.php";
 require_once "models/UserCollection.php";
 require_once "models/BrandCollection.php";

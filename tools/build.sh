@@ -31,13 +31,13 @@ git archive -o tools/prep-$REV/build.tar $REV
 cd tools/prep-$REV
 
 # add configuration file
-cp ../../config.php .
+cp ../../config-$AUDIENCE.php .
 
 # will attach a revision info file to permit quick inspection on deployment site
 echo "$(date) $REV" > rev.txt
 
 # append files to build
-tar --append --file=build.tar rev.txt config.php --exclude-vcs
+tar --append --file=build.tar rev.txt config-$AUDIENCE.php --exclude-vcs
 
 # delete files as necessary
 echo "Deleting from built tar: $build_delete"
