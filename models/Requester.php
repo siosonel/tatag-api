@@ -57,7 +57,7 @@ class Requester {
 		$path = array_slice($url, 0, 3);
 		$openAccess = array("collection", "about", "ts", "ranks", "tally", "flow", "inflow", "outflow", "added", "intrause");
 		
-		if ($_SERVER['PHP_SELF']=='/api/login.php' OR count($openAccess) > count(array_diff($openAccess, $path)) AND !isset($_SERVER['PHP_AUTH_USER'])) {
+		if (AUDIENCE=='sim' OR $_SERVER['PHP_SELF']=='/api/login.php' OR count($openAccess) > count(array_diff($openAccess, $path)) AND !isset($_SERVER['PHP_AUTH_USER'])) {
 			$_SERVER['PHP_AUTH_USER'] = OPEN_ACCESS_USER;
 			$_SERVER['PHP_AUTH_PW'] = OPEN_ACCESS_PW;
 		}

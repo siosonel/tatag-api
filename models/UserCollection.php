@@ -45,6 +45,8 @@ class UserCollection extends Base {
 	}
 	
 	function setDefaultBrand() {
+		if (AUDIENCE == 'sim') return;
+		
 		require_once "models/BrandCollection.php";
 		require_once "models/Brand.php";
 		require_once "models/BudgetIssued.php";
