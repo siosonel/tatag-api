@@ -26,8 +26,8 @@ case $AUDIENCE in
         # for integration testing of new features, debugged code				
 				elif [[ "$ENV" == "live" ]]; then
 					SERVER=tatag.cc
-					REMOTE_DIR=/var/www/html/api
-					URL="http://tatag.cc/api/"
+					REMOTE_DIR=/var/www/html/$APP
+					URL="http://tatag.cc/$APP/"
 					xhome="~/builds/"
 					
 				fi
@@ -46,8 +46,8 @@ case $AUDIENCE in
         # for integration testing of new features, debugged code				
 				elif [[ "$ENV" == "live" ]]; then
 					SERVER=sim-stage.tatag.cc
-					REMOTE_DIR=/var/www/sim/api
-					URL="http://sim.tatag.cc/api/"
+					REMOTE_DIR=/var/www/sim/$APP
+					URL="http://sim.tatag.cc/$APP/"
 					xhome="~/builds/"
 					
 				fi

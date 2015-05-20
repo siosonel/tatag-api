@@ -29,7 +29,7 @@ class Requester {
 		error_reporting(error_reporting() & ~E_NOTICE);
 		
 		self::define_SITE();
-		if (SITE=="live")	error_reporting(0);
+		if (SITE=="live" OR SITE=='stage') error_reporting(0);
 		
 		$audience = self::detect_AUDIENCE();
 		global $dbs;

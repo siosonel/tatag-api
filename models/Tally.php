@@ -35,11 +35,13 @@ class Tally {
 		ORDER BY week ASC, amount DESC";
 		
 		$rows = DBquery::get($sql, $this->params);
+		$d = array();
 		
 		foreach($rows AS $r) {
 			$d["".$r['brand']][] = $r;
 		}
  		
+		$data = array();
 		foreach($d AS $key=>$arr) {
 			$data[] = array("brand_id"=>$key, $this->metric=>$arr);
 		}

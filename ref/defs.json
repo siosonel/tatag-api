@@ -208,8 +208,6 @@
 			"@id": "/forms#user-registration",
 			"method": "POST",
 			
-			"query": ["holder_id"],
-			
 			"inputs": {
 				"required": ["email", "password", "name"],
 				"optional": []
