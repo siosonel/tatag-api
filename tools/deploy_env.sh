@@ -45,7 +45,7 @@ case $AUDIENCE in
 				
         # for integration testing of new features, debugged code				
 				elif [[ "$ENV" == "live" ]]; then
-					SERVER=sim-stage.tatag.cc
+					SERVER=sim.tatag.cc
 					REMOTE_DIR=/var/www/sim/$APP
 					URL="http://sim.tatag.cc/$APP/"
 					xhome="~/builds/"

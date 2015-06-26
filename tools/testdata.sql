@@ -49,7 +49,8 @@ LOCK TABLES `consumers` WRITE;
 /*!40000 ALTER TABLE `consumers` DISABLE KEYS */;
 INSERT INTO `consumers` VALUES 
 (1,'login','login','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.',NULL,NOW(),NULL,NULL),
-(2,'tatag-ui','ui','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.',NULL,NOW(),NULL,NULL);
+(2,'tatag-ui','ui','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.',NULL,NOW(),NULL,NULL),
+(3,'flora','sim','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.',NULL,NOW(),NULL,NULL);
 /*!40000 ALTER TABLE `consumers` ENABLE KEYS */;
 UNLOCK TABLES;
 
