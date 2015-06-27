@@ -10,6 +10,7 @@
 		"brand",
 		"brandMembers",
 		"brandAccounts",
+		"brandFilters",
 		
 		"brandHolders",
 		"memberAccounts",
@@ -587,6 +588,69 @@
 					"by_user": "2"
 				},
 				"status": 403
+			}]
+		}]
+	},
+	
+	"brandFilters": {
+		"description": "The accounts administered by a brand.",
+
+		"properties": {
+			"required": ["@type", "@id", "brand_id", "items"],
+			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
+		},
+		
+		"actions": [
+		{
+			"title": "Add a filter",
+			"@type": "form",
+			"@id": "/forms#filter-add",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["other_id", "accept", "reason"],
+				"optional": []
+			},
+			
+			"examples": [{
+				"label": "should allow a member to add a new filter",
+				"target": "/brand/104/filters",
+				"method": "POST",
+				
+				"inputs": {
+					"other_id": 106,
+					"accept": 0,
+					"reason": "polluter"
+				},
+				"status": 200
+			}]
+		},
+		{
+			"title": "Update a filter",
+			"@type": "form",
+			"@id": "/forms#filter-set",
+			"method": "POST",
+			
+			"inputs": {
+				"required": [],
+				"optional": ["accept","reason","ended"]
+			},
+			
+			"query": {
+				"required": ["filter_id"],
+				"optional": []				
+			},
+			
+			"examples": [{
+				"label": "should allow a member to update a filter",
+				"target": "/brand/104/filters?filter_id=1",
+				"method": "POST",
+				
+				"inputs": {
+					"accept": 1,
+					"reason": "non-polluter {random}"
+				},
+				"status": 200
 			}]
 		}]
 	},

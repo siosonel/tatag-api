@@ -76,6 +76,26 @@ CREATE TABLE `consumers` (
 
 
 
+
+
+DROP TABLE IF EXISTS `filters`;
+
+CREATE TABLE `filters` (
+  `filter_id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand_id` int(11) DEFAULT NULL,
+  `other_id` int(11) DEFAULT NULL,
+  `accept` smallint(6) DEFAULT NULL,
+  `reason` varchar(150) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
+  `ended` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`filter_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
 DROP TABLE IF EXISTS `holders`;
 
 CREATE TABLE `holders` (

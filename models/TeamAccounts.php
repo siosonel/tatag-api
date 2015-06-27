@@ -3,7 +3,7 @@
 class TeamAccounts extends Collection {
 	function __construct($data='') {		
 		$this->brand_id = $this->getID();
-		if (!Requester::isMember($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
+		if (!Requester::isMember($this->brand_id)) Error::http(403, "The requester is not a member of brand #$this->brand_id.");
 		
 		$this->{"@type"} = 'teamAccounts';		
 		$this->{"@id"} = "$this->root/team/$this->brand_id/accounts";

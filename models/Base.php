@@ -80,8 +80,8 @@ class Base {
 		}
 		else {
 			$this->keyArr[] = $key;
-			$this->valArr[] = ($val=='NULL') ? NULL : $val; 
-			$this->quotedValArr[] = ($val=='NULL') ? $val : DBquery::$conn->quote($val);
+			$this->valArr[] = ($val==='NULL') ? NULL : $val; 
+			$this->quotedValArr[] = ($val==='NULL') ? $val : DBquery::$conn->quote($val);
 			$this->paramMarker[] = "?";
 			$this->keyMarkerArr[] = "$key=?";
 		}
