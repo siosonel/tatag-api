@@ -87,6 +87,17 @@ class Base {
 		}
 	}
 	
+	function delKeyVal($key) {
+		$i = array_search($key, $this->keyArr);
+		if ($i===false) return;
+		
+		unset($this->keyArr[$i]);
+		unset($this->valArr[$i]);
+		unset($this->quotedValArr[$i]);
+		unset($this->paramMarker[$i]);
+		unset($this->keyMarkerArr[$i]);
+	}
+	
 	function insert() {
 		if ($arr = array_diff($this->keyArr, $this->okToAdd)) Error::http(403, "Cannot insert values for these object properties: ". implode(",", $arr));
 		if ($arr = array_diff($this->okToAdd, $this->keyArr)) Error::http(403, "Missing object properties: ". implode(",", $arr));

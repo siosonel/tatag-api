@@ -7,6 +7,7 @@ $baseURL = "http://tatag.dev/api";
 chdir("..");
 
 $r = isset($_GET['r']) ? explode(',', $_GET['r']) : array();
+$f = isset($_GET['f']) ? explode(',', $_GET['f']) : array();
 $n = isset($_GET['n']) ? explode(',', $_GET['n']) : array(); //optional test-example index matcher
 
 $contents = file_get_contents("ref/defs.json");
@@ -28,6 +29,7 @@ if (!$r) {
 $warnings = 0;
 $failed = 0;
 $passed = 0;
+$skipped = 0;
 $total = 0;
 $out = "";
 echo "\nRESOURCES:\n";
@@ -44,13 +46,24 @@ foreach($defs->resourceTypes AS $resourceName) {
 			$total++;
 		}
 		else {
-			foreach($defs->$resourceName->actions AS $a) {	
+			foreach($defs->$resourceName->actions AS $formNum=>$a) {
 				$out .= "\n[ $a->title ]\n";
 				$out .= "Method: $a->method\n";
+	
 				
-				if (isset($a->examples)) {
+				if (!isset($a->examples) OR !count($a->examples)) $out .= "(no examples)\n";
+				else if ($f AND !in_array($formNum, $f)) {
+					$out .= "(skipped)\n"; 
+					$skipped++;
+					$total++;
+				}
+				else {
 					foreach($a->examples AS $i=>$q) {
-						if (!$n OR in_array($i,$n)) {
+						if ($n AND !in_array($i,$n)) {
+							$skipped++;
+							$out .= "\n    [$i]: $q->label\n     (skipped)\n"; 
+						}
+						else {
 							$url = $baseURL . $q->target;
 							if (isset($q->query)) $url .= "?". http_build_query($q->query);
 							
@@ -70,7 +83,7 @@ foreach($defs->resourceTypes AS $resourceName) {
 	}
 }
 
-echo "\n\n\nRESULTS:\n\n     Warnings: $warnings\n     Failed: $failed\n     Passed: $passed\n     Total: $total\n";
+echo "\n\n\nRESULTS:\n\n     Warnings: $warnings\n     Skipped: $skipped\n     Failed: $failed\n     Passed: $passed\n     Total: $total\n";
 echo "\n\n\nDETAILS:\n$out";
 
 function request($url,$method,$q) {	

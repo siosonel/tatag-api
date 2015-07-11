@@ -618,7 +618,29 @@
 				"method": "POST",
 				
 				"inputs": {
-					"other_id": 106,
+					"other_id": 105,
+					"accept": 0,
+					"reason": "polluter"
+				},
+				"status": 200
+			},{
+				"label": "should allow a member to add a new filter for a previously unregistered brand",
+				"target": "/brand/104/filters",
+				"method": "POST",
+				
+				"inputs": {
+					"other_id": "test test test {random}",
+					"accept": 0,
+					"reason": "polluter"
+				},
+				"status": 200
+			},{
+				"label": "should not allow a member to duplicate an existing filter, by other_id",
+				"target": "/brand/104/filters",
+				"method": "POST",
+				
+				"inputs": {
+					"other_id": 105,
 					"accept": 0,
 					"reason": "polluter"
 				},
@@ -628,12 +650,12 @@
 		{
 			"title": "Update a filter",
 			"@type": "form",
-			"@id": "/forms#filter-set",
+			"@id": "/forms#filter-edit",
 			"method": "POST",
 			
 			"inputs": {
 				"required": [],
-				"optional": ["accept","reason","ended"]
+				"optional": ["accept","reason","ended","other_id"]
 			},
 			
 			"query": {

@@ -1,6 +1,7 @@
 <?php 
 
 class Collection extends Base {	
+	public $items = array();
 	public $pageOrder;
 	protected $ltgt;
 	public $itemsLimit = 50;
@@ -31,7 +32,6 @@ class Collection extends Base {
 	
 	function paginate($keyName, $items=null) {
 		if (!$items) $items = $this->items;
-		if (!$items) return;
 		
 		$min = 99999999;
 		$max = 0;
@@ -54,6 +54,7 @@ class Collection extends Base {
 	
 		//embed forms only in the first page
 		if ($this->limitIdArr OR $_GET['itemsLimit']) $this->embedForms = false;
+		
 		$this->setForms();
 	}
 	
