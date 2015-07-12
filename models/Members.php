@@ -18,9 +18,18 @@ class Members extends Base {
 		
 		if ($this->getMemberId()) Error::http(409, "User #$this->user_id is already a member of brand #$this->brand_id."); 
 		
+		$this->member_id = $this->insert();
 		$Member = $this->obj;
-		$Member->member_id = $this->insert();
+		$Member->member_id = $this->member_id;
 		return $Member;
+	}
+	
+	function resetSimMember() {
+		$sql = "UPDATE members m 
+		JOIN brands b USING (brand_id)
+		SET m.ended=NOW() 
+		WHERE member_id=? AND b.type_system='sim'";
+		DBquery::set($sql, array($this->member_id));
 	}
 	
 	function set() {

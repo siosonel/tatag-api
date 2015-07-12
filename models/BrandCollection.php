@@ -17,6 +17,7 @@ class BrandCollection extends Collection {
 		include_once "models/Holders.php";
 		
 		$this->okToAdd = array('name','mission','description','type_system','type_id','country_code','area_code','url','advisor','logo');
+		
 		$this->addKeyVal("type_system", "nonprofit", "ifMissing");		
 		$this->addKeyVal("type_id", 10, "ifMissing");
 		$this->addKeyVal("country_code", "USA", "ifMissing");
@@ -28,13 +29,15 @@ class BrandCollection extends Collection {
 		
 		$Brand =  $this->obj;
 		$Brand->brand_id = $this->insert();		//print_r($Brand); print_r(Requester);
-				
-		$Brand->members[] = (new Members(json_decode('{
+		
+		$Member = new Members(json_decode('{
 			"brand_id":'.$Brand->brand_id.', 
 			"user_id":'. Requester::$user_id.', 
 			"role":"admin",
 			"hours":0
-		}')))->add();
+		}'));
+		
+		$Brand->members[] = $Member->add();
 		
 		$MainRev = (new Accounts(json_decode('{
 			"brand_id": '. $Brand->brand_id .',
@@ -54,17 +57,22 @@ class BrandCollection extends Collection {
 		
 		$Brand->accounts = array($MainRev, $MainExp);
 		
-		$Brand->holders[] =  (new Holders(json_decode('{
-			"account_id": '. $MainRev->account_id .', 
-			"user_id":'.Requester::$user_id.',
-			"authcode": "cftix"
-		}')))->add();
-		
-		$Brand->holders[] =  (new Holders(json_decode('{
-			"account_id": '. $MainExp->account_id .', 
-			"user_id":'.Requester::$user_id.',
-			"authcode": "cftix"
-		}')))->add();
+		if ($Brand->type_system=='sim') {
+			$Member->resetSimMember();
+		} 
+		else {
+			$Brand->holders[] =  (new Holders(json_decode('{
+				"account_id": '. $MainRev->account_id .', 
+				"user_id":'.Requester::$user_id.',
+				"authcode": "cftix"
+			}')))->add();
+			
+			$Brand->holders[] =  (new Holders(json_decode('{
+				"account_id": '. $MainExp->account_id .', 
+				"user_id":'.Requester::$user_id.',
+				"authcode": "cftix"
+			}')))->add();
+		}
 		
 		return array($Brand);
 	}

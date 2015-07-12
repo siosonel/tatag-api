@@ -21,9 +21,10 @@ class BrandFilters extends Collection {
 	
 	function prepOther($data) {
 		if (is_numeric($data->other_id)) return;
+		$data->other_id = substr($data->other_id,0,200);
 		
-		$sql = "SELECT brand_id FROM brands WHERE name=?";
-		$rows = DBquery::get($sql, array($data->other_id));
+		$sql = "SELECT brand_id FROM brands WHERE name LIKE '?' LIMIT 1";
+		$rows = DBquery::get($sql, array($data->other_id)); 
 		
 		if ($rows) {
 			$data->other_id = $rows[0]['brand_id'];
@@ -32,9 +33,10 @@ class BrandFilters extends Collection {
 			require_once "models/BrandCollection.php";
 			
 			$Brand = (new BrandCollection(json_decode('{
-				"name": "'. substr($data->other_id,0,45) .'",
+				"name": "'. $data->other_id .'",
 				"mission": "simulate a well-known brand for whitelisting or blacklisting",
-				"description": "This is a simulated brand to be used for testing the tatag system."
+				"description": "This is a simulated brand to be used for testing the tatag system.",
+				"type_system": "sim"
 			}')))->add()[0];
 			
 			$data->other_id = $Brand->brand_id;
