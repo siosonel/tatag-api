@@ -3,9 +3,41 @@
 class SimRecords extends Collection {
 	private $weekNum=0;
 	private $numBrands=0;
+	private $rating=array();
+	private $minNumRaters = 10;
+	private $nominalRating = 95;
 	
 	function __construct() {
 		$this->weekNum = date('W');
+		$this->setRatings();
+	}
+	
+	
+	function setRatings($brandID=0) {
+		if (!$brand_id) {
+			$sql = "SELECT other_id, count(*) AS num, sum(accept) AS rating, GROUP_CONCAT(brand_id) AS raters
+			FROM filters
+			WHERE ended IS NULL
+			GROUP BY other_id";
+		
+			$rows = DBquery::get($sql);
+		}
+		else {
+			$rows = array(array(
+				"other_id"=>$brandID, "num"=>$this->minNumRaters, "rating"=>$nominalRating, "raters"=>""
+			));
+		}
+		
+		foreach($rows AS $f) {
+			$rated[] = $f['other_id'];
+			
+			$this->rating[$f['other_id']] = array(
+				"count" => 1*$f['num'],
+				"rating_total" => 1*$f['rating'],
+				"rating_avg" => ($f['num']*$f['rating'] + (max(0,$this->minNumRaters-1*$f['num']))*$this->nominalRating) / max($f['num'], $this->minNumRaters),
+				"raters" => explode(" ", $f['raters'])				
+			);
+		}		
 	}
 	
 	function get() {
@@ -16,6 +48,7 @@ class SimRecords extends Collection {
 		
 		foreach($rows AS $b) {
 			$brands[] = DBquery::get("CALL budgetRevExp(". $b['brand_id'] .")")[0];
+			if (!$this->rating[$b['brand_id']]) $this->setRatings($b['brand_id']); 
 		}
 		
 		foreach($brands AS &$b) {
@@ -27,7 +60,7 @@ class SimRecords extends Collection {
 			if (!$b['revBal'] AND !$b['expBal']) $this->addBudget($b);
 			else if ($b['lastWeekAdded'] < $this->weekNum) $this->addBudget($b); 
 			else $this->transact($b, $brands[mt_rand(0,$this->numBrands-1)]);
-		}
+		} 
 		
 		return $brands;
 	}
@@ -51,6 +84,7 @@ class SimRecords extends Collection {
 	function transact(&$from, &$to) {
 		if ($from['brand_id']==$to['brand_id']) return;
 		if (!$from['expBal'] OR !$to['revBal']) return;
+		if (!$this->rating[$from['brand_id']] OR !$this->rating[$to['brand_id']]) return;
 		
 		if ($from['expBal']==1 OR $to['revBal']==1) $amount = 1;
 		else $amount = mt_rand(1, max(2, round(min($from['expBal']/4, $to['revBal']/4)), 10)); //round($to['expBal'])));		
@@ -63,8 +97,26 @@ class SimRecords extends Collection {
 			
 		$from['outflow'] = $sql;
 		DBquery::set($sql);
-		$from['record_id'] = DBquery::$conn->lastInsertId();		
-		DBquery::get("CALL approveRecord(". $from['record_id'] .")");
+		$from['record_id'] = DBquery::$conn->lastInsertId();	
+		
+		$status = $this->advise($from,$to);
+		
+		if ($status==7) DBquery::get("CALL approveRecord(". $from['record_id'] .")");
+		else {
+			$sql = "UPDATE records SET status=?, updated=NOW() WHERE record_id=?";
+			DBquery::set($sql, array($status, $from['record_id']));
+		}
+	}
+	
+	function advise(&$from,&$to) {
+		$fromID = $from['brand_id'];
+		$toID = $to['brand_id'];
+		$this->rating[$fromID]['rand_val'] = mt_rand(0,100);
+		
+		if ($this->rating[$fromID]['rand_val'] <= $this->rating[$fromID]['rating_avg']) $from['record_status'] = 7;
+		else $from['record_status'] = -1;
+		
+		return $from['record_status'];
 	}
 }
 

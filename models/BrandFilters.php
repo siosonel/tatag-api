@@ -60,7 +60,7 @@ class BrandFilters extends Collection {
 	}
 	
 	function detectExisting() {
-		$sql = "SELECT filter_id FROM filters WHERE brand_id=? AND other_id=?";
+		$sql = "SELECT filter_id FROM filters WHERE brand_id=? AND other_id=? AND ended IS NULL";
 		$row = DBquery::get($sql, array($this->brand_id, $this->other_id));
 		if ($row) {
 			$_GET['filter_id'] = $row[0]['filter_id'];
