@@ -21,6 +21,7 @@ class BrandFilters extends Collection {
 	
 	function prepOther($data) {
 		if (is_numeric($data->other_id)) return;
+		if (substr($data->other_id,0,1) != "~") $data->other_id = "~". $data->other_id;
 		$data->other_id = substr($data->other_id,0,200);
 		
 		$sql = "SELECT brand_id FROM brands WHERE name LIKE '?' LIMIT 1";

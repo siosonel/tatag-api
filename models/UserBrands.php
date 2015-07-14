@@ -43,7 +43,7 @@ class UserBrands extends Base {
 		$sql = "SELECT brand_id, b.name AS brand_name, member_id, m.created AS joined, role, hours 
 			FROM members m
 			JOIN brands b USING (brand_id)
-			WHERE user_id=? AND m.ended IS NULL AND revoked IS NULL";
+			WHERE user_id=? AND m.ended IS NULL AND revoked IS NULL AND type_system != 'sim'";
 		
 		$this->items = DBquery::get($sql, array($this->user_id));
 		$this->setForms();
