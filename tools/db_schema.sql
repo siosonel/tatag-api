@@ -712,6 +712,36 @@ WHERE brand_id=$brandID AND sign=$sign;
 END;;
 
 
+DROP PROCEDURE IF EXISTS `budgetRevExp`;;
+
+CREATE DEFINER=`npxer`@`localhost` PROCEDURE `budgetRevExp`(
+	IN $brandID INT
+)
+BEGIN
+
+
+set @revBudget=0;
+set @expBudget=0;
+set @inflow=0;
+
+set @startDate='2015-01-01 00:00:00';
+set @endDate='2015-12-31 11:59:59';
+
+
+call budgetTotal($brandID,-1,@revBudget);
+call budgetTotal($brandID,1,@expBudget);
+call tallyInflow($brandID, @startDate, @endDate, @inflow);
+
+select 
+	$brandID AS brand_id, 
+	@revBudget AS revBal, 
+	@expBudget AS expBal, 
+	COALESCE(@inflow,0) AS inflow,
+	(SELECT account_id FROM accounts WHERE brand_id=$brandID AND name='Main Revenue') AS revAcct,
+	(SELECT account_id FROM accounts WHERE brand_id=$brandID AND name='Main Expense') AS expAcct
+;
+
+END;;
 
 
 DROP PROCEDURE IF EXISTS `tally`;;

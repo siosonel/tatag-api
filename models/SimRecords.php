@@ -1,0 +1,70 @@
+<?php
+
+class SimRecords extends Collection {
+	private $weekNum=0;
+	private $numBrands=0;
+	
+	function __construct() {
+		$this->weekNum = date('W');
+	}
+	
+	function get() {
+		$sql = "SELECT brand_id FROM brands WHERE type_system='sim'";
+		$rows = DBquery::get($sql);
+		$this->numBrands = count($rows);
+		shuffle($rows);
+		
+		foreach($rows AS $b) {
+			$brands[] = DBquery::get("CALL budgetRevExp(". $b['brand_id'] .")")[0];
+		}
+		
+		foreach($brands AS &$b) {
+			$b['revBal'] = 1*$b['revBal'];
+			$b['expBal'] = 1*$b['expBal'];
+			$b['inflow'] = 1*$b['inflow'];
+			$b['lastWeekAdded'] = 1*$b['lastWeekAdded'];
+			
+			if (!$b['revBal'] AND !$b['expBal']) $this->addBudget($b);
+			else if ($b['lastWeekAdded'] < $this->weekNum) $this->addBudget($b); 
+			else $this->transact($b, $brands[mt_rand(0,$this->numBrands-1)]);
+		}
+		
+		return $brands;
+	}
+	
+	function addBudget(&$b) {
+		if ($b['revBal'] > $b['inflow']) return;
+	
+		$amount = $b['inflow'] ? $b['inflow'] : mt_rand(50,100); 
+		$revAcct = $b['revAcct'];
+		$expAcct = $b['expAcct'];
+		
+		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id,status,created,updated) 
+			VALUES ('np',$revAcct,0,$expAcct,0,$amount,$this->weekNum,0,NOW(),NOW())";
+		
+		$b['added'] = $sql;
+		DBquery::set($sql);
+		$b['record_id'] = DBquery::$conn->lastInsertId();		
+		DBquery::get("CALL approveRecord(". $b['record_id'] .")");
+	}
+	
+	function transact(&$from, &$to) {
+		if ($from['brand_id']==$to['brand_id']) return;
+		if (!$from['expBal'] OR !$to['revBal']) return;
+		
+		if ($from['expBal']==1 OR $to['revBal']==1) $amount = 1;
+		else $amount = mt_rand(1, max(2, round(min($from['expBal']/4, $to['revBal']/4)), 10)); //round($to['expBal'])));		
+		
+		$fromAcct = $from['revAcct'];
+		$toAcct = $to['expAcct'];
+		
+		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id,status,created,updated) 
+			VALUES ('pn',$fromAcct,0,$toAcct,0,$amount,$this->weekNum,0,NOW(),NOW())";
+			
+		$from['outflow'] = $sql;
+		DBquery::set($sql);
+		$from['record_id'] = DBquery::$conn->lastInsertId();		
+		DBquery::get("CALL approveRecord(". $from['record_id'] .")");
+	}
+}
+

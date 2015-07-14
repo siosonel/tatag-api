@@ -37,6 +37,7 @@ class Router {
 				OR self::$subresource=='throttles' 
 				OR strpos(self::$resource, 'budget')!==false 
 				OR (self::$resource=='token' AND !self::$id) 
+				OR (self::$resource=='sim')
 			) $method = 'add';
 			else $method = 'set';
 		}
