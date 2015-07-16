@@ -15,10 +15,10 @@ class SimRecords extends Collection {
 	
 	function setRatings($brandID=0) {
 		if (!$brand_id) {
-			$sql = "SELECT other_id, count(*) AS num, sum(accept) AS rating, GROUP_CONCAT(brand_id) AS raters
-			FROM filters
+			$sql = "SELECT brand_id, count(*) AS num, sum(rating) AS rating, GROUP_CONCAT(user_id) AS raters
+			FROM ratings
 			WHERE ended IS NULL
-			GROUP BY other_id";
+			GROUP BY brand_id";
 		
 			$rows = DBquery::get($sql);
 		}
@@ -31,7 +31,7 @@ class SimRecords extends Collection {
 		foreach($rows AS $f) {
 			$rated[] = $f['other_id'];
 			
-			$this->rating[$f['other_id']] = array(
+			$this->rating[$f['brand_id']] = array(
 				"count" => 1*$f['num'],
 				"rating_total" => 1*$f['rating'],
 				"rating_avg" => ($f['num']*$f['rating'] + (max(0,$this->minNumRaters-1*$f['num']))*$this->nominalRating) / max($f['num'], $this->minNumRaters),

@@ -34,11 +34,13 @@ class User extends Base {
 	function get() {		
 		$this->links = new stdClass();
 		$this->links->userMemberships = $this->{'@id'}."/brands";
-		$this->links->userAccounts = $this->{'@id'}."/accounts";
+		$this->links->userAccounts = $this->{'@id'}."/accounts";			
+		$this->links->userRatings = $this->{'@id'}."/ratings";
 		$this->setForms();	
 		
 		include_once "models/UserBrands.php";		
 		include_once "models/UserAccounts.php";
+		include_once "models/UserRatings.php";
 		$obj = json_decode('{"user_id":' . $this->user_id .'}');	
 		
 		$memberships = (new UserBrands($obj))->get(); 
@@ -53,6 +55,7 @@ class User extends Base {
 			array($this)
 			, $memberships
 			, (new UserAccounts($obj))->get()
+			, (new UserRatings($obj))->get()
 		);
 	}
 }

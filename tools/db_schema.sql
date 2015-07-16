@@ -76,26 +76,6 @@ CREATE TABLE `consumers` (
 
 
 
-
-
-DROP TABLE IF EXISTS `filters`;
-
-CREATE TABLE `filters` (
-  `filter_id` int(11) NOT NULL AUTO_INCREMENT,
-  `brand_id` int(11) DEFAULT NULL,
-  `other_id` int(11) DEFAULT NULL,
-  `accept` smallint(6) DEFAULT NULL,
-  `reason` varchar(150) DEFAULT NULL,
-  `created` timestamp NULL DEFAULT NULL,
-  `updated` timestamp NULL DEFAULT NULL,
-  `ended` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`filter_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-
-
 DROP TABLE IF EXISTS `holders`;
 
 CREATE TABLE `holders` (
@@ -130,6 +110,23 @@ CREATE TABLE `members` (
   `revoked` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`member_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `ratings`;
+
+CREATE TABLE `ratings` (
+  `rating_id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `rating` smallint(6) DEFAULT NULL,
+  `reason` varchar(150) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
+  `ended` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`rating_id`)
+) ENGINE=MEMORY AUTO_INCREMENT=1 DEFAULT CHARSET=utf8$$
+
 
 
 --

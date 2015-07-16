@@ -6,11 +6,11 @@
 		"user",
 		"userMemberships",
 		"userAccounts",
+		"userRatings",
 		
 		"brand",
 		"brandMembers",
 		"brandAccounts",
-		"brandFilters",
 		
 		"brandHolders",
 		"memberAccounts",
@@ -238,6 +238,92 @@
 			}]
 		}]
 	},
+	
+	"userRatings": {
+		"description": "A user's ratings of brands.",
+
+		"properties": {
+			"required": ["@type", "@id", "user_id", "items"],
+			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
+		},
+		
+		"actions": [
+		{
+			"title": "Add a rating",
+			"@type": "form",
+			"@id": "/forms#rating-add",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["brand_id", "rating", "reason"],
+				"optional": []
+			},
+			
+			"examples": [{
+				"label": "should allow a user to add a new rating",
+				"target": "/user/21/ratings",
+				"method": "POST",
+				
+				"inputs": {
+					"brand_id": 105,
+					"rating": 0,
+					"reason": "polluter"
+				},
+				"status": 200
+			},{
+				"label": "should allow a user to add a new rating for a previously unregistered brand",
+				"target": "/user/21/ratings",
+				"method": "POST",
+				
+				"inputs": {
+					"brand_id": "test test test {random}",
+					"rating": 0,
+					"reason": "polluter"
+				},
+				"status": 200
+			},{
+				"label": "should not allow a user to duplicate an existing rating, by other_id",
+				"target": "/user/21/ratings",
+				"method": "POST",
+				
+				"inputs": {
+					"brand_id": 105,
+					"rating": 0,
+					"reason": "polluter"
+				},
+				"status": 200
+			}]
+		},
+		{
+			"title": "Update a rating",
+			"@type": "form",
+			"@id": "/forms#rating-edit",
+			"method": "POST",
+			
+			"inputs": {
+				"required": [],
+				"optional": ["rating","reason","ended"]
+			},
+			
+			"query": {
+				"required": ["rating_id"],
+				"optional": []				
+			},
+			
+			"examples": [{
+				"label": "should allow a user to update a rating",
+				"target": "/user/21/ratings?rating_id=1",
+				"method": "POST",
+				
+				"inputs": {
+					"rating": 1,
+					"reason": "non-polluter {random}"
+				},
+				"status": 200
+			}]
+		}]
+	},
+	
 	
 	"brand": {
 		"description": "An admin's view of a budget-issuing organization.",
@@ -591,92 +677,7 @@
 			}]
 		}]
 	},
-	
-	"brandFilters": {
-		"description": "The accounts administered by a brand.",
-
-		"properties": {
-			"required": ["@type", "@id", "brand_id", "items"],
-			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
-		},
 		
-		"actions": [
-		{
-			"title": "Add a filter",
-			"@type": "form",
-			"@id": "/forms#filter-add",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["other_id", "accept", "reason"],
-				"optional": []
-			},
-			
-			"examples": [{
-				"label": "should allow a member to add a new filter",
-				"target": "/brand/104/filters",
-				"method": "POST",
-				
-				"inputs": {
-					"other_id": 105,
-					"accept": 0,
-					"reason": "polluter"
-				},
-				"status": 200
-			},{
-				"label": "should allow a member to add a new filter for a previously unregistered brand",
-				"target": "/brand/104/filters",
-				"method": "POST",
-				
-				"inputs": {
-					"other_id": "test test test {random}",
-					"accept": 0,
-					"reason": "polluter"
-				},
-				"status": 200
-			},{
-				"label": "should not allow a member to duplicate an existing filter, by other_id",
-				"target": "/brand/104/filters",
-				"method": "POST",
-				
-				"inputs": {
-					"other_id": 105,
-					"accept": 0,
-					"reason": "polluter"
-				},
-				"status": 200
-			}]
-		},
-		{
-			"title": "Update a filter",
-			"@type": "form",
-			"@id": "/forms#filter-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["accept","reason","ended","other_id"]
-			},
-			
-			"query": {
-				"required": ["filter_id"],
-				"optional": []				
-			},
-			
-			"examples": [{
-				"label": "should allow a member to update a filter",
-				"target": "/brand/104/filters?filter_id=1",
-				"method": "POST",
-				
-				"inputs": {
-					"accept": 1,
-					"reason": "non-polluter {random}"
-				},
-				"status": 200
-			}]
-		}]
-	},
-	
 	"memberAccounts": {
 		"description": "A brand's accountholdings, filtered for a specific member_id.",
 		"testURL": "/member/53/accounts",
