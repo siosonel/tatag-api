@@ -46,6 +46,7 @@ class SimRecords extends Collection {
 		$this->numBrands = count($rows);
 		shuffle($rows);
 		
+		$brands = array();
 		foreach($rows AS $b) {
 			$brands[] = DBquery::get("CALL budgetRevExp(". $b['brand_id'] .")")[0];
 			if (!$this->rating[$b['brand_id']]) $this->setRatings($b['brand_id']); 
@@ -68,7 +69,9 @@ class SimRecords extends Collection {
 	function addBudget(&$b) {
 		if ($b['revBal'] > $b['inflow']) return;
 	
-		$amount = $b['inflow'] ? $b['inflow'] : mt_rand(50,100); 
+		$amount = $b['inflow'] ? $b['inflow'] : mt_rand(5,20);
+		if ($amount>20) $amount = 20;
+		
 		$revAcct = $b['revAcct'];
 		$expAcct = $b['expAcct'];
 		

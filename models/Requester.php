@@ -55,7 +55,7 @@ class Requester {
 	static function setAccess() {
 		$url = explode("/", trim($_GET['_url'], " \/\\\t\n\r\0\x0B"));
 		$path = array_slice($url, 0, 3);
-		$openAccess = array("collection", "about", "ts", "ranks", "tally", "flow", "inflow", "outflow", "added", "intrause");
+		$openAccess = array("collection", "about", "ts", "ranks", "tally", "flow", "inflow", "outflow", "added", "intrause","sim");
 		
 		if ((AUDIENCE=='sim' 
 			OR $_SERVER['PHP_SELF']=='/api/login.php' 

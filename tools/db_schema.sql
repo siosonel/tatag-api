@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS `brands`;
 
 CREATE TABLE `brands` (
   `brand_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `mission` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `rating_min` float DEFAULT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE `ratings` (
   `updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`rating_id`)
-) ENGINE=MEMORY AUTO_INCREMENT=1 DEFAULT CHARSET=utf8$$
+) ENGINE=MEMORY AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
@@ -711,7 +711,7 @@ END;;
 
 DROP PROCEDURE IF EXISTS `budgetRevExp`;;
 
-CREATE DEFINER=`npxer`@`localhost` PROCEDURE `budgetRevExp`(
+CREATE PROCEDURE `budgetRevExp`(
 	IN $brandID INT
 )
 BEGIN
@@ -735,7 +735,8 @@ select
 	@expBudget AS expBal, 
 	COALESCE(@inflow,0) AS inflow,
 	(SELECT account_id FROM accounts WHERE brand_id=$brandID AND name='Main Revenue') AS revAcct,
-	(SELECT account_id FROM accounts WHERE brand_id=$brandID AND name='Main Expense') AS expAcct
+	(SELECT account_id FROM accounts WHERE brand_id=$brandID AND name='Main Expense') AS expAcct,
+	(SELECT WEEKOFYEAR(MAX(updated)) FROM records WHERE brand_id=$brandID AND txntype='np') AS lastWeekAdded
 ;
 
 END;;
