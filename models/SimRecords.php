@@ -59,7 +59,7 @@ class SimRecords extends Collection {
 			$b['lastWeekAdded'] = 1*$b['lastWeekAdded'];
 			
 			if (!$b['revBal'] AND !$b['expBal']) $this->addBudget($b);
-			else if ($b['lastWeekAdded'] < $this->weekNum) $this->addBudget($b); 
+			else if ($b['lastWeekAdded'] < $this->weekNum AND $b['revBal'] > $b['inflow']) $this->addBudget($b); 
 			else $this->transact($b, $brands[mt_rand(0,$this->numBrands-1)]);
 		} 
 		
@@ -95,8 +95,8 @@ class SimRecords extends Collection {
 		$fromAcct = $from['revAcct'];
 		$toAcct = $to['expAcct'];
 		
-		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id,status,created,updated) 
-			VALUES ('pn',$fromAcct,0,$toAcct,0,$amount,$this->weekNum,0,NOW(),NOW())";
+		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,note,ref_id,status,created,updated) 
+			VALUES ('pn',$fromAcct,0,$toAcct,0,$amount,'sim',$this->weekNum,0,NOW(),NOW())";
 			
 		$from['outflow'] = $sql;
 		DBquery::set($sql);
