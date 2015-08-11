@@ -34,11 +34,25 @@ class Tally {
 		GROUP BY $this->groupByCond
 		ORDER BY week ASC, amount DESC";
 		
-		$rows = DBquery::get($sql, $this->params);
+		$rows = DBquery::get($sql, $this->params); 
 		$d = array();
 		
+		$weekMin = 54;
+		$weekMax = 0;
+		$hasData = array();
+		
 		foreach($rows AS $r) {
+			if ($r['week']<$weekMin) $weekMin = $r['week'];
+			if ($r['week']>$weekMax) $weekMax = $r['week'];
+			
 			$d["".$r['brand']][] = $r;
+			$hasData["".$r['brand']][] = $r['week'];
+		}
+		
+		$expectedWeeks = range($weekMin, $weekMax);
+		foreach($hasData AS $brand_id=>$hasWeeks) {
+			$missingWeeks = array_diff($expectedWeeks, $hasWeeks);
+			foreach($missingWeeks AS $wk) $d[$brand_id][] = array('brand'=>$brand_id,'week'=>$wk,'amount'=>0);
 		}
  		
 		$data = array();
