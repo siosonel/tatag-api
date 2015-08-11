@@ -51,7 +51,7 @@ class SimRecords extends Collection {
 			$brands[] = DBquery::get("CALL budgetRevExp(". $b['brand_id'] .")")[0];
 			if (!$this->rating[$b['brand_id']]) $this->setRatings($b['brand_id']); 
 		}
-		
+	
 		foreach($brands AS &$b) {
 			$b['revBal'] = 1*$b['revBal'];
 			$b['expBal'] = 1*$b['expBal'];
@@ -90,10 +90,12 @@ class SimRecords extends Collection {
 		if (!$this->rating[$from['brand_id']] OR !$this->rating[$to['brand_id']]) return;
 		
 		if ($from['expBal']==1 OR $to['revBal']==1) $amount = 1;
-		else $amount = mt_rand(1, max(2, round(min($from['expBal']/4, $to['revBal']/4)), 10)); //round($to['expBal'])));		
+		else $amount = min(20, mt_rand(1, max(2, round(min($from['expBal']/4, $to['revBal']/4))))); //round($to['expBal'])));	
 		
-		$fromAcct = $from['revAcct'];
-		$toAcct = $to['expAcct'];
+		if ($amount>$from['expBal'] OR $amount>$to['revBal']) return;
+		
+		$fromAcct = $from['expAcct'];
+		$toAcct = $to['revAcct'];
 		
 		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,note,ref_id,status,created,updated) 
 			VALUES ('pn',$fromAcct,0,$toAcct,0,$amount,'sim',$this->weekNum,0,NOW(),NOW())";

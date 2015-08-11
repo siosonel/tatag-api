@@ -140,6 +140,11 @@ class Tally {
 	}
 	
 	function updateTally($tally_id, $issued, $intrause, $inflow, $outflow, $num_members, $member_hours) {	
+		if (!$issued) $issued = 0;
+		if (!$intrause) $intrause = 0;
+		if (!$inflow) $inflow = 0;
+		if (!$outflow) $outflow = 0;
+		
 		$sql = "UPDATE tallies SET updated=NOW(), issued=$issued, intrause=$intrause, inflow=$inflow, outflow=$outflow, num_members=$num_members, member_hours=$member_hours
 			WHERE tally_id=$tally_id";
 			
