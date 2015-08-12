@@ -4,7 +4,7 @@ class SimRecords extends Collection {
 	private $weekNum=0;
 	private $numBrands=0;
 	private $rating=array();
-	private $minNumRaters = 10;
+	private $minNumRaters = 2;
 	private $nominalRating = 95;
 	
 	function __construct() {
@@ -37,7 +37,7 @@ class SimRecords extends Collection {
 				"rating_avg" => ($f['num']*$f['rating'] + (max(0,$this->minNumRaters-1*$f['num']))*$this->nominalRating) / max($f['num'], $this->minNumRaters),
 				"raters" => explode(" ", $f['raters'])				
 			);
-		}		
+		}
 	}
 	
 	function get() {
