@@ -30,7 +30,7 @@ class Relay extends Base {
 	}
 	
 	function get() {				
-		$sql = "SELECT relay_id, r.holder_id, user_id, account_id, amount_min, amount_max, redirect, secret, tag, txntype, r.created, r.updated
+		$sql = "SELECT relay_id, r.holder_id, user_id, account_id, amount_min, amount_max, qty, redirect, secret, tag, txntype, r.created, r.updated
 			FROM relays r
 			JOIN holders h ON h.holder_id=r.holder_id
 			WHERE relay_id=?";

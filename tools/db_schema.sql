@@ -169,6 +169,7 @@ CREATE TABLE `relays` (
   `updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   `txntype` varchar(5) DEFAULT 'pn',
+  `qty` int(11) DEFAULT NULL '-1',	
   PRIMARY KEY (`relay_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

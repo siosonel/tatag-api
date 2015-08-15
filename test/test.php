@@ -83,7 +83,7 @@ foreach($defs->resourceTypes AS $resourceName) {
 	}
 }
 
-echo "\n\n\nRESULTS:\n\n     Warnings: $warnings\n     Skipped: $skipped\n     Failed: $failed\n     Passed: $passed\n     Total: $total\n";
+echo "\n\n\nRESULTS:\n\n     Warnings: $warnings\n     Failed: $failed\n     Passed: $passed\n     Skipped: $skipped\n     Total: $total\n";
 echo "\n\n\nDETAILS:\n$out";
 
 function request($url,$method,$q) {	

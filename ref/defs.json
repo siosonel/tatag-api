@@ -1040,8 +1040,43 @@
 				
 				"inputs": {
 					"from": "42-abc",
-					"to": "3",
-					"amount": 11.11,
+					"to": "3.xyz",
+					"amount": 1.11,
+					"note": "test budget use"
+				},
+				"status": 200
+			},{
+				"label": "should void the transaction when the transaction amount is not within a relay's amount_min and _max",
+				"target": "/budget/104/used",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "42-abc",
+					"to": "3.xyz",
+					"amount": 51.11,
+					"note": "test budget use"
+				},
+				"status": 403
+			},{
+				"label": "should fill-in missing transaction amount",
+				"target": "/budget/104/used",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "42-abc",
+					"to": "3.xyz",
+					"note": "test budget use"
+				},
+				"status": 403
+			},{
+				"label": "should decrement any relay qty that is > 0",
+				"target": "/budget/104/used",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "42-abc",
+					"to": "3.xyz",
+					"amount": 0.12,
 					"note": "test budget use"
 				},
 				"status": 200

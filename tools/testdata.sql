@@ -150,10 +150,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `relays` WRITE;
 /*!40000 ALTER TABLE `relays` DISABLE KEYS */;
-INSERT INTO `relays` (relay_id,holder_id,amount_min,amount_max,tag,created) VALUES 
-(1, 41, 0.00, 100.00, 'test','2015-01-01 00:00:00')
-,(2, 41, 5.00, 10.00, 'test','2015-01-01 00:00:00')
-,(3, 44, 0.00, 50.00, 'test-brand-105','2015-01-01 00:00:00');
+INSERT INTO `relays` (relay_id,holder_id,secret,amount_min,amount_max,qty,tag,created) VALUES 
+(1, 41, NULL, 0.01, 100.00,-1,'test','2015-01-01 00:00:00')
+,(2, 41, NULL, 5.00, 10.00,-1,'test','2015-01-01 00:00:00')
+,(3, 44, 'xyz', 0.01, 50.00,100000,'test-brand-105','2015-01-01 00:00:00');
 /*!40000 ALTER TABLE `relays` ENABLE KEYS */;
 UNLOCK TABLES;
 
