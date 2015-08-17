@@ -38,29 +38,15 @@ class ForwardVerifier {
 	
 	function relayToHolderInfo($data, $ft) {
 		list($relay_id,$secret) = explode(".", $data->$ft);
-	
-		$sql = "SELECT secret, r.holder_id, limkey, txntype, COALESCE(amount_min,0) as amount_min, COALESCE(amount_max,999999999) as amount_max, qty FROM relays r JOIN holders USING (holder_id) WHERE relay_id=? AND r.ended IS NULL";
-		$rows = DBquery::get($sql, array($relay_id));
-		if (!$rows) Error::http(403, "Relay id# '$relay id' is not active.");
-		$r = $rows[0];
 		
-		if ($r['secret'] AND $r['secret'] != $secret) Error::http(403, "Invalid relay credentials='$relay'. [$secret]");
+		require_once "models/Relay.php";
+		$this->Relay = new Relay();
+		$this->Relay->setDetails($relay_id);
 		
-		if (!$data->amount) $data->amount = $r['amount_min'] > 0 ? $r['amount_min'] : $r['amount_max'];  
-		if ($r['amount_min'] > $data->amount OR $r['amount_max'] < $data->amount) Error::http(403, "The amount must be between ". $r['amount_min'] ." and ". $r['amount_max'] .".");
+		if (!$data->amount) $data->amount = $this->Relay->getDefaultAmount();
+		$this->Relay->checkAgainst($secret, $data->amount);
 		
-		if ($r['qty'] == 0) Error::halt(403, "The total usage limit for relay #$relay_id has been exceeded.");
-		
-		$this->relay_id = $relay_id;		
-		$this->relayQty = $r['qty'];
-		$this->relayTxnType = $r['txntype'];
-		return $r['holder_id'] ."-". $r['limkey'];
-	}
-	
-	function adjustRelayQty() {
-		if (!isset($this->relayQty) OR $this->relayQty < 1) return;
-		$sql = "UPDATE relays SET qty = qty-1 WHERE relay_id=?";
-		$mssg = DBquery::set($sql, array($this->relay_id));
+		return $this->Relay->holder_id ."-". $this->Relay->limkey;
 	}
 	
 	function throttleCheck($amount) {

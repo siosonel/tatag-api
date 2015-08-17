@@ -1067,7 +1067,7 @@
 					"to": "3.xyz",
 					"note": "test budget use"
 				},
-				"status": 403
+				"status": 200
 			},{
 				"label": "should decrement any relay qty that is > 0",
 				"target": "/budget/104/used",

@@ -42,7 +42,7 @@ class BudgetUsed extends Base {
 		$this->record_id = $this->insert();
 		$this->catchError($this->verifyBals()); //void transaction record as needed
 		
-		$this->verifier->adjustRelayQty();
+		$this->verifier->Relay->adjustQty();
 		
 		if ($this->amount < 0) $this->reversal_id = $this->verifier->trackReversal($this->record_id);
 		//unlike instant approval of budget issuance or transfer when from_user==to_user, 
