@@ -1069,17 +1069,17 @@
 				},
 				"status": 200
 			},{
-				"label": "should decrement any relay qty that is > 0",
+				"label": "should not allow relay usage that exceeds limits",
 				"target": "/budget/104/used",
 				"method": "POST",
 				
 				"inputs": {
 					"from": "42-abc",
-					"to": "3.xyz",
+					"to": "4.qrs",
 					"amount": 0.12,
 					"note": "test budget use"
 				},
-				"status": 200
+				"status": 403
 			}]
 		},
 		{

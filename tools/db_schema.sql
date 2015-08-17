@@ -169,7 +169,13 @@ CREATE TABLE `relays` (
   `updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   `txntype` varchar(5) DEFAULT 'pn',
-  `qty` int(11) DEFAULT NULL '-1',	
+  `qty` int(11) DEFAULT '100',
+  `by_all_period` varchar(8) DEFAULT 'week',
+  `by_all_limit` int(11) DEFAULT '1000',
+  `by_brand_period` varchar(8) DEFAULT 'day',
+  `by_brand_limit` int(11) DEFAULT '100',
+  `by_user_period` varchar(8) DEFAULT 'day',
+  `by_user_limit` int(11) DEFAULT '10',
   PRIMARY KEY (`relay_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

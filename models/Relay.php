@@ -65,9 +65,9 @@ class Relay extends Base {
 		
 		if ($this->qty == 0) $mssg .= "The total usage limit for relay #$relay_id has been exceeded.";
 		
-		if ($this->amount_min > $amount OR $this->amount_max < $amount) $mssg .= "The amount must be between $this->amount_min and $this->amount_max.";
+		if ($this->amount_min > $amount OR $this->amount_max < $amount) $mssg .= "The amount must be between $this->amount_min and $this->amount_max.";		
 		
-		if ($mssg) Error::http(403, $mssg);
+		if ($mssg) Error::http(403, $mssg);		
 	}
 	
 	function getDefaultAmount() {
@@ -78,6 +78,44 @@ class Relay extends Base {
 		if (!isset($this->qty) OR $this->qty < 1) return;
 		$sql = "UPDATE relays SET qty = qty-1 WHERE relay_id=?";
 		$mssg = DBquery::set($sql, array($this->relay_id));
+	}
+	
+	function checkLimits($brand_id, $user_id) {
+		$currTime = time();
+		
+		$cutoff = array(
+			'hour' => $currTime - 3600,
+			'day' => $currTime - 86400,
+			'week' => $currTime - 604800
+		);
+		
+		$mssg = "";
+		
+		foreach(array('user','brand','all') AS $type) {
+			$limitNum = $this->{"by_". $type ."_limit"};
+			$limitPeriod = $this->{"by_". $type ."_period"};
+			$cutoffTime = $cutoff[$limitPeriod];
+			
+			if ($type=='brand') {
+				$extraJoin = "JOIN accounts a ON records.from_acct = a.account_id";
+				$extraCond = "AND brand_id=$brand_id";
+			}
+			else if ($type=='user') {
+				$extraJoin = "";
+				$extraCond = "AND from_user=$user_id";
+			}
+			else {
+				$extraJoin = "";
+				$extraCond = "";
+			}
+		
+			$sql = "SELECT COALESCE(COUNT(*),0) as total 
+				FROM records $extraJoin
+				WHERE relay_id=$this->relay_id $extraCond AND UNIX_TIMESTAMP(records.created) > $cutoffTime";
+			
+			$total = DBquery::get($sql)[0]['total'];
+			if ($total >= $limitNum) Error::http(403, "The $type relay usage limit of $limitNum per $limitPeriod has been reached or exceeded (counted $total uses).");
+		}
 	}
 }
 

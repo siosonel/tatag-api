@@ -12,7 +12,8 @@ class ForwardVerifier {
 		if ($data->from_acct == $data->to_acct) Error::http(403, "The from_acct and to_acct must have a different account id's.");
 		
 		$this->setTxnType();
-	}	
+		if (isset($this->Relay)) $this->Relay->checkLimits($this->from_holder['brand_id'], $data->from_user);
+	}
 	
 	function verifyHolder($data, $ft) {
 		if (strpos($data->$ft,"-")==false OR strpos($data->$ft, ".")) $data->$ft = $this->relayToHolderInfo($data, $ft);  
