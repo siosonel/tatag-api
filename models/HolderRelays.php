@@ -52,7 +52,8 @@ class HolderRelays extends Collection {
 		$this->setFilters($_GET);		
 		unset($_GET['r.holder_id']);
 		
-		$sql = "SELECT relay_id, r.holder_id, user_id, account_id, amount_min, amount_max, redirect, secret, tag, txntype, r.created, r.updated
+		$sql = "SELECT relay_id, r.holder_id, user_id, account_id, amount_min, amount_max, redirect, secret, tag, txntype, r.created, r.updated,
+			by_all_limit, by_brand_limit, by_user_limit, by_user_wait
 			FROM relays r
 			JOIN holders h ON h.holder_id=r.holder_id
 			WHERE $this->filterCond AND r.relay_id < $this->limitID
