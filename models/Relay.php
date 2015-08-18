@@ -30,7 +30,8 @@ class Relay extends Base {
 	}
 	
 	function get() {				
-		$sql = "SELECT relay_id, r.holder_id, user_id, account_id, amount_min, amount_max, qty, redirect, secret, tag, txntype, r.created, r.updated, r.ended, qty, by_all_period, by_all_limit, by_brand_period, by_brand_limit, by_user_period, by_user_limit
+		$sql = "SELECT relay_id, r.holder_id, user_id, account_id, amount_min, amount_max, redirect, secret, tag, txntype, r.created, r.updated, r.ended, 
+		by_all_limit, by_brand_limit, by_user_limit, by_user_wait
 			FROM relays r
 			JOIN holders h ON h.holder_id=r.holder_id
 			WHERE relay_id=?";
@@ -48,12 +49,13 @@ class Relay extends Base {
 	}
 	
 	function setDetails($relay_id) {	
-		$sql = "SELECT relay_id, secret, r.holder_id AS holder_id, limkey, txntype, COALESCE(amount_min,0) as amount_min, COALESCE(amount_max,999999999) as amount_max, qty, by_all_period, by_all_limit, by_brand_period, by_brand_limit, by_user_period, by_user_limit 
+		$sql = "SELECT relay_id, secret, r.holder_id AS holder_id, limkey, txntype, COALESCE(amount_min,0) as amount_min, COALESCE(amount_max,999999999) as amount_max, 
+		by_all_limit, by_brand_limit, by_user_limit, by_user_wait
 		FROM relays r 
 		JOIN holders USING (holder_id) 
 		WHERE relay_id=? AND r.ended IS NULL";
 		$rows = DBquery::get($sql, array($relay_id));
-		if (!$rows) Error::http(403, "Relay id# '$relay id' is not active.");
+		if (!$rows) Error::http(403, "Relay id# '$relay_id' is not active.");
 		
 		foreach($rows[0] AS $k=>$v) $this->$k = $v;
 	}
@@ -61,10 +63,7 @@ class Relay extends Base {
 	function checkAgainst($secret, $amount) {
 		$mssg="";
 		
-		if ($this->secret AND $this->secret != $secret) $mssg .= "Invalid relay credentials.";
-		
-		if ($this->qty == 0) $mssg .= "The total usage limit for relay #$relay_id has been exceeded.";
-		
+		if ($this->secret AND $this->secret != $secret) $mssg .= "Invalid relay credentials.";		
 		if ($this->amount_min > $amount OR $this->amount_max < $amount) $mssg .= "The amount must be between $this->amount_min and $this->amount_max.";		
 		
 		if ($mssg) Error::http(403, $mssg);		
@@ -74,27 +73,13 @@ class Relay extends Base {
 		return $this->amount_min > 0 ? $this->amount_min : $this->amount_max;
 	}
 	
-	function adjustQty() {
-		if (!isset($this->qty) OR $this->qty < 1) return;
-		$sql = "UPDATE relays SET qty = qty-1 WHERE relay_id=?";
-		$mssg = DBquery::set($sql, array($this->relay_id));
-	}
-	
 	function checkLimits($brand_id, $user_id) {
-		$currTime = time();
-		
-		$cutoff = array(
-			'hour' => $currTime - 3600,
-			'day' => $currTime - 86400,
-			'week' => $currTime - 604800
-		);
-		
+		$currTime = time();		
+		$cutoff = $currTime - 604800; //last 7 days
 		$mssg = "";
 		
 		foreach(array('user','brand','all') AS $type) {
 			$limitNum = $this->{"by_". $type ."_limit"};
-			$limitPeriod = $this->{"by_". $type ."_period"};
-			$cutoffTime = $cutoff[$limitPeriod];
 			
 			if ($type=='brand') {
 				$extraJoin = "JOIN accounts a ON records.from_acct = a.account_id";
@@ -109,12 +94,20 @@ class Relay extends Base {
 				$extraCond = "";
 			}
 		
-			$sql = "SELECT COALESCE(COUNT(*),0) as total 
+			$sql = "SELECT COALESCE(COUNT(*),0) as total, UNIX_TIMESTAMP(MAX(records.created)) AS lastUsed
 				FROM records $extraJoin
-				WHERE relay_id=$this->relay_id $extraCond AND UNIX_TIMESTAMP(records.created) > $cutoffTime";
+				WHERE relay_id=$this->relay_id $extraCond AND UNIX_TIMESTAMP(records.created) > $cutoff";
 			
 			$total = DBquery::get($sql)[0]['total'];
-			if ($total >= $limitNum) Error::http(403, "The $type relay usage limit of $limitNum per $limitPeriod has been reached or exceeded (counted $total uses).");
+			if ($total >= $limitNum) Error::http(403, "The $type relay usage limit of $limitNum within the last seven days has been reached or exceeded (counted $total uses).");
+			
+			if ($type=='user') { 
+				$lastUsed = DBquery::get($sql)[0]['lastUsed'];
+				$waitElapsed = $currTime - $lastUsed;
+				$waitMin = 3600*$this->{"by_". $type ."_wait"};
+				
+				if ($waitElapsed < $waitMin) Error::http(403, "The user must wait another ". ceil(($waitMin - $waitElapsed)/3600) ." hours before reusing relay #$this->relay_id.");
+			}
 		}
 	}
 }

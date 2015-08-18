@@ -21,12 +21,20 @@ class HolderRelays extends Collection {
 	}
 	
 	function add() {
-		$this->okToAdd = array("holder_id","amount_min","amount_max","redirect","tag","secret","txntype");
+		$this->okToAdd = array(
+			"holder_id","amount_min","amount_max","redirect","tag","secret","txntype",
+			"by_all_limit", "by_brand_limit", "by_user_limit", "by_user_wait"
+		);
+		
 		$this->addKeyVal('holder_id',$this->holder_id,'ifMissing');
 		$this->addKeyVal('redirect','NULL','ifMissing');
 		$this->addKeyVal('tag','NULL','ifMissing');
 		$this->addKeyVal('txntype','pn','ifMissing');
 		$this->addKeyVal('secret','NULL','ifMissing');
+		$this->addKeyVal('by_all_limit',25,'ifMissing');
+		$this->addKeyVal('by_brand_limit',5,'ifMissing');
+		$this->addKeyVal('by_user_limit',2,'ifMissing');
+		$this->addKeyVal('by_user_wait',48,'ifMissing');
 		
 		$this->relay_id = $this->insert();		
 		return array($this->obj);

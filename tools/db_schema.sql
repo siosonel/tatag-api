@@ -113,6 +113,28 @@ CREATE TABLE `members` (
 
 
 
+
+DROP TABLE IF EXISTS `promos`;
+
+CREATE TABLE `promos` (
+  `promo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `brand_id` int(11) DEFAULT '0',
+  `name`  varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `imageURL` varchar(255) DEFAULT NULL,
+  `infoURL` varchar(255) DEFAULT NULL,
+  `amount` decimal(9,2) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
+  `ended` timestamp NULL DEFAULT NULL,
+  `expires` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`promo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4$$
+
+
+
+
 DROP TABLE IF EXISTS `ratings`;
 
 CREATE TABLE `ratings` (
@@ -169,13 +191,10 @@ CREATE TABLE `relays` (
   `updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   `txntype` varchar(5) DEFAULT 'pn',
-  `qty` int(11) DEFAULT '100',
-  `by_all_period` varchar(8) DEFAULT 'week',
-  `by_all_limit` int(11) DEFAULT '1000',
-  `by_brand_period` varchar(8) DEFAULT 'day',
-  `by_brand_limit` int(11) DEFAULT '100',
-  `by_user_period` varchar(8) DEFAULT 'day',
-  `by_user_limit` int(11) DEFAULT '10',
+  `by_all_limit` int(11) DEFAULT '25',
+  `by_brand_limit` int(11) DEFAULT '5',
+  `by_user_limit` int(11) DEFAULT '2',
+  `by_user_wait` int(11) DEFAULT '48',
   PRIMARY KEY (`relay_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

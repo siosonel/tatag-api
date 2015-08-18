@@ -38,7 +38,9 @@
 		"throttle",
 		
 		"holderRelays",
-		"relay"
+		"relay",
+		"promo",
+		"brandPromos"
 	],
 
 	"user": {		
@@ -1395,7 +1397,8 @@
 			
 			"inputs": {
 				"required": [],
-				"optional": ["amount_min", "amount_max", "redirect", "tag", "secret", "txntype", "ended"]
+				"optional": ["amount_min", "amount_max", "redirect", "tag", "secret", "txntype", "ended",
+				"by_all_limit","by_brand_limit","by_user_limit","by_user_wait"]
 			},
 			
 			"examples": [{
@@ -1427,7 +1430,8 @@
 		"testURL": "/relay/1",
 		
 		"properties": {
-			"required": ["@id", "@type", "relay_id", "holder_id", "amount_min", "amount_max", "redirect", "tag", "secret", "txntype"],
+			"required": ["@id", "@type", "relay_id", "holder_id", "amount_min", "amount_max", "redirect", "tag", "secret", "txntype",
+				"by_all_limit","by_brand_limit","by_user_limit","by_user_wait"],
 			"optional": ["links", "actions", "user_id", "account_id", "created", "updated"]
 		},
 		
@@ -1439,7 +1443,8 @@
 			
 			"inputs": {
 				"required": [],
-				"optional": ["amount_min", "amount_max", "redirect", "tag", "secret", "txntype", "ended"]
+				"optional": ["amount_min", "amount_max", "redirect", "tag", "secret", "txntype", "ended",
+				"by_all_limit","by_brand_limit","by_user_limit","by_user_wait"]
 			},
 			
 			"examples": [{
@@ -1460,6 +1465,98 @@
 				"inputs": {
 					"secret": "{hex}",
 					"amount_max": "{random}"
+				},
+				"status": 403
+			}]
+		}]
+	},
+	
+	"promo": {	
+		"description": "A brand's promo information.",
+		"testURL": "/promo/1",
+		
+		"properties": {
+			"required": ["@id", "@type", "promo_id", "brand_id", "name", "description", 
+				"qty","imageURL","infoURL","created","updated","expires"],
+			"optional": ["links", "actions", "user_id", "account_id", "created", "updated"]
+		},
+		
+		"actions": [{
+			"title": "Edit",
+			"@type": "form",
+			"@id": "/forms#promo-edit",
+			"method": "POST",
+			
+			"inputs": {
+				"required": [],
+				"optional": ["name", "description", "qty", "imageURL", "infoURL", "expires"]
+			},
+			
+			"examples": [{
+				"label": "should allow a brand admin to edit a promo specification",
+				"target": "/promo/1",
+				"method": "POST",
+				
+				"inputs": {
+					"name": "{hex}",
+					"amount": "{random}"
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-brand admin to edit a promo specification",
+				"target": "/promo/2",
+				"method": "POST",
+				
+				"inputs": {
+					"name": "{hex}",
+					"amount": "{random}"
+				},
+				"status": 403
+			}]
+		}]
+	},
+	
+	"brandPromos": {	
+		"description": "A brand's collection of promos.",
+		
+		"properties": {
+			"required": ["@type", "@id", "items", "holder_id"],
+			"optional": ["links", "actions", "pageOrder", "itemsLimit"]
+		},
+		
+		"actions": [{
+			"title": "Add",
+			"@type": "form",
+			"@id": "/forms#promo-add",
+			"method": "POST",
+			
+			"inputs": {
+				"required": ["name", "description", "qty", "amount"],
+				"optional": ["imageURL", "infoURL", "expires"]
+			},
+			
+			"examples": [{
+				"label": "should allow a brand admin to add a promo specification",
+				"target": "/brand/104/promos",
+				"method": "POST",
+				
+				"inputs": {
+					"name": "product promo {hex}",
+					"description": "a brand 104 promo {hex}",
+					"amount": "{random}",
+					"qty": 100					
+				},
+				"status": 200
+			},{
+				"label": "should NOT allow a non-brand admin to add a promo specification",
+				"target": "/brand/105/promos",
+				"method": "POST",
+				
+				"inputs": {
+					"name": "product promo {hex}",
+					"description": "a brand 105 promo {hex}",
+					"amount": "{random}",
+					"qty": 100					
 				},
 				"status": 403
 			}]
