@@ -35,6 +35,7 @@ class Brand extends Base {
 		include_once "models/BrandMembers.php";
 		include_once "models/BrandAccounts.php";
 		include_once "models/BrandHolders.php";
+		include_once "models/BrandPromos.php";
 		include_once "models/BudgetThrottles.php";
 		$obj = json_decode('{"brand_id":' . $this->brand_id .'}');
 		
@@ -43,6 +44,7 @@ class Brand extends Base {
 			(new BrandMembers($obj))->get(),
 			(new BrandAccounts($obj))->get(),
 			(new BrandHolders($obj))->get(),
+			(new BrandPromos($obj))->get(),
 			(new BudgetThrottles($obj))->get()
 		);
 	}	
@@ -57,8 +59,9 @@ class Brand extends Base {
 			$this->links = array(
 				"brandMembers" => "$this->root/brand/$this->brand_id/members",
 				"brandAccounts" => "$this->root/brand/$this->brand_id/accounts",
-				"brandAbout" => "$this->root/brand/$this->brand_id/about",
-				"budgetRecords" => "$this->root/budget/$this->brand_id/records",				
+				"brandAbout" => "$this->root/brand/$this->brand_id/about",					
+				"brandPromos" => "$this->root/brand/$this->brand_id/promos",	
+				"budgetRecords" => "$this->root/budget/$this->brand_id/records",	
 				"budgetThrottles" => "$this->root/budget/$this->brand_id/throttles"
 			);
 		}

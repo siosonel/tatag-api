@@ -65,7 +65,7 @@ class Promo extends Base {
 	
 	function adjustQty() {
 		if (!isset($this->qty) OR $this->qty < 1) return;
-		$sql = "UPDATE relays SET qty = qty-1 WHERE relay_id=? AND qty>0";
+		$sql = "UPDATE promos SET qty = qty-1 WHERE promo_id=? AND qty>0";
 		$mssg = DBquery::set($sql, array($this->relay_id));
 	}
 	
@@ -105,12 +105,6 @@ class Promo extends Base {
 				if ($waitElapsed < $waitMin) Error::http(403, "The user must wait another ". ceil(($waitMin - $waitElapsed)/3600) ." hours before reusing relay #$this->relay_id.");
 			}
 		}
-	}
-	
-	function adjustQty() {
-		if (!isset($this->qty) OR $this->qty < 1) return;
-		$sql = "UPDATE relays SET qty = qty-1 WHERE relay_id=? AND qty>0";
-		$mssg = DBquery::set($sql, array($this->relay_id));
 	}
 }
 

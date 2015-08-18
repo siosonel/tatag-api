@@ -28,10 +28,10 @@ class BrandPromos extends Collection {
 		$this->addKeyVal('brand_id',"$this->brand_id");
 		$this->addKeyVal('expires','2016-12-31 00:00:00','ifMissing');
 		$this->addKeyVal('imageURL','NULL','ifMissing');
-		$this->addKeyVal('infoURL','pn','ifMissing');
+		$this->addKeyVal('infoURL','NULL','ifMissing');
 		
 		$this->promo_id = $this->insert();		
-		return array($this->promo);
+		return array($this);
 	}
 	
 	function set() {	
@@ -41,7 +41,7 @@ class BrandPromos extends Collection {
 	function get() {
 		$this->setFilters($_GET);		
 	
-		$sql = "SELECT promo_id, brand_id, created, updated, expires
+		$sql = "SELECT promo_id, brand_id, name, description, amount, qty, imageURL, infoURL, created, updated, expires
 			FROM promos p
 			WHERE brand_id=$this->brand_id $this->filterCond AND promo_id < $this->limitID
 			ORDER BY promo_id ASC
@@ -52,11 +52,10 @@ class BrandPromos extends Collection {
 		foreach($this->items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
-			$r['links']['promo-edit'] = '/forms#promo-edit';
+			$r['links']['admin-promo-edit'] = '/forms#admin-promo-edit';
 		}
 		
 		$this->paginate('promo_id');
-		$this->links['promo-add'] = "/forms#brand-promos-add";
 		return array($this);
 	}
 }

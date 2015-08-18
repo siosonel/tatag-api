@@ -1484,12 +1484,12 @@
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#promo-edit",
+			"@id": "/forms#admin-promo-edit",
 			"method": "POST",
 			
 			"inputs": {
 				"required": [],
-				"optional": ["name", "description", "qty", "imageURL", "infoURL", "expires"]
+				"optional": ["name", "description", "amount", "qty", "imageURL", "infoURL", "expires"]
 			},
 			
 			"examples": [{
@@ -1522,6 +1522,10 @@
 		"properties": {
 			"required": ["@type", "@id", "items", "holder_id"],
 			"optional": ["links", "actions", "pageOrder", "itemsLimit"]
+		},
+		
+		"relatedActions": {
+			"promo": ["/forms#admin-promo-edit"]
 		},
 		
 		"actions": [{
