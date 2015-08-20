@@ -55,13 +55,16 @@ class Requester {
 	static function setAccess() {
 		$url = explode("/", trim($_GET['_url'], " \/\\\t\n\r\0\x0B"));
 		$path = array_slice($url, 0, 3);
-		$openAccess = array("collection", "about", "ts", "ranks", "tally", "flow", "inflow", "outflow", "added", "intrause","sim", "arRatio");
+		$openAccess = array(
+			"collection", "about", "ts", "ranks", "tally", 
+			"flow", "inflow", "outflow", "added", "intrause",
+			"sim", "arRatio"
+		);
 		
-		if ((AUDIENCE=='sim' 
+		if (!isset($_SERVER['PHP_AUTH_USER'])
+			AND (AUDIENCE=='sim' 
 			OR $_SERVER['PHP_SELF']=='/api/login.php' 
-			OR count($openAccess) > count(array_diff($openAccess, $path))
-			OR $path[0]=='sim')
-			AND !isset($_SERVER['PHP_AUTH_USER'])
+			OR count($openAccess) > count(array_diff($openAccess, $path)))
 		) {
 			$_SERVER['PHP_AUTH_USER'] = OPEN_ACCESS_USER;
 			$_SERVER['PHP_AUTH_PW'] = OPEN_ACCESS_PW;

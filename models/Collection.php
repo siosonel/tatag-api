@@ -14,7 +14,8 @@ class Collection extends Base {
 		if (!isset($this->pageOrder)) $this->pageOrder = isset($_GET['pageOrder']) ? strtolower($_GET['pageOrder']) : "asc";
 		$this->ltgt = $this->pageOrder=="desc" ? "<" : ">";
 		
-		if (isset($_GET['itemsLimit']) AND is_numeric($_GET['itemsLimit'])) {
+		if (isset($_GET['itemsLimit'])) {
+			if (!is_numeric($_GET['itemsLimit'])) Error::http(400, "Invalid value for the itemsLimit parameter in the URL.");
 			$itemsLimit = $_GET['itemsLimit'];
 			if ($itemsLimit < 101 AND $itemsLimit > 1) $this->itemsLimit = $itemsLimit;   
 		}

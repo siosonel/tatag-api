@@ -18,7 +18,7 @@ class BudgetUsed extends Base {
 		
 		$this->init($data);
 		
-		$this->okToAdd = array("from_acct", "from_user", "to_acct", "to_user", "amount", "note", "txntype", "throttle_id", "relay_id");
+		$this->okToAdd = array("from_acct", "from_user", "to_acct", "to_user", "amount", "note", "txntype", "throttle_id", "relay_id", "promo_id");
 	}
 	
 	function get() {
@@ -38,6 +38,7 @@ class BudgetUsed extends Base {
 		$this->addKeyVal('txntype', $this->verifier->txnType, 'ifMissing');
 		$this->addKeyVal('throttle_id', $this->verifier->to_holder['throttle_id']);
 		$this->addKeyVal('relay_id', isset($this->verifier->Relay) ? $this->verifier->Relay->relay_id : 0);
+		$this->addKeyVal('promo_id', isset($this->verifier->promo_id) ? $this->verifier->promo_id : 0);
 		
 		$this->catchError($this->verifyBals(), $this->verifyAuth());	
 		$this->record_id = $this->insert();

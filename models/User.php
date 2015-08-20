@@ -36,6 +36,8 @@ class User extends Base {
 		$this->links->userMemberships = $this->{'@id'}."/brands";
 		$this->links->userAccounts = $this->{'@id'}."/accounts";			
 		$this->links->userRatings = $this->{'@id'}."/ratings";
+		$this->links->promoCollection = "$this->root/promo/collection";
+		$this->links->brandCollection = "$this->root/brand/collection";
 		$this->setForms();	
 		
 		include_once "models/UserBrands.php";		

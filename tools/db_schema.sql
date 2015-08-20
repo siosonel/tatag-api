@@ -129,6 +129,8 @@ CREATE TABLE `promos` (
   `updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
   `expires` timestamp NULL DEFAULT NULL,
+  `relay_id` int(11) DEFAULT '0',
+  `promo_id` int(11) DEFAULT '0',
   PRIMARY KEY (`promo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4$$
 

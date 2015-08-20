@@ -16,6 +16,8 @@ class ForwardVerifier {
 	}
 	
 	function verifyHolder($data, $ft) {
+		if ($ft=='to' AND substr($data->to, 0,6) == 'promo-') $this->usePromo($data);
+		
 		if (strpos($data->$ft,"-")==false OR strpos($data->$ft, ".")) $data->$ft = $this->relayToHolderInfo($data, $ft);  
 		list($holder_id, $limkey) = explode("-", $data->$ft);
 	
@@ -36,6 +38,14 @@ class ForwardVerifier {
 		if ($this->{$_holder}['holder_auth']=='*') $this->{$_holder}['holder_auth'] = $this->{$_holder}['acct_auth'];
 	}
 	
+	function usePromo($data) {	
+		$promo_id = explode("-", $data->to)[1];
+		$sql = "SELECT promo_id, amount, CONCAT_WS('.',r.relay_id,r.secret) AS code FROM promos p JOIN relays r USING (relay_id) WHERE promo_id=?";
+		$r = DBquery::get($sql, array($promo_id))[0];
+		$data->to = $r['code'];
+		$data->amount = $r['amount'];
+		$this->promo_id = $promo_id;
+	}
 	
 	function relayToHolderInfo($data, $ft) {
 		list($relay_id,$secret) = explode(".", $data->$ft);

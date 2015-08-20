@@ -39,8 +39,10 @@
 		
 		"holderRelays",
 		"relay",
+		
 		"promo",
-		"brandPromos"
+		"brandPromos",
+		"promoCollection"
 	],
 
 	"user": {		
@@ -1082,6 +1084,17 @@
 					"note": "test budget use"
 				},
 				"status": 403
+			},{
+				"label": "should convert promo to correct record info",
+				"target": "/budget/104/used",
+				"method": "POST",
+				
+				"inputs": {
+					"from": "42-abc",
+					"to": "promo-2",
+					"note": "test budget use"
+				},
+				"status": 200
 			}]
 		},
 		{
@@ -1565,6 +1578,21 @@
 				"status": 403
 			}]
 		}]
+	},
+	
+	"promoCollection": {	
+		"description": "A brand's collection of promos.",
+		
+		"properties": {
+			"required": ["@type", "@id", "items", "holder_id"],
+			"optional": ["links", "actions", "pageOrder", "itemsLimit"]
+		},
+		
+		"relatedActions": {
+			"budgetUsed": ["/forms#budget-use"]
+		},
+		
+		"actions": []
 	}
 }
 	
