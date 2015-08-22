@@ -1,6 +1,8 @@
 <?php
 
-class BrandPromos extends Collection {
+require_once "models/PromoCollection.php";
+
+class BrandPromos extends PromoCollection {
 	function __construct($data='') { 		
 		$this->brand_id = $this->getID();
 		
@@ -12,26 +14,12 @@ class BrandPromos extends Collection {
 		$this->table = "promos";
 		$this->idkey = 'promo_id';
 		
+		if (Router::$method=='add' OR Router::$method=='set') $this->translateInput($data);
+		
 		$this->pageOrder = "desc"; //prevents being reset
 		$this->init($data);
 		
 		$this->okToFilterBy = array("brand_id", "promo_id", 'expires');
-	}
-	
-	function add() {
-		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin of brand #$this->brand_id.");
-		
-		$this->okToAdd = array(
-			"brand_id","name","description","amount","qty","expires","imageURL","infoURL"
-		);
-		
-		$this->addKeyVal('brand_id',"$this->brand_id");
-		$this->addKeyVal('expires','2016-12-31 00:00:00','ifMissing');
-		$this->addKeyVal('imageURL','NULL','ifMissing');
-		$this->addKeyVal('infoURL','NULL','ifMissing');
-		
-		$this->promo_id = $this->insert();		
-		return array($this);
 	}
 	
 	function set() {	
@@ -41,8 +29,10 @@ class BrandPromos extends Collection {
 	function get() {
 		$this->setFilters($_GET);		
 	
-		$sql = "SELECT promo_id, brand_id, name, description, amount, qty, imageURL, infoURL, created, updated, expires
+		$sql = "SELECT promo_id, brand_id, name, description, amount, imageURL, infoURL, p.created, p.updated, expires, 
+				relay_id, by_all_limit, by_brand_limit, by_user_limit, by_user_wait
 			FROM promos p
+			JOIN relays r USING (relay_id)
 			WHERE brand_id=$this->brand_id $this->filterCond AND promo_id < $this->limitID
 			ORDER BY promo_id ASC
 			LIMIT $this->itemsLimit";
@@ -52,7 +42,15 @@ class BrandPromos extends Collection {
 		foreach($this->items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
-			$r['links']['admin-promo-edit'] = '/forms#admin-promo-edit';
+			$r['links']['promo-edit'] = '/forms#promo-edit';
+			
+			$relayHoldings = array();
+			
+			if (in_array($r['relay_id'],$relayHoldings) OR Requester::isRelayHolder($r['relay_id'])) {
+				$relayHoldings[] = $r['relay_id'];
+				$r['links']['relay-edit'] = '/forms#relay-edit';
+				$r['links']['relay-edit-target'] = "/relay/".$r['relay_id'];
+			}
 		}
 		
 		$this->paginate('promo_id');

@@ -63,8 +63,9 @@ class Router {
 		require_once "models/$ObjClass.php";
 		self::$Resource = new $ObjClass($data); 
 		
-		if (!method_exists(self::$Resource,self::$method)) Error::http(405, "The method='$method' is not supported by resource='$ObjClass'.");	
 		$method = self::$method;
+		if (!method_exists(self::$Resource,self::$method)) Error::http(405, "The method='$method' is not supported by resource='$ObjClass'.");	
+		
 		return array_merge(self::$Resource->$method(), Requester::$graph);
 	}
 	

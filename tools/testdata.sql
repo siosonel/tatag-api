@@ -114,9 +114,9 @@ UNLOCK TABLES;
 
 LOCK TABLES `promos` WRITE;
 /*!40000 ALTER TABLE `promos` DISABLE KEYS */;
-INSERT INTO `promos` (promo_id,brand_id,name,description,amount,qty,imageURL,infoURL,created, relay_id) VALUES 
-(1, 104, 'Test promo', 'A brand #104 promo', '25.00', 100, NULL, NULL, '2015-01-01 00:00:00',1)
-,(2, 105, 'Test promo', 'A brand #105 promo', '25.00', 100, NULL, NULL, '2015-01-01 00:00:00',4);
+INSERT INTO `promos` (promo_id,brand_id,name,description,amount,imageURL,infoURL,created, relay_id) VALUES 
+(1, 104, 'Test promo', 'A brand #104 promo', '25.00', NULL, NULL, '2015-01-01 00:00:00',1)
+,(2, 105, 'Test promo', 'A brand #105 promo', '25.00', NULL, NULL, '2015-01-01 00:00:00',4);
 /*!40000 ALTER TABLE `promos` ENABLE KEYS */;
 UNLOCK TABLES;
 

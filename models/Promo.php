@@ -15,25 +15,27 @@ class Promo extends Base {
 	
 	function set() {
 		$rows = DBquery::get("SELECT brand_id FROM promos WHERE promo_id=?", array($this->promo_id));
-		if (!Requester::isBrandAdmin($rows[0]['brand_id'])) Error::http(
-			403, "The user is not an admin of the brand that owns this promo and does not have accees to its details."
+		if (!Requester::isMember($rows[0]['brand_id'])) Error::http(
+			403, "The user is not a member of the brand that owns this promo and does not have accees to its details."
 		);
 		
-		$this->okToSet = array('name','description', 'amount', 'qty','expires','imageURL','infoURL');		
+		$this->okToSet = array('name','description', 'amount', 'expires', 'imageURL', 'infoURL');		
 		$this->update(array('promo_id'=>$this->promo_id));
 		return array($this->obj);
 	}
 	
 	function get() {
-		$sql = "SELECT promo_id, brand_id, name, description, amount, qty, imageURL, infoURL, created, updated, expires
-			FROM promos
+		$sql = "SELECT promo_id, brand_id, name, description, amount, imageURL, infoURL, p.created, p.updated, expires,
+				relay_id, by_all_limit, by_brand_limit, by_user_limit, by_user_wait
+			FROM promos p
+			JOIN relays USING (relay_id)
 			WHERE promo_id=?";
 			
 		$rows = DBquery::get($sql, array($this->promo_id));
 		if (!$rows) return array(new stdClass());
 		
-		if (!Requester::isBrandAdmin($rows[0]['brand_id'])) Error::http(
-			403, "The user is not an admin of the brand that owns this promo and does not have accees to its details."
+		if (!Requester::isMember($rows[0]['brand_id'])) Error::http(
+			403, "The user is not a member of the brand that owns this promo and does not have accees to its details."
 		);
 		
 		

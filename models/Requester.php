@@ -8,6 +8,7 @@ include_once "models/Collection.php";
 class Requester {
 	public static $user_id=0;
 	private $pass='';
+	private static $memberships=0;
 	public static $email='';
 	public static $name='';
 	public static $member_id=0;
@@ -138,8 +139,8 @@ class Requester {
 	
 	static function isAccountAdmin($account_id) {	
 		$sql = "SELECT member_id FROM members JOIN accounts USING (brand_id) WHERE account_id=? AND user_id IN (?) AND role='admin'";
-		$row = DBquery::get($sql, array($account_id, self::$user_id));
-		if (!$row) return 0; //	401, "User #". self::$user_id ." is not an account admin for account #$account_id."
+		$rows = DBquery::get($sql, array($account_id, self::$user_id));
+		if (!$rows) return 0; //	401, "User #". self::$user_id ." is not an account admin for account #$account_id."
 
 		
 		self::$member_id=$row[0]['member_id'];
@@ -148,16 +149,28 @@ class Requester {
 	
 	static function isAccountHolder($account_id) { 	
 		$sql = "SELECT holder_id, holders.authcode AS authcode, brand_id, limkey FROM holders JOIN accounts USING (account_id) WHERE account_id IN (?) AND user_id IN (?)";
-		$row = DBquery::get($sql, array($account_id, self::$user_id));
-		if ($row) self::$holder_id=$row[0]['holder_id'];
+		$rows = DBquery::get($sql, array($account_id, self::$user_id));
+		if ($rows) self::$holder_id=$rows[0]['holder_id'];
 		
-		return $row[0];
+		return $rows[0];
 	}
 	
 	static function isMember($brand_id) {
-		$sql = "SELECT member_id FROM members WHERE brand_id IN (?) AND user_id IN (?) LIMIT 1";
-		$row = DBquery::get($sql, array($brand_id, self::$user_id));
-		if ($row) return $row[0]['member_id']; 
+		if (is_array(self::$memberships)) return self::$memberships[$brand_id];
+		else {
+			$sql = "SELECT member_id FROM members WHERE brand_id IN (?) AND user_id IN (?) LIMIT 1";
+			$rows = DBquery::get($sql, array($brand_id, self::$user_id));
+			if ($rows) return $rows[0]['member_id'];
+		}
+	}
+	
+	static function detectMemberships() {
+		$sql = "SELECT brand_id, member_id FROM members WHERE user_id IN (?)";
+		$rows = DBquery::get($sql, array(self::$user_id));
+		if ($rows) {
+			self::$memberships = array(); 
+			foreach($rows AS $r) self::$memberships[$r['brand_id']] = $r['member_id']; 
+		}
 	}
 	
 	static function holderIDs() {

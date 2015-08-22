@@ -2,7 +2,12 @@
 
 class HolderRelays extends Collection {
 	function __construct($data='') { 		
-		$this->holder_id = $this->getID();
+		$this->holder_id = Router::$resource=='holder' ? $this->getID() : 0;
+		
+		if (!$this->holder_id AND $data->holder_id) {
+			$this->holder_id = $data->holder_id;
+			unset($data->holder_id);
+		}
 		
 		if (!in_array($this->holder_id, Requester::holderIDs())) Error::http(
 			403, "The user does not have access to this accountholder's information."
@@ -36,7 +41,7 @@ class HolderRelays extends Collection {
 		$this->addKeyVal('by_user_limit',2,'ifMissing');
 		$this->addKeyVal('by_user_wait',48,'ifMissing');
 		
-		$this->relay_id = $this->insert();		
+		$this->obj->relay_id = $this->insert();	
 		return array($this->obj);
 	}
 	

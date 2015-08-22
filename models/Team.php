@@ -49,13 +49,15 @@ class Team extends Base {
 		include_once "models/TeamMembers.php";
 		include_once "models/TeamAccounts.php";
 		include_once "models/TeamThrottles.php";
+		include_once "models/BrandPromos.php";
 		$obj = json_decode('{"brand_id":' . $this->brand_id .'}');
 		
 		return array_merge(
 			array($this),
 			(new TeamMembers($obj))->get(),
 			(new TeamAccounts($obj))->get(),
-			(new TeamThrottles($obj))->get()
+			(new TeamThrottles($obj))->get(),
+			(new BrandPromos($obj))->get()
 		);
 	}	
 	
@@ -76,7 +78,8 @@ class Team extends Base {
 				"teamAccounts" => "$this->root/team/$this->brand_id/accounts",							
 				"teamThrottles" => "$this->root/team/$this->brand_id/throttles",
 				"budgetRecords" => "$this->root/budget/$this->brand_id/records",	
-				"teamAbout" => "$this->root/brand/$this->brand_id/about"
+				"teamAbout" => "$this->root/brand/$this->brand_id/about",			
+				"brandPromos" => "$this->root/brand/$this->brand_id/promos"
 			);
 		}
 	}

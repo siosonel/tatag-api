@@ -1490,19 +1490,24 @@
 		
 		"properties": {
 			"required": ["@id", "@type", "promo_id", "brand_id", "name", "description", 
-				"qty","imageURL","infoURL","created","updated","expires"],
+				"imageURL","infoURL","created","updated","expires",
+				"by_all_limit","by_brand_limit","by_user_limit","by_user_wait"],
 			"optional": ["links", "actions", "user_id", "account_id", "created", "updated"]
+		},
+		
+		"relatedActions": {
+			"relay": ["/forms#relay-edit"]
 		},
 		
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#admin-promo-edit",
+			"@id": "/forms#promo-edit",
 			"method": "POST",
 			
 			"inputs": {
 				"required": [],
-				"optional": ["name", "description", "amount", "qty", "imageURL", "infoURL", "expires"]
+				"optional": ["name", "description", "amount", "imageURL", "infoURL", "expires"]
 			},
 			
 			"examples": [{
@@ -1538,7 +1543,8 @@
 		},
 		
 		"relatedActions": {
-			"promo": ["/forms#admin-promo-edit"]
+			"promo": ["/forms#promo-edit"],
+			"relay": ["/forms#relay-edit"]
 		},
 		
 		"actions": [{
@@ -1548,12 +1554,12 @@
 			"method": "POST",
 			
 			"inputs": {
-				"required": ["name", "description", "qty", "amount"],
-				"optional": ["imageURL", "infoURL", "expires"]
+				"required": ["name", "description", "amount", "holder_id"],
+				"optional": ["imageURL", "infoURL", "expires", "by_all_limit", "by_brand_limit", "by_user_limit", "by_user_wait"]
 			},
 			
 			"examples": [{
-				"label": "should allow a brand admin to add a promo specification",
+				"label": "should allow a brand member to add a promo specification",
 				"target": "/brand/104/promos",
 				"method": "POST",
 				
@@ -1561,21 +1567,32 @@
 					"name": "product promo {hex}",
 					"description": "a brand 104 promo {hex}",
 					"amount": "{random}",
-					"qty": 100					
+					"holder_id": 41					
 				},
 				"status": 200
 			},{
-				"label": "should NOT allow a non-brand admin to add a promo specification",
+				"label": "should NOT allow a non-brand member to add a promo specification",
 				"target": "/brand/105/promos",
 				"method": "POST",
 				
 				"inputs": {
 					"name": "product promo {hex}",
 					"description": "a brand 105 promo {hex}",
-					"amount": "{random}",
-					"qty": 100					
+					"amount": "{random}"
 				},
 				"status": 403
+			},{
+				"label": "should allow a brand member to add using the promo/collection endpoint",
+				"target": "/promo/collection",
+				"method": "POST",
+				
+				"inputs": {
+					"name": "product promo {hex}",
+					"description": "a brand 104 promo {hex}",
+					"amount": "{random}",
+					"holder_id": 41					
+				},
+				"status": 200
 			}]
 		}]
 	},
@@ -1589,7 +1606,9 @@
 		},
 		
 		"relatedActions": {
-			"budgetUsed": ["/forms#budget-use"]
+			"budgetUsed": ["/forms#budget-use"],
+			"brandPromos": ["/forms#promo-add"],
+			"promo": ["/forms#promo-edit"]
 		},
 		
 		"actions": []
