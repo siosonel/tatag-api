@@ -130,9 +130,8 @@ CREATE TABLE `promos` (
   `ended` timestamp NULL DEFAULT NULL,
   `expires` timestamp NULL DEFAULT NULL,
   `relay_id` int(11) DEFAULT '0',
-  `promo_id` int(11) DEFAULT '0',
   PRIMARY KEY (`promo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4$$
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
@@ -173,6 +172,9 @@ CREATE TABLE `records` (
   `ref_id` int(11) DEFAULT NULL,
   `status` tinyint(3) DEFAULT '0',
 	`throttle_id` int(11) DEFAULT '0',
+  `relay_id` int(11) DEFAULT '0',
+  `promo_id` int(11) DEFAULT '0',
+  `readkey` varchar(12) DEFAULT '0',
   PRIMARY KEY (`record_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

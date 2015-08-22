@@ -709,7 +709,7 @@
 		
 			"examples": [{
 				"label": "should allow an admin to edit a holder's authcode",
-				"target": "/member/56/accounts?holder_id=46",
+				"target": "/member/57/accounts?holder_id=46",
 				"method": "POST",
 				
 				"inputs": {
@@ -740,7 +740,7 @@
 			
 			"examples": [{
 				"label": "should allow an admin to add a new accountholder",
-				"target": "/member/56/accounts",
+				"target": "/member/57/accounts",
 				"method": "POST",
 				
 				"inputs": {
@@ -1091,7 +1091,7 @@
 				
 				"inputs": {
 					"from": "42-abc",
-					"to": "promo-2",
+					"to": "promo-1",
 					"note": "test budget use"
 				},
 				"status": 200

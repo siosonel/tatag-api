@@ -144,13 +144,13 @@ UNLOCK TABLES;
 LOCK TABLES `records` WRITE;
 /*!40000 ALTER TABLE `records` DISABLE KEYS */;
 INSERT INTO `records` VALUES 
-(30,'np',92,21,93,21,1000.00,'first budget','2015-01-05 19:53:32',NULL,0,7,0)
-,(31,'pp',93,21,94,21,35.87,'wages','2015-01-05 19:53:32',NULL,0,7,0)
-,(32,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-05 19:53:32',NULL,0,0,0)
-,(33,'np',95,22,96,22,1000.00,'first budget','2015-01-05 19:53:33',NULL,0,7,0)
-,(34,'pn',96,22,92,21,9.37,'first external budget use','2015-01-05 19:53:33',NULL,0,0,0)
-,(35,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:13:00',NULL,0,0,0)
-,(36,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:29:57',NULL,0,0,0);
+(30,'np',92,21,93,21,1000.00,'first budget','2015-01-05 19:53:32',NULL,0,7,0,0,0,0)
+,(31,'pp',93,21,94,21,35.87,'wages','2015-01-05 19:53:32',NULL,0,7,0,0,0,0)
+,(32,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-05 19:53:32',NULL,0,0,0,0,0,0)
+,(33,'np',95,22,96,22,1000.00,'first budget','2015-01-05 19:53:33',NULL,0,7,0,0,0,0)
+,(34,'pn',96,22,92,21,9.37,'first external budget use','2015-01-05 19:53:33',NULL,0,0,0,0,0,0)
+,(35,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:13:00',NULL,0,0,0,0,0,0)
+,(36,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:29:57',NULL,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `records` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,11 +159,11 @@ UNLOCK TABLES;
 
 LOCK TABLES `relays` WRITE;
 /*!40000 ALTER TABLE `relays` DISABLE KEYS */;
-INSERT INTO `relays` (relay_id,holder_id,secret,amount_min,amount_max,tag,created,by_user_limit,by_user_period) VALUES 
-(1, 41, NULL, 0.01, 100.00, 'test', '2015-01-01 00:00:00',10000,'day')
-,(2, 41, NULL, 5.00, 10.00, 'test', '2015-01-01 00:00:00',10000,'day')
-,(3, 44, 'xyz', 0.01, 50.00, 'test-brand-105', '2015-01-01 00:00:00',10000,'day')
-,(4, 44, 'qrs', 0.01, 100.00, 'test', '2015-01-01 00:00:00',0,'week');
+INSERT INTO `relays` (relay_id,holder_id,secret,amount_min,amount_max,tag,created,by_user_limit,by_user_wait) VALUES 
+(1, 41, NULL, 0.01, 100.00, 'test', '2015-01-01 00:00:00',25,24)
+,(2, 41, NULL, 5.00, 10.00, 'test', '2015-01-01 00:00:00',25,0)
+,(3, 44, 'xyz', 0.01, 50.00, 'test-brand-105', '2015-01-01 00:00:00',25,0)
+,(4, 44, 'qrs', 0.01, 100.00, 'test', '2015-01-01 00:00:00',0,24);
 /*!40000 ALTER TABLE `relays` ENABLE KEYS */;
 UNLOCK TABLES;
 
