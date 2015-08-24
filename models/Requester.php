@@ -104,16 +104,20 @@ class Requester {
 		list($label, self::$token_id) = explode("-", $user); 
 		if (!self::$token_id) Error::http(400, "Missing or invalid token id.");
 		
-		$sql = "SELECT tokens.user_id, users.name, tokens.login_provider 
+		$sql = "SELECT tokens.user_id, users.name, tokens.login_provider, UNIX_TIMESTAMP(tokens.updated) as updated
 			FROM tokens LEFT JOIN users ON tokens.user_id=users.user_id
 			WHERE token_id=? AND ((token_val='0' AND otk=?) OR (token_val!=0 AND token_val=?))";
-		$row = DBquery::get($sql, array(self::$token_id, $pwd, $pwd));
-		if (!$row) Error::http(401, "Invalid credentials for token ID='". self::$token_id ."'. $sql $user $pwd");
+		$rows = DBquery::get($sql, array(self::$token_id, $pwd, $pwd));
 		
-		self::$user_id = $row[0]['user_id'];
-		self::$name = $row[0]['name'];
+		if (!$rows) Error::http(401, "Invalid credentials for token ID='". self::$token_id ."'. $sql $user $pwd");
+		
+		$updated = $rows[0]['updated'];
+		if ($udpated AND time() - $updated > 86400) Error::http(401, "The login-enabled token#". self::$token_id ." for this user has expired (maximum 24-hours API session reached.).");
+		
+		self::$user_id = $rows[0]['user_id'];
+		self::$name = $rows[0]['name'];
 		self::$otk = $pwd;
-		self::$login_provider = $row[0]['login_provider'];
+		self::$login_provider = $rows[0]['login_provider'];
 	}
 	
 	static function isUser($user_id) {

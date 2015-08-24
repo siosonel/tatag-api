@@ -12,7 +12,7 @@ class Token extends Base {
 		$this->table = 'tokens';
 		$this->idkey = 'token_id';
 		
-		$this->removeFromInput = array("access_token", "id_type", "fb_id");		
+		$this->removeFromInput = array("access_token", "id_type", "fb_id", "email", "pwd", "action");
 		$this->init($data);
 		
 		$this->okToSet = array("user_id", "otk", "token_val", "login_provider");

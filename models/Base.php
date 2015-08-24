@@ -96,7 +96,13 @@ class Base {
 		unset($this->quotedValArr[$i]);
 		unset($this->paramMarker[$i]);
 		unset($this->keyMarkerArr[$i]);
-	}
+		
+		$this->keyArr[$i];
+		$this->valArr[$i];
+		$this->quotedValArr[$i];
+		$this->paramMarker[$i];
+		$this->keyMarkerArr[$i];
+	} 
 	
 	function insert() {
 		if ($arr = array_diff($this->keyArr, $this->okToAdd)) Error::http(403, "Cannot insert values for these object properties: ". implode(",", $arr));

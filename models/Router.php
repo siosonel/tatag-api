@@ -52,7 +52,7 @@ class Router {
 		unset($_GET['file']);
 		
 		$data = (self::$method=='get') ? json_decode(json_encode(array("id"=>self::$id))) : json_decode(trim(file_get_contents($src)));
-		if (gettype($data)!='object') Error::http(400, "Bad Request - unable to retriev or decode submitted data.");
+		if (gettype($data)!='object') Error::http(400, "Bad Request - unable to retrieve or decode submitted data.");
 		return $data;
 	}
 	

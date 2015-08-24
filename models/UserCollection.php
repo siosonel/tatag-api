@@ -11,11 +11,12 @@ class UserCollection extends Base {
 		$this->idkey = 'user_id';
 		$this->init($data);
 		
-		$this->okToAdd = array('email', 'name', 'password', "fb_id", "gp_id", "tw_id", "login_provider", 'phone', 'wallet');
+		$this->okToAdd = array('email', 'name', 'password', "fb_id", "gp_id", "tw_id", "login_provider", 'phone', 'wallet','question','answer');
 	}
 	
 	function add($data='') {
 		if (!isset($this->email) AND !isset($this->fb_id) AND !isset($this->gp_id) AND !isset($this->tw_id)) Error::http(400, "When registerng a user, an email, facebook id (fb_id), google+ id (gp_id) , or twitter id (tw_id) must be used as input.");
+		
 		foreach($this->okToAdd AS $key) $this->addKeyVal($key,0,"ifMissing");
 	
 		$this->obj->password = password_hash($this->obj->password, PASSWORD_DEFAULT);

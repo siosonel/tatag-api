@@ -6,6 +6,7 @@ header("content-type: text/html");
 
 $provider = isset($_GET['provider']) ? $_GET['provider'] : '';
 if ($provider=='tw') {require_once "login_tw.php";	exit();}
+if ($provider=='email') {require_once "login_email.php";	exit();}
 
 ?><!DOCTYPE html>
 <html>
@@ -75,6 +76,11 @@ if ($provider=='tw') {require_once "login_tw.php";	exit();}
 			<img src='https://g.twimg.com/Twitter_logo_blue.png' style='width: 22px;'/>
 			<span style='vertical-align:top;'>Sign-in</span>
 		</a>
+		<?php }
+		
+		
+		if (0 AND !$provider)	{ ?>
+		<a href='?provider=email'><span class='fi-social-mail large' style='font-size: 50px; color:#55acee;'>&nbsp;&nbsp;</span></a>			
 		<?php } ?>
 	</div>	
 </body>
