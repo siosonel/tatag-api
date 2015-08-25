@@ -3,19 +3,21 @@ require_once "models/Token.php";
 
 class TokenEmail extends Token {
 	private $verLifetime = 600;
-	private $verCode;
 
 	function setTokenUserID() {
 		if (!method_exists($this, $this->action)) Error::http(400, "Invalid action value='$this->action', must be one of [login, register, recover].");
 		
 		//need to verify recaptcha code		
-		require('../common2/lib/recaptcha/autoload.php');
-		$Recaptcha = new \ReCaptcha\ReCaptcha(G_RECAPTCHA);
-		$response = $Recaptcha->verify($this->access_token);
+		if ((SITE=='live' OR SITE=='stage') AND $this->action != 'setPassword') {
+			require('../common2/lib/recaptcha/autoload.php');
+			$Recaptcha = new \ReCaptcha\ReCaptcha(G_RECAPTCHA);
+			$response = $Recaptcha->verify($this->access_token);
 		
-		if (!$response->isSuccess()) Error::http(403, 
-			"The submitted data either failed the recaptcha challenge or has expired. ". json_encode($response->getErrorCodes())
-		);
+		
+			if (!$response->isSuccess()) Error::http(403, 
+				"The submitted data either failed the recaptcha challenge or has expired. ". json_encode($response->getErrorCodes())
+			);
+		}
 		
 		$row = $this->getByEmailAddr();
 		return $this->{$this->action}($row);
@@ -37,7 +39,7 @@ class TokenEmail extends Token {
 		$this->okToSet = array("otk","user_id", "login_provider");	
 		$this->addKeyVal('user_id',$this->user_id);		
 		$this->addKeyVal('otk', mt_rand(1, 99999999));
-		$this->addKeyVal('login_provider', 'gp');
+		$this->addKeyVal('login_provider', 'email');
 		
 		$this->update(array(
 			"token_id" => $this->token_id, 
@@ -51,7 +53,7 @@ class TokenEmail extends Token {
 	function sendRecoveryCode($row) {		
 		if (!$row) Error::http(400, "Cannot send verification code: The user email='$this->email' was not found during pasword recovery. Either the email was typed incorrectly or the user must register first.");
 		
-		$this->setVerCode();
+		$this->setAndMailVerCode();
 		
 		$sql = "UPDATE users SET ver_code='$this->verCode', ver_expires=$this->verExpires WHERE user_id=?";
 		DBquery::set($sql, array($row['user_id']));
@@ -62,7 +64,7 @@ class TokenEmail extends Token {
 	function sendRegistrationCode($row) { 
 		if ($this->verType=='register' AND $row AND $row['password']) Error::http(403, "There is already a user with the email='$this->email'. If you typed your email correctly, recover your password instead of registering.");
 		
-		$this->setVerCode();
+		$this->setAndMailVerCode();
 		
 		require_once "models/UserCollection.php";
 		$Users = new UserCollection(json_decode('{
@@ -74,12 +76,10 @@ class TokenEmail extends Token {
 		}'));
 		
 		$user = $Users->add()[0];
-		unset($user->question);
-		unset($user->answer);
 		return array($user);
 	}
 	
-	function setVerCode() {		
+	function setAndMailVerCode() {		
 		$this->verCode = substr(sha1(microtime(). $this->email . $this->verType . mt_rand(0,10000)), 0,6);
 		$this->verExpires = time() + $this->verLifetime; 
 		
@@ -100,6 +100,8 @@ class TokenEmail extends Token {
 		if (!$row) Error::http(40, "There is no user found to verify against the submitted code, email='$this->email'.");
 		
 		if ($time > $row['ver_expires']) Error::http(403, "The verification code has expired. Please use the form again to request a new verificaion code to be send to your email.");
+		
+		if ($this->ver_code != $row['ver_code']) Error::http(403, 'The submitted verification code does not match the one on record.');
 		
 		$pwd = password_hash($this->pwd, PASSWORD_BCRYPT);
 		

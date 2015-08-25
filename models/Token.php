@@ -12,7 +12,7 @@ class Token extends Base {
 		$this->table = 'tokens';
 		$this->idkey = 'token_id';
 		
-		$this->removeFromInput = array("access_token", "id_type", "fb_id", "email", "pwd", "action");
+		$this->removeFromInput = array("access_token", "id_type", "fb_id", "email", "pwd", "action", "ver_code");
 		$this->init($data);
 		
 		$this->okToSet = array("user_id", "otk", "token_val", "login_provider");
@@ -30,7 +30,7 @@ class Token extends Base {
 	}
 	
 	function set() {
-		if ($this->access_token) return $this->setTokenUserID();		
+		if ($this->access_token OR $this->ver_code) return $this->setTokenUserID();		
 		else {
 			$this->okToSet = array("token_val");		
 			$this->addKeyVal('token_val', mt_rand(1, 99999999));

@@ -280,7 +280,7 @@ CREATE TABLE `tokens` (
 	`token_val` varchar(45) DEFAULT '0',
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated` timestamp NULL DEFAULT NULL,
-	`login_provider` varchar(2) DEFAULT NULL,
+	`login_provider` varchar(12) DEFAULT NULL,
   PRIMARY KEY (`token_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Used by users to authorize API consumers ';
 
@@ -308,7 +308,7 @@ CREATE TABLE `users` (
   `profileImg` varchar(255) DEFAULT NULL,
   `bannerImg` varchar(255) DEFAULT NULL,
   `wallet` int(11) DEFAULT '2',
-	`ver_code` int(11) DEFAULT '0',
+	`ver_code` varchar(12) DEFAULT '0',
 	`ver_response` int(11) DEFAULT '0';
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`),

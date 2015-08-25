@@ -1,4 +1,4 @@
-<html>
+<?php include_once "config-public.php" ?><html>
 <head>
 	<title>tatag.cc login</title>
 	<link rel="icon" type="image/png" href="/ui/css/logo5.png">
@@ -75,8 +75,8 @@
 		<div id='newPwdDiv'>
 			<table>
 			<tr>
-				<td><label for='verification_token'>Verification Code: </label>&nbsp;</td>
-				<td><input type='text' name='verToken' id='verToken' value='' /></td>
+				<td><label for='verification_code'>Verification Code: </label>&nbsp;</td>
+				<td><input type='text' name='verCode' id='verCode' value='' /></td>
 			</tr>
 			<tr>
 				<td><label for='newPwd'>New Password: </label></td>
@@ -95,11 +95,13 @@
 	</div>
 	
 	<script>	
-	(function () {
+	(function (conf) {
+		if (!arguments.length) var conf={};
 		var baseURI = window.location.origin;
 		var params = {};
 		var queryStr = window.location.search.substr(1).split('&').map(function (p) {var arr=p.split("="); params[arr[0]]=arr[1]});	
 		var securityQuestion="";
+		
 		
 		$(document).ready(function () {			
 			$('#action-register, #action-login, #action-recover').click(toggleActionDiv);
@@ -108,6 +110,11 @@
 			$('#sendRegistrationCode, #sendRecoveryCode').click(getVerificationCode);
 			
 			$('#setPassword').click(setPassword);
+			
+			if (conf.mode=='test') {
+				$('#email').val(conf.email); 
+				$('#pwd, #newPwd, #newPwdCopy').val(conf.pwd);
+			}
 		});
 		
 		function toggleActionDiv(e) {
@@ -122,8 +129,8 @@
 		}
 				
 		function login(res) {
-			var recapCode = grecaptcha.getResponse();
-			if (!recapCode) {alert("You must answer a recaptcha challenge first."); return;}
+			var access_token = conf.mode=='test' ? conf.recap : grecaptcha.getResponse();
+			if (!access_token) {alert("You must answer a recaptcha challenge first."); return;}
 			
 			var email = $('#email').val(), pwd = $('#pwd').val();
 			if (!email || !pwd) {alert("Missing email and/or password."); return;}
@@ -137,27 +144,25 @@
 					"Authorization": "Basic " + btoa('token-'+params.token_id + ":" + params.otk)
 				},
 				data: JSON.stringify({
-					access_token: recapCode, 
+					access_token: access_token, 
 					id_type: 'email', 
 					email: email, 
 					pwd: pwd,
 					action: 'login'	
 				}),
-				success: function (resp) { console.log(resp); console.log(decodeURIComponent(params.next));		//return;			
+				success: function (resp) { //console.log(resp['@graph'][0]); console.log(decodeURIComponent(params.next));		return;			
 					var token = resp['@graph'][0];
 					var url = decodeURIComponent(params.next);
 					var separator = url.search("/\?/")!=-1 ? "&" : "?"; 
 					window.location.href = url + separator + 'token_id='+ token.token_id+'&otk='+ token.otk;
 				}, 
-				error: function (xhr, status, text) {
-					alert(status+' '+text);
-					console.log(status+' '+text)
-				}
-			})
+				error: httpErrFunction
+			});
 		}
 		
 		function getVerificationCode(e) {		
-			var recapCode = grecaptcha.getResponse();
+			var access_token = conf.mode=='test' ? conf.recap : grecaptcha.getResponse();
+			if (!access_token) {alert("You must answer a recaptcha challenge first."); return;}
 			
 			var email = $('#email').val();
 			if (!email) {alert("Missing email."); return;}
@@ -171,28 +176,27 @@
 					"Authorization": "Basic " + btoa('token-'+params.token_id + ":" + params.otk)
 				},
 				data: JSON.stringify({ 
-					access_token: recapCode,
+					access_token: access_token,
 					email: email, 
 					action: e.target.id
 				}),
-				success: function (resp) { console.log(JSON.stringify(resp));
+				success: function (resp) {
 					$('#verifyDiv, #newPwdDiv').css('display', 'block');
 				}, 
-				error: function (xhr, status, text) {
-					$('#verifyDiv, #newPwdDiv').css('display', 'none');	
-					alert(status+' '+text);				
-					console.log(status+' '+text)
-				}
+				error: httpErrFunction
 			});			
 		}
 		
 		function setPassword(res) {
-			var recapCode = grecaptcha.getResponse();
-			if (!recapCode) {alert("You must answer a recaptcha challenge first."); return;}
+			//recaptcha challenge should have been met while getting the verification code
 			
-			var email = $('#email').val(), pwd = $('#newPwd').val(), pwdCopy=$('#newPwdCopy').val();			
+			var email = $('#email').val(), 
+				pwd = $('#newPwd').val(), pwdCopy=$('#newPwdCopy').val(),
+				verCode = $('#verCode').val().toLowerCase().trim();
+				
 			if (!email || !pwd) {alert("Missing email and/or password."); return;}
 			if (pwd!=pwdCopy) {alert("The passwords do not match."); return;}
+			if (!verCode || verCode.length!=6) {alert("Invalid verificaiton code (must be 6-characters long."); return;}
 			
 			$.ajax({
 				url: "./tokenEmail/" + params.token_id,
@@ -203,25 +207,32 @@
 					"Authorization": "Basic " + btoa('token-'+params.token_id + ":" + params.otk)
 				},
 				data: JSON.stringify({
-					access_token: recapCode, 
 					id_type: 'email', 
 					email: email, 
 					pwd: pwd,
-					action: 'setPassword'
+					action: 'setPassword',
+					ver_code: verCode
 				}),
-				success: function (resp) { console.log(JSON.stringify(resp)); console.log(decodeURIComponent(params.next));		//return;			
-					var token = resp['@graph'][0];
+				success: function (resp) { console.log(JSON.stringify(resp)); console.log(decodeURIComponent(params.next));				
+					var token = resp['@graph'][0]; console.log(token); //return;
 					var url = decodeURIComponent(params.next);
 					var separator = url.search("/\?/")!=-1 ? "&" : "?"; 
 					window.location.href = url + separator + 'token_id='+ token.token_id+'&otk='+ token.otk;
 				}, 
-				error: function (xhr, status, text) {
-					alert(status+' '+text);
-					console.log(status+' '+text)
-				}
+				error: httpErrFunction
 			});
 		}
-	})();
+		
+		function httpErrFunction(xhr, status, text) {
+			var resp = JSON.parse(xhr.responseText); console.log(status+' '+text+' '+resp.error);
+			alert(status+' '+text+' '+resp.error); 
+		}
+	})(<?php echo '{
+		"email": "'. ((SITE=='dev' AND TEST_EMAIL) ? TEST_EMAIL : '') .'",
+		"pwd": "'. ((SITE=='dev' AND TEST_PWD) ? TEST_PWD : '') .'",
+		"mode": "'. ((SITE=='dev') ? 'test' : '') .'",
+		"recap": "'. ((SITE=='dev') ? 1 : 0) .'"
+	}'; ?>); 
 	</script>
 </body>
 </html>
