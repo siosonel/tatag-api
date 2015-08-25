@@ -11,7 +11,7 @@ class UserCollection extends Base {
 		$this->idkey = 'user_id';
 		$this->init($data);
 		
-		$this->okToAdd = array('email', 'name', 'password', "fb_id", "gp_id", "tw_id", "login_provider", 'phone', 'wallet','question','answer');
+		$this->okToAdd = array('email', 'name', 'password', "fb_id", "gp_id", "tw_id", "login_provider", 'phone', 'wallet', "ver_code", "ver_expires");
 	}
 	
 	function add($data='') {

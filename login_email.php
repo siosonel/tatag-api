@@ -17,14 +17,17 @@
 			margin: auto;
 		}
 		
-		#recoverDiv {
+		#verifyDiv, #newPwdDiv {
 			display: none;
 		}
 		
-		#recoverDiv button {
-			display: none;
+		#newPwdDiv button {
 			position: relative;
 			left: 80%;
+		}
+		
+		td {
+			padding: 10px;
 		}
 	</style>
 	
@@ -54,29 +57,40 @@
 		
 		<div id='forgotDiv'>
 			<input type='radio' name='action' id='action-recover' value='recover' />
-			<label for='action-recover'>I forgot my password.</label>
+			<label for='action-recover'>I forgot my password and need a verification code to
+				<button id='sendRecoveryCode' disabled='disabled'>recover</button>.
+			</label>
 		</div>
 		
 		<div id='registerDiv'>
 			<input type='radio' name='action' id='action-register' value='register'/>
-			<label for='action-register'>I don't have a password and need to register.</label>
+			<label for='action-register'>I don't have a password and need a verification code to
+				<button id='sendRegistrationCode' disabled='disabled'>register</button>.</label>
 		</div>
 		
-		<div id='recoverDiv' >
-			<label for='newPwd'>New Password: </label>
-			<input type='password' name='newPwd' id='newPwd' value='' />
-			<br />
-			<br />			
-			<label for=''>Security Question: </label><br />
-			<textarea name='question' id='question' rows='3'></textarea>
-			<br />
-			<br />
-			<label for=''>Recovery Answer: </label><br />
-			<textarea name='answer' id='answer' rows='3'></textarea>
-			<br />
-			<br />			
-			<button id='recoverBtn'>Submit</button>
-			<button id='registerBtn'>Submit</button>
+		<div id='verifyDiv'>
+			<p id='verifyInstruction'>Check your inbox AND spam folder for a <b>verification code</b> from a tatag.cc email.</p>
+		</div>
+		
+		<div id='newPwdDiv'>
+			<table>
+			<tr>
+				<td><label for='verification_token'>Verification Code: </label>&nbsp;</td>
+				<td><input type='text' name='verToken' id='verToken' value='' /></td>
+			</tr>
+			<tr>
+				<td><label for='newPwd'>New Password: </label></td>
+				<td><input type='password' name='newPwd' id='newPwd' value='' /></td>
+			</tr>
+			<tr>
+				<td><label for='newPwdCopy'>Confirm Password: </label></td>
+				<td><input type='password' name='newPwd' id='newPwdCopy' value='' /></td>
+			</tr>
+			<tr>
+				<td colspan='2'>
+					<button id='setPassword'>Submit</button>
+				</td>
+			</tr>
 		</div>
 	</div>
 	
@@ -87,27 +101,29 @@
 		var queryStr = window.location.search.substr(1).split('&').map(function (p) {var arr=p.split("="); params[arr[0]]=arr[1]});	
 		var securityQuestion="";
 		
-		$(document).ready(function () {
-			$('#email').val('user21@email.org'); $('#pwd, #newPwd').val('pass2'); $('#question, #answer').val('test');
-			
+		$(document).ready(function () {			
 			$('#action-register, #action-login, #action-recover').click(toggleActionDiv);
 			$('#loginBtn').click(login);
-			$('#recoverBtn').click(recover);
-			$('#registerBtn').click(register);
+			
+			$('#sendRegistrationCode, #sendRecoveryCode').click(getVerificationCode);
+			
+			$('#setPassword').click(setPassword);
 		});
 		
 		function toggleActionDiv(e) {
 			var action = e.target.id.split('-')[1];
+			params.action = action;
 			
 			$('#pwd, #loginBtn').prop('disabled', action=='login' ? '' : 'disabled');
-			$('#recoverDiv').css('display', action=='login' ? 'none' : 'block');
-			$('#recoverBtn').css('display', action=='recover' ? 'block' : 'none');
-			$('#registerBtn').css('display', action=='register' ? 'block' : 'none');
+			//$('#recoverDiv').css('display', action=='login' ? 'none' : 'block');
+			
+			$('#sendRecoveryCode').prop('disabled', action=='recover' ? '' : 'disabled');
+			$('#sendRegistrationCode').prop('disabled', action=='register' ? '' : 'disabled');
 		}
 				
 		function login(res) {
-			var recapCode = 1;//grecaptcha.getResponse();
-			//if (!recapCode) {alert("You must answer a recaptcha challenge first."); return;}
+			var recapCode = grecaptcha.getResponse();
+			if (!recapCode) {alert("You must answer a recaptcha challenge first."); return;}
 			
 			var email = $('#email').val(), pwd = $('#pwd').val();
 			if (!email || !pwd) {alert("Missing email and/or password."); return;}
@@ -127,27 +143,56 @@
 					pwd: pwd,
 					action: 'login'	
 				}),
-				success: function (resp) { console.log(resp); console.log(decodeURIComponent(params.next));		return;			
+				success: function (resp) { console.log(resp); console.log(decodeURIComponent(params.next));		//return;			
 					var token = resp['@graph'][0];
 					var url = decodeURIComponent(params.next);
 					var separator = url.search("/\?/")!=-1 ? "&" : "?"; 
 					window.location.href = url + separator + 'token_id='+ token.token_id+'&otk='+ token.otk;
 				}, 
 				error: function (xhr, status, text) {
+					alert(status+' '+text);
 					console.log(status+' '+text)
 				}
 			})
 		}
 		
-		function register(res) {
-			var recapCode = 1;//grecaptcha.getResponse();
-			//if (!recapCode) {alert("You must answer a recaptcha challenge first."); return;}
+		function getVerificationCode(e) {		
+			var recapCode = grecaptcha.getResponse();
 			
-			var email = $('#email').val(), pwd = $('#pwd').val();
-			var question = $('#question').val(), answer = $('#answer').val();
+			var email = $('#email').val();
+			if (!email) {alert("Missing email."); return;}
 			
+			$.ajax({
+				url: "./tokenEmail/"+ params.token_id,
+				type: "POST",
+				dataType: 'json',
+				contentType: 'json',
+				headers: {
+					"Authorization": "Basic " + btoa('token-'+params.token_id + ":" + params.otk)
+				},
+				data: JSON.stringify({ 
+					access_token: recapCode,
+					email: email, 
+					action: e.target.id
+				}),
+				success: function (resp) { console.log(JSON.stringify(resp));
+					$('#verifyDiv, #newPwdDiv').css('display', 'block');
+				}, 
+				error: function (xhr, status, text) {
+					$('#verifyDiv, #newPwdDiv').css('display', 'none');	
+					alert(status+' '+text);				
+					console.log(status+' '+text)
+				}
+			});			
+		}
+		
+		function setPassword(res) {
+			var recapCode = grecaptcha.getResponse();
+			if (!recapCode) {alert("You must answer a recaptcha challenge first."); return;}
+			
+			var email = $('#email').val(), pwd = $('#newPwd').val(), pwdCopy=$('#newPwdCopy').val();			
 			if (!email || !pwd) {alert("Missing email and/or password."); return;}
-			if (!question || !answer) {alert("Missing email and/or password."); return;}
+			if (pwd!=pwdCopy) {alert("The passwords do not match."); return;}
 			
 			$.ajax({
 				url: "./tokenEmail/" + params.token_id,
@@ -162,26 +207,20 @@
 					id_type: 'email', 
 					email: email, 
 					pwd: pwd,
-					action: 'register',
-					question: question,
-					answer: answer
+					action: 'setPassword'
 				}),
-				success: function (resp) { console.log(resp); console.log(decodeURIComponent(params.next));		return;			
+				success: function (resp) { console.log(JSON.stringify(resp)); console.log(decodeURIComponent(params.next));		//return;			
 					var token = resp['@graph'][0];
 					var url = decodeURIComponent(params.next);
 					var separator = url.search("/\?/")!=-1 ? "&" : "?"; 
 					window.location.href = url + separator + 'token_id='+ token.token_id+'&otk='+ token.otk;
 				}, 
 				error: function (xhr, status, text) {
+					alert(status+' '+text);
 					console.log(status+' '+text)
 				}
-			})
+			});
 		}
-		
-		function recover() { // TO-DO
-		
-		}
-
 	})();
 	</script>
 </body>

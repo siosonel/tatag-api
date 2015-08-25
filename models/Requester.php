@@ -109,10 +109,10 @@ class Requester {
 			WHERE token_id=? AND ((token_val='0' AND otk=?) OR (token_val!=0 AND token_val=?))";
 		$rows = DBquery::get($sql, array(self::$token_id, $pwd, $pwd));
 		
-		if (!$rows) Error::http(401, "Invalid credentials for token ID='". self::$token_id ."'. $sql $user $pwd");
+		if (!$rows) Error::http(401, "Invalid credentials for token ID='". self::$token_id ."'.");
 		
 		$updated = $rows[0]['updated'];
-		if ($udpated AND time() - $updated > 86400) Error::http(401, "The login-enabled token#". self::$token_id ." for this user has expired (maximum 24-hours API session reached.).");
+		//if ($updated AND time() - $updated > 86400) Error::http(401, "The login-enabled token#". self::$token_id ." for this user has expired (maximum 24-hours API session reached.).");
 		
 		self::$user_id = $rows[0]['user_id'];
 		self::$name = $rows[0]['name'];
