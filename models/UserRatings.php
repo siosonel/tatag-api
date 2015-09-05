@@ -11,6 +11,7 @@ class UserRatings extends Collection {
 		$this->idkey = 'rating_id';
 		
 		if (isset($data->brand_id)) $this->prepOther($data);
+		else if (Router::$method=='POST') Error::http(400, "Missing value for brand_id parameter.");
 		
 		$this->init($data);
 		
@@ -24,7 +25,7 @@ class UserRatings extends Collection {
 		if (substr($data->brand_id,0,1) != "~") $data->brand_id = "~". $data->brand_id;
 		$data->brand_id = substr($data->brand_id,0,200);
 		
-		$sql = "SELECT brand_id FROM brands WHERE name LIKE '?' LIMIT 1";
+		$sql = "SELECT brand_id FROM brands WHERE name LIKE ? LIMIT 1";
 		$rows = DBquery::get($sql, array($data->brand_id)); 
 		
 		if ($rows) {
@@ -41,6 +42,7 @@ class UserRatings extends Collection {
 			}')))->add()[0];
 			
 			$data->brand_id = $Brand->brand_id;
+			if (!$data->brand_id) Error::http(500, "Failed to create or use a new brand_id for what you are rating.");
 		}
 	}
 	

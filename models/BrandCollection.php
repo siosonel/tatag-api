@@ -29,6 +29,7 @@ class BrandCollection extends Collection {
 		
 		$Brand =  $this->obj;
 		$Brand->brand_id = $this->insert();		//print_r($Brand); print_r(Requester);
+		if (!$Brand->brand_id) Error::http(500, "Failed to fully create a new brand.");
 		
 		$Member = new Members(json_decode('{
 			"brand_id":'.$Brand->brand_id.', 

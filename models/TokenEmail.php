@@ -8,7 +8,7 @@ class TokenEmail extends Token {
 		if (!method_exists($this, $this->action)) Error::http(400, "Invalid action value='$this->action', must be one of [login, register, recover].");
 		
 		//need to verify recaptcha code		
-		if ((SITE=='live' OR SITE=='stage') AND $this->action != 'setPassword') {
+		if (SITE!='dev' AND ($this->action=='recoverCode' OR $this->action=='registerCode')) {
 			require('../common2/lib/recaptcha/autoload.php');
 			$Recaptcha = new \ReCaptcha\ReCaptcha(G_RECAPTCHA);
 			$response = $Recaptcha->verify($this->access_token);

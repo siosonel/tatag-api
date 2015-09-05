@@ -26,6 +26,17 @@
 			left: 80%;
 		}
 		
+		#recaptchaWrapper {
+			display: none;
+			min-height: 100px;
+			padding: 2rem;
+			background-color: rgba(255, 255, 0, 0.25);
+		}
+		
+		#recaptchaWrapper button {
+			display: none;
+		}
+		
 		td {
 			padding: 10px;
 		}
@@ -43,9 +54,6 @@
 			<input type='text' name='email' id='email' value='' />
 		</div>
 		
-		<div class="g-recaptcha" data-sitekey="6Lf4rwsTAAAAAOccKg4CY02kQhEi5lCCTB_DsQFL" data-callback='reverify' style='margin-left: -10px;'>
-		</div>
-		
 		<h3>Choose one: </h3>
 		
 		<div id='loginDiv'>
@@ -57,15 +65,22 @@
 		
 		<div id='forgotDiv'>
 			<input type='radio' name='action' id='action-recover' value='recover' />
-			<label for='action-recover'>I forgot my password and need a verification code to
-				<button id='sendRecoveryCode' disabled='disabled'>recover</button>.
+			<label for='action-recover'>I forgot my password and need a verification code to recover my access.
 			</label>
 		</div>
 		
 		<div id='registerDiv'>
 			<input type='radio' name='action' id='action-register' value='register'/>
-			<label for='action-register'>I don't have a password and need a verification code to
-				<button id='sendRegistrationCode' disabled='disabled'>register</button>.</label>
+			<label for='action-register'>I don't have a password and need a verification code to register.</label>
+		</div>
+		
+		<div id='recaptchaWrapper'>
+			<span style='color:#00f; font-weight:700;'>Answer below and then click here: </span>
+			<button id='sendRecoveryCode' disabled='disabled'>Recover</button>
+			<button id='sendRegistrationCode' disabled='disabled'>Register</button>
+		
+			<div class="g-recaptcha" data-sitekey="6Lf4rwsTAAAAAOccKg4CY02kQhEi5lCCTB_DsQFL" data-callback='reverify' style='margin-left: -10px;'>
+			</div>
 		</div>
 		
 		<div id='verifyDiv'>
@@ -100,7 +115,7 @@
 		var baseURI = window.location.origin;
 		var params = {};
 		var queryStr = window.location.search.substr(1).split('&').map(function (p) {var arr=p.split("="); params[arr[0]]=arr[1]});	
-		var securityQuestion="";
+		var parentData;
 		
 		
 		$(document).ready(function () {			
@@ -114,24 +129,35 @@
 			if (conf.mode=='test') {
 				$('#email').val(conf.email); 
 				$('#pwd, #newPwd, #newPwdCopy').val(conf.pwd);
-			}
+			};
+			
+			window.addEventListener("message", function (e) {
+				if (e.origin != parent.location.origin) return; console.log(e.origin);
+				parentData = JSON.parse(e.data);
+				params.token_id = parentData.token_id;
+				params.otk = parentData.otk;
+			}, false);
 		});
 		
 		function toggleActionDiv(e) {
 			var action = e.target.id.split('-')[1];
 			params.action = action;
 			
+			$('#recaptchaWrapper').css('display', action=='login' ? 'none' : 'block');
+			
 			$('#pwd, #loginBtn').prop('disabled', action=='login' ? '' : 'disabled');
 			//$('#recoverDiv').css('display', action=='login' ? 'none' : 'block');
 			
-			$('#sendRecoveryCode').prop('disabled', action=='recover' ? '' : 'disabled');
-			$('#sendRegistrationCode').prop('disabled', action=='register' ? '' : 'disabled');
+			$('#sendRecoveryCode')
+				.prop('disabled', action=='recover' ? '' : 'disabled')
+				.css('display', action=='recover' ? 'inline' : 'none');
+			
+			$('#sendRegistrationCode')
+				.prop('disabled', action=='register' ? '' : 'disabled')
+				.css('display', action=='register' ? 'inline' : 'none');
 		}
 				
-		function login(res) {
-			var access_token = conf.mode=='test' ? conf.recap : grecaptcha.getResponse();
-			if (!access_token) {alert("You must answer a recaptcha challenge first."); return;}
-			
+		function login(res) {			
 			var email = $('#email').val(), pwd = $('#pwd').val();
 			if (!email || !pwd) {alert("Missing email and/or password."); return;}
 			
@@ -144,7 +170,7 @@
 					"Authorization": "Basic " + btoa('token-'+params.token_id + ":" + params.otk)
 				},
 				data: JSON.stringify({
-					access_token: access_token, 
+					access_token: 1, 
 					id_type: 'email', 
 					email: email, 
 					pwd: pwd,
@@ -181,6 +207,7 @@
 					action: e.target.id
 				}),
 				success: function (resp) {
+					$('#recaptchaWrapper').css('display', 'none');
 					$('#verifyDiv, #newPwdDiv').css('display', 'block');
 				}, 
 				error: httpErrFunction

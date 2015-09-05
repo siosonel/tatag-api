@@ -309,7 +309,7 @@ CREATE TABLE `users` (
   `bannerImg` varchar(255) DEFAULT NULL,
   `wallet` int(11) DEFAULT '2',
 	`ver_code` varchar(12) DEFAULT '0',
-	`ver_response` int(11) DEFAULT '0';
+	`ver_expires` int(11) DEFAULT '0',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `profileImg_UNIQUE` (`profileImg`)
