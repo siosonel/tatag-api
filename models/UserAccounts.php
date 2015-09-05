@@ -4,9 +4,9 @@ Holder access to user's accounts
 */
 
 class UserAccounts extends Base {	
-	function __construct($data='') {
-		$this->{"@type"} = 'userAccounts';
-		$this->user_id =  $this->getID();	
+	function __construct($data='') { 
+		$this->{"@type"} = 'userAccounts'; //print_r($data);
+		$this->user_id =  Router::$id ? $this->getID() : Requester::$user_id; //print_r($this);
 		if (!Requester::isUser($this->user_id)) Error::http(401, "The requester must be logged in as the requested user.");
 		
 		$this->{"@id"} = "$this->root/user/$this->user_id/accounts";

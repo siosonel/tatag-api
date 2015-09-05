@@ -35,7 +35,21 @@ class Requester {
 		$audience = self::detect_AUDIENCE();
 		global $dbs;
 		include_once "config-$audience.php";		
-		
+
+		if (!self::inSession()) self::setUser();
+		else self::setDBs();
+	}
+	
+	static function inSession() {
+		session_start(); $_SESSION['user_id'] = 21; //print_r($_SESSION['user_id']);
+		if (!$_SESSION['user_id']) return false;
+		self::$user_id = $_SESSION['user_id'];
+		self::$name = $_SESSION['user_name'];
+		self::$email = $_SESSION['user_email'];
+		return true;
+	}
+	
+	static function setUser() {
 		self::setAccess();		
 		self::$defs = json_decode(file_get_contents("ref/defs.json")); //print_r(self::$defs); exit();		
 		
@@ -71,6 +85,10 @@ class Requester {
 			$_SERVER['PHP_AUTH_PW'] = OPEN_ACCESS_PW;
 		}
 		
+		self::setDBs();
+	}
+
+	static function setDBs() {
 		global $dbs;
 		self::$db_default = 'tatagtest';
 		DBquery::init($dbs, array(self::$db_default));

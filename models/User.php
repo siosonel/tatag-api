@@ -52,7 +52,7 @@ class User extends Base {
 				if ($b['role']=='admin') $this->links->brand[] = '/brand/'. $b['brand_id'];
 			}
 		}
-		
+print_r($obj);		
 		return array_merge(
 			array($this)
 			, $memberships
