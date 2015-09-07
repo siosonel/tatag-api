@@ -17,7 +17,7 @@ class UserCollection extends Base {
 	function add($data='') {
 		if (!isset($this->email) AND !isset($this->fb_id) AND !isset($this->gp_id) AND !isset($this->tw_id)) Error::http(400, "When registerng a user, an email, facebook id (fb_id), google+ id (gp_id) , or twitter id (tw_id) must be used as input.");
 		
-		foreach($this->okToAdd AS $key) $this->addKeyVal($key,0,"ifMissing");
+		foreach($this->okToAdd AS $key) $this->addKeyVal($key,"NULL","ifMissing");
 	
 		$this->obj->password = password_hash($this->obj->password, PASSWORD_DEFAULT);
 		$this->valArr[ array_search('password', $this->keyArr) ] = $this->obj->password; 

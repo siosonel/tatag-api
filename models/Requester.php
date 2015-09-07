@@ -35,13 +35,17 @@ class Requester {
 		$audience = self::detect_AUDIENCE();
 		global $dbs;
 		include_once "config-$audience.php";		
-
-		if (!self::inSession()) self::setUser();
-		else self::setDBs();
+		
+		self::setUser();		
+		//if (!self::inSession()) self::setUser();
+		//else self::setDBs();
 	}
 	
-	static function inSession() {
-		session_start(); $_SESSION['user_id'] = 21; //print_r($_SESSION['user_id']);
+	static function inSession() { 
+		//danger of using the same session for different consumers
+		return false;
+		
+		session_start(); //$_SESSION['user_id'] = 21; 
 		if (!$_SESSION['user_id']) return false;
 		self::$user_id = $_SESSION['user_id'];
 		self::$name = $_SESSION['user_name'];

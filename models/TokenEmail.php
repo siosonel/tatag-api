@@ -20,6 +20,7 @@ class TokenEmail extends Token {
 		}
 		
 		$row = $this->getByEmailAddr();
+		$this->user_id = $row['user_id'];		
 		return $this->{$this->action}($row);
 	}
 	
