@@ -9,5 +9,6 @@
 		"userAbout": "/user/{user_id}/about",
 		
 		"userCollection": "/user/collection",		
-		"brandCollection": "/brand/collection"
+		"brandCollection": "/brand/collection",
+		"promoCollection": "/promo/collection"
 }

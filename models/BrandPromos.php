@@ -37,11 +37,12 @@ class BrandPromos extends PromoCollection {
 			ORDER BY promo_id ASC
 			LIMIT $this->itemsLimit";
 		
-		$this->items = DBquery::get($sql, $this->filterValArr);
+		$this->items = DBquery::get($sql, $this->filterValArr);		
 		
 		foreach($this->items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
+			$r['links']['payLink'] = Requester::$ProtDomain .'/pay?to=promo-'. $r['promo_id'] ."&amount=". $r['amount'];
 			$r['links']['promo-edit'] = '/forms#promo-edit';
 			
 			$relayHoldings = array();

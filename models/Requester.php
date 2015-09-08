@@ -23,6 +23,7 @@ class Requester {
 	public static $otk;
 	public static $login_provider;
 	public static $db_default="tatagtest";
+	public static $ProtDomain;
 	
 	static function init() {
 		//@header("Content-Type: text/plain");
@@ -37,8 +38,8 @@ class Requester {
 		include_once "config-$audience.php";		
 		
 		self::setUser();		
-		//if (!self::inSession()) self::setUser();
-		//else self::setDBs();
+		$protocol = (isset($_SERVER['HTTPS']) AND $_SERVER['HTTPS']) ? 'https' : 'http';
+		self::$ProtDomain = $protocol ."://". $_SERVER['SERVER_NAME'];
 	}
 	
 	static function inSession() { 
@@ -75,6 +76,7 @@ class Requester {
 		$url = explode("/", trim($_GET['_url'], " \/\\\t\n\r\0\x0B"));
 		$path = array_slice($url, 0, 3);
 		$openAccess = array(
+			"", 
 			"collection", "about", "ts", "ranks", "tally", 
 			"flow", "inflow", "outflow", "added", "intrause",
 			"sim", "arRatio"
@@ -99,17 +101,23 @@ class Requester {
 	}
 	
 	static function login($pwd) {
-		$sql = "SELECT user_id, name, password, email, login_provider FROM users WHERE (user_id=? OR email=?)";
-		$row = DBquery::get($sql, array(self::$user_id, self::$email));
-		if (!$row) Error::http(401, "Invalid user ID/email or password. User ID: ". self::$user_id .", Email: ". self::$email);
-		
-		$user = $row[0];		 
-		if (!$user OR !password_verify($pwd, $user['password'])) Error::http(401, "Invalid user ID/email or password. User ID: ". self::$user_id .", Email: ". self::$email);
+		if (self::$user_id==0) {
+			if (strtolower($_SERVER['REQUEST_METHOD'])!='get') Error::http(403,"The user must be logged in order to submit this request.");
+			self::$name='guest';
+		}
+		else {	
+			$sql = "SELECT user_id, name, password, email, login_provider FROM users WHERE (user_id=? OR email=?)";
+			$row = DBquery::get($sql, array(self::$user_id, self::$email));
+			if (!$row) Error::http(401, "Invalid user ID/email or password. User ID: ". self::$user_id .", Email: ". self::$email);
+			
+			$user = $row[0];		 
+			if (!$user OR !password_verify($pwd, $user['password'])) Error::http(401, "Invalid user ID/email or password. User ID: ". self::$user_id .", Email: ". self::$email);
 
-		self::$user_id=$user['user_id'];
-		self::$name=$user['name'];
-		self::$email=$user['email'];
-		self::$login_provider = $row[0]['login_provider'];
+			self::$user_id=$user['user_id'];
+			self::$name=$user['name'];
+			self::$email=$user['email'];
+			self::$login_provider = $row[0]['login_provider'];
+		}
 	}
 	
 	static function consumer_login($user, $pwd) {
