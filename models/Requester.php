@@ -79,7 +79,7 @@ class Requester {
 			"", 
 			"collection", "about", "ts", "ranks", "tally", 
 			"flow", "inflow", "outflow", "added", "intrause",
-			"sim", "arRatio"
+			"sim", "arRatio", "cron"
 		);
 		
 		if (!isset($_SERVER['PHP_AUTH_USER'])
@@ -103,7 +103,7 @@ class Requester {
 	static function login($pwd) {
 		if (self::$user_id==0) {
 			if (strtolower($_SERVER['REQUEST_METHOD'])!='get') Error::http(403,"The user must be logged in order to submit this request.");
-			self::$name='guest';
+			self::$name='Guest';
 		}
 		else {	
 			$sql = "SELECT user_id, name, password, email, login_provider FROM users WHERE (user_id=? OR email=?)";

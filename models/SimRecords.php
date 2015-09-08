@@ -41,6 +41,8 @@ class SimRecords extends Collection {
 	}
 	
 	function get() {
+		if ($_SERVER['REMOTE_ADDR']!=$_SERVER['SERVER_ADDR'] AND $_SERVER['REMOTE_ADDR']!='127.0.0.1') Error::http(403, "Requests for the sim/records resource must originate from the server environment.");
+	
 		$sql = "SELECT brand_id FROM brands WHERE type_system='sim'";
 		$rows = DBquery::get($sql);
 		$this->numBrands = count($rows);
@@ -67,6 +69,7 @@ class SimRecords extends Collection {
 	}
 	
 	function addBudget(&$b) {
+		if (!$b['revAcct'] OR !$b['expAcct']) return;
 		if ($b['revBal'] > $b['inflow']) return;
 	
 		$amount = $b['inflow'] ? $b['inflow'] : mt_rand(5,20);

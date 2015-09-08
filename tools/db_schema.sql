@@ -563,7 +563,7 @@ WHERE record_id=$record_id AND status BETWEEN 0 AND 6;
 
 IF @f!=0 AND @t!=0 THEN BEGIN
 	START TRANSACTION;
-	UPDATE records SET status=7 WHERE record_id=$record_id;
+	UPDATE records SET status=7, updated=NOW() WHERE record_id=$record_id;
 	UPDATE accounts SET balance = balance-sign*@amount WHERE account_id=@f;
 	UPDATE accounts SET balance = balance+sign*@amount WHERE account_id=@t;
 	COMMIT;
