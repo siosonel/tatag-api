@@ -80,6 +80,8 @@ class Router {
 		$links['name'] = Requester::$name;
 		$links['login_provider'] = Requester::$login_provider;
 		
+		if (!Requester::$user_id) $links['userLoginPage'] = '/login.php';
+		
 		return array($links);
 	}
 }

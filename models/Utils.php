@@ -3,16 +3,47 @@
 class PhlatMedia {	
 	public static function write($output, $error="") {
 		$wrapper = new stdClass();
+		$wrapper->{"@context"}= "--test--";		
+		if ($error) $wrapper->error = $error;	
 		
-		$wrapper->{"@context"}= "--test--";
-		
-		if ($error) $wrapper->error = $error;		
-		$graph = $output;
+		//this might be useful later on for adjusting link format, 
+		//such as converting links to objects with href property
+		/*foreach($output AS $R) {
+			self::adjustLinks($R);
+			
+			if ($R->items) {  echo "--".$R->{'@type'}."--";
+				foreach($R->items AS &$Item) {
+					$Item = json_decode(json_encode($Item));
+					self::adjustLinks($Item);
+				}
+			}
+		}*/
 		
 		$wrapper->{"@graph"} = $output;
 		
 		exit(json_encode($wrapper, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-	}	
+	}
+	
+	static function adjustLinks(&$R) {
+		if ($R->{'@id'}) $R->{'@id'} = self::addLinkPrefix($R->{'@id'});
+		
+		if ($R->links) {
+			foreach($R->links AS $key=>&$url) {
+				if (!is_array($url)) $url = self::addLinkPrefix($url);
+				else {
+					foreach($url AS &$u) $u = self::addLinkPrefix($u);
+				}
+			}
+		}
+		
+		if ($R->actions) {
+			foreach($R->actions AS &$url) $url = self::addLinkPrefix($url);
+		}
+	}
+	
+	static function addLinkPrefix($link) {
+		return "/api$link";
+	}
 }
 
 class Error {
