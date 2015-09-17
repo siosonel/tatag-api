@@ -1,27 +1,21 @@
 <?php
 
-class PhlatMedia {	
-	public static function write($output, $error="") {
+class PhlatMedia {
+	private static $format = "formatDefault";
+
+	public static function write($output, $error="") {		
+		$response = self::{self::$format}($output, $error);
+		
+		exit(json_encode($response, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+	}
+	
+	static function formatDefault($output, $error="") {
 		$wrapper = new stdClass();
 		$wrapper->{"@context"}= "--test--";		
-		if ($error) $wrapper->error = $error;	
 		
-		//this might be useful later on for adjusting link format, 
-		//such as converting links to objects with href property
-		/*foreach($output AS $R) {
-			self::adjustLinks($R);
-			
-			if ($R->items) {  echo "--".$R->{'@type'}."--";
-				foreach($R->items AS &$Item) {
-					$Item = json_decode(json_encode($Item));
-					self::adjustLinks($Item);
-				}
-			}
-		}*/
-		
+		if ($error) $wrapper->error = $error;			
 		$wrapper->{"@graph"} = $output;
-		
-		exit(json_encode($wrapper, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+		return $wrapper;
 	}
 	
 	static function adjustLinks(&$R) {
@@ -43,6 +37,62 @@ class PhlatMedia {
 	
 	static function addLinkPrefix($link) {
 		return "/api$link";
+	}
+	
+	
+	static function formatHal($output, $error="") {		
+		//this might be useful later on for adjusting link format, 
+		//such as converting links to objects with href property
+		foreach($output AS $R) {
+			self::linksFormatHal($R);
+			
+			if ($R->items) {
+				foreach($R->items AS &$Item) {
+					$Item = json_decode(json_encode($Item));
+					self::linksFormatHal($Item);
+				}
+			}
+		}
+		
+		
+		if ($error) {
+			$hal = new stdClass();
+			$hal->error = $error;	
+		}
+		else $hal = array_shift($output);
+	
+		$hal->{"_embedded"} = $output;
+		return $hal;
+	}
+	
+	static function linksFormatHal(&$R) {
+		if ($R->{'@id'}) $R->{'@id'} = self::addLinkPrefix($R->{'@id'});
+		
+		if ($R->links) {
+			foreach($R->links AS $key=>&$url) {
+				if (!is_array($url)) $url = self::linkObject($url);
+				else {
+					foreach($url AS &$u) $u = self::linkObject($u);
+				}
+			}
+		}
+		else $R->links = array();
+		
+		$rel_self = new stdClass();
+		$rel_self->href = $R->{'@id'};
+		
+		if (is_array($R->links)) $R->links['self'] = $rel_self;
+		else $R->links->self = $rel_self;
+		
+		if ($R->actions) {
+			foreach($R->actions AS &$url) $url = self::addLinkPrefix($url);
+		}
+	}
+	
+	static function linkObject($href) {
+		$link = new stdClass();
+		$link->href = "/api$href";
+		return $link;
 	}
 }
 

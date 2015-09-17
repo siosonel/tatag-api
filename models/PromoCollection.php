@@ -53,10 +53,12 @@ class PromoCollection extends Collection {
 	function get() {	
 		$this->setForms();
 	
-		$sql = "SELECT promo_id, brand_id, name, description, amount, imageURL, infoURL, p.created, p.updated, expires,
+		$sql = "SELECT promo_id, p.brand_id AS brand_id, brands.name AS brand_name, 
+				p.name AS name, p.description AS description, amount, imageURL, infoURL, p.created, p.updated, expires,
 				by_all_limit, by_brand_limit, by_user_limit, by_user_wait
 			FROM promos p
 			JOIN relays USING (relay_id)
+			JOIN brands USING (brand_id)
 			WHERE promo_id $this->ltgt $this->limitID
 			ORDER BY promo_id $this->pageOrder
 			LIMIT $this->itemsLimit";
@@ -68,7 +70,7 @@ class PromoCollection extends Collection {
 		foreach($this->items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
-			$r['links']['payLink'] = Requester::$ProtDomain .'/pay?to=promo-'. $r['promo_id'] ."&amount=". $r['amount'];
+			$r['links']['payLink'] = Requester::$ProtDomain .'/pay?to=promo-'. $r['promo_id'] ."&amount=". $r['amount'] ."&brand=". urlencode($r['brand_name']);
 			
 			if (Requester::isMember($r['brand_id'])) {
 				$r['links']['promo-edit'] = '/forms#promo-edit';

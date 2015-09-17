@@ -29,11 +29,13 @@ class BrandPromos extends PromoCollection {
 	function get() {
 		$this->setFilters($_GET);		
 	
-		$sql = "SELECT promo_id, brand_id, name, description, amount, imageURL, infoURL, p.created, p.updated, expires, 
+		$sql = "SELECT promo_id, brand_id, brands.name AS brand_name, 
+				p.name AS name, p.description AS description, amount, imageURL, infoURL, p.created, p.updated, expires, 
 				relay_id, by_all_limit, by_brand_limit, by_user_limit, by_user_wait
 			FROM promos p
 			JOIN relays r USING (relay_id)
-			WHERE brand_id=$this->brand_id $this->filterCond AND promo_id < $this->limitID
+			JOIN brands USING (brand_id)
+			WHERE brand_id=$this->brand_id $this->filterCond AND promo_id $this->ltgt $this->limitID
 			ORDER BY promo_id ASC
 			LIMIT $this->itemsLimit";
 		
@@ -42,7 +44,7 @@ class BrandPromos extends PromoCollection {
 		foreach($this->items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
-			$r['links']['payLink'] = Requester::$ProtDomain .'/pay?to=promo-'. $r['promo_id'] ."&amount=". $r['amount'];
+			$r['links']['payLink'] = Requester::$ProtDomain .'/pay?to=promo-'. $r['promo_id'] ."&amount=". $r['amount'] ."&brand=". urlencode($r['brand_name']);
 			$r['links']['promo-edit'] = '/forms#promo-edit';
 			
 			$relayHoldings = array();
