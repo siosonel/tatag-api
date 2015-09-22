@@ -109,7 +109,11 @@ class SimRecords extends Collection {
 		
 		$status = $this->advise($from,$to);
 		
-		if ($status==7) DBquery::get("CALL approveRecord(". $from['record_id'] .")");
+		if ($status==7) {
+			DBquery::get("CALL approveRecord(". $from['record_id'] .")");
+			$from['expBal'] += -1*$amount;
+			$to['revBal'] += -1*$amount;
+		}
 		else {
 			$sql = "UPDATE records SET status=?, updated=NOW() WHERE record_id=?";
 			DBquery::set($sql, array($status, $from['record_id']));
