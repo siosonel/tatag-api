@@ -54,7 +54,7 @@ class PromoCollection extends Collection {
 		$this->setForms();
 	
 		$sql = "SELECT promo_id, p.brand_id AS brand_id, brands.name AS brand_name, 
-				p.name AS name, p.description AS description, amount, imageURL, infoURL, p.created, p.updated, expires,
+				p.name AS name, p.description AS description, amount, imageURL, infoURL, p.created, p.updated, p.expires,
 				by_all_limit, by_brand_limit, by_user_limit, by_user_wait
 			FROM promos p
 			JOIN relays USING (relay_id)
@@ -63,14 +63,22 @@ class PromoCollection extends Collection {
 			ORDER BY promo_id $this->pageOrder
 			LIMIT $this->itemsLimit";
 		
-		$this->items = DBquery::get($sql);
-		
+		$this->items = DBquery::get($sql);		
 		Requester::detectMemberships();
 		
 		foreach($this->items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
 			$r['links']['payLink'] = Requester::$ProtDomain .'/pay?to=promo-'. $r['promo_id'] ."&amount=". $r['amount'] ."&brand=". urlencode($r['brand_name']);
+			$r['relay']['budget-use'] = 'promo-'. $r['promo_id'];
+			
+			if (!$r['imageURL']) {
+				//$r['imageURL'] = "/ui/logo.php?brand=". $r['brand_name'];
+				//$images[] = BrandLogo::wrap($r['brand_name'], $r['imageURL'], 'base64svg');
+				//$r['imageURL'] = BrandLogo::base64svg($r['brand_name'], $r['imageURL']);
+				//$r['imageURL'] = BrandLogo::dataURL($r['brand_name']);
+				$r['imageTemplate'] = "/ui/logo.php";
+			}
 			
 			if (Requester::isMember($r['brand_id'])) {
 				$r['links']['promo-edit'] = '/forms#promo-edit';
@@ -78,7 +86,9 @@ class PromoCollection extends Collection {
 		}
 		
 		$this->paginate('promo_id');
-		return array($this);
+		
+		
+		return array_merge(array($this, BrandLogo::svgTemplate()));
 	}
 	
 	function add() {

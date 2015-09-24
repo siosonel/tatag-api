@@ -807,5 +807,51 @@ select
 	@numMembers AS numMembers,
 	@totalMemberHours AS totalMemberHours;
 
+END;;
+
+delimiter ;;
+
+DROP PROCEDURE IF EXISTS `detect_imbalance`;; 
+
+CREATE PROCEDURE `detect_imbalance`(
+)
+
+BEGIN
+select * from (
+	select account_id, sign, balance, 
+		(COALESCE(addedf,0) + COALESCE(addedt,0) - COALESCE(outflow,0) - COALESCE(inflow,0)) as actual,
+		COALESCE(addedf,0), COALESCE(addedt,0),
+		COALESCE(outflow,0), COALESCE(inflow,0)	
+	from accounts a
+	left join (
+		select from_acct, SUM(amount) as outflow
+		from records r
+		where status=7 and txntype='pn' and to_acct IS NOT NULL and from_acct IS NOT NULL
+		group by from_acct
+	) f on f.from_acct = a.account_id
+	left join (
+		select to_acct, SUM(amount) as inflow
+		from records r
+		where status=7 and txntype='pn' and to_acct IS NOT NULL and from_acct IS NOT NULL
+		group by to_acct
+	) t on t.to_acct = a.account_id
+	left join (
+		select from_acct, SUM(amount) as addedf
+		from records r
+		where status=7 and txntype='np' and to_acct IS NOT NULL and from_acct IS NOT NULL
+		group by from_acct
+	) addf on addf.from_acct = a.account_id
+	left join (
+		select to_acct, SUM(amount) as addedt
+		from records r
+		where status=7 and txntype='np' and to_acct IS NOT NULL and from_acct IS NOT NULL
+		group by to_acct
+	) addt on addt.to_acct = a.account_id
+) byrec
+where balance<0 OR byrec.balance != actual
+;
 
 END;;
+
+
+

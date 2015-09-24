@@ -71,6 +71,7 @@ class HolderRelays extends Collection {
 			if ($r['user_id'] != Requester::$user_id) Error::http(403, 
 				"The user is not the accountholder of this relay and does not have accees to its details.");
 			
+			$r['token'] = $r['secret'] ? $r['relay_id'] .".". $r['secret'] : $r['relay_id'];
 			$r['@id'] = "$this->root/relay/". $r['relay_id'];
 			$r['@type'] = 'relay';
 			$r['links']['relay-edit'] = '/forms#relay-edit';

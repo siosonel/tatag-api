@@ -47,6 +47,7 @@ class UserAccounts extends Base {
 			$row['@type'] = 'userAccount';
 			$row['@id'] = $this->{'@id'} ."?holder_id=". $row['holder_id']; 	
 			$row["_brand"] = "$this->root/brand/".$row['brand_id'] ."/about";
+			$row['balance'] = number_format(1*$row['balance'], 2, ".", "");
 			
 			if (strpos($row['holder_authcode'],"*")!==false) $row['authcode'] = $row['account_authcode'];
 			else $row['authcode'] = implode("", array_intersect(str_split($row['holder_authcode']), str_split($row['account_authcode'])));

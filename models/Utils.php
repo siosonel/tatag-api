@@ -223,4 +223,35 @@ class DBquery {
 }
 
 
-
+class BrandLogo {
+	public static function wrap($brand_name, $id, $type='svg') {
+		return array(
+			"@id" => "$id", 
+			$type => "image/svg+xml",
+			"data" => $type=='base64svg' ? base64_encode(self::svg($brand_name)) : self::svg($brand_name)
+		);
+	}
+	
+	public static function svg($brand_name='{brand_name}') {
+		return '<svg>
+<rect width="100%" height="100%" fill="rgba(100,150,200,0.5)" />
+<circle cx="50%" cy="50%" r="30%" fill="transparent" />
+<text x="50%" y="50%" font-size="3rem" text-anchor="middle" fill="white">'. $brand_name .'</text>
+</svg>'; 
+	}
+	
+	public static function dataURL($brand_name) {
+		return 'data:image/svg+xml;charset=utf-8;base64,'. base64_encode(self::svg($brand_name));
+		//return 'data:image/svg+xml;'. self::svg($brand_name);
+	}
+	
+	public static function svgTemplate() {
+		return array(
+			'@id' => '/ui/logo.php',
+			'@type' => 'svgTemplate',
+			'delimiter' => array('{', '}'),
+			'substitute' => array('brand_name'),
+			'data' => self::svg()
+		);
+	}
+}

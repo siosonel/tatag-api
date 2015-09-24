@@ -7,7 +7,9 @@ class Promo extends Base {
 		$this->{"@type"} = "promo";
 		$this->{'@id'} = "$this->root/promo/$this->promo_id";
 		$this->table = "promos";
-		$this->idkey = 'promo_id';
+		$this->idkey = 'promo_id'; 
+		
+		if (isset($data->expires) AND !$this->expires) unset($data->expires);
 		
 		$this->init($data);
 		$this->okToFilterBy = array('promo_id');
@@ -19,7 +21,9 @@ class Promo extends Base {
 			403, "The user is not a member of the brand that owns this promo and does not have accees to its details."
 		);
 		
-		$this->okToSet = array('name','description', 'amount', 'expires', 'imageURL', 'infoURL');		
+		$this->okToSet = array('name','description', 'amount', 'expires', 'imageURL', 'infoURL');
+		if ($this->expires) $this->okToSet[] = 'expires';
+		
 		$this->update(array('promo_id'=>$this->promo_id));
 		return array($this->obj);
 	}
