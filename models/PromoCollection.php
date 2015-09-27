@@ -1,6 +1,9 @@
 <?php
 
 class PromoCollection extends Collection {
+	private $cond;
+	private $condVals;
+	
 	function __construct($data='') { 		
 		$this->{"@type"} = "promoCollection";
 		$this->{'@id'} = "$this->root/promo/collection".$params;
@@ -51,25 +54,33 @@ class PromoCollection extends Collection {
 	}
 	
 	function get() {	
-		$this->setForms();
+		$this->setAddlCond(); 
+		//if (!$this->cond) $this->setForms();
 	
 		$sql = "SELECT promo_id, p.brand_id AS brand_id, brands.name AS brand_name, 
-				p.name AS name, p.description AS description, amount, imageURL, infoURL, p.created, p.updated, p.expires,
+				p.name AS name, p.description AS description, amount, imageURL, infoURL, 
+				p.created, p.updated, p.expires, keyword,
 				by_all_limit, by_brand_limit, by_user_limit, by_user_wait
 			FROM promos p
 			JOIN relays USING (relay_id)
 			JOIN brands USING (brand_id)
-			WHERE promo_id $this->ltgt $this->limitID
+			WHERE promo_id $this->ltgt $this->limitID $this->cond
+				AND (expires IS NULL OR expires>NOW())
+				AND by_user_limit > 0 AND by_brand_limit > 0 AND by_all_limit > 0
 			ORDER BY promo_id $this->pageOrder
 			LIMIT $this->itemsLimit";
 		
-		$this->items = DBquery::get($sql);		
+		$this->items = DBquery::get($sql, $this->condVals);		
 		Requester::detectMemberships();
 		
 		foreach($this->items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
-			$r['links']['payLink'] = Requester::$ProtDomain .'/pay?to=promo-'. $r['promo_id'] ."&amount=". $r['amount'] ."&brand=". urlencode($r['brand_name']);
+			
+			$r['links']['payLink'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";			
+			$r['links']['promoPage'] = Requester::$ProtDomain ."/ad/$r[promo_id]";
+			$r['links']['recipientToken'] = "$r[keyword]-$r[promo_id]";
+			
 			$r['relay']['budget-use'] = 'promo-'. $r['promo_id'];
 			
 			if (!$r['imageURL']) {
@@ -83,11 +94,13 @@ class PromoCollection extends Collection {
 			if (Requester::isMember($r['brand_id'])) {
 				$r['links']['promo-edit'] = '/forms#promo-edit';
 			}
+			
+			if (!$r['expires']) $r['expires'] = "2019-12-31 11:59:59";
 		}
 		
 		$this->paginate('promo_id');
 		
-		
+		if ($this->cond) return array($this);
 		return array_merge(array($this, BrandLogo::svgTemplate()));
 	}
 	
@@ -103,12 +116,33 @@ class PromoCollection extends Collection {
 		$this->addKeyVal('expires','2016-12-31 00:00:00','ifMissing');
 		$this->addKeyVal('imageURL','NULL','ifMissing');
 		$this->addKeyVal('infoURL','NULL','ifMissing');
+		$this->addKeyVal('keyword','ad','ifMissing');
 		$this->addKeyVal('relay_id',$HolderRelays->relay_id);
 		
 		$this->obj->promo_id = $this->insert();
 		$this->obj->relay = $this->relay;
 		$this->obj->relay_id = $HolderRelays->relay_id;
 		return array($this->obj);
+	}
+	
+	function setAddlCond() {
+		$this->condVals = array();
+		if (!isset($_GET['for']) OR !$_GET['for']) return;
+		
+		$for = explode('-', trim($_GET['for']));
+		
+		if (count($for)==1) {
+			$this->cond = "AND keyword=?";
+			$this->condVals = array($for[0]);
+		}		
+		else if (!is_numeric($for[1])) {
+			$this->cond = "AND keyword=?";
+			$this->condVals = array(implode("-", $for));			
+		}
+		else {
+			$this->cond = "AND keyword=? AND promo_id=?";
+			$this->condVals = $for;
+		}
 	}
 }
 

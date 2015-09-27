@@ -29,22 +29,31 @@ class Promo extends Base {
 	}
 	
 	function get() {
-		$sql = "SELECT promo_id, brand_id, name, description, amount, imageURL, infoURL, p.created, p.updated, expires,
-				relay_id, by_all_limit, by_brand_limit, by_user_limit, by_user_wait
+		$sql = "SELECT promo_id, brand_id, b.name AS brand_name,
+				p.name, p.description, amount, imageURL, infoURL, 
+				p.created, p.updated, expires,
+				relay_id, keyword,
+				by_all_limit, by_brand_limit, by_user_limit, by_user_wait
 			FROM promos p
 			JOIN relays USING (relay_id)
+			JOIN brands b USING (brand_id)
 			WHERE promo_id=?";
 			
 		$rows = DBquery::get($sql, array($this->promo_id));
 		if (!$rows) return array(new stdClass());
+		$r = $rows[0];
+		/*if (!Requester::isMember($rows[0]['brand_id'])) {
+			$this->setForms();
+		}*/
 		
-		if (!Requester::isMember($rows[0]['brand_id'])) Error::http(
-			403, "The user is not a member of the brand that owns this promo and does not have accees to its details."
-		);
+		foreach($r AS $k=>$v) $this->$k = $v;
+		if (!$this->imageURL) $this->imageURL = Requester::$ProtDomain ."/ui/css/logo5.png"; //."/ui/logo.php?brand=". $rows[0]['brand_name'];
 		
+		$this->payLink = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";
+		$this->promoPage = "/ad/$r[amount]";
+		$this->recipientToken = "$r[keyword]-$r[promo_id]";
+		if (!$this->expires) $this->expires = "2019-12-31 11:59:59";
 		
-		$this->setForms();
-		foreach($rows[0] AS $k=>$v) $this->$k = $v;
 		return array($this);
 	}
 	

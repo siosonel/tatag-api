@@ -16,7 +16,7 @@ class ForwardVerifier {
 	}
 	
 	function verifyHolder($data, $ft) {
-		if ($ft=='to' AND substr($data->to, 0,6) == 'promo-') $this->usePromo($data);
+		if ($ft=='to' AND strpos($data->to,"-") != false) $this->usePromo($data);
 		
 		if (strpos($data->$ft,"-")==false OR strpos($data->$ft, ".")) $data->$ft = $this->relayToHolderInfo($data, $ft);  
 		list($holder_id, $limkey) = explode("-", $data->$ft);
@@ -39,12 +39,23 @@ class ForwardVerifier {
 	}
 	
 	function usePromo($data) {	
-		$promo_id = explode("-", $data->to)[1];
-		$sql = "SELECT promo_id, amount, CONCAT_WS('.',r.relay_id,r.secret) AS code FROM promos p JOIN relays r USING (relay_id) WHERE promo_id=?";
+		list($keyword,$promo_id) = explode("-", $data->to);
+		
+		$sql = "SELECT promo_id, amount, keyword, UNIX_TIMESTAMP(expires) as expires, CONCAT_WS('.',r.relay_id,r.secret) AS code 
+		FROM promos p 
+		JOIN relays r USING (relay_id) 
+		WHERE promo_id=?";
+		
 		$r = DBquery::get($sql, array($promo_id))[0];
+		
+		if (!$r) Error::http(403, "Invalid recipient token='$data->to': no matching active promo info found.");
+		if ($r['expires'] AND $r['expires'] < time()) Error::http(403, "Expired promo code.");
+		if ($keyword!=$r['keyword']) Error::http(403, "Invalid keyword in recipient token='$data->to'.");
+		
 		$data->to = $r['code'];
 		$data->amount = $r['amount'];
 		$this->promo_id = $promo_id;
+		if (!$data->note) $data->note = "for $keyword-$promo_id";
 	}
 	
 	function relayToHolderInfo($data, $ft) {

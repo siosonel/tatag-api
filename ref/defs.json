@@ -54,7 +54,8 @@
 		},	
 		
 		"relatedActions": {
-			"brandCollection": ["/forms#brand-registration"]
+			"brandCollection": ["/forms#brand-registration"],
+			"promoCollection": ["/forms#promo-search"]
 		},
 		
 		"actions": [{
@@ -1507,7 +1508,7 @@
 			
 			"inputs": {
 				"required": [],
-				"optional": ["name", "description", "amount", "imageURL", "infoURL", "expires"]
+				"optional": ["name", "description", "amount", "imageURL", "infoURL", "expires", "keyword"]
 			},
 			
 			"examples": [{
@@ -1555,7 +1556,7 @@
 			
 			"inputs": {
 				"required": ["name", "description", "amount", "holder_id"],
-				"optional": ["imageURL", "infoURL", "expires", "by_all_limit", "by_brand_limit", "by_user_limit", "by_user_wait"]
+				"optional": ["imageURL", "infoURL", "expires", "by_all_limit", "by_brand_limit", "by_user_limit", "by_user_wait","keyword"]
 			},
 			
 			"examples": [{
@@ -1611,7 +1612,22 @@
 			"promo": ["/forms#promo-edit"]
 		},
 		
-		"actions": []
+		"actions": [{
+			"title": "Search",
+			"@type": "form",
+			"@id": "/forms#promo-search",
+			"method": "POST",
+			"target": "/promo/collection",
+			
+			"query": {
+				"required": [],
+				"optional": ["for"]				
+			},
+			
+			"inputs": {},
+			
+			"examples": []
+		}]
 	}
 }
 	

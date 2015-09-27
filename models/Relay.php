@@ -59,7 +59,7 @@ class Relay extends Base {
 		JOIN holders USING (holder_id) 
 		WHERE relay_id=? AND r.ended IS NULL";
 		$rows = DBquery::get($sql, array($relay_id));
-		if (!$rows) Error::http(403, "Relay id# '$relay_id' is not active.");
+		if (!$rows) Error::http(403, "The associated recipient token is not active. (resolved to relay id='$relay_id'");
 		
 		foreach($rows[0] AS $k=>$v) $this->$k = $v;
 	}

@@ -79,7 +79,7 @@ class Requester {
 			"", 
 			"collection", "about", "ts", "ranks", "tally", 
 			"flow", "inflow", "outflow", "added", "intrause",
-			"sim", "arRatio", "cron"
+			"sim", "arRatio", "cron", "promo"
 		);
 		
 		if (!isset($_SERVER['PHP_AUTH_USER'])

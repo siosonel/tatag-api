@@ -130,6 +130,7 @@ CREATE TABLE `promos` (
   `ended` timestamp NULL DEFAULT NULL,
   `expires` timestamp NULL DEFAULT NULL,
   `relay_id` int(11) DEFAULT '0',
+  `keyword` varchar(16) DEFAULT 'ad',
   PRIMARY KEY (`promo_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
