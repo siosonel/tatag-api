@@ -1,0 +1,69 @@
+
+## Why use JSON-LD?
+
+The purpose is similar to a stylesheet (*.css) that targets and applies styling rules 
+to HTML tag names, 
+in that the JSON-LD @context targets the 'keys' in a json object to associate meanings 
+to those keys.
+
+An HTML document is valid without a CSS stylesheet, and likewise a JSON document without a
+JSON-LD context is valid. However, from the perspective of end users something might be lost. 
+A web user might find the browser's default styles to be less pleasing and user friendly. 
+Similarly, a JSON document that does not provide context, or that provides that context
+in a non-standard way, might appear less precise for use as an API response. Defining
+a context in a standard way helps minimize arbitrary interpretation that could hinder an 
+API's usage and evolution.
+
+
+## Why not just markup the keys directly with semantic context?
+
+That approach would lead to cluttering the JSON document, similar to the effect of inline-styles
+in an HTML document. JSON does not have a place to capture semantic attributes inline, such
+as within HTML tag brackets, and so an inline approach would actually either add properties
+to a current JSON object or require the use of a JSON-based media type that separates 
+metadata and data into different object containers (see Collection JSON). The use of
+@context is more backwards compatible and less intrusive to a JSON document.
+
+ 
+## Wouldn't using the JSON-LD require reading the spec?
+
+Not really. The way I've approached JSON-LD is to defer working on the @context definitions. 
+This is like working on just the HTML structure at first, and only applying styles as needed.
+
+
+## Don't I need to know about triples, quads, turtles, and RDFs to work with JSON-LD?
+
+No. At this time I'm just using the @context, @id, and @graph keywords with no clue or
+intention on how those terms match to data models.
+
+
+## Doesn't the Phlat profile just add another layer of mysteriousness and complexity to JSON-LD?
+
+On the contrary, it might be easier to start using Phlat before diving into JSON-LD specs.
+There is nothing to lose by following the response guidelines in Phlat, and a few things to gain.
+
+
+## What are the benefits of using Phlat?
+
+You'll have a consistent approach for caching, updates, and providing hints that is not specific 
+to your application. Underlying media types (html, hal-json, json-ld) naturally avoids specifying
+client expectations that go beyond the minimum required. Phlat is a way for some APIs to
+indicate that the response supports more advanced client processing behavior, but at the same
+time the profile can be safely ignored by clients that are not Phlat-aware.
+
+
+## Am I prematurely locking my representation to Phlat?
+
+No. It is actually relatively easy to transform a flat graph of objects to other profiles or
+even media types such hal-json.
+
+
+
+
+ 
+
+
+
+
+
+  

@@ -1,0 +1,543 @@
+<html>
+<head>
+	<title>Phlat</title>
+	<link rel="icon" type="image/png" href="/ui/css/logo5.png">	
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+  <link rel="stylesheet" href="/common2/lib/foundation-5.3.3/css/foundation.min.css">
+	
+	<style>
+		body {
+			padding: 2rem;
+		}
+	
+		/*h4 {
+			margin: 3rem 0 1rem 0;
+		}*/
+		
+		pre {
+			background-color: #ececec;
+			padding: 1rem;
+			margin: 1rem;
+		}
+		
+		.highlight {
+			color: green;
+			font-weight: bold;
+			background-color: yellow;
+		}
+	</style>
+</head>
+<body>
+<h1>Phlat Profile</h1>
+
+<p>Phlat defines a consistent <b>compositional model</b> among the target resource, 
+related resources within the same response (embedding and indexing), and  
+potential future responses (caching and hints). This focus on composition should
+enable applications from different subject domains to use a generic client with known
+capabilities as an interface between the server and an application.</p>
+
+<p>
+Goals: ...
+</p>
+
+<h2>1 Introduction</h2>
+
+<p>The first few examples show the media types below the Phlat layer. Any standard JSON
+parser is sufficient as far as 
+providing input to a generic Phlat client to be described later. Phlat does not require
+the use of any JSON-LD processors as long as the representation of resources follow
+the guidelines in Section 2.</p>
+
+<h3>1.1 Target resource: basic representation</h3>
+
+<p>The target resource representation, as-is, is simply JSON at
+the most basic level.</p>
+
+<pre>
+GET /post/10
+
+{
+	"post_id": 10,
+	"content": "hello, world!",
+	"created": "2015-01-01 00:19:56",
+	...
+}
+</pre>
+
+
+<h3>1.2 Adding JSON-LD markup</h3>
+
+<p>As the target representation becomes stable, we could indicate the potential
+for machine readable semantics.</p>
+
+<pre>
+GET /post/10
+
+{		
+	<span class='highlight'>"@context": {}, ## just a placeholder for now</span>
+	
+	<span class='highlight'>"@id": "/post/10",</span>  ## aka HAL's _links.self.href,
+	"post_id": 10,
+	"content": "hello, world!",
+	"created": "2015-01-01 00:19:56",
+	...
+}
+</pre>
+
+
+<h3>1.3 Filling-in the context</h3>
+
+<p>Next, we add pointers to documentation using JSON-LD, as well as dereferenceable links
+as highlighted below. We'll separate the context into its own URL at this point, in order 
+to avoid cluttering the response.</p>
+
+<pre>
+GET <span class='highlight'>https://example.site/docs#context</span>
+
+{
+	"@context": {
+		"content": "/docs#post-content",
+		"created": "/docs#post-created",
+		"Link": "https://en.wikipedia.org/wiki/Dereferenceable_Uniform_Resource_Identifier",
+		<span class='highlight'>"author"</span>: {"@id": "/docs#author", "@type": ["@id","Link"]},
+		<span class='highlight'>"comments"</span>:  {"@id": "/docs#comments", "@type": ["@id","Link"]}
+	}
+}
+</pre>
+
+<p>and then</p>
+
+<pre>
+GET /post/10
+
+{			
+	<span class='highlight'>"@context"</span>: "https://example.site/docs#context"
+	"@id": "/post/10",
+	"content": "Hello, world!",
+	"created": "2015-01-01 00:19:23",
+	<span class='highlight'>"author"</span>: "/user/3",
+	<span class='highlight'>"comments"</span>: "/post/10/comments"		
+	...
+}
+</pre>
+
+
+<h3>1.4 Optional before using Phlat</h3>
+
+<p>It's good practice to use conventional terms based on standardized semantics
+such as those found at http://schema.org and similar sites. That is not required,
+however, and terms could be algorithmically translated later using a suitable
+JSON-LD processor.</p>
+
+<br />
+<br />
+<br />
+
+
+<h2>2 Phlat core</h2>
+
+<p>The server indicates the use of Phlat profile via the response header as</p>
+<pre>Link: &lt;http://tatag.cc/ref/phlat.html&gt;; rel="profile".</pre>
+
+<p>As a profile, Phlat does not affect the semantics or structure of the preceding 
+resource representations. The conventions here may be safely ignored by
+JSON parsers and JSON-LD processors. For Phlat-aware clients, additional processing 
+constraints take into effect.</p>
+
+<p>The main advantage of using generic Phlat-aware clients is the support for
+predictable handling of resource representations. A common pattern 
+for embedding, caching, and update notification enables application layers to 
+concentrate on other concerns.
+</p>
+
+<p>Note that this section does *not* introduce new vocabulary or extensions to JSON-LD.
+The server-side and client-side processing rules are simply implied by the composition
+of the response.
+</p>
+
+<h3>2.1 Wrapper</h3>
+
+<p>Phlat requires a top-level wrapper, based on the JSON-LD compacted-flattened profile.</p>
+
+<pre>
+{
+	<span class='highlight'>"@context"</span>: "https://example.site/docs#context",
+	<span class='highlight'>"@graph"</span>: [
+		
+	]
+}
+</pre>
+
+
+
+<h3>2.2 Target resource</h3>
+
+<p>The target resource is the first element in the @graph array.</p>
+
+<pre>
+GET <span class='highlight'>/post/10</span>
+
+{
+	"@context": "https://example.site/docs#context",  
+	"@graph": [<span class='highlight'>{</span>		
+		"@id": "/post/10",
+		"content": "Hello, world!",
+		"created": "2015-01-01 00:19:23",
+		"author": "/user/3",
+		"comments": "/post/10/comments"
+	<span class='highlight'>}</span>]
+}
+</pre>
+
+
+
+<h3>2.3 Including linked resources</h3>
+
+<p>In the examples above, only the target resource has been returned. Linked
+resources may also be included in the response, and by default, are assumed
+to be partial representations.</p>
+
+<pre>
+GET /post/10
+
+{
+	"@context": "https://example.site/docs#context",
+	
+	"@graph": [{
+		"@id": "/post/10", 
+		...
+		<span class='highlight'>"author"</span>: <span class='highlight'>"/user/3"</span>,
+		<span class='highlight'>"comments"</span>: <span class='highlight'>"/post/10/comments"</span>
+		....
+	},<span class='highlight'>{</span>
+		## objects are included after the first object in the @graph array 
+	
+		"@id": <span class='highlight'>"/user/3"</span>,
+		"name": "John Doe",
+		"image": "..."			
+	<span class='highlight'>},{</span>
+		
+		"@id": <span class='highlight'>"/post/10/comments"</span>,
+		"item": [
+			
+		]
+	<span class='highlight'>}</span>]
+}
+</pre>
+
+
+<h3>2.4 Caching rules</h3>
+
+<h4>2.4.1 Indexing</h4>
+
+<p>The client is expected to cache each object directly under @graph by its @id.
+A cache based on the preceding example may thus be visualized as follows:
+</p>
+
+<pre>
+
+client.cache = {
+	"/post/10": ## object at @graph[0] ##,
+	"/user/3": ## object at @graph[1] ##,
+	"/post/10/comments": ## object at @graph[2] ##
+}
+
+</pre>
+
+
+<h4>2.4.2 Cache exclusion</h4>
+
+<p>Resources that are nested or embedded within another resource, those not found 
+as an array element directly under @graph, are not cached by the generic client.</p>
+
+<pre>
+GET /post/10
+
+{
+	"@context": "https://example.site/docs#context",
+	
+	"@graph": [{
+		"@id": "/post/10", <span class='highlight'>## index of @graph[0] object</span>
+		"author": "/user/3",
+		"comments": "/post/10/comments"
+		....
+	},{
+		## objects are embedded after the first object in the @graph array 
+	
+		"@id": "/user/3", <span class='highlight'>## index of @graph[1] object</span>
+		"name": "John Doe",
+		"image": "..."			
+	},{
+		
+		"@id": "/post/10/comments", <span class='highlight'>## index of @graph[2] object</span>
+		"item": [{
+			"@id": "/comment/16", <span class='highlight'>Not cached</span>
+			"@type": "postComment",
+			"comment_id": "",
+			...
+		},{
+			"@id": "/comment/29", <span class='highlight'>Not cached</span>
+			"@type": "postComment",
+			"comment_id": "",
+			...
+		}],
+		"next": ...
+	}]
+}
+</pre>
+
+<p>If the server wants the client to cache each comment item, 
+then it should compose the response as follows:
+
+<pre>
+GET /post/10
+
+{
+	"@context": "https://example.site/docs#context",
+	
+	"@graph": [{
+		"@id": "/post/10", ## index of @graph[0] object
+		"author": "/user/3",
+		"comments": "/post/10/comments"
+		....
+	},{
+		## objects are embedded after the first object in the @graph array 
+	
+		"@id": "/user/3", ## index of @graph[1] object
+		"name": "John Doe",
+		"image": "..."			
+	},{
+		
+		"@id": "/post/10/comments", ## index of @graph[2] object
+		"item": [<span class='highlight'>"/comment/16"</span>, <span class='highlight'>"/comment/29"</span>],
+		"next": ...
+		
+	},{		
+		"@id": "/comment/16", <span class='highlight'>## index of @graph[3] object</span>
+		"@type": "postComment",
+		"comment_id": 16
+		...
+	},{
+		"@id": "/comment/29", <span class='highlight'>## index of @graph[4] object</span>
+		"@type": "postComment",
+		"comment_id": 29,
+		...
+	}]
+}
+</pre>
+
+
+
+<h4>2.4.3 Full and partial cache refresh</h4>
+
+<p>By default, an existing cache is replaced if its index matches the @id of the target
+resource at @graph[0]. In contrast, embedded resources at @graph[1+] are used to 
+overwrite only the represented properties of corresponding cached objects. These default
+behaviors may be overridden per Section 3.</p>
+
+<pre>
+	//replace cache of the target resource
+	client.cache["/post/10"] = ## object at @graph[0] ##;
+	
+	//partially overwrite cached objects with properties
+	//of embedded resources
+	for(var prop in comment[i]) {
+		client.cache[comment[i]["@id"]][prop] = comment[i][prop];
+	}
+</pre>
+
+
+
+<h3>2.5 Update notification</h3>
+
+<p>A generic client must provide a way for an application to subscribe to resource update
+notifications. The basic requirement is to have notification by resource @type. When
+resources of interest get updated, listener functions get invoked and provided with an 
+array of @id's corresponding to the updated resources. This feature enables an 
+application to take full advantage of the caching mechanism.</p>
+
+<p>The implementation details of this requirement would vary by programming language. In
+Javascript, an example might look like:</p>
+
+<pre>
+	//listen by resource type
+	client.onUpdateOf("postComment", [postRender, commentRender, commentCounterRender]);
+	
+	//notify after one or more resources with @type:"comment" get updated
+	listeners['postComment'].map(function (f) { f([## updated comments ##]);})
+	
+	... the abstraction above is equivalent to sequential calls of ... 
+	
+	postRender(["/comment/16", "/comment/29"]);
+	commentRender(["/comment/16", "/comment/29"]);
+	commentCounterRender(["/comment/16", "/comment/29"]);
+</pre>
+
+
+<h2>3 Phlat hints</h2>
+
+<p>The hint feature may be safely ignored by less advanced Phlat-clients.
+The advantage of being aware of hints is minimizing the number of unnecessary 
+server requests.</p>
+
+
+<h4>3.1 Placement</h4>
+
+<p>Phlat hints are placed under a "hints" term at the top-level.</p>
+
+<pre>
+{
+	"@context": "https://example.site/docs#context",
+	
+	<span class='highlight'>"hints"</span>: {
+		...
+	},
+	
+	"@graph": [
+	
+	]
+}
+</pre>
+
+<h3>3.2 Hint indexing</h3>
+
+<pre>Hints are grouped by @id.</pre>
+
+<pre>
+{
+	"@context": "https://example.site/docs#context",
+	
+	"hints": {
+		<span class='highlight'>"/user/3": {</span>
+			<span class='highlight'>...</span>
+		<span class='highlight'>},</span>
+		
+		<span class='highlight'>"/comment/16": {</span>
+			<span class='highlight'>...</span>
+		<span class='highlight'>}</span>
+	},
+	
+	"@graph": [
+	
+	]
+}
+</pre>
+
+
+<h3>3.3 Hint properties</h3>
+
+<p>The property of each hint depends on optional information that are
+available for each @id. Some examples are as follows.</p> 
+
+<h4>3.3.1 head</h4>
+
+<p>The properties in this hint corresponds to a partial representation of 
+the likely response if the client made a HEAD method request to the encapsulating @id.
+For embedded resources, a "head" hint captures response metadata that will otherwise
+be missing since the HTTP header information applies only to the target resource.
+</p>
+
+<pre>
+{
+	"hints": {
+		"/user/3": {
+			<span class='highlight'>"head": {</span>
+				<span class='highlight'>"age": "234",</span>
+				<span class='highlight'>"allow": ["POST", "DELETE"]</span>
+			<span class='highlight'>}</span>
+		},
+		
+		"/comment/16": {
+			...
+		}
+	},
+}	
+</pre>
+
+<h4>3.3.2 alternate</h4>
+
+<p>This corresponds to the link relation of the same name.</p>
+
+<pre>
+{
+	"hints": {
+		"/user/3": {
+			...
+		},
+		
+		<span class='highlight'>"/comment/16": {</span>
+			<span class='highlight'>"alternate": [</span>
+				<span class='highlight'>{"@id": "/comment/16?lang=es", "hreflang": "es"},</span>
+				<span class='highlight'>{"@id": "/comment/16?lang=fr", "hreflang": "fr"}</span>
+			<span class='highlight'>]</span>
+		<span class='highlight'>}</span>
+	},
+}
+</pre>
+
+<h4>3.3.3 indexAs</h4>
+
+<p>This may be used to override the default behavior of caching a resource using
+its index. It may also indicate that an embedded resource is a full representation,
+in which case the client should replace a cached representation with the latest
+returned representation.</p>
+
+<pre>
+{
+	"hints": {
+		"/user/3": {
+			<span class='highlight'>"indexAs": {</span>
+				<span class='highlight'>"@id": "/user/3",</span>
+				<span class='highlight'>"full": true</span>
+			<span class='highlight'>}</span>
+		},
+		
+		"/comment/16": {
+			...
+		}
+	},
+}
+</pre>
+
+<h4>3.3.4 cacheableHints</h4>
+
+<p>Hints themselves are not cacheable by default, unless indicated in 
+the cacheableHints property.</p>
+
+
+<pre>
+{
+	"hints": {
+		"/user/3": {
+			<span class='highlight'>"cacheableHints": ["head", "indexAs"],</span>
+			"head": ...
+			"indexAs": ...
+		},
+		
+		"/comment/16": {
+			...
+		}
+	},
+}
+</pre>
+
+<h2>4 Error Handling</h2>
+
+
+
+<!--
+<h3>## Handling one-to-many (1:M) link relation value</h3>
+<p><i>This is where it starts getting opinionated.</i></p>
+<p>For simplicity, a link value is always represented as a URL
+string value, not an object. The 1:M cardinality is treated as an edge case
+in Phlat, with provision to handle link metadata and hints in link_options.</p>
+<ul>
+	<li>As a collection resource</li>
+	<li>Define more specific terms as a link key: mostly related to an action that may have multiple forms</li>
+	<li>Use link_options in the top-level: head, alternate, restrictions</li>
+</ul>
+</p>-->
+
+</body>
+</html>

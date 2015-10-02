@@ -74,6 +74,7 @@ class Router {
 		
 		foreach($links AS $key=>&$val) {
 			$val = str_replace("{user_id}", Requester::$user_id, $val);
+			if (strpos($val, '/')===0) $val = '/api'. $val; 
 		}
 		
 		$links['user_id'] = Requester::$user_id;

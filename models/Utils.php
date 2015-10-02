@@ -6,12 +6,12 @@ class PhlatMedia {
 	public static function write($output, $error="") {		
 		$response = self::{self::$format}($output, $error);
 		
-		exit(json_encode($response, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+		exit(json_encode($response, JSON_NUMERIC_CHECK | JSON_UNESCAPED_SLASHES));// | JSON_PRETTY_PRINT ));
 	}
 	
 	static function formatDefault($output, $error="") {
 		$wrapper = new stdClass();
-		$wrapper->{"@context"}= "--test--";		
+		$wrapper->{"@context"}= "/api/ref/context.php";		
 		
 		if ($error) $wrapper->error = $error;			
 		$wrapper->{"@graph"} = $output;

@@ -4,7 +4,7 @@ Inherited class of common methods, including enforced input validation
 */
 
 class Base {
-	protected $root='';
+	protected $root='/api';
 	protected $obj;
 	protected $table;
 	protected $id;
