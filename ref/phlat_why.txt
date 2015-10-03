@@ -58,6 +58,29 @@ No. It is actually relatively easy to transform a flat graph of objects to other
 even media types such hal-json.
 
 
+## etc ...
+
+Generic client should take care of hard parts:
+- link traversal
+- async loads
+- caching
+- update broadcast/notification
+- "saving" changes
+- selection
+
+
+Phlat
+	.onEnter("@id", "/user/21", [fxn])
+	.onExit("@type", "brand", [fxn1, fxn2])
+	.onUpdate("@type", "brand", [fxn3])
+	
+Phlat
+	.select("@id=/user/21")
+	.select("@id", rel)
+	.selectAll("@type=brand")
+	.selectAll("@type",brand)
+	
+
 
 
  

@@ -38,7 +38,8 @@ function PhlatViewer(url) {
 			if (prop=='items') obj.items.map(highlightLinks);
 			else if (prop=="@id" 
 				|| (context[prop] && (
-						context[prop] == "@id" || context[prop]["@type"] == "@id"
+						context[prop] == "Link" || context[prop]["@type"] == "Link"
+						//|| context[prop] == "@id" || context[prop]["@type"] == "@id"
 				))
 			) obj[prop] = "<span class='link'>"+ obj[prop] + "</span>";
 		}
@@ -52,8 +53,10 @@ function PhlatViewer(url) {
 		console.log(status+' '+text);
 	}
 	
-	function displayCachedTypes(obj) { console.log(obj['@type']);
-		$cache.append("<button>"+ obj['@type'] +"</button>");
+	function displayCachedTypes(obj) { //console.log(obj['@type']);
+		var id = 'v_'+ obj['@type'];
+		if ($('#'+id).length) return;
+		$cache.append("<button id='"+id+"'>"+ obj['@type'] +"</button>");
 	}
 	
 	function loadByType(type) {
@@ -64,7 +67,7 @@ function PhlatViewer(url) {
 		Phlat
 			.onEnter(
 				'@type', 
-				['root', 'user', 'userMemberships', 'userAccounts', 'brandCollection', 'brandAbout', 'promoCollection'], 
+				['root', 'user', 'userAbout', 'userMemberships', 'userAccounts', 'brandCollection', 'brandAbout', 'promoCollection'], 
 				[displayCachedTypes]
 			)
 			.init(initRender);

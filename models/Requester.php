@@ -27,7 +27,7 @@ class Requester {
 	
 	static function init() {
 		//@header("Content-Type: text/plain");
-		@header("Content-Type: application/json-ld");
+		@header("Content-Type: application/json");
 		error_reporting(error_reporting() & ~E_NOTICE);
 		
 		self::define_SITE();

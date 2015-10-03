@@ -6,6 +6,8 @@ function PhlatClient(conf) {
 	var initListener;
 	var tracked = {};
 	var responseHandler;
+	var lookup = {id:[], prop:[]};
+	
 	var listeners = {
 		enter: setListeners('enter'), 
 		update: setListeners('update'), 
@@ -22,7 +24,7 @@ function PhlatClient(conf) {
 		request(conf.url);
 	}
 	
-	function request(url) {		console.log(url)
+	function request(url) {
 		$.ajax({
 			url: url,
 			headers: {
@@ -33,15 +35,15 @@ function PhlatClient(conf) {
 		});
 	}
 	
-	function setRoot(resp) { console.log(resp);
+	function setRoot(resp) {
 		root = resp;
 		responseHandler = setContext;
 		request(root['@context']);	
 	}
 	
 	function setContext(resp) {
-		context = resp;	
-		main.context = resp;
+		context = resp;
+		main.context = resp['@context'];
 		responseHandler = processResponse;
 		
 		processObj(root['@graph'][0],0,conf.url);
@@ -69,6 +71,7 @@ function PhlatClient(conf) {
 		var id = obj['@id'];
 		
 		if (!id) return;
+		if (lookup.id.indexOf(id)==-1) lookup.id.push(id); 
 		
 		if (!cache[id]) {
 			cache[id] = {};
@@ -125,6 +128,13 @@ function PhlatClient(conf) {
 		}
 	}
 	
+	function getCssId(obj, prop) {
+		var id = obj['@id'];
+		if (lookup.id.indexOf(id)==-1) lookup.id.push(id); 
+		if (lookup.prop.indexOf(prop)==-1) lookup.prop.push(id); 
+		return 'p_'+ lookup.id.indexOf(id) + lookup.prop.indexOf(prop);
+	}
+	
 	main.errHandler = errHandler;
 	
 	main.init = init;
@@ -136,6 +146,8 @@ function PhlatClient(conf) {
 	main.onExit = onFxnSetter('exit');	
 		
 	main.loadURL = function (url) {
+		if (url in cache) return Promise.resolve(cache[url]);
+		
 		tracked[url]={enter:[], update: [], exit: []};
 		
 		return (Promise.resolve($.ajax({
