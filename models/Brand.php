@@ -56,14 +56,12 @@ class Brand extends Base {
 			foreach($row[0] AS $key=>$val) $this->$key = $val;
 			$this->brand_name = $this->name;
 			
-			$this->links = array(
-				"brandMembers" => "$this->root/brand/$this->brand_id/members",
-				"brandAccounts" => "$this->root/brand/$this->brand_id/accounts",
-				"brandAbout" => "$this->root/brand/$this->brand_id/about",					
-				"brandPromos" => "$this->root/brand/$this->brand_id/promos",	
-				"budgetRecords" => "$this->root/budget/$this->brand_id/records",	
-				"budgetThrottles" => "$this->root/budget/$this->brand_id/throttles"
-			);
+			$this->brandMembers = "$this->root/brand/$this->brand_id/members";
+			$this->brandAccounts = "$this->root/brand/$this->brand_id/accounts";
+			$this->brandAbout = "$this->root/brand/$this->brand_id/about";		
+			$this->brandPromos = "$this->root/brand/$this->brand_id/promos";	
+			$this->budgetRecords = "$this->root/budget/$this->brand_id/records";	
+			$this->budgetThrottles = "$this->root/budget/$this->brand_id/throttles";
 		}
 	}
 }

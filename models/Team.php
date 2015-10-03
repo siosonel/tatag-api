@@ -73,14 +73,12 @@ class Team extends Base {
 				if ($num==$row[0]['area_code']) {$this->area_name = $loc; break;}
 			}
 			
-			$this->links = array(
-				"teamMembers" => "$this->root/team/$this->brand_id/members",
-				"teamAccounts" => "$this->root/team/$this->brand_id/accounts",							
-				"teamThrottles" => "$this->root/team/$this->brand_id/throttles",
-				"budgetRecords" => "$this->root/budget/$this->brand_id/records",	
-				"teamAbout" => "$this->root/brand/$this->brand_id/about",			
-				"brandPromos" => "$this->root/brand/$this->brand_id/promos"
-			);
+			$this->teamMembers = "$this->root/team/$this->brand_id/members";
+			$this->teamAccounts = "$this->root/team/$this->brand_id/accounts";							
+			$this->teamThrottles = "$this->root/team/$this->brand_id/throttles";
+			$this->budgetRecords = "$this->root/budget/$this->brand_id/records";	
+			$this->teamAbout = "$this->root/brand/$this->brand_id/about";
+			$this->brandPromos = "$this->root/brand/$this->brand_id/promos";
 		}
 	}
 	

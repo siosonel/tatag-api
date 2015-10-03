@@ -1,5 +1,5 @@
 function PhlatViewer(url) {
-	if (!url) var url = "/api/";
+	if (!url) var url = "/api";
 	var $preview = $('#preview');
 	var $navtab = $('#navtab');
 	var $cache = $('#cache');

@@ -40,7 +40,7 @@ class BrandAccounts extends Collection {
 		
 		foreach($this->items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?account_id=". $r['account_id'];
-			$r['links']['holders'] = "$this->root/account/". $r['account_id'] ."/holders";
+			$r['holders'] = "$this->root/account/". $r['account_id'] ."/holders";
 		}
 		
 		//the paginate function will call setForms() when there are no next/prev pages to set

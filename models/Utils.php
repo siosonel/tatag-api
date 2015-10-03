@@ -11,7 +11,7 @@ class PhlatMedia {
 	
 	static function formatDefault($output, $error="") {
 		$wrapper = new stdClass();
-		$wrapper->{"@context"}= "/api/ref/context.php";		
+		$wrapper->{"@context"}= "/ref/context.php";		
 		
 		if ($error) $wrapper->error = $error;			
 		$wrapper->{"@graph"} = $output;
@@ -82,7 +82,7 @@ class PhlatMedia {
 		$rel_self->href = $R->{'@id'};
 		
 		if (is_array($R->links)) $R->links['self'] = $rel_self;
-		else $R->links->self = $rel_self;
+		else $R->self = $rel_self;
 		
 		if ($R->actions) {
 			foreach($R->actions AS &$url) $url = self::addLinkPrefix($url);

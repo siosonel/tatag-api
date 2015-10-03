@@ -32,13 +32,12 @@ class User extends Base {
 	}
 	
 	function get() {		
-		$this->links = new stdClass();
-		$this->links->userMemberships = $this->{'@id'}."/brands";
-		$this->links->userAccounts = $this->{'@id'}."/accounts";			
-		$this->links->userRatings = $this->{'@id'}."/ratings";
-		$this->links->promoCollection = "$this->root/promo/collection";
-		$this->links->brandCollection = "$this->root/brand/collection";
-		$this->links->promoSearch = "/forms#promo-search";
+		$this->userMemberships = $this->{'@id'}."/brands";
+		$this->userAccounts = $this->{'@id'}."/accounts";			
+		$this->userRatings = $this->{'@id'}."/ratings";
+		$this->promoCollection = "$this->root/promo/collection";
+		$this->brandCollection = "$this->root/brand/collection";
+		$this->promoSearch = "/forms#promo-search";
 		$this->setForms();	
 		
 		include_once "models/UserBrands.php";		
@@ -49,8 +48,8 @@ class User extends Base {
 		$memberships = (new UserBrands($obj))->get(); 
 		foreach($memberships AS $m) {
 			foreach($m->items AS $b) {
-				$this->links->team[] = "$this->root/team/". $b['brand_id'];
-				if ($b['role']=='admin') $this->links->brand[] = "$this->root/brand/". $b['brand_id'];
+				$this->team[] = "$this->root/team/". $b['brand_id'];
+				if ($b['role']=='admin') $this->brand[] = "$this->root/brand/". $b['brand_id'];
 			}
 		}
 		

@@ -58,20 +58,20 @@ class UserAccounts extends Base {
 			
 			if (strpos($auth,"c")) {
 				if ($row['sign']==1) $row['relay']['budget-add'] = $row['holder_id']."-".$row['limkey']."-c";
-				else $row['links']['budget-add'] = "$this->root/forms#budget-add";
+				else $row['budget-add'] = "$this->root/forms#budget-add";
 			}
 
-			if (strpos($auth,"f")) $row['links']['budget-transfer'] = "$this->root/forms#budget-transfer";
+			if (strpos($auth,"f")) $row['budget-transfer'] = "$this->root/forms#budget-transfer";
 			if (strpos($auth,"t")) $row['relay']['budget-transfer'] = $row['holder_id']."-".$row['limkey']."-t";
 			
 			if (strpos($auth,"i") OR strpos($auth,"x")) {
 				if ($row['sign']==-1) $row['relay']['budget-use'] = $row['holder_id']."-".$row['limkey']."-ix";
-				else $row['links']['budget-use'] = "$this->root/forms#budget-use";
+				else $row['budget-use'] = "$this->root/forms#budget-use";
 			}
 			
-			$row['links']['accountRecords'] = "$this->root/account/". $row['account_id'] ."/records";
-			$row['links']['holder-edit'] = "$this->root/forms#holder-edit";
-			$row['links']['relays'] = "$this->root/holder/". $row['holder_id'] ."/relays";
+			$row['accountRecords'] = "$this->root/account/". $row['account_id'] ."/records";
+			$row['holder-edit'] = "$this->root/forms#holder-edit";
+			$row['relays'] = "$this->root/holder/". $row['holder_id'] ."/relays";
 		}
 		
 		//$this->setForms('budgetIssued');

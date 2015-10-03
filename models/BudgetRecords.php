@@ -21,14 +21,12 @@ class BudgetRecords extends Base {
 		
 	function get() {
 		if (!$this->txntype) {
-			$this->links = array(
-				"issued" => $this->{'@id'} ."?txntype=np",
-				"revTransfer" => $this->{'@id'} ."?txntype=nn",
-				"expTransfer" => $this->{'@id'} ."?txntype=pp",
-				"intrause" => $this->{'@id'} ."?txntype=pn&subtype=intrause",
-				"inflow" => $this->{'@id'} ."?txntype=pn&subtype=inflow",
-				"outflow" => $this->{'@id'} ."?txntype=pn&subtype=outflow"
-			);
+			$this->issued = $this->{'@id'} ."?txntype=np";
+			$this->revTransfer = $this->{'@id'} ."?txntype=nn";
+			$this->expTransfer = $this->{'@id'} ."?txntype=pp";
+			$this->intrause = $this->{'@id'} ."?txntype=pn&subtype=intrause";
+			$this->inflow = $this->{'@id'} ."?txntype=pn&subtype=inflow";
+			$this->outflow = $this->{'@id'} ."?txntype=pn&subtype=outflow";
 			
 			return array_merge(
 				array($this), 

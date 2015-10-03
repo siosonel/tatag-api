@@ -46,19 +46,19 @@ class BrandPromos extends PromoCollection {
 		foreach($this->items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
-			$r['links']['payLink'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";
-			$r['links']['recipientToken'] = "$r[keyword]-$r[promo_id]";
+			$r['payLink'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";
+			$r['recipientToken'] = "$r[keyword]-$r[promo_id]";
 			
-			$r['links']['promoPage'] = Requester::$ProtDomain ."/ad/$r[amount]";
+			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[amount]";
 			
-			$r['links']['promo-edit'] = '/forms#promo-edit';
+			$r['promo-edit'] = '/forms#promo-edit';
 			
 			$relayHoldings = array();
 			
 			if (in_array($r['relay_id'],$relayHoldings) OR Requester::isRelayHolder($r['relay_id'])) {
 				$relayHoldings[] = $r['relay_id'];
-				$r['links']['relay-edit'] = '/forms#relay-edit';
-				$r['links']['relay-edit-target'] = "/relay/".$r['relay_id'];
+				$r['relay-edit'] = '/forms#relay-edit';
+				$r['relay-edit-target'] = "/relay/".$r['relay_id'];
 			}
 		}
 		

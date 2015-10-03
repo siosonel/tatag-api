@@ -21,12 +21,12 @@ function PhlatClient(conf) {
 		
 		tracked[conf.url]={enter:[], update: [], exit: []};
 		responseHandler = setRoot;
-		request(conf.url);
+		request('/');
 	}
 	
 	function request(url) {
 		$.ajax({
-			url: url,
+			url: conf.url + url,
 			headers: {
 				"Authorization": "Basic " + btoa(conf.userid + ":" + conf.pass)
 			},
@@ -151,7 +151,7 @@ function PhlatClient(conf) {
 		tracked[url]={enter:[], update: [], exit: []};
 		
 		return (Promise.resolve($.ajax({
-			url: url,
+			url: conf.url + url,
 			headers: {
 				"Authorization": "Basic " + btoa(conf.userid + ":" + conf.pass)
 			},

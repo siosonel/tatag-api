@@ -77,9 +77,9 @@ class PromoCollection extends Collection {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
 			
-			$r['links']['payLink'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";			
-			$r['links']['promoPage'] = Requester::$ProtDomain ."/ad/$r[promo_id]";
-			$r['links']['recipientToken'] = "$r[keyword]-$r[promo_id]";
+			$r['payLink'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";			
+			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[promo_id]";
+			$r['recipientToken'] = "$r[keyword]-$r[promo_id]";
 			
 			$r['relay']['budget-use'] = 'promo-'. $r['promo_id'];
 			
@@ -92,7 +92,7 @@ class PromoCollection extends Collection {
 			}
 			
 			if (Requester::isMember($r['brand_id'])) {
-				$r['links']['promo-edit'] = '/forms#promo-edit';
+				$r['promo-edit'] = '/forms#promo-edit';
 			}
 			
 			if (!$r['expires']) $r['expires'] = "2019-12-31 11:59:59";
