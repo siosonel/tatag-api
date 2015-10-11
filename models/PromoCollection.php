@@ -109,7 +109,7 @@ class PromoCollection extends Collection {
 		$HolderRelays = (new HolderRelays($this->relay))->add()[0];
 		
 		$this->okToAdd = array(
-			"brand_id","name","description","amount","expires","imageURL","infoURL","relay_id"
+			"brand_id","name","description","amount","expires","imageURL","infoURL","relay_id","keyword"
 		);
 		
 		$this->addKeyVal('brand_id',"$this->brand_id");

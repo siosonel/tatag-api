@@ -116,7 +116,7 @@ function PhlatClient(conf) {
 	}
 	
 	function onFxnSetter(eventType) {
-		return function setListeners(key, val, fxnArr) { console.log(eventType);
+		return function setListeners(key, val, fxnArr) {
 			if (typeof val=='string') on[eventType][key+'='+val] = {key: key, val: val, listeners: fxnArr};
 			else if (Array.isArray(val)) {
 				for(var i=0; i<val.length; i++) {
@@ -135,18 +135,8 @@ function PhlatClient(conf) {
 		return 'p_'+ lookup.id.indexOf(id) + lookup.prop.indexOf(prop);
 	}
 	
-	main.errHandler = errHandler;
-	
-	main.init = init;
-		
-	main.onEnter = onFxnSetter('enter');
-	
-	main.onUpdate = onFxnSetter('update');
-
-	main.onExit = onFxnSetter('exit');	
-		
-	main.loadURL = function (url) {
-		if (url in cache) return Promise.resolve(cache[url]);
+	function loadURL(url) {
+		if (url in cache) return Promise.resolve($.extend({}, cache[url]));
 		
 		tracked[url]={enter:[], update: [], exit: []};
 		
@@ -159,14 +149,51 @@ function PhlatClient(conf) {
 		}))).then(processResponse, errHandler);
 	}
 	
-	main.loadType = function (type) {
+	function loadType(type) {
 		var arr = [];
 		for(var id in cache) {
-			if (cache[id]['@type']==type) arr.push(cache[id]);
+			if (cache[id]['@type']==type) arr.push($.extend({}, cache[id]));
 		}
 		
 		return Promise.resolve(arr);
 	}
+	
+	function getCopy(url, tracked) {
+		if (arguments.length==1) var tracked = [];
+		if (!cache[url] || tracked.indexOf(url)!=-1 || tracked.length>5) return;
+		
+		var clone = JSON.parse(JSON.stringify(cache[url])); //$.extend() does not prevent affecting cache[url] in this function
+		tracked.push(url);
+		
+		for(var prop in clone) {
+			if (main.context[prop]) {			
+				if (main.context[prop]['@type']=='Link') {
+					if (typeof clone[prop]=='string') {
+						clone[prop] = getCopy(clone[prop], tracked.slice());
+					}
+					else if (Array.isArray(clone[prop])) {
+						for(var i=0; i<clone[prop].length; i++) { 
+							if (tracked.indexOf(clone[prop][i])==-1) { 
+								if (typeof clone[prop][i] == 'string') clone[prop][i] = getCopy(clone[prop][i], tracked.slice());
+							}
+						}
+					}
+				} 
+			}
+		}
+		
+		return clone;
+	}
+	
+	main.errHandler = errHandler;	
+	main.init = init;		
+	main.cache = cache;
+	main.onEnter = onFxnSetter('enter');	
+	main.onUpdate = onFxnSetter('update');
+	main.onExit = onFxnSetter('exit');		
+	main.loadURL = loadURL;	
+	main.loadType = loadType;
+	main.copy = getCopy;
 	
 	return main;
 }

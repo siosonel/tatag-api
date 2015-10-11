@@ -38,8 +38,18 @@ require_once "../config-public.php";
 			"@type": "Link"
 		},
 		
+		"userAccount": {
+			"@id": "/ref#userAccount-item", 
+			"@type": "Link"
+		},
+		
 		"userCollection": {
 			"@id": "/ref#userCollection", 
+			"@type": "Link"
+		},
+
+		"account": {
+			"@id": "/ref#account", 
 			"@type": "Link"
 		},
 		
@@ -48,8 +58,18 @@ require_once "../config-public.php";
 			"@type": "Link"
 		},
 		
+		"brand": {
+			"@id": "/ref#brand", 
+			"@type": "Link"
+		},
+		
 		"promoCollection": {
 			"@id": "/ref#promoCollection", 
+			"@type": "Link"
+		},
+		
+		"items": {
+			"@id": "/ref#items", 
 			"@type": "Link"
 		}
 	}

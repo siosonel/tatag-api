@@ -10,5 +10,25 @@
 		
 		"userCollection": "/user/collection",		
 		"brandCollection": "/brand/collection",
-		"promoCollection": "/promo/collection"
+		"promoCollection": "/promo/collection",
+		
+		"linkTerms": [
+			"items",
+		
+			"user",
+			"brand",
+			"account",
+			
+			"budget-add",
+			"budget-transfer",
+			"budget-use",
+			
+			"userAccounts",
+			"userMemberships",
+			"userAbout",
+			
+			"userCollection",
+			"brandCollection",
+			"promoCollection"
+		]
 }

@@ -99,9 +99,12 @@ GET <span class='highlight'>https://example.site/docs#context</span>
 	"@context": {
 		"content": "/docs#post-content",
 		"created": "/docs#post-created",
-		"Link": "https://en.wikipedia.org/wiki/Dereferenceable_Uniform_Resource_Identifier",
-		<span class='highlight'>"author"</span>: {"@id": "/docs#author", "@type": ["@id","Link"]},
-		<span class='highlight'>"comments"</span>:  {"@id": "/docs#comments", "@type": ["@id","Link"]}
+		"Link": {
+			"@id": "https://en.wikipedia.org/wiki/Dereferenceable_Uniform_Resource_Identifier",
+			"@type: "@id"
+		},
+		<span class='highlight'>"author"</span>: {"@id": "/docs#author", "@type": "Link"},
+		<span class='highlight'>"comments"</span>:  {"@id": "/docs#comments", "@type": "Link"}
 	}
 }
 </pre>
@@ -202,7 +205,7 @@ to be partial representations.</p>
 GET /post/10
 
 {
-	"@context": "https://example.site/docs#context",
+	"@context": "https://example.site/docs#context", //the context defines "author" and "comments" terms as links
 	
 	"@graph": [{
 		"@id": "/post/10", 

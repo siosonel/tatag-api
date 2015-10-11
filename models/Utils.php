@@ -6,7 +6,7 @@ class PhlatMedia {
 	public static function write($output, $error="") {		
 		$response = self::{self::$format}($output, $error);
 		
-		exit(json_encode($response, JSON_NUMERIC_CHECK | JSON_UNESCAPED_SLASHES));// | JSON_PRETTY_PRINT ));
+		exit(json_encode($response, JSON_NUMERIC_CHECK | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ));
 	}
 	
 	static function formatDefault($output, $error="") {

@@ -38,47 +38,100 @@ class UserAccounts extends Base {
 	
 	function get() {
 		$forms = array();
+		$graph = array($this);
 		
 		$sql = "CALL userAccounts(?)"; 			
-		$this->items = DBquery::get($sql, array($this->user_id));
+		$items = DBquery::get($sql, array($this->user_id));
 		$this->setForms();
+		$tracked = array();
 		
-		foreach($this->items AS &$row) {	
-			$row['@type'] = 'userAccount';
-			$row['@id'] = $this->{'@id'} ."?holder_id=". $row['holder_id']; 	
-			$row["_brand"] = "$this->root/brand/".$row['brand_id'] ."/about";
-			$row['balance'] = number_format(1*$row['balance'], 2, ".", "");
+		foreach($items AS &$r) {
+			$r['relay'] = array();
+			$r['@type'] = 'userAccount';
+			$r['@id'] = $this->{'@id'} ."?holder_id=$r[holder_id]"; 	
+			$r["_brand"] = "$this->root/brand/$r[brand_id]/about";
+			$r['account'] = "$this->root/account/$r[account_id]";
+			$r['user'] = "$this->root/user/21";
 			
-			if (strpos($row['holder_authcode'],"*")!==false) $row['authcode'] = $row['account_authcode'];
-			else $row['authcode'] = implode("", array_intersect(str_split($row['holder_authcode']), str_split($row['account_authcode'])));
+			$account = $this->transferProps($r, array(
+				"account_id", "balance", "unit", "sign", "throttle_id"
+			), array(
+				"name"=>"account_name", "authcode"=>"account_authcode"
+			));
 			
-			$auth = "_".$row['authcode']; //indent to not have to use strict strpos false comparison
-			
-			$row['relay']['default'] = $row['holder_id']."-".$row['limkey'];
-			
-			if (strpos($auth,"c")) {
-				if ($row['sign']==1) $row['relay']['budget-add'] = $row['holder_id']."-".$row['limkey']."-c";
-				else $row['budget-add'] = "$this->root/forms#budget-add";
+			if (!in_array($r['account'], $tracked)) {				
+				$account["@type"] = "account";
+				$account["@id"] = $r['account'];
+				$account["balance"] = number_format(1*$account['balance'], 2, ".", "");
+				$account["brand"] = "$this->root/brand/$r[brand_id]";
+				
+				$graph[] = $account;
+				$tracked[] = $r['account'];
+				
+				
+				$brand = $this->transferProps($r, array("brand_id","role"), array("name"=>"brand_name"));
+				if (!in_array($account['brand'], $tracked)) {					
+					$brand['@type'] = 'brand';
+					$brand["@id"] = $account['brand'];
+					
+					$graph[] = $brand; 
+					$tracked[] = $account['brand'];
+				}
 			}
-
-			if (strpos($auth,"f")) $row['budget-transfer'] = "$this->root/forms#budget-transfer";
-			if (strpos($auth,"t")) $row['relay']['budget-transfer'] = $row['holder_id']."-".$row['limkey']."-t";
 			
-			if (strpos($auth,"i") OR strpos($auth,"x")) {
-				if ($row['sign']==-1) $row['relay']['budget-use'] = $row['holder_id']."-".$row['limkey']."-ix";
-				else $row['budget-use'] = "$this->root/forms#budget-use";
-			}
-			
-			$row['accountRecords'] = "$this->root/account/". $row['account_id'] ."/records";
-			$row['holder-edit'] = "$this->root/forms#holder-edit";
-			$row['relays'] = "$this->root/holder/". $row['holder_id'] ."/relays";
+			$this->setAllowedActions($r, $account);
+			$r['accountRecords'] = "$this->root/account/$account[account_id]/records";
+			$r['holder-edit'] = "$this->root/forms#holder-edit";
+			$r['relays'] = "$this->root/holder/$r[holder_id]/relays";
+			$graph[] = $r;
+			$this->items[] = $r['@id'];
 		}
 		
 		//$this->setForms('budgetIssued');
 		//$this->setForms('budgetTransferred');
 		//$this->setForms('budgetUsed');
 		
-		return array($this);
+		return $graph;
+	}
+	
+	function transferProps(&$r, $props=array(), $renames=array()) {
+		$arr = array(); 
+		
+		foreach($props AS $key) {
+			$arr[$key] = $r[$key];
+			unset($r[$key]);
+		}
+		
+		foreach($renames AS $newname=>$prop) {
+			$arr[$newname] = $r[$prop];
+			unset($r[$prop]);
+		}
+		
+		return $arr;
+	}
+	
+	function setAllowedActions(&$r, $account) {
+		if (strpos($r['holder_authcode'],"*")!==false) $r['authcode'] = $account['authcode'];
+		else $r['authcode'] = implode("", array_intersect(str_split($r['holder_authcode']), str_split($account['authcode'])));
+		
+		$auth = "_".$r['authcode']; //indent to not have to use strict strpos false comparison
+		
+		$r['relay']['default'] = $r['holder_id']."-".$r['limkey'];
+		
+		if (strpos($auth,"c")) {
+			if ($account['sign']==1) $r['relay']['budget-add'] = $r['holder_id']."-".$r['limkey']."-c";
+			else $r['budget-add'] = "$this->root/forms#budget-add";
+		}
+
+		if (strpos($auth,"f")) $r['budget-transfer'] = "$this->root/forms#budget-transfer";
+		if (strpos($auth,"t")) $r['relay']['budget-transfer'] = $r['holder_id']."-".$r['limkey']."-t";
+		
+		if (strpos($auth,"i") OR strpos($auth,"x")) {
+			if ($account['sign']==-1) $r['relay']['budget-use'] = $r['holder_id']."-".$r['limkey']."-ix";
+			else $r['budget-use'] = "$this->root/forms#budget-use";
+		}
+		
+		unset($r['authcode']);
 	}
 }
 

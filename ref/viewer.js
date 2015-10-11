@@ -6,7 +6,7 @@ function PhlatViewer(url) {
 	var lastView;
 	var context;
 	
-	var Phlat = PhlatClient({url: url, userid:21, pass:'pass2'});
+	var api = PhlatClient({url: url, userid:21, pass:'pass2'});
 	
 	function main(e) {
 		if (!e) return;
@@ -14,17 +14,17 @@ function PhlatViewer(url) {
 		else if (typeof e=='string') url = e;
 		else return;		
 		
-		Phlat.loadURL(url)
-			.then(render, Phlat.errHandler);
+		api.loadURL(url)
+			.then(render, api.errHandler);
 	}
 	
 	function initRender(resp) {
-		context = Phlat.context;
+		context = api.context;
 		render(resp);
 	}
 	
 	function render(resp) { //console.log(resp);
-		var copy = JSON.parse(JSON.stringify(resp));
+		var copy = resp; //JSON.parse(JSON.stringify(resp));
 		
 		if (copy['@graph']) copy['@graph'].map(highlightLinks);	
 		else if (Array.isArray(copy)) copy.map(highlightLinks)
@@ -37,7 +37,8 @@ function PhlatViewer(url) {
 		for(var prop in obj) {
 			if (prop=='items') obj.items.map(highlightLinks);
 			else if (prop=="@id" 
-				|| (context[prop] && (
+				|| (typeof obj[prop]=='string' &&
+						context[prop] && (
 						context[prop] == "Link" || context[prop]["@type"] == "Link"
 						//|| context[prop] == "@id" || context[prop]["@type"] == "@id"
 				))
@@ -59,24 +60,30 @@ function PhlatViewer(url) {
 		$cache.append("<button id='"+id+"'>"+ obj['@type'] +"</button>");
 	}
 	
-	function loadByType(type) {
-		
-	}
-	
-	main.init = function () {	
-		Phlat
+	function init() {	
+		api
 			.onEnter(
 				'@type', 
-				['root', 'user', 'userAbout', 'userMemberships', 'userAccounts', 'brandCollection', 'brandAbout', 'promoCollection'], 
+				['root', 'user', 'userAbout', 'userMemberships', 
+					'userAccounts', 'userAccount', 'account',
+					'brand', 'brandCollection', 
+					'brandAbout', 'promoCollection'], 
 				[displayCachedTypes]
 			)
 			.init(initRender);
 			
 		$preview.on('click', main);
-		$cache.on('click', function (e) {Phlat.loadType(e.target.innerHTML).then(render)});
+		$cache.on('click', function (e) {api.loadType(e.target.innerHTML).then(render)});
 	}
 	
-	main.Phlat = Phlat; //expose for now
+	main.init = init;	
+	main.api = api; //expose for now
+	
+	
+	main.testCopy = function testCopy(type) {
+		if (!type) {console.log('missing type'); return;}
+		$preview.html(JSON.stringify(api.copy('/user/21/'+type), null, '     '));
+	}
 	
 	return main;
 }
