@@ -1,0 +1,41 @@
+{
+	"public": {
+		"ratings": {},
+		"promos": {},
+		"brands": {},
+		"reports": {}
+	},
+	
+	"login": "",
+
+	"personal": {
+		"me": {
+			"memberOf": {}, 
+			"holdings": {},
+			"logout": ""
+		}
+	},
+
+	"teamMember": {
+		"teamMembers": {},
+		"teamAccounts": {},
+		"teamAbout": {},
+		"tally": {}
+	},	
+
+	"brandAdmin": {
+		"brandMembers": {
+			"accounts": {}
+		},
+		"brandAccounts": {
+			"holders": {}
+		},
+		"teamAbout": {},
+		"tally": {}
+	}
+}
+
+
+
+			
+	

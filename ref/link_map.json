@@ -1,0 +1,60 @@
+{
+	"public": {
+		"ratings": {
+			"brand": {}
+		},
+		"promos": {},
+		"brands": {},
+		"reports": {}
+	},
+
+	"personal": {
+		"me": {
+			"teams": {
+				"team": {}
+			}, 
+			"holdings": {
+				"account": {}
+			},
+			"about": {},
+			"logout": ""
+		}
+	},
+
+	"teamMember": {
+		"me": {
+			"teams": {
+				"team": {
+					"members": {},
+					"accounts": {},
+					"about": {},
+					"tally": {}
+				}
+			}
+		}
+	},	
+
+	"brandAdmin": {
+		"me": {
+			"brands": {
+				"team": {
+					"members": {
+						"holdings": {
+							"account": {}
+						}
+					},
+					"accounts": {
+						"holders": {}
+					},
+					"about": {},
+					"tally": {}
+				}
+			}
+		}
+	}	
+}
+
+
+
+			
+	
