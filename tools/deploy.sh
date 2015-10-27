@@ -90,19 +90,15 @@ fi
 
 tempdir="$REMOTE_DIR-$SVN_REV-z"
 
-#in production environment, sync server farm and clear cache
-# if [[ "$AUDIENCE" == "public" && "$ENV" == "live" ]]; then	
-	# server_sync="sudo /usr/local/bin/sync_healthdata.sh"
-	# clear_cache="sudo /share/local/IT/scripts/clear_cloudflare_cache.sh"
-# elif [[ "$AUDIENCE" != "public" ]]; then
-	# changeperm="$as_user chmod -R 755 $REMOTE_DIR" # started using ACL perms in Sept. 2014
-	# ;
-#else
-	changeperm=""
-# fi
+changeperm=""
 
-echo "Sending tar ball to $SERVER"	
-scp -r $BUILD.tar.gz $USER@$SERVER:$xhome
+# assume required deploy to stage before deploy to live
+# and that different hosts uses the same home directory
+if [[ "$ENV" == "stage" ]]; then
+	echo "Sending tar ball to $SERVER"	
+	scp -r $BUILD.tar.gz $USER@$SERVER:$xhome
+fi
+
 	
 # as_user, like 'sudo -u apache' or empty string, is declared in $APP/tools/deploy_env.sh
 ssh -t $USER@$SERVER "
@@ -121,6 +117,8 @@ ssh -t $USER@$SERVER "
 	$as_user chmod -R 755 $REMOTE_DIR/
 	$as_user mv -f $tempdir $REMOTE_DIR	
 	$as_user rm -Rf $REMOTE_DIR-X
+	
+	echo \"$(date) $REV $AUDIENCE deploy\" >> $REMOTE_DIR/rev.txt
 "
 
 

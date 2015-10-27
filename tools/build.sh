@@ -34,7 +34,7 @@ cd tools/prep-$REV
 cp ../../config-$AUDIENCE.php .
 
 # will attach a revision info file to permit quick inspection on deployment site
-echo "$(date) $REV" > rev.txt
+echo "$(date) $REV $AUDIENCE build" > rev.txt
 
 # append files to build
 tar --append --file=build.tar rev.txt config-$AUDIENCE.php --exclude-vcs
