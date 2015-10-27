@@ -11,7 +11,8 @@ class PhlatMedia {
 	
 	static function formatDefault($output, $error="") {
 		$wrapper = new stdClass();
-		$wrapper->{"@context"}= "/ref/context.php";		
+		$wrapper->{"@context"}= "/api/ref/context.php";		
+		//$wrapper->{"@base"} = Router::$root;
 		
 		if ($error) $wrapper->error = $error;			
 		$wrapper->{"@graph"} = $output;

@@ -68,9 +68,8 @@ class UserAccounts extends Base {
 				$graph[] = $account;
 				$tracked[] = $r['account'];
 				
-				
 				$brand = $this->transferProps($r, array("brand_id","role"), array("name"=>"brand_name"));
-				if (!in_array($account['brand'], $tracked)) {					
+				if (!in_array($account['brand'], $tracked)) {				
 					$brand['@type'] = 'brand';
 					$brand["@id"] = $account['brand'];
 					
@@ -87,27 +86,7 @@ class UserAccounts extends Base {
 			$this->items[] = $r['@id'];
 		}
 		
-		//$this->setForms('budgetIssued');
-		//$this->setForms('budgetTransferred');
-		//$this->setForms('budgetUsed');
-		
 		return $graph;
-	}
-	
-	function transferProps(&$r, $props=array(), $renames=array()) {
-		$arr = array(); 
-		
-		foreach($props AS $key) {
-			$arr[$key] = $r[$key];
-			unset($r[$key]);
-		}
-		
-		foreach($renames AS $newname=>$prop) {
-			$arr[$newname] = $r[$prop];
-			unset($r[$prop]);
-		}
-		
-		return $arr;
 	}
 	
 	function setAllowedActions(&$r, $account) {

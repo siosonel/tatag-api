@@ -45,11 +45,11 @@ class User extends Base {
 		include_once "models/UserRatings.php";
 		$obj = json_decode('{"user_id":' . $this->user_id .'}');	
 		
-		$memberships = (new UserBrands($obj))->get(); 
-		foreach($memberships AS $m) {
-			foreach($m->items AS $b) {
-				$this->team[] = "$this->root/team/". $b['brand_id'];
-				if ($b['role']=='admin') $this->brand[] = "$this->root/brand/". $b['brand_id'];
+		$memberships = (new UserBrands($obj))->get();		
+		foreach($memberships AS $i=>$m) {
+			if ($i>0 AND $m['@type']=='userMembership') {
+				if (isset($m['team'])) $this->team[] = $m['team'];
+				if (isset($m['brand'])) $this->brand[] = $m['brand'];
 			}
 		}
 		

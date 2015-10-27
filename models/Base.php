@@ -32,7 +32,8 @@ class Base {
 	protected $forms = array();
 	protected $embedForms = true;
 	
-	function init($data) {		
+	function init($data) {
+		//$this->root = Router::$root;
 		if (!$data) return;  
 		
 		$this->validate($data);
@@ -148,6 +149,22 @@ class Base {
 		
 		$this->filterCond = implode(' AND ', $cond);
 		$this->filterValArr = $valArr;
+	}
+	
+	function transferProps(&$r, $props=array(), $renames=array()) {
+		$arr = array(); 
+		
+		foreach($props AS $key) {
+			$arr[$key] = $r[$key];
+			unset($r[$key]);
+		}
+		
+		foreach($renames AS $newname=>$prop) {
+			$arr[$newname] = $r[$prop];
+			unset($r[$prop]);
+		}
+		
+		return $arr;
 	}
 	
 	function getViewable($arr=array()) {	

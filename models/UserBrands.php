@@ -39,26 +39,37 @@ class UserBrands extends Base {
 	
 	function get() {
 		$forms = array();
+		$graph = array($this);
 	
 		$sql = "SELECT brand_id, b.name AS brand_name, member_id, m.created AS joined, role, hours 
 			FROM members m
 			JOIN brands b USING (brand_id)
 			WHERE user_id=? AND m.ended IS NULL AND revoked IS NULL AND type_system != 'sim'";
 		
-		$this->items = DBquery::get($sql, array($this->user_id));
+		$items = DBquery::get($sql, array($this->user_id));
 		$this->setForms();
+		$tracked = array();
 		
-		foreach($this->items AS &$row) {
-			$row['@id'] = $this->{'@id'} ."?member_id=". $row['member_id']; 
-			$row["_brand"] = "$this->root/brands/".$row['brand_id'] ."/about";			
-			$this->setForms();
+		foreach($items AS &$r) {
+			$r['@type'] = 'userMembership';
+			$r['@id'] = $this->{'@id'} ."?member_id=". $r['member_id'];
+			$r["team"] = "$this->root/team/".$r['brand_id'];			
+			if ($r['role']=='admin') $r["brand"] = "$this->root/brand/".$r['brand_id'];			
 			
-			/*if ($row['role']=='admin') {
-				$row["_adminViews"] = array("$this->root/member/".$row['member_id'], "$this->root/brand/".$row['brand_id']);
-			}*/
+			$brand = $this->transferProps($r, array("brand_id"), array("name"=>"brand_name"));
+			if (!in_array($r['brand'], $tracked)) {
+				$brand['@type'] = 'brand';
+				$brand['@id'] = $r['brand'];
+				
+				$graph[] = $brand;
+				$tracked[] = $r['brand'];
+			}
+			
+			$graph[] = $r;			
+			$this->items[] = $r['@id'];
 		}
 		
-		return array($this);
+		return $graph;
 	}
 }
 

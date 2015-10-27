@@ -1,11 +1,13 @@
 <?php
 
 class Router {
+	public static $root="";
 	public static $resource;
 	public static $id;
 	public static $method; 
 	public static $Resource;
 	public static $subresource;
+	public static $deprecationDate=0;
 	
 	public static function run() {	
 		self::parseURL();		
@@ -16,9 +18,15 @@ class Router {
 	}
 	
 	public static function parseURL() {
+		if (isset($_GET['deprecationDate'])) {
+			self::$deprecationDate = $_GET['deprecationDate'];
+			self::$root = "/api-". self::$deprecationDate;
+			unset($_GET['deprecationDate']);
+		}
+		else self::$root = "/api";
+		
 		$_url = trim($_GET['_url'], " \/\\\t\n\r\0\x0B");
 		if (!$_url) PhlatMedia::write(self::getLinks());
-		
 		
 		list(self::$resource, self::$id, self::$subresource) = explode("/", $_url);
 		unset($_GET['_url']);
@@ -70,20 +78,9 @@ class Router {
 	}
 	
 	public static function getLinks($error="") {
-		$links = json_decode(file_get_contents("ref/tentativeLinks.json"),true);
-		
-		foreach($links AS $key=>&$val) {
-			$val = str_replace("{user_id}", Requester::$user_id, $val);
-			if (!is_array($val) AND strpos($val, '/')===0) $val = $val; 
-		}
-		
-		$links['user_id'] = Requester::$user_id;
-		$links['name'] = Requester::$name;
-		$links['login_provider'] = Requester::$login_provider;
-		
-		if (!Requester::$user_id) $links['userLoginPage'] = '/login.php';
-		
-		return array($links);
+		require_once "models/Home.php";
+		$Home = new Home();
+		return $Home->get();
 	}
 }
 

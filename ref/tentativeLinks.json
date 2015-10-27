@@ -30,5 +30,13 @@
 			"userCollection",
 			"brandCollection",
 			"promoCollection"
-		]
+		],
+		
+		"userResource": {
+			"@id": "/user/{user_id}",
+			"user_id": "{user_id}",
+			"teams": "/user/{user_id}/brands",
+			"holdings": "/user/{user_id}/accounts",
+			"about": "/user/{user_id}/about"
+		}
 }
