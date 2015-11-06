@@ -1,0 +1,45 @@
+{
+	"public": [
+		"ratings",		
+		"brands",		
+		"promos",		
+		
+		"report",
+		"addedByWeek",
+		"intrauseByWeek",
+		"inflowByWeek",
+		"outflowByWeek",
+		"flowMatrix"
+	],
+
+	"personal": [
+		"me",		
+		"memberOf",
+		"holdings",
+		"ratings",
+		"about"
+	],
+
+	"teamMember": [
+		"teams",
+		"members",
+		"accounts",
+		"about"
+	],
+
+	"admin": [
+		"brands",
+		"members",
+		"holdings",
+		"account",
+		"accounts",
+		"holders",
+		"about",
+		"tally"
+	]
+}
+
+
+
+			
+	

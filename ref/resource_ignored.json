@@ -1,0 +1,31 @@
+{
+	"*": [
+		"items"
+	],
+	
+	"public": [
+		"brand",
+		"promo",
+		"rating",
+		"report"
+	],
+	
+	"personal": [
+		"holding",
+		"team",
+		"holdings"
+	],
+	
+	"teamMember": [
+	
+	],
+	
+	"admin": [
+		
+	]
+}
+
+
+
+			
+	

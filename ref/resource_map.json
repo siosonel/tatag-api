@@ -1,0 +1,116 @@
+{
+	"public": {
+		"ratings": {
+			"items": {
+				"#": ["rating"],
+				"brand": {}
+			}
+		},
+		"promos": {
+			"items": {
+				"#": ["promo"],
+				"brand": {}
+			}
+		},
+		"report": {
+			"addedByWeek": {},
+			"intrauseByWeek": {},
+			"inflowByWeek": {},
+			"outflowByWeek": {},
+			"flowMatrix": {}			
+		},
+		"brands": {
+			"items": {
+				"#": ["brand"],
+				"brand": {}
+			}
+		}
+	},
+
+	"personal": {
+		"me": {
+			"memberOf": {
+				"items": {
+					"#": ["memberInfo"],
+					"team": {}
+				}
+			}, 
+			"holdings": {
+				"items": {
+					"#": ["holding"],
+					"account": {}
+				}
+			},
+			"ratings": {
+				"items": {
+					"#": ["rating"],
+					"brand": {}
+				}
+			},
+			"about": {},
+			"logout": ""
+		}
+	},
+
+	"teamMember": {
+		"teams": {
+			"items": {
+				"#": ["team"],
+				"members": {
+					"items": {
+						"#": ["memberInfo"]
+					}
+				},
+				"accounts": {
+					"items": {
+						"#": ["account"]
+					}
+				},
+				"promos": {
+					"items": {
+						"#": ["promo"]
+					}
+				},
+				"about": {},
+				"tally": {}
+			}
+		}
+	},	
+
+	"admin": {
+		"brands": {
+			"items": {
+				"#": ["team"],
+				"members": {
+					"items": {
+						"#": ["memberInfo"],
+						"holdings": {
+							"items": {
+								"#": ["holding"],
+								"account": {}
+							}
+						}
+					}
+				},
+				"accounts": {
+					"items": {
+						"#": ["account"],
+						"holders": {
+							"items": {
+								"#": ["holder"],
+								"user": {}
+							}
+						}
+					}
+				},
+				"about": {},
+				"tally": {}
+			}
+		}
+	}
+}
+
+
+
+			
+	

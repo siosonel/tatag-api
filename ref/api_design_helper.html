@@ -1,0 +1,100 @@
+<html>
+<head>
+	<title>Link Map</title>
+</head>
+<body>	
+	<div id='transformedDiv'>
+		<h4>Unreachable Concepts, by Audience</h4>
+		<p id='unreachableWarning'></p>
+		<pre id='unreachablePre'></pre>
+		
+		<h4>Navigation to Concepts, by Audience</h4>
+		<pre id='transformedPre'></pre>
+		
+		<h4>Untracked and Unignored Terms, by Audience</h4>
+		<pre id='untrackedTermsPre'></pre>
+	</div>
+	
+	<div id='termFreqDiv'>
+		<h4>Term Frequency</h4>
+		<pre id='termFreqPre'></pre>
+	</div>
+	
+	<div id='rawMapDiv'>
+		<h4>Raw Map</h4>
+		<pre id='rawMapPre'></pre>
+	</div>
+</body>
+	<script type="text/javascript" src="/common2/lib/jQuery/jquery-1.8.2.min.js"></script>
+	<script src='linkMap.js'></script>
+	<script>
+		var mapper = linkMap();
+		var ready = readyFxn(3);
+		var serverData = {};
+		init();
+		
+		function init() {
+			$.ajax({
+				url: "resource_concepts.json",
+				success: function (resp) {mapper.concepts(resp); ready();},
+				error: errHandler
+			});
+			
+			$.ajax({
+				url: "resource_map.json",
+				success: function (resp) {mapper.rawMap(resp); ready();},
+				error: errHandler
+			});
+			
+			$.ajax({
+				url: "resource_ignored.json",
+				success: function (resp) {mapper.ignored(resp); ready();},
+				error: errHandler
+			});
+		}
+		
+		function readyFxn(targetNum) {
+			var ready=0;
+			
+			function main() {
+				ready++;
+				if (ready==targetNum) {
+					ready=0;
+					render();
+				}
+			}
+			
+			return main;
+		}
+		
+		function render() {
+			$('#rawMapPre').html(JSON.stringify(mapper.rawMap(), null, '     '));
+			
+			$('#transformedPre').html(JSON.stringify(
+				mapper.byAudience(mapper.rawMap(), 'collapse'), null, '     ' 
+			));
+			
+			$('#termFreqPre').html(JSON.stringify(mapper.termFreq(), null, '     '));
+			
+			var untrackedTerms = mapper.untrackedTerms();
+			$('#untrackedTermsPre').html( !untrackedTerms._total_
+				? "All resource_map.json terms correspond to an audience concept."
+				: "Please verify that these terms were intentionally left untracked and "
+					+ "<br/>include in resource_ignored.json as needed:" 
+					+ "<br/><br/>" + JSON.stringify(untrackedTerms, null, '     ')
+			);
+			
+			var unreachable = mapper.unreachableTerms();
+			
+			$("#unreachablePre").html(!unreachable._total_
+				? "All concepts are reachable based on resource_map.json. (This test did not include actual navigation)." 
+				: "Please fix the resource_map.json to make sure the following concepts are reachable.<br/><br/>" 
+					+ JSON.stringify(unreachable, null, '     ')
+			);
+		}
+		
+		function errHandler(xhr, status, text) {
+			console.log(status+': '+text);
+		}
+	</script>
+</html>
