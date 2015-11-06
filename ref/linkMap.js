@@ -23,6 +23,8 @@ function linkMap(m) {
 	
 	function trackConceptRef(termArr, arr) {
 		if (!arr) arr = [];
+		if (typeof termArr == 'string') termArr = [termArr]; 
+		
 		for(var i=0; i<termArr.length; i++) {
 			refArr.push(arr.concat(termArr[i]));
 			trackFreq(termArr[i]);					
@@ -169,6 +171,16 @@ function linkMap(m) {
 		
 		obj._total_ = total;		
 		return obj;
+	}
+	
+	main.directions = function () {
+		for(var audience in directions) {
+			for(var term in directions[audience]) {
+				directions[audience][term] = directions[audience][term].split(",");
+			}
+		}
+		
+		return directions;
 	}
 	
 	return main;

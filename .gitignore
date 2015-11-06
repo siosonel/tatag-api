@@ -10,3 +10,5 @@ models/old/*
 php/test.php
 
 tools/builds/*
+
+ref/examples/*

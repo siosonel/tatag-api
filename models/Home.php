@@ -3,6 +3,7 @@
 class Home {
 	function __construct() {
 		$this->links = json_decode(file_get_contents("ref/tentativeLinks.json"),true);
+		$this->links['navDirections'] = json_decode(file_get_contents("ref/examples/nav-directions.json"),true);
 	}
 	
 	function get() {

@@ -9,6 +9,7 @@
 		<pre id='unreachablePre'></pre>
 		
 		<h4>Navigation to Concepts, by Audience</h4>
+		<button id='navSaveBtn'>save</button>
 		<pre id='transformedPre'></pre>
 		
 		<h4>Untracked and Unignored Terms, by Audience</h4>
@@ -96,5 +97,18 @@
 		function errHandler(xhr, status, text) {
 			console.log(status+': '+text);
 		}
+		
+		$('#navSaveBtn').click(function () {
+			$.ajax({
+				url: 'examples.php?name=nav-directions',
+				type: "PUT",
+				data: JSON.stringify(mapper.directions()),
+				dataType: 'json',
+				contentType: 'json',
+				success: function () {console.log('saved navigation directions')},
+				error: errHandler
+			});
+		});
+		
 	</script>
 </html>
