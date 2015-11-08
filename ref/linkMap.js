@@ -32,7 +32,7 @@ function linkMap(m) {
 	}
 	
 	function trackConceptRel(m, link, arr) {	
-		if (!(link in concepts)) trackFreq(link);	
+		if (!(link in concepts)) trackFreq(link);	//track non-audience terms
 		
 		if (!arr) arr = [];			
 		relArr.push(arr.concat([link]));
@@ -56,6 +56,15 @@ function linkMap(m) {
 		if (!arr.length) return;
 		var audience = arr.shift();
 		var term = arr[arr.length-1];
+		var termAlt='';
+		
+		//some concepts may be referenced as a conjuction of link relation terms
+		if (arr.length>1) {
+			termAlt = arr[arr.length-2]+'.'+term; 
+			if (concepts[audience].indexOf(termAlt)!=-1) {			
+				mappedTerms.rel[audience][termAlt] = collapsePath ? arr.join(",") : arr;
+			}
+		}
 		
 		if (!(audience in mappedTerms.rel)) {
 			mappedTerms.rel[audience] = {};
@@ -63,7 +72,7 @@ function linkMap(m) {
 		else if (concepts[audience].indexOf(term)!=-1) {
 			mappedTerms.rel[audience][term] = collapsePath ? arr.join(",") : arr;
 		}
-		else {
+		else if (!(termAlt in mappedTerms.rel[audience])) {
 			if (!untrackedTerms[audience]) untrackedTerms[audience] = [];
 			if (untrackedTerms[audience].indexOf(term)==-1) untrackedTerms[audience].push(term);
 		}

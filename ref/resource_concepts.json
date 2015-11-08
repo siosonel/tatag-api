@@ -15,8 +15,11 @@
 	"personal": [
 		"me",		
 		"memberOf",
+		"memberOf.items",
 		"holdings",
+		"holdings.items",
 		"ratings",
+		"ratings.items",
 		"about"
 	],
 

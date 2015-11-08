@@ -31,19 +31,16 @@
 		"me": {
 			"memberOf": {
 				"items": {
-					"#": ["memberInfo"],
 					"team": {}
 				}
 			}, 
 			"holdings": {
 				"items": {
-					"#": ["holding"],
 					"account": {}
 				}
 			},
 			"ratings": {
 				"items": {
-					"#": ["rating"],
 					"brand": {}
 				}
 			},
@@ -109,8 +106,3 @@
 		}
 	}
 }
-
-
-
-			
-	
