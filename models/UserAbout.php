@@ -6,7 +6,7 @@ Public access to user information
 class UserAbout extends Base {	
 	function __construct($data='') {
 		$id =  $this->getID();	
-		$this->{"@id"} = "$this->root/users/$id";
+		$this->{"@id"} = "$this->root/user/$id/about";
 		$this->table = 'users';
 		$this->user_id = $id;
 		$this->idkey = 'user_id';
@@ -28,7 +28,9 @@ class UserAbout extends Base {
 		WHERE m.user_id IN (?) AND m.ended IS NULL
 		GROUP BY m.user_id";
 		
-		return DBquery::get($sql, array($this->user_id));	
+		$rows = DBquery::get($sql, array($this->user_id));
+		foreach($rows[0] AS $k=>$v) $this->{$k} = $v;
+		return array($this);
 	}
 }
 

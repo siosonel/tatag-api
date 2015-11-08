@@ -30,6 +30,7 @@
 	"admin": [
 		"brands",
 		"members",
+		"memberInfo",
 		"holdings",
 		"account",
 		"accounts",

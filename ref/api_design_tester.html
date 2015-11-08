@@ -1,0 +1,51 @@
+<html>
+<head>
+	<title>Map Tester</title>
+</head>
+<body>	
+	<label for='audience'>Audience: </label><input type='text' name='' id='audience' value='personal' />
+	<br/><br />
+	<button id='crawlBtn'>Crawl</button> &nbsp; 
+	<button id='saveBtn'>Save</button> &nbsp;
+	<button id='compareBtn'>Compare</button>  
+</body>
+	<script type="text/javascript" src="/common2/lib/jQuery/jquery-1.8.2.min.js"></script>
+	<script src='phlatCrawler.js'></script>
+	<script>
+		var params = {};
+		location.search.substr(1).split("&").forEach(function(item) {
+				var s = item.split("=");
+				params[s[0]] = s[1];
+		});
+		
+		if (params.audience) $('#audience').val(params.audience);
+	
+		var Personal = {
+			me: function (resp) {console.log('me'); console.log(resp)},
+			memberOf: function (resp) {console.log('memberOf'); console.log(resp)},
+			memberInfo: function (resp) {console.log('memberInfo'); console.log(resp)},
+			holding: function (resp) {console.log('holding'); console.log(resp)},
+		};
+			
+		phlat.init({
+			url: 'test/home.json',
+			headers: !params.user ? {} : {"Authorization": "Basic " + btoa(params.user+":"+params.pwd)},
+			listeners: {
+				//personal: [Personal]
+			} 
+		});
+		
+		$('#crawlBtn').click(function () {
+			phlat.test($('#audience').val());
+		});
+		
+		$('#saveBtn').click(function () {
+			phlat.test($('#audience').val(), 'save');
+		});		
+		
+		$('#compareBtn').click(function () {
+			phlat.test($('#audience').val(), 'compare');
+		});	
+		
+	</script>
+</html>
