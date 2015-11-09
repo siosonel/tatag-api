@@ -1,0 +1,15 @@
+{
+	"Introduction": {
+		
+	},
+	"Authorization": {
+		
+	},
+	"Personal": {
+		"concepts": [
+			"me",
+			"memberOf",
+			"holdings"
+		]
+	}	
+}
