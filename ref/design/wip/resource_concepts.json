@@ -1,18 +1,9 @@
 {
 	"public": [
-		"ratings",
-		"rating",
 		"brands",
 		"brand",
 		"promos",
-		"promo",
-		
-		"report",
-		"addedByWeek",
-		"intrauseByWeek",
-		"inflowByWeek",
-		"outflowByWeek",
-		"flowMatrix"
+		"promo"
 	],
 
 	"personal": [
@@ -38,7 +29,9 @@
 		"accounts",	
 		"account",
 		"promos",
-		"promo"
+		"promo",
+		"throttles",
+		"throttle"
 	],
 
 	"brandAdmin": [
@@ -52,7 +45,11 @@
 		"account-holders",
 		"account-holder",
 		"about",
-		"tally"
+		"tally",
+		"promos",
+		"promo",
+		"throttles",
+		"throttle"
 	]
 }
 

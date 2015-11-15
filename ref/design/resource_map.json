@@ -1,14 +1,12 @@
 {
 	"public": {
 		"ratings": {
-			"items": {
-				"#": ["rating"],
+			"rating": {
 				"brand": {}
 			}
 		},
 		"promos": {
-			"items": {
-				"#": ["promo"],
+			"promo": {
 				"brand": {}
 			}
 		},
@@ -20,8 +18,7 @@
 			"flowMatrix": {}			
 		},
 		"brands": {
-			"items": {
-				"#": ["brand"],
+			"brand": {
 				"brand": {}
 			}
 		}
@@ -29,79 +26,73 @@
 
 	"personal": {
 		"me": {
-			"memberOf": {
-				"items": {
-					"team": {}
-				}
+			"memberships": {
+				"membership": {}
 			}, 
-			"holdings": {
-				"items": {
-					"account": {}
+			"holdings": {		
+				"holding": {
+					"user": "",
+					"account": {
+						"records": {
+							"record": {}
+						}
+					}
 				}
 			},
 			"ratings": {
-				"items": {
-					"brand": {}
-				}
+				"rating": {}
 			},
 			"about": {},
-			"logout": ""
+			"logout": "",
+			"teams": {},
+			"brands": {}
 		}
 	},
 
 	"teamMember": {
-		"teams": {
-			"items": {
-				"#": ["team"],
-				"members": {
-					"items": {
-						"#": ["memberInfo"]
-					}
-				},
-				"accounts": {
-					"items": {
-						"#": ["account"]
-					}
-				},
-				"promos": {
-					"items": {
-						"#": ["promo"]
-					}
-				},
-				"about": {},
-				"tally": {}
+		"me": {
+			"teams": {
+				"team": {
+					"members": {
+						"member": {
+							"user": {}
+						}
+					},
+					"accounts": {
+						"account": {}
+					},
+					"promos": {
+						"promo": {}
+					},
+					"tally": {}
+				}
 			}
 		}
 	},	
 
-	"admin": {
-		"brands": {
-			"items": {
-				"#": ["team"],
-				"members": {
-					"items": {
-						"#": ["memberInfo"],
-						"holdings": {
-							"items": {
-								"#": ["holding"],
-								"account": {}
+	"brandAdmin": {
+		"me": {
+			"brands": {
+				"brand": {
+					"members": {
+						"member": {
+							"holdings": {
+								"holding": {
+									"account": {}
+								}
 							}
 						}
-					}
-				},
-				"accounts": {
-					"items": {
-						"#": ["account"],
-						"holders": {
-							"items": {
-								"#": ["holder"],
-								"user": {}
+					},
+					"accounts": {
+						"account": {
+							"holders": {
+								"holder": {}
 							}
 						}
-					}
-				},
-				"about": {},
-				"tally": {}
+					},
+					"about": {},
+					"tally": {}
+				}
 			}
 		}
 	}

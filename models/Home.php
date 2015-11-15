@@ -36,7 +36,7 @@ class Home {
 		
 		if ($date < 20151019) $this->links['deprecated'][] = array(
 			"date"=>20151019, 
-			"reason"=>"use the link rel=user instead",
+			"reason"=>"use the link rel=me instead",
 			"merge-patch"=> array_diff_key($user,array("@id"=>0))
 		);
 		

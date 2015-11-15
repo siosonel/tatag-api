@@ -1,0 +1,133 @@
+{
+	"public": {
+		"promos": {
+			"items": {
+				"#": "promo"
+			}
+		}
+		"brands": {
+			"items": {
+				"#": "brand"
+			}
+		}
+	},
+
+	"personal": {
+		"me": {
+			"memberships": {
+				"items": {
+					"#": "membership"
+				}
+			}, 
+			"holdings": {		
+				"items": {				
+					"#": "holding",
+					"account": {},
+					"accountRecords": {
+						"#": "account-records",
+						"items": {
+							"#": "account-record"
+						}
+					}
+				}
+			},
+			"ratings": {
+				"items": {
+					"#": "rating"
+				}
+			},
+			"about": {},
+			"logout": "",
+			"teams": {
+				"team": {}
+			},
+			"brands": {
+				"team": {}
+			}
+		}
+	},
+
+	"teamMember": {
+		"me": {
+			"teams": {
+				"team": {
+					"teamMembers": {
+						"#": "members",
+						"items": {
+							"#": "member"
+						}
+					},
+					"teamAccounts": {
+						"#": "accounts",
+						"items": {
+							"#": "account"
+						}
+					},
+					"brandPromos": {
+						"#": "promos",
+						"items": {
+							"#": "promo"
+						}
+					},
+					"teamThrottles": {
+						"#": "throttles",
+						"items": {
+							"#": "throttle"
+						}
+					},
+					"tally": {}
+				}
+			}
+		}
+	},	
+
+	"brandAdmin": {
+		"me": {
+			"brands": {
+				"brand": {
+					"brandMembers": {
+						"#": "members",
+						"items": {
+							"#": "member",
+							"accounts": {
+								"#": "member-holdings",
+								"items": {
+									"#": "member-holding",
+									"account": {}
+								}
+							}
+						}
+					},
+					"brandAccounts": {
+						"#": "accounts",
+						"items": {
+							"#": "account",
+							"holders": {
+								"#": "account-holders",
+								"items": {
+									"#": "account-holder"
+								}
+							}
+						}
+					},
+					"brandPromos": {
+						"#": "promos",
+						"items": {
+							"#": "promo"
+						}
+					},
+					"budgetThrottles": {
+						"#": "throttles",
+						"items": {
+							"#": "throttle"
+						}
+					},
+					"brandAbout": {
+						"#": "about"
+					},
+					"tally": {}
+				}
+			}
+		}
+	}
+}

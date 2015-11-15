@@ -7,4 +7,4 @@ $Parsedown = new ParsedownSlate();
 $content = $Parsedown->text($content);
 $languages = array('javascript');
 
-include_once "../../addtd/docs.php";
+include_once "$parserDir/docs.php";

@@ -1,5 +1,6 @@
 ﻿
 _exclude/*
+
 config*
 config/*
 
@@ -12,3 +13,5 @@ php/test.php
 tools/builds/*
 
 ref/examples/*
+
+ref/design/in-progress/*
