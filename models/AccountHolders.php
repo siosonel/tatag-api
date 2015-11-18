@@ -12,6 +12,7 @@ class AccountHolders extends BrandHolders {
 		$this->{'@id'} = "$this->root/account/$this->account_id/holders";
 		$this->table = "holders";
 		$this->idkey = 'holder_id';
+		$this->collectionOf = "holder";
 		
 		$this->init($data);
 		
@@ -41,10 +42,12 @@ class AccountHolders extends BrandHolders {
 			ORDER BY holder_id $this->pageOrder
 			LIMIT $this->itemsLimit";
 		
-		$this->items = DBquery::get($sql, array($this->account_id));
+		$items = DBquery::get($sql, array($this->account_id));
 		
-		foreach($this->items AS &$r) {
+		$this->{$this->collectionOf} = array();
+		foreach($items AS &$r) {
 			$r['@id'] = $this->{'@id'} ."?holder_id=". $r['holder_id'];
+			$this->{$this->collectionOf}[] = $r;
 		}
 		
 		$this->paginate('holder_id');

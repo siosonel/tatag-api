@@ -9,6 +9,7 @@ class BrandAccounts extends Collection {
 		$this->{"@id"} = "$this->root/brand/$this->brand_id/accounts";
 		$this->table = "accounts";
 		$this->idkey = 'account_id';
+		$this->collectionOf = "account";
 		
 		$this->init($data); 
 		
@@ -36,11 +37,13 @@ class BrandAccounts extends Collection {
 	
 	function get() {	
 		$sql = "CALL brandAccountsAsc($this->brand_id, 0, 100)";		
-		$this->items = DBquery::get($sql);
+		$items = DBquery::get($sql);
 		
-		foreach($this->items AS &$r) {
+		$this->{$this->collectionOf} = array();
+		foreach($items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?account_id=". $r['account_id'];
 			$r['holders'] = "$this->root/account/". $r['account_id'] ."/holders";
+			$this->{$this->collectionOf}[] = $r;
 		}
 		
 		//the paginate function will call setForms() when there are no next/prev pages to set

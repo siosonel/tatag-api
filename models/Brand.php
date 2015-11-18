@@ -50,18 +50,19 @@ class Brand extends Base {
 	}	
 	
 	function getInfo() {
-		$sql = "SELECT name, description, mission, created, url, advisor, type_system, type_id, country_code, area_code FROM brands WHERE brand_id=?";
+		$sql = "SELECT name FROM brands WHERE brand_id=?";
 		$row = DBquery::get($sql, array($this->brand_id));
 		if ($row[0]) {
 			foreach($row[0] AS $key=>$val) $this->$key = $val;
 			$this->brand_name = $this->name;
 			
-			$this->brandMembers = "$this->root/brand/$this->brand_id/members";
-			$this->brandAccounts = "$this->root/brand/$this->brand_id/accounts";
-			$this->brandAbout = "$this->root/brand/$this->brand_id/about";		
-			$this->brandPromos = "$this->root/brand/$this->brand_id/promos";	
-			$this->budgetRecords = "$this->root/budget/$this->brand_id/records";	
-			$this->budgetThrottles = "$this->root/budget/$this->brand_id/throttles";
+			$this->members = "$this->root/brand/$this->brand_id/members";
+			$this->accounts = "$this->root/brand/$this->brand_id/accounts";
+			$this->about = "$this->root/brand/$this->brand_id/about";		
+			$this->promos = "$this->root/brand/$this->brand_id/promos";	
+			$this->records = "$this->root/budget/$this->brand_id/records";	
+			$this->throttles = "$this->root/budget/$this->brand_id/throttles";
+			$this->about = "$this->root/brand/$this->brand_id/about";
 		}
 	}
 }

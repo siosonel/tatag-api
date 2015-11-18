@@ -9,6 +9,7 @@ class BrandMembers extends Collection {
 		$this->{"@id"} = "$this->root/brand/$this->brand_id/members";
 		$this->table = "members";	
 		$this->idkey = 'member_id'; 
+		$this->collectionOf = "member";
 		
 		$this->init($data); 
 		
@@ -49,10 +50,13 @@ class BrandMembers extends Collection {
 			ORDER BY member_id $this->pageOrder
 			LIMIT $this->itemsLimit";
 		
-		$this->items = DBquery::get($sql, array($this->brand_id));		
-		foreach($this->items AS &$r) {
+		$items = DBquery::get($sql, array($this->brand_id));
+
+		$this->{$this->collectionOf} = array();
+		foreach($items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?member_id=". $r['member_id'];
-			$r['accounts'] = "$this->root/member/". $r['member_id'] ."/accounts";
+			$r['holdings'] = "$this->root/member/". $r['member_id'] ."/accounts";
+			$this->{$this->collectionOf}[] = $r;
 		}
 		
 		$this->paginate('member_id');

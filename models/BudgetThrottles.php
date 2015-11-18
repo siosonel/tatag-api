@@ -7,6 +7,7 @@ class BudgetThrottles extends Base {
 		$this->{"@type"} = 'budgetThrottles';
 		$this->{"@id"} = "$this->root/budget/$this->brand_id/throttles";
 		$this->table = "throttles";
+		$this->collectionOf = "throttle";
 		
 		$this->init($data);
 			
@@ -27,8 +28,13 @@ class BudgetThrottles extends Base {
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "Only brand #$this->brand_id members have access to this brandThrottles view.");
 	
 		$sql = "SELECT * FROM $this->table WHERE brand_id=? AND ended IS NULL"; 		
-		$this->items = DBquery::get($sql, array($this->brand_id));
-		foreach($this->items AS &$t) $t['@id'] = "$this->root/throttle/". $t['throttle_id'];
+		$items = DBquery::get($sql, array($this->brand_id));
+		
+		$this->{$this->collectionOf} = array();
+		foreach($items AS &$t) {
+			$t['@id'] = "$this->root/throttle/". $t['throttle_id'];
+			$this->{$this->collectionOf}[] = $t;
+		}
 		
 		$this->setForms();
 		return array($this);
