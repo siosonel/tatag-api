@@ -9,6 +9,7 @@ class PromoCollection extends Collection {
 		$this->{'@id'} = "$this->root/promo/collection".$params;
 		$this->table = "promos";
 		$this->idkey = 'promo_id';
+		$this->collectionOf = "promo";
 		
 		if (Router::$method=='add' OR Router::$method=='set') $this->translateInput($data);
 		
@@ -70,10 +71,10 @@ class PromoCollection extends Collection {
 			ORDER BY promo_id $this->pageOrder
 			LIMIT $this->itemsLimit";
 		
-		$this->items = DBquery::get($sql, $this->condVals);		
+		$items = DBquery::get($sql, $this->condVals);		
 		Requester::detectMemberships();
 		
-		foreach($this->items AS &$r) {
+		foreach($items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
 			
@@ -96,6 +97,7 @@ class PromoCollection extends Collection {
 			}
 			
 			if (!$r['expires']) $r['expires'] = "2019-12-31 11:59:59";
+			$this->{$this->collectionOf}[] = $r;
 		}
 		
 		$this->paginate('promo_id');

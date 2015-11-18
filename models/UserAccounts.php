@@ -10,6 +10,8 @@ class UserAccounts extends Base {
 		if (!Requester::isUser($this->user_id)) Error::http(401, "The requester must be logged in as the requested user.");
 		
 		$this->{"@id"} = "$this->root/user/$this->user_id/accounts";
+		$this->collectionOf = "holding";
+		
 		$this->init($data);
 		
 		$this->okToSet = array("alias", "limkey");
@@ -85,6 +87,8 @@ class UserAccounts extends Base {
 			$graph[] = $r;
 			$this->items[] = $r['@id'];
 		}
+		
+		$this->{$this->collectionOf} = $this->items;
 		
 		return $graph;
 	}

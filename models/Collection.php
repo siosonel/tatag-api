@@ -8,6 +8,7 @@ class Collection extends Base {
 	protected $minID;
 	protected $limitID;
 	protected $limitIdArr;
+	public $collectionOf;
 	
 	function setLimitID() {		
 		//will not reset pageOrder if child class has set pageOrder

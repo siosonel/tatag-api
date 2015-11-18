@@ -9,6 +9,7 @@ class UserRatings extends Collection {
 		$this->{"@id"} = "$this->root/user/$this->user_id/ratings";
 		$this->table = "ratings";	
 		$this->idkey = 'rating_id';
+		$this->collectionOf = "rating";
 		
 		if (isset($data->brand_id)) $this->prepOther($data);
 		else if (Router::$method=='POST') Error::http(400, "Missing value for brand_id parameter.");
@@ -80,8 +81,11 @@ class UserRatings extends Collection {
 			ORDER BY rating_id $this->pageOrder
 			LIMIT $this->itemsLimit";
 		
-		$this->items = DBquery::get($sql, array($this->user_id));
-		foreach($this->items AS &$item) $item['@id'] = $this->{"@id"} ."?rating_id=". $item['rating_id']; 
+		$items = DBquery::get($sql, array($this->user_id));
+		foreach($items AS &$item) $item['@id'] = $this->{"@id"} ."?rating_id=". $item['rating_id']; 
+		
+		$this->{$this->collectionOf} = $items;
+		
 		$this->paginate('rating_id');
 		return array($this);
 	}

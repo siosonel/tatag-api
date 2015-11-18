@@ -21,7 +21,7 @@ class Home {
 		
 		foreach($home['@graph'] AS &$r) {
 			foreach($r AS $key=>&$val) {
-				if (gettype($val)=="string" AND substr($val,0,5)!='/api/' AND substr($val,0,1)=="/") $val = Router::$root . $val;
+				//if (gettype($val)=="string" AND substr($val,0,5)!='/api/' AND substr($val,0,1)=="/") $val = Router::$root . $val;
 				$val = str_replace("{user_id}", Requester::$user_id, $val);
 			}
 		}
