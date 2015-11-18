@@ -45,7 +45,7 @@ class Router {
 				OR self::$subresource=='throttles' 
 				OR strpos(self::$resource, 'budget')!==false 
 				OR (self::$resource=='token' AND !self::$id) 
-				OR (self::$resource=='sim')
+				OR self::$resource=='sim'
 			) $method = 'add';
 			else $method = 'set';
 		}
@@ -65,7 +65,7 @@ class Router {
 	}
 	
 	public static function getResource($data) {
-		$ObjClass = ucfirst(self::$resource) . ucfirst(self::$subresource);
+		$ObjClass = (self::$resource=="form") ? ucfirst(self::$resource) : ucfirst(self::$resource) . ucfirst(self::$subresource);
 		if (!self::$resource OR !file_exists("models/$ObjClass.php")) Error::http(404, "The resource was not found.", self::getLinks());
 				
 		require_once "models/$ObjClass.php";

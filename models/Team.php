@@ -41,9 +41,9 @@ class Team extends Base {
 		
 		$this->setForms();
 		if (!$this->member_id OR $this->revoked) 
-			$this->actions = array_values(array_diff($this->actions, array("$this->root/forms#member-revoke")));
+			$this->actions = array_values(array_diff($this->actions, array("$this->root/form/member-revoke")));
 		if ($this->joined) 
-			$this->actions = array_values(array_diff($this->actions, array("$this->root/forms#member-accept")));
+			$this->actions = array_values(array_diff($this->actions, array("$this->root/form/member-accept")));
 		
 		
 		include_once "models/TeamMembers.php";

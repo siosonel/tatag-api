@@ -92,7 +92,7 @@ class PromoCollection extends Collection {
 			}
 			
 			if (Requester::isMember($r['brand_id'])) {
-				$r['promo-edit'] = '/forms#promo-edit';
+				$r['promo-edit'] = '/form/promo-edit';
 			}
 			
 			if (!$r['expires']) $r['expires'] = "2019-12-31 11:59:59";

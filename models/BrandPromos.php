@@ -52,13 +52,13 @@ class BrandPromos extends PromoCollection {
 			
 			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[amount]";
 			
-			$r['promo-edit'] = '/forms#promo-edit';
+			$r['promo-edit'] = '/form/promo-edit';
 			
 			$relayHoldings = array();
 			
 			if (in_array($r['relay_id'],$relayHoldings) OR Requester::isRelayHolder($r['relay_id'])) {
 				$relayHoldings[] = $r['relay_id'];
-				$r['relay-edit'] = '/forms#relay-edit';
+				$r['relay-edit'] = '/form/relay-edit';
 				$r['relay-edit-target'] = "/relay/".$r['relay_id'];
 			}
 			

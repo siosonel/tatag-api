@@ -74,11 +74,11 @@ class HolderRelays extends Collection {
 			$r['token'] = $r['secret'] ? $r['relay_id'] .".". $r['secret'] : $r['relay_id'];
 			$r['@id'] = "$this->root/relay/". $r['relay_id'];
 			$r['@type'] = 'relay';
-			$r['relay-edit'] = '/forms#relay-edit';
+			$r['relay-edit'] = '/form/relay-edit';
 		}
 		
 		$this->paginate('relay_id');
-		$this->{'relay-add'} = "/forms#holder-relays-add";
+		$this->{'relay-add'} = "/form/holder-relays-add";
 		return array($this);
 	}
 }

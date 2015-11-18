@@ -54,14 +54,14 @@
 		},	
 		
 		"relatedActions": {
-			"brandCollection": ["/forms#brand-registration"],
-			"promoCollection": ["/forms#promo-search"]
+			"brandCollection": ["/form/brand-registration"],
+			"promoCollection": ["/form/promo-search"]
 		},
 		
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#user-edit",
+			"@id": "/form/user-edit",
 			"method": "POST",
 			
 			"inputs": {
@@ -89,7 +89,7 @@
 		},{
 			"title": "Deactivate",
 			"@type": "form",
-			"@id": "/forms#user-deactivate",
+			"@id": "/form/user-deactivate",
 			"method": "DELETE"
 		}]
 	},
@@ -105,7 +105,7 @@
 		"actions": [{
 			"title": "Accept or Rescind Membership",
 			"@type": "form",
-			"@id": "/forms#member-edit",
+			"@id": "/form/member-edit",
 			"method": "POST",
 			
 			"query": {
@@ -155,7 +155,7 @@
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#holder-edit",
+			"@id": "/form/holder-edit",
 			"method": "POST",
 			
 			"query": {
@@ -194,9 +194,9 @@
 		}],
 		
 		"relatedActions": {
-			"budgetIssued": ["/forms#budget-add"],
-			"budgetTransferred": ["/forms#budget-transfer"],
-			"budgetUsed": ["/forms#budget-use"]
+			"budgetIssued": ["/form/budget-add"],
+			"budgetTransferred": ["/form/budget-transfer"],
+			"budgetUsed": ["/form/budget-use"]
 		}
 	},
 	
@@ -211,7 +211,7 @@
 		"actions": [{
 			"title": "User registration",
 			"@type": "form",
-			"@id": "/forms#user-registration",
+			"@id": "/form/user-registration",
 			"method": "POST",
 			
 			"inputs": {
@@ -256,7 +256,7 @@
 		{
 			"title": "Add a rating",
 			"@type": "form",
-			"@id": "/forms#rating-add",
+			"@id": "/form/rating-add",
 			"method": "POST",
 			
 			"inputs": {
@@ -302,7 +302,7 @@
 		{
 			"title": "Update a rating",
 			"@type": "form",
-			"@id": "/forms#rating-edit",
+			"@id": "/form/rating-edit",
 			"method": "POST",
 			
 			"inputs": {
@@ -341,7 +341,7 @@
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#brand-edit",
+			"@id": "/form/brand-edit",
 			"method": "POST",
 			
 			"inputs": {
@@ -386,7 +386,7 @@
 		{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#admin-member-edit",
+			"@id": "/form/admin-member-edit",
 			"method": "POST",
 			
 			"inputs": {
@@ -426,7 +426,7 @@
 		{
 			"title": "Add a member",
 			"@type": "form",
-			"@id": "/forms#member-add",
+			"@id": "/form/member-add",
 			"method": "POST",
 			
 			"inputs": {
@@ -472,7 +472,7 @@
 		{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#admin-account-edit",
+			"@id": "/form/admin-account-edit",
 			"method": "POST",
 			
 			"inputs": {
@@ -512,7 +512,7 @@
 		{
 			"title": "Add an account",
 			"@type": "form",
-			"@id": "/forms#account-add",
+			"@id": "/form/account-add",
 			"method": "POST",
 			
 			"inputs": {
@@ -558,7 +558,7 @@
 		{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#admin-holder-edit",
+			"@id": "/form/admin-holder-edit",
 			"method": "POST",
 			
 			"inputs": {
@@ -597,7 +597,7 @@
 		{
 			"title": "Add an account holder",
 			"@type": "form",
-			"@id": "/forms#holder-add",
+			"@id": "/form/holder-add",
 			"method": "POST",
 			
 			"inputs": {
@@ -640,14 +640,14 @@
 		},
 		
 		"relatedActions": {
-			"throttle": ["/forms#admin-throttle-edit"]
+			"throttle": ["/form/admin-throttle-edit"]
 		},
 		
 		"actions": [
 		{
 			"title": "Add an inflow throttle",
 			"@type": "form",
-			"@id": "/forms#throttle-add",
+			"@id": "/form/throttle-add",
 			"method": "POST",
 			
 			"inputs": {
@@ -693,14 +693,14 @@
 		},
 		
 		"relatedActions": {
-			"brandHolders": ["/forms#admin-holder-edit", "forms#holder-add"]
+			"brandHolders": ["/form/admin-holder-edit", "forms#holder-add"]
 		},
 		
 		"actions": [
 		{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#admin-holder-edit",
+			"@id": "/form/admin-holder-edit",
 			"method": "POST",
 			
 			"inputs": {
@@ -731,7 +731,7 @@
 		{
 			"title": "Add an account holder",
 			"@type": "form",
-			"@id": "/forms#holder-add",
+			"@id": "/form/holder-add",
 			"method": "POST",
 			
 			"inputs": {
@@ -775,7 +775,7 @@
 		},
 		
 		"relatedActions": {
-			"brandHolders": ["/forms#admin-holder-edit", "forms#holder-add"]
+			"brandHolders": ["/form/admin-holder-edit", "forms#holder-add"]
 		},
 		
 		"actions": []
@@ -803,7 +803,7 @@
 		"actions": [{
 			"title": "Brand registration",
 			"@type": "form",
-			"@id": "/forms#brand-registration",			
+			"@id": "/form/brand-registration",			
 			"method": "POST",
 			"target": "/brand/collection",
 			
@@ -850,7 +850,7 @@
 		{
 			"title": "Issue budget",
 			"@type": "form",
-			"@id": "/forms#budget-add",			
+			"@id": "/form/budget-add",			
 			"method": "POST",
 			"target": "/budget/issued",
 			
@@ -893,7 +893,7 @@
 		{
 			"title": "Reverse issued budget",
 			"@type": "form",
-			"@id": "/forms#budget-unadd",
+			"@id": "/form/budget-unadd",
 			"method": "POST",
 			"target": "/budget/issued",
 			
@@ -937,7 +937,7 @@
 		{
 			"title": "Transfer budget",
 			"@type": "form",
-			"@id": "/forms#budget-transfer",
+			"@id": "/form/budget-transfer",
 			"method": "POST",
 			"target": "/budget/transferred",
 			
@@ -968,7 +968,7 @@
 		{
 			"title": "Reverse transferred budget",
 			"@type": "form",
-			"@id": "/forms#budget-untransfer",
+			"@id": "/form/budget-untransfer",
 			"method": "POST",
 			"target": "/budget/transferred",
 			
@@ -1012,7 +1012,7 @@
 		{
 			"title": "Use budget",
 			"@type": "form",
-			"@id": "/forms#budget-use",
+			"@id": "/form/budget-use",
 			"method": "POST",
 			"target": "/budget/used",
 			
@@ -1101,7 +1101,7 @@
 		{
 			"title": "Reverse used budget",
 			"@type": "form",
-			"@id": "/forms#budget-unuse",
+			"@id": "/form/budget-unuse",
 			"method": "POST",
 			"target": "/budget/used",
 			
@@ -1142,16 +1142,16 @@
 		},
 		
 		"relatedActions": {
-			"budgetIssued": ["/forms#budget-unadd"],
-			"budgetTransferred": ["/forms#budget-untransfer"],
-			"budgetUsed": ["/forms#budget-unuse"]
+			"budgetIssued": ["/form/budget-unadd"],
+			"budgetTransferred": ["/form/budget-untransfer"],
+			"budgetUsed": ["/form/budget-unuse"]
 		},
 		
 		"actions": [
 		{
 			"title": "Hold transaction (disable auto-approval)",
 			"@type": "form",
-			"@id": "/forms#record-hold",
+			"@id": "/form/record-hold",
 			"method": "POST",
 			
 			"query": {
@@ -1185,7 +1185,7 @@
 		{
 			"title": "Manually approve transaction",
 			"@type": "form",
-			"@id": "/forms#record-approve",
+			"@id": "/form/record-approve",
 			"method": "POST",
 			
 			"query": {
@@ -1219,7 +1219,7 @@
 		{
 			"title": "Manually reject transaction",
 			"@type": "form",
-			"@id": "/forms#record-reject",
+			"@id": "/form/record-reject",
 			"method": "POST",
 			
 			"query": {
@@ -1281,7 +1281,7 @@
 		{
 			"title": "Accept Membership",
 			"@type": "form",
-			"@id": "/forms#member-accept",
+			"@id": "/form/member-accept",
 			"method": "POST",
 			
 			"query": {
@@ -1310,7 +1310,7 @@
 		{
 			"title": "Revoke Membership",
 			"@type": "form",
-			"@id": "/forms#member-revoke",
+			"@id": "/form/member-revoke",
 			"method": "POST",
 			
 			"query": {
@@ -1369,7 +1369,7 @@
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#admin-throttle-edit",
+			"@id": "/form/admin-throttle-edit",
 			"method": "POST",
 			
 			"inputs": {
@@ -1400,13 +1400,13 @@
 		},
 		
 		"relatedActions": {
-			"relay": ["/forms#relay-edit"]
+			"relay": ["/form/relay-edit"]
 		},
 		
 		"actions": [{
 			"title": "Add",
 			"@type": "form",
-			"@id": "/forms#holder-relays-add",
+			"@id": "/form/holder-relays-add",
 			"method": "POST",
 			
 			"inputs": {
@@ -1452,7 +1452,7 @@
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#relay-edit",
+			"@id": "/form/relay-edit",
 			"method": "POST",
 			
 			"inputs": {
@@ -1497,13 +1497,13 @@
 		},
 		
 		"relatedActions": {
-			"relay": ["/forms#relay-edit"]
+			"relay": ["/form/relay-edit"]
 		},
 		
 		"actions": [{
 			"title": "Edit",
 			"@type": "form",
-			"@id": "/forms#promo-edit",
+			"@id": "/form/promo-edit",
 			"method": "POST",
 			
 			"inputs": {
@@ -1544,14 +1544,14 @@
 		},
 		
 		"relatedActions": {
-			"promo": ["/forms#promo-edit"],
-			"relay": ["/forms#relay-edit"]
+			"promo": ["/form/promo-edit"],
+			"relay": ["/form/relay-edit"]
 		},
 		
 		"actions": [{
 			"title": "Add",
 			"@type": "form",
-			"@id": "/forms#promo-add",
+			"@id": "/form/promo-add",
 			"method": "POST",
 			
 			"inputs": {
@@ -1607,15 +1607,15 @@
 		},
 		
 		"relatedActions": {
-			"budgetUsed": ["/forms#budget-use"],
-			"brandPromos": ["/forms#promo-add"],
-			"promo": ["/forms#promo-edit"]
+			"budgetUsed": ["/form/budget-use"],
+			"brandPromos": ["/form/promo-add"],
+			"promo": ["/form/promo-edit"]
 		},
 		
 		"actions": [{
 			"title": "Search",
 			"@type": "form",
-			"@id": "/forms#promo-search",
+			"@id": "/form/promo-search",
 			"method": "POST",
 			"target": "/promo/collection",
 			

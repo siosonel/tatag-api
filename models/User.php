@@ -37,7 +37,7 @@ class User extends Base {
 		$this->userRatings = $this->{'@id'}."/ratings";
 		$this->promoCollection = "$this->root/promo/collection";
 		$this->brandCollection = "$this->root/brand/collection";
-		$this->promoSearch = "/forms#promo-search";
+		$this->promoSearch = "/form/promo-search";
 		$this->setForms();	
 		
 		include_once "models/UserBrands.php";		

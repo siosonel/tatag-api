@@ -16,7 +16,7 @@ class ForwardVerifier {
 	}
 	
 	function verifyHolder($data, $ft) {
-		if ($ft=='to' AND strpos($data->to,"-") != false) $this->usePromo($data);
+		if ($ft=='to' AND strpos($data->to,"-") != false AND !is_numeric(explode("-", $data->to)[0])) $this->usePromo($data);
 		
 		if (strpos($data->$ft,"-")==false OR strpos($data->$ft, ".")) $data->$ft = $this->relayToHolderInfo($data, $ft);  
 		list($holder_id, $limkey) = explode("-", $data->$ft);

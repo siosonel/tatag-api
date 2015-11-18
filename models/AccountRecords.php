@@ -62,16 +62,16 @@ class AccountRecords extends Collection {
 				$action = $actions[$r['txntype']];
 				$r['orig_record_id'] = $r['record_id'];
 				
-				if ($r['direction']=='from') $r["budget-un$action"] = "$this->root/forms#budget-un$action";
+				if ($r['direction']=='from') $r["budget-un$action"] = "$this->root/form/budget-un$action";
 				else $r['relay']["budget-un$action"] = $this->holder_id ."-". $this->limkey ."-". $r['txntype'];
 				
 				$r['relay']["default"] = $this->holder_id ."-". $this->limkey;
 			}
 			
 			if ($status>=0 AND $status<7 AND (($r['direction']=='from' AND $amount>0) OR ($r['direction']=='to' AND $amount<0))) {
-				if ($status==0) $r['record-hold']="$this->root/forms#record-hold";
-				$r['record-approve']="$this->root/forms#record-approve";
-				$r['record-reject']="$this->root/forms#record-reject";
+				if ($status==0) $r['record-hold']="$this->root/form/record-hold";
+				$r['record-approve']="$this->root/form/record-approve";
+				$r['record-reject']="$this->root/form/record-reject";
 				
 				if ($r['brand_id']!=$this->brand_id) {
 					if (!isset($this->advisor)) $this->advisor = $this->getAdvisor();

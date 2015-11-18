@@ -80,7 +80,7 @@ class UserAccounts extends Base {
 			
 			$this->setAllowedActions($r, $account);
 			$r['accountRecords'] = "$this->root/account/$account[account_id]/records";
-			$r['holder-edit'] = "$this->root/forms#holder-edit";
+			$r['holder-edit'] = "$this->root/form/holder-edit";
 			$r['relays'] = "$this->root/holder/$r[holder_id]/relays";
 			$graph[] = $r;
 			$this->items[] = $r['@id'];
@@ -99,15 +99,15 @@ class UserAccounts extends Base {
 		
 		if (strpos($auth,"c")) {
 			if ($account['sign']==1) $r['relay']['budget-add'] = $r['holder_id']."-".$r['limkey']."-c";
-			else $r['budget-add'] = "$this->root/forms#budget-add";
+			else $r['budget-add'] = "$this->root/form/budget-add";
 		}
 
-		if (strpos($auth,"f")) $r['budget-transfer'] = "$this->root/forms#budget-transfer";
+		if (strpos($auth,"f")) $r['budget-transfer'] = "$this->root/form/budget-transfer";
 		if (strpos($auth,"t")) $r['relay']['budget-transfer'] = $r['holder_id']."-".$r['limkey']."-t";
 		
 		if (strpos($auth,"i") OR strpos($auth,"x")) {
 			if ($account['sign']==-1) $r['relay']['budget-use'] = $r['holder_id']."-".$r['limkey']."-ix";
-			else $r['budget-use'] = "$this->root/forms#budget-use";
+			else $r['budget-use'] = "$this->root/form/budget-use";
 		}
 		
 		unset($r['authcode']);
