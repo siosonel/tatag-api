@@ -50,35 +50,32 @@ class Team extends Base {
 		include_once "models/TeamAccounts.php";
 		include_once "models/TeamThrottles.php";
 		include_once "models/BrandPromos.php";
+		
 		$obj = json_decode('{"brand_id":' . $this->brand_id .'}');
 		
-		return array_merge(
-			array($this),
+		return array(
+			$this,
 			(new TeamMembers($obj))->get(),
 			(new TeamAccounts($obj))->get(),
 			(new TeamThrottles($obj))->get(),
-			(new BrandPromos($obj))->get()
+			(new BrandPromos($obj))->get()			
 		);
 	}	
 	
 	function getInfo() {
-		$sql = "SELECT name, description, mission, created, url, advisor, type_system, type_id, country_code, area_code FROM brands WHERE brand_id=?";
+		$sql = "SELECT name FROM brands WHERE brand_id=?";
 		$row = DBquery::get($sql, array($this->brand_id));
 		if ($row[0]) {
-			foreach($row[0] AS $key=>$val) $this->$key = $val;
+			$about = new stdClass();
+			foreach($row[0] AS $key=>$val) $about->$key = $val;
 			$this->brand_name = $this->name;
 			
-			$area_codes = json_decode(file_get_contents("ref/area_codes/". $row[0]['country_code'] .".json"));			
-			foreach($area_codes AS $loc=>$num) {
-				if ($num==$row[0]['area_code']) {$this->area_name = $loc; break;}
-			}
-			
-			$this->teamMembers = "$this->root/team/$this->brand_id/members";
-			$this->teamAccounts = "$this->root/team/$this->brand_id/accounts";							
-			$this->teamThrottles = "$this->root/team/$this->brand_id/throttles";
-			$this->budgetRecords = "$this->root/budget/$this->brand_id/records";	
-			$this->teamAbout = "$this->root/brand/$this->brand_id/about";
-			$this->brandPromos = "$this->root/brand/$this->brand_id/promos";
+			$this->members = "$this->root/team/$this->brand_id/members";
+			$this->accounts = "$this->root/team/$this->brand_id/accounts";							
+			$this->throttles = "$this->root/team/$this->brand_id/throttles";
+			$this->records = "$this->root/budget/$this->brand_id/records";	
+			$this->about = "$this->root/brand/$this->brand_id/about";
+			$this->promos = "$this->root/brand/$this->brand_id/promos";
 		}
 	}
 	

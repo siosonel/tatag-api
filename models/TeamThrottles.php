@@ -4,9 +4,10 @@ class TeamThrottles extends Base {
 	function __construct($data='') {
 		$this->brand_id = $this->getID();
 		
-		$this->{"@type"} = 'teamThrottles';
+		$this->{"@type"} = 'throttles';
 		$this->{"@id"} = "$this->root/team/$this->brand_id/throttles";
 		$this->table = "throttles";
+		$this->collectionOf = "throttle";
 		
 		$this->init($data);
 		$this->okToFilterBy = array("throttle_id");
@@ -16,8 +17,11 @@ class TeamThrottles extends Base {
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "Only brand #$this->brand_id members have access to this brandThrottles view.");
 	
 		$sql = "SELECT * FROM $this->table WHERE brand_id=? AND ended IS NULL"; 		
-		$this->items = DBquery::get($sql, array($this->brand_id));
-		foreach($this->items AS &$t) $t['@id'] = "$this->root/throttle/". $t['throttle_id'];
+		$items = DBquery::get($sql, array($this->brand_id));
+		foreach($items AS &$t) {
+			$t['@id'] = "$this->root/throttle/". $t['throttle_id'];
+			$this->{$this->collectionOf}[] = $t;
+		}
 		
 		$this->setForms();
 		return array($this);

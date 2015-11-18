@@ -32,6 +32,7 @@ class Collection extends Base {
 	}
 	
 	function paginate($keyName, $items=null) {
+		if (!$items AND isset($this->{$this->collectionOf})) $items = $this->{$this->collectionOf}; 
 		if (!$items) $items = $this->items;
 		
 		$min = 99999999;

@@ -6,10 +6,11 @@ class TeamMembers extends Collection {
 		$this->brand_id = $this->getID();
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "The '/team/$this->brand_id/members' resource is only viewable by members of brand #$this->brand_id.");
 		
-		$this->{"@type"} = 'teamMembers';			
+		$this->{"@type"} = 'members';			
 		$this->{"@id"} = "$this->root/team/$this->brand_id/members";
 		$this->table = "members";	
 		$this->idkey = 'member_id'; 
+		$this->collectionOf = "member";
 		
 		$this->init($data); 
 		$this->okToSet = array("role", 'hours','ended');		 
@@ -25,9 +26,10 @@ class TeamMembers extends Collection {
 			ORDER BY member_id $this->pageOrder
 			LIMIT $this->itemsLimit";
 		
-		$this->items = DBquery::get($sql, array($this->brand_id));		
-		foreach($this->items AS &$r) {
+		$items = DBquery::get($sql, array($this->brand_id));		
+		foreach($items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?member_id=". $r['member_id'];
+			$this->{$this->collectionOf}[] = $r;
 		}
 		
 		$this->paginate('member_id');

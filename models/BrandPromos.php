@@ -8,11 +8,12 @@ class BrandPromos extends PromoCollection {
 		
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "The requester is not a member of brand #$this->brand_id.");
 		
-		$this->{"@type"} = "brandPromos";
+		$this->{"@type"} = "promos";
 		$params = $_GET ? '?'. http_build_query($_GET) : '';
 		$this->{'@id'} = "$this->root/brand/$this->brand_id/promos".$params;
 		$this->table = "promos";
 		$this->idkey = 'promo_id';
+		$this->collectionOf = "promo";
 		
 		if (Router::$method=='add' OR Router::$method=='set') $this->translateInput($data);
 		
@@ -41,9 +42,9 @@ class BrandPromos extends PromoCollection {
 			ORDER BY promo_id ASC
 			LIMIT $this->itemsLimit";
 		
-		$this->items = DBquery::get($sql, $this->filterValArr);		
+		$items = DBquery::get($sql, $this->filterValArr);		
 		
-		foreach($this->items AS &$r) {
+		foreach($items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
 			$r['payLink'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";
@@ -60,6 +61,8 @@ class BrandPromos extends PromoCollection {
 				$r['relay-edit'] = '/forms#relay-edit';
 				$r['relay-edit-target'] = "/relay/".$r['relay_id'];
 			}
+			
+			$this->{$this->collectionOf}[] = $r;
 		}
 		
 		$this->paginate('promo_id');
