@@ -66,6 +66,7 @@ class UserAccounts extends Base {
 				$account["@id"] = $r['account'];
 				$account["balance"] = number_format(1*$account['balance'], 2, ".", "");
 				$account["brand"] = "$this->root/brand/$r[brand_id]";
+				$account['records'] = "$this->root/account/$account[account_id]/records";
 				
 				$graph[] = $account;
 				$tracked[] = $r['account'];
@@ -81,7 +82,6 @@ class UserAccounts extends Base {
 			}
 			
 			$this->setAllowedActions($r, $account);
-			$r['accountRecords'] = "$this->root/account/$account[account_id]/records";
 			$r['holder-edit'] = "$this->root/form/holder-edit";
 			$r['relays'] = "$this->root/holder/$r[holder_id]/relays";
 			$graph[] = $r;

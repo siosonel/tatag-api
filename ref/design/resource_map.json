@@ -18,23 +18,21 @@
 			"flowMatrix": {}			
 		},
 		"brands": {
-			"brand": {
-				"brand": {}
-			}
+			"items": {}
 		}
 	},
 
 	"personal": {
 		"me": {
 			"memberships": {
-				"membership": {}
+				"items": {}
 			}, 
 			"holdings": {		
 				"holding": {
 					"user": "",
 					"account": {
 						"records": {
-							"record": {}
+							"items": {}
 						}
 					}
 				}
@@ -52,7 +50,7 @@
 	"teamMember": {
 		"me": {
 			"teams": {
-				"team": {
+				"brand": {
 					"members": {
 						"member": {
 							"user": {}
