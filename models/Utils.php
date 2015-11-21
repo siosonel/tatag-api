@@ -2,6 +2,7 @@
 
 class PhlatMedia {
 	private static $format = "formatDefault";
+	public static $hints = array();
 
 	public static function write($output, $error="") {		
 		$response = self::{self::$format}($output, $error);
@@ -14,7 +15,8 @@ class PhlatMedia {
 		$wrapper->{"@context"}= "/api/ref/context.php";		
 		//$wrapper->{"@base"} = Router::$root;
 		
-		if ($error) $wrapper->error = $error;			
+		if ($error) $wrapper->error = $error;	
+		$wrapper->hints = self::$hints;		
 		$wrapper->{"@graph"} = $output;
 		return $wrapper;
 	}

@@ -38,12 +38,13 @@ class AccountRecords extends Collection {
 	function get() {
 		$actions = array("pn"=>"use", "np"=>"add", "pp"=>"transfer", "nn"=>"transfer");
 		$advisory = array();		
-		
+		$graph = array($this);
+				
 		//only desc order, no option to order asc
-		$sql = "CALL accountRecords($this->account_id, $this->limitID, $this->itemsLimit)";
-		$this->items = DBquery::get($sql); 		
+		$sql = "CALL accountRecords($this->account_id, $this->limitID, $this->itemsLimit, $this->minUpdated, $this->cutoffID)";
+		$items = DBquery::get($sql); 		
 		
-		foreach($this->items AS &$r) {
+		foreach($items AS &$r) {
 			$r['@type'] = 'accountRecord';
 			$r['@id'] = $this->{'@id'} .'?record_id='. $r['record_id'];
 		
@@ -57,13 +58,15 @@ class AccountRecords extends Collection {
 			
 			$status = $r['status'];
 			$amount = $r['amount'];
-			
+						
 			if ($amount > 0 AND $status==7) {
 				$action = $actions[$r['txntype']];
 				$r['orig_record_id'] = $r['record_id'];
 				
-				if ($r['direction']=='from') $r["budget-un$action"] = "$this->root/form/budget-un$action";
-				else $r['relay']["budget-un$action"] = $this->holder_id ."-". $this->limkey ."-". $r['txntype'];
+				if ($action != 'transfer') {
+					if ($r['direction']=='from') $r["budget-un$action"] = "$this->root/form/budget-un$action";
+					else $r['relay']["budget-un$action"] = $this->holder_id ."-". $this->limkey ."-". $r['txntype'];
+				}
 				
 				$r['relay']["default"] = $this->holder_id ."-". $this->limkey;
 			}
@@ -79,10 +82,14 @@ class AccountRecords extends Collection {
 					$r['advisory'] = $advisory[$r['brand_id']];
 				}
 			}
+			
+			$graph[] = $r;
+			$this->items[] = $r['@id'];
 		}
 		
-		$this->paginate('record_id');
-		return array($this);
+		$this->paginate('record_id', $graph);
+		
+		return $graph;
 	}
 	
 	function getAdvisor() {

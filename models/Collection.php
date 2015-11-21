@@ -5,10 +5,14 @@ class Collection extends Base {
 	public $pageOrder;
 	protected $ltgt;
 	public $itemsLimit = 50;
-	protected $minID;
+	protected $minID = 999999999;
+	protected $maxID = 0;
 	protected $limitID;
 	protected $limitIdArr;
-	public $collectionOf;
+	protected $minUpdated = 0;
+	protected $cutoffID = 0;	
+	public $collectionOf; //the items-equivalent link relation name 
+	public $pageOf; //the @id of the collection home
 	
 	function setLimitID() {		
 		//will not reset pageOrder if child class has set pageOrder
@@ -30,23 +34,41 @@ class Collection extends Base {
 			$this->limitID = $this->limitIdArr[count($this->limitIdArr)-1];
 			unset($_GET['limitIDs']);
 		}
+		
+		
+		if (isset($_GET['minUpdated'])) {
+			if (is_numeric($_GET['minUpdated'])) $this->minUpdated = $_GET['minUpdated']; 
+			unset($_GET['minUpdated']);
+		}
+		
+		if (isset($_GET['cutoffID'])) {
+			if (is_numeric($_GET['cutoffID'])) $this->cutoffID = $_GET['cutoffID']; 
+			unset($_GET['cutoffID']);
+		}
 	}
 	
 	function paginate($keyName, $items=null) {
+		$this->pageOf = $this->{'@id'};
+		$maxUpdated = 0;
+		
 		if (!$items AND isset($this->{$this->collectionOf})) $items = $this->{$this->collectionOf}; 
-		if (!$items) $items = $this->items;
-		
-		$min = 99999999;
-		$max = 0;
-		
+		if (!$items) $items = $this->items; 
+	
 		foreach($items AS $r) {
-			if ($r[$keyName] < $min) $min = $r[$keyName];
-			if ($r[$keyName] > $max) $max = $r[$keyName];
-		} //echo "[$min][$this->minID][$max][$this->limitID]";
-		
+			if (is_array($r)) {
+				if ($r[$keyName] < $this->minID) $this->minID = $r[$keyName];
+				if ($r[$keyName] > $this->maxID) $this->maxID = $r[$keyName];
+				if ($r['updated'] > $this->minUpdated) $this->minUpdated = $r['updated'];
+			}	
+			else if ($r->$keyName) {
+				if ($r->$keyName < $this->minID) $this->minID = $r->$keyName;
+				if ($r->$keyName > $this->maxID) $this->maxID = $r->$keyName;
+				if ($r->updated > $this->minUpdated) $this->minUpdated = $r->updated;
+			}
+		}
 	
 		$query = http_build_query($_GET);
-		$this->pageDesc($items,$min,$max,$query);
+		$this->pageDesc($items,$this->minID,$this->maxID,$query);
 		//else $this->pageAsc($query);
 		
 		//reset @id as needed
@@ -58,7 +80,18 @@ class Collection extends Base {
 		//embed forms only in the first page
 		if ($this->limitIdArr OR $_GET['itemsLimit']) $this->embedForms = false;
 		
-		$this->setForms();
+		//$this->setForms();
+		
+		//
+		if (!count($items)) {
+			$updatedItemsLink = "$this->pageOf?minUpdated=$this->minUpdated&cutoffID=$this->cutoffID";  
+		}		
+		else {
+			if (!$this->cutoffID) $this->cutoffID = $this->pageOrder=='desc' ? $this->minID : $this->maxID;
+			$updatedItemsLink = "$this->pageOf?minUpdated=$this->minUpdated&cutoffID=$this->cutoffID";  
+		}
+		
+		PhlatMedia::$hints[$this->pageOf]['refresh'] = $updatedItemsLink;
 	}
 	
 	function pageDesc($items,$min,$max,$query) {
