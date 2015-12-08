@@ -15,7 +15,7 @@
 		"flowMatrix"
 	],
 
-	"personal": [
+	"my": [
 		"me",		
 		"memberships",
 		"membership",
@@ -31,7 +31,7 @@
 		"brands"
 	],
 
-	"teamMember": [
+	"team": [
 		"brand",
 		"members",
 		"member",		
@@ -41,7 +41,7 @@
 		"promo"
 	],
 
-	"brandAdmin": [
+	"admin": [
 		"brand",
 		"members",
 		"member",

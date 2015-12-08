@@ -490,7 +490,7 @@
 				},					
 				
 				"inputs": {
-					"name": "personal -{xtime}",
+					"name": "my -{xtime}",
 					"authcode": "ft -{random}"
 				},
 				"status": 200
@@ -503,7 +503,7 @@
 				},					
 				
 				"inputs": {
-					"name": "personal -{xtime}",
+					"name": "my -{xtime}",
 					"authcode": "{random}"
 				},
 				"status": 403
@@ -588,7 +588,7 @@
 				},					
 				
 				"inputs": {
-					"name": "personal -{xtime}",
+					"name": "my -{xtime}",
 					"authcode": "{random}"
 				},
 				"status": 403
@@ -722,7 +722,7 @@
 				"target": "/member/54/accounts?holder_id=45",
 				"method": "POST",					
 				"inputs": {
-					"name": "personal -{xtime}",
+					"name": "my -{xtime}",
 					"authcode": "{random}"
 				},
 				"status": 403

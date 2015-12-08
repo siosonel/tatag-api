@@ -48,6 +48,8 @@ class UserAccounts extends Base {
 		$tracked = array();
 		
 		foreach($items AS &$r) {
+			if (!$r['alias']) $r['alias'] = $r['account_name']; 
+		
 			$r['relay'] = array();
 			$r['@type'] = 'userAccount';
 			$r['@id'] = $this->{'@id'} ."?holder_id=$r[holder_id]"; 	
@@ -83,6 +85,7 @@ class UserAccounts extends Base {
 			
 			$this->setAllowedActions($r, $account);
 			$r['holder-edit'] = "$this->root/form/holder-edit";
+			$r['edit'] = "$this->root/form/holder-edit";
 			$r['relays'] = "$this->root/holder/$r[holder_id]/relays";
 			$graph[] = $r;
 			$this->items[] = $r['@id'];

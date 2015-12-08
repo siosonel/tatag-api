@@ -6,7 +6,7 @@
 		"promo"
 	],
 
-	"personal": [
+	"my": [
 		"me",		
 		"memberships",
 		"membership",
@@ -22,7 +22,7 @@
 		"brands"
 	],
 
-	"teamMember": [
+	"team": [
 		"team",
 		"members",
 		"member",		
@@ -34,7 +34,7 @@
 		"throttle"
 	],
 
-	"brandAdmin": [
+	"admin": [
 		"brand",
 		"members",
 		"member",

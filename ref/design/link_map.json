@@ -8,7 +8,7 @@
 		"brands": {}
 	},
 
-	"personal": {
+	"my": {
 		"me": {
 			"teams": {
 				"team": {}
@@ -21,7 +21,7 @@
 		}
 	},
 
-	"teamMember": {
+	"team": {
 		"me": {
 			"teams": {
 				"team": {
@@ -34,7 +34,7 @@
 		}
 	},	
 
-	"brandAdmin": {
+	"admin": {
 		"me": {
 			"brands": {
 				"team": {
