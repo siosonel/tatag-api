@@ -97,16 +97,16 @@ A bit of a dance using Oauth.
 
 
 
-# Common Resources
+# Public Resources
 
 These resources do not require a user to be logged-in.
 
 
-## promos
+## public-promos
 
 ```
 
-api.loadConcept('publishedPromos').then('...')
+api.loadConcept('public-promos').then('...')
 
 ```
 
@@ -114,12 +114,12 @@ A list of promotions that any user could pay for, such as for purchasing product
 funding nonprofit campaigns, or supporting team projects.
 
 
-## ratings
+## public-ratings
 
-## users
+## public-users
 
 ```
-api.loadConcept('publishedUserProfiles').then('...')
+api.loadConcept('public-promos').then('...')
 
 ```
 
@@ -127,11 +127,11 @@ A paged list of registered users, containing non-sensitive user information.
 
 
 
-## brands
+## public-brands
 
 
 ```
-api.loadConcept('publishedBrandProfiles')
+api.loadConcept('public-brands')
 
 ```
 
@@ -143,7 +143,7 @@ A paged list of registered brands.
 
 These are resources that belong to the current user and are meant for private viewing. 
 
-## me
+## my-me
 
 ```
 api.loadConcept('me').then(...)
@@ -152,40 +152,35 @@ api.loadConcept('me').then(...)
 > Status 200
 
 ```
-{{examples/personal-me.json}}
+{{examples/wip/my-me.json}}
 ```
 
 
 The currently logged-in user.
 
-_table:examples/personal-me.json
+_table:examples/wip/my-me.json
 
 
 
 ## my-about
 
 ```javascript
-// URL-based
-api.loadId('/user/' + User.user_id + '/about')
-
-// Path-based
-api.loadPointer('#/me/about')
 
 // Concept-based
-api.loadConcept('aboutMe');
+api.loadConcept('my-about');
 
 ```
 
 > Status 200
 
 ```
-{{examples/personal-about.json}}
+{{examples/wip/my-about.json}}
 ```
 
 
 Public information about the currently logged-in user.
 
-_table:examples/personal-about.json
+_table:examples/wip/my-about.json
 
 
 
@@ -202,13 +197,13 @@ phlat.loadConcept('my-memberships');
 > Status 200
 
 ```
-{{examples/personal-memberOf.json}}
+{{examples/wip/my-memberships.json}}
 ```
 
 
 The current user's paged collection of membership information.
 
-_table:examples/personal-memberOf.json
+_table:examples/wip/my-memberships.json
 
 
 
@@ -225,14 +220,14 @@ phlat.request('my-membership');
 > Status 200
 
 ```
-{{examples/personal-memberInfo.json}}
+{{examples/wip/my-membership.json}}
 ```
 
 
 The current user's membership information, presented as an array
 (a user could belong to multiple one team).
 
-_table:examples/personal-memberInfo.json
+_table:examples/wip/my-membership.json
 
 
 
@@ -240,20 +235,20 @@ _table:examples/personal-memberInfo.json
 
 ```javascript
 
-phlat.request('personal','holdings');
+phlat.loadConcept('my-holdings');
 
 ```
 
 > Status 200
 
 ```
-{{examples/personal-holdings.json}}
+{{examples/wip/my-holdings.json}}
 ```
 
 
 The current user's paged collection of accountholdings.
 
-_table:examples/personal-holdings.json
+_table:examples/wip/my-holdings.json
 
 
 
@@ -262,20 +257,20 @@ _table:examples/personal-holdings.json
 
 ```javascript
 
-phlat.request('personal','holdingInfo');
+phlat.loadConcept('my-holding');
 
 ```
 
 > Status 200
 
 ```
-{{examples/personal-holdingInfo.json}}
+{{examples/wip/my-holding.json}}
 ```
 
 
 The current user's accountholdings, presented as an array.
 
-_table:examples/personal-holdingInfo.json
+_table:examples/wip/my-holding.json
 
 
 
@@ -287,7 +282,18 @@ api.loadConcept('my-account-records');
 
 ```
 
+> Status 200
+
+```
+{{examples/wip/my-account-records.json}}
+```
+
+
+
 The account's transaction records, most recent first.
+
+_table:examples/wip/my-account-records.json
+
 
 
 ## my-account-record
@@ -298,6 +304,11 @@ api.loadConcept('my-account-record');
 
 ```
 
+> Status 200
+
+```
+{{examples/wip/my-account-record.json}}
+```
 
 
 # Team Resources

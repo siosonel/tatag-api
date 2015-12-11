@@ -22,13 +22,19 @@
 			"holdings": {		
 				"items": {				
 					"#": "holding",
-					"account": {},
-					"accountRecords": {
-						"#": "account-records",
-						"items": {
-							"#": "account-record"
+					"account": {
+						"records": {
+							"items": {
+								"#": "account-record"
+							}
 						}
-					}
+					},
+					"#forms": [
+						"edit",
+						"budget-add", 
+						"budget-transfer", 
+						"budget-use"
+					]
 				}
 			},
 			"ratings": {
@@ -38,42 +44,32 @@
 			},
 			"about": {},
 			"logout": "",
-			"teams": {
-				"team": {}
-			},
-			"brands": {
-				"team": {}
-			}
+			"teams": {},
+			"brands": {}
 		}
 	},
 
 	"team": {
 		"me": {
 			"teams": {
-				"team": {
-					"teamMembers": {
-						"#": "members",
+				"brand": {
+					"members": {
 						"items": {
 							"#": "member"
 						}
 					},
-					"teamAccounts": {
-						"#": "accounts",
+					"accounts": {
 						"items": {
 							"#": "account"
 						}
 					},
-					"brandPromos": {
-						"#": "promos",
+					"promos": {
 						"items": {
 							"#": "promo"
 						}
 					},
-					"teamThrottles": {
-						"#": "throttles",
-						"items": {
-							"#": "throttle"
-						}
+					"throttles": {
+						"throttle": {}
 					},
 					"tally": {}
 				}
@@ -85,8 +81,7 @@
 		"me": {
 			"brands": {
 				"brand": {
-					"brandMembers": {
-						"#": "members",
+					"members": {
 						"items": {
 							"#": "member",
 							"accounts": {
@@ -98,8 +93,7 @@
 							}
 						}
 					},
-					"brandAccounts": {
-						"#": "accounts",
+					"accounts": {
 						"items": {
 							"#": "account",
 							"holders": {
@@ -110,21 +104,15 @@
 							}
 						}
 					},
-					"brandPromos": {
-						"#": "promos",
+					"promos": {
 						"items": {
 							"#": "promo"
 						}
 					},
-					"budgetThrottles": {
-						"#": "throttles",
-						"items": {
-							"#": "throttle"
-						}
+					"throttles": {
+						"throttle": {}
 					},
-					"brandAbout": {
-						"#": "about"
-					},
+					"about": {},
 					"tally": {}
 				}
 			}

@@ -17,7 +17,9 @@ class Home {
 			}
 		}*/
 		
-		$home = json_decode(file_get_contents("ref/examples/wip/home1.json"),true);
+		$home = json_decode(file_get_contents("ref/examples/wip/home.json"),true);
+		$home['@graph'][0]['linkTerms'] = json_decode(file_get_contents("ref/examples/wip/linkTerms.json"),true);
+		$home['@graph'][0]['navDirections'] = json_decode(file_get_contents("ref/examples/wip/navDirections.json"),true);
 		
 		foreach($home['@graph'] AS &$r) {
 			foreach($r AS $key=>&$val) {
