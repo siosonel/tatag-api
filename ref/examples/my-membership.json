@@ -1,1 +1,12 @@
-[{"member_id":53,"joined":"2015-01-05 11:53:31","role":"admin","hours":0,"@type":"userMembership","@id":"/user/21/brands?member_id=53","team":"/team/104","brand":"/brand/104"}]
+[
+    {
+        "member_id": 53,
+        "joined": "2015-01-05 11:53:31",
+        "role": "admin",
+        "hours": 0,
+        "@type": "userMembership",
+        "@id": "/user/21/brands?member_id=53",
+        "team": "/team/104",
+        "brand": "/brand/104"
+    }
+]

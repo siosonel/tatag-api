@@ -1,1 +1,61 @@
-{"items":[{"member_id":53,"brand_id":104,"user_id":21,"role":"admin","hours":0,"created":"2015-01-05 11:53:31","name":"User One","joined":"2015-11-17 04:15:14","revoked":null,"@id":"/team/104/members?member_id=53"},{"member_id":55,"brand_id":104,"user_id":23,"role":"staff","hours":0,"created":"2015-01-05 11:53:31","name":"User Three","joined":null,"revoked":null,"@id":"/team/104/members?member_id=55"}],"pageOrder":"asc","itemsLimit":50,"collectionOf":"member","pageOf":"/team/104/members","brand_id":104,"@type":"members","@id":"/team/104/members","member":[{"member_id":53,"brand_id":104,"user_id":21,"role":"admin","hours":0,"created":"2015-01-05 11:53:31","name":"User One","joined":"2015-11-17 04:15:14","revoked":null,"@id":"/team/104/members?member_id=53"},{"member_id":55,"brand_id":104,"user_id":23,"role":"staff","hours":0,"created":"2015-01-05 11:53:31","name":"User Three","joined":null,"revoked":null,"@id":"/team/104/members?member_id=55"}]}
+{
+    "items": [
+        {
+            "member_id": 53,
+            "brand_id": 104,
+            "user_id": 21,
+            "role": "admin",
+            "hours": 0,
+            "created": "2015-01-05 11:53:31",
+            "name": "User One",
+            "joined": "2015-11-17 04:15:14",
+            "revoked": null,
+            "@id": "/team/104/members?member_id=53"
+        },
+        {
+            "member_id": 55,
+            "brand_id": 104,
+            "user_id": 23,
+            "role": "staff",
+            "hours": 0,
+            "created": "2015-01-05 11:53:31",
+            "name": "User Three",
+            "joined": null,
+            "revoked": null,
+            "@id": "/team/104/members?member_id=55"
+        }
+    ],
+    "pageOrder": "asc",
+    "itemsLimit": 50,
+    "collectionOf": "member",
+    "pageOf": "/team/104/members",
+    "brand_id": 104,
+    "@type": "members",
+    "@id": "/team/104/members",
+    "member": [
+        {
+            "member_id": 53,
+            "brand_id": 104,
+            "user_id": 21,
+            "role": "admin",
+            "hours": 0,
+            "created": "2015-01-05 11:53:31",
+            "name": "User One",
+            "joined": "2015-11-17 04:15:14",
+            "revoked": null,
+            "@id": "/team/104/members?member_id=53"
+        },
+        {
+            "member_id": 55,
+            "brand_id": 104,
+            "user_id": 23,
+            "role": "staff",
+            "hours": 0,
+            "created": "2015-01-05 11:53:31",
+            "name": "User Three",
+            "joined": null,
+            "revoked": null,
+            "@id": "/team/104/members?member_id=55"
+        }
+    ]
+}

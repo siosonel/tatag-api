@@ -1,1 +1,6 @@
-{"brand":["/brand/104"]}
+{
+    "@id": "/user/21/brands",
+    "brand": [
+        "/brand/104"
+    ]
+}

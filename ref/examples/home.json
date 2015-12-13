@@ -27,6 +27,7 @@
 							"brand": ["/team/104"]
 						},
 						"brands": {
+							"@id": "/user/{user_id}/brands",							
 							"brand": ["/brand/104"]
 						},
 						"promoSearch": "/form/promo-search"

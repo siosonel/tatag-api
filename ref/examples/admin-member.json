@@ -1,1 +1,28 @@
-[{"member_id":53,"brand_id":104,"user_id":21,"role":"admin","hours":0,"created":"2015-01-05 11:53:31","name":"User One","joined":"2015-11-17 04:15:14","revoked":null,"@id":"/brand/104/members?member_id=53","holdings":"/member/53/accounts"},{"member_id":55,"brand_id":104,"user_id":23,"role":"staff","hours":0,"created":"2015-01-05 11:53:31","name":"User Three","joined":null,"revoked":null,"@id":"/brand/104/members?member_id=55","holdings":"/member/55/accounts"}]
+[
+    {
+        "member_id": 53,
+        "brand_id": 104,
+        "user_id": 21,
+        "role": "admin",
+        "hours": 0,
+        "created": "2015-01-05 11:53:31",
+        "name": "User One",
+        "joined": "2015-11-17 04:15:14",
+        "revoked": null,
+        "@id": "/brand/104/members?member_id=53",
+        "holdings": "/member/53/accounts"
+    },
+    {
+        "member_id": 55,
+        "brand_id": 104,
+        "user_id": 23,
+        "role": "staff",
+        "hours": 0,
+        "created": "2015-01-05 11:53:31",
+        "name": "User Three",
+        "joined": null,
+        "revoked": null,
+        "@id": "/brand/104/members?member_id=55",
+        "holdings": "/member/55/accounts"
+    }
+]

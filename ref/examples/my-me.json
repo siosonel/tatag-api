@@ -1,1 +1,24 @@
-{"@id":"/api/user/21","@type":"user","user_id":21,"memberships":"/user/21/brands","holdings":"/user/21/accounts","ratings":"/user/21/ratings","about":"/user/21/about","name":"User One","login_provider":"gp","teams":{"@id":"/user/21/teams","brand":["/team/104"]},"brands":{"brand":["/brand/104"]},"promoSearch":"/form/promo-search"}
+{
+    "@id": "/api/user/21",
+    "@type": "user",
+    "user_id": 21,
+    "memberships": "/user/21/brands",
+    "holdings": "/user/21/accounts",
+    "ratings": "/user/21/ratings",
+    "about": "/user/21/about",
+    "name": "User One",
+    "login_provider": "gp",
+    "teams": {
+        "@id": "/user/21/teams",
+        "brand": [
+            "/team/104"
+        ]
+    },
+    "brands": {
+        "@id": "/user/21/brands",
+        "brand": [
+            "/brand/104"
+        ]
+    },
+    "promoSearch": "/form/promo-search"
+}

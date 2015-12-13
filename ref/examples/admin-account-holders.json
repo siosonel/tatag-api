@@ -1,1 +1,36 @@
-{"items":[{"holder_id":41,"authcode":"cftix","account_id":92,"brand_id":104,"name":"User One","created":"2015-01-05 11:53:31","member_id":53,"user_id":21,"@id":"/account/92/holders?holder_id=41"}],"pageOrder":"asc","itemsLimit":50,"collectionOf":"holder","pageOf":"/account/92/holders","account_id":92,"brand_id":104,"@type":"accountHolders","@id":"/account/92/holders","holder":[{"holder_id":41,"authcode":"cftix","account_id":92,"brand_id":104,"name":"User One","created":"2015-01-05 11:53:31","member_id":53,"user_id":21,"@id":"/account/92/holders?holder_id=41"}]}
+{
+    "items": [
+        {
+            "holder_id": 41,
+            "authcode": "cftix",
+            "account_id": 92,
+            "brand_id": 104,
+            "name": "User One",
+            "created": "2015-01-05 11:53:31",
+            "member_id": 53,
+            "user_id": 21,
+            "@id": "/account/92/holders?holder_id=41"
+        }
+    ],
+    "pageOrder": "asc",
+    "itemsLimit": 50,
+    "collectionOf": "holder",
+    "pageOf": "/account/92/holders",
+    "account_id": 92,
+    "brand_id": 104,
+    "@type": "accountHolders",
+    "@id": "/account/92/holders",
+    "holder": [
+        {
+            "holder_id": 41,
+            "authcode": "cftix",
+            "account_id": 92,
+            "brand_id": 104,
+            "name": "User One",
+            "created": "2015-01-05 11:53:31",
+            "member_id": 53,
+            "user_id": 21,
+            "@id": "/account/92/holders?holder_id=41"
+        }
+    ]
+}

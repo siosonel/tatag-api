@@ -1,1 +1,8 @@
-{"@id":"/user/21/about","user_id":21,"name":"User One","created":"2015-01-05 11:53:31","numMemberships":1,"totalHours":0}
+{
+    "@id": "/user/21/about",
+    "user_id": 21,
+    "name": "User One",
+    "created": "2015-01-05 11:53:31",
+    "numMemberships": 1,
+    "totalHours": 0
+}
