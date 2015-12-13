@@ -1,26 +1,18 @@
 {
-	"*": [
-		"items"
-	],
-	
-	"public": [
-		
-	],
-	
-	"my": [
-		"logout"
-	],
-	
-	"team": [
-	
-	],
-	
-	"admin": [
-		
-	]
+    "*": [
+        "items"
+    ],
+    "public": [],
+    "my": [
+        "logout"
+    ],
+    "team": [
+        "me",
+        "tally"
+    ],
+    "admin": [
+        "me",
+        "holdings",
+        "holders"
+    ]
 }
-
-
-
-			
-	

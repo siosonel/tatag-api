@@ -1,0 +1,35 @@
+{
+    "@context": "/api/ref/context.php",
+    "@graph": [
+        {
+            "@id": "/api/",
+            "@type": "root",
+            "definitions": "/ref/defs.json",
+            "me": "/api/user/{user_id}",
+						"ratings": "/rating/collection",
+						"promos": "/promo/collection",						
+						"brands": "/brand/collection",						
+            "linkTerms": [],
+            "navDirections": {}
+				},
+        {
+            "@id": "/api/user/{user_id}",
+						"@type": "user",
+            "user_id": "{user_id}",
+            "memberships": "/user/{user_id}/brands",
+            "holdings": "/user/{user_id}/accounts",
+            "ratings": "/user/{user_id}/ratings",
+            "about": "/user/{user_id}/about",
+            "name": "User One",
+            "login_provider": "gp",
+						"teams": {
+							"@id": "/user/{user_id}/teams",
+							"brand": ["/team/104"]
+						},
+						"brands": {
+							"brand": ["/brand/104"]
+						},
+						"promoSearch": "/form/promo-search"
+        }
+    ]
+}

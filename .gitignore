@@ -12,9 +12,3 @@ php/test.php
 
 tools/builds/*
 
-ref/examples/*
-
-ref/design/in-progress/*
-
-*- Copy*
-*-backup*
