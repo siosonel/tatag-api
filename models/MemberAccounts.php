@@ -48,7 +48,7 @@ class MemberAccounts extends BrandHolders {
 		$this->{$this->collectionOf} = array();
 		foreach($items AS &$r) {
 			$r['@id'] = $this->{'@id'} ."?holder_id=". $r['holder_id'];
-			$this->{$this->collectionOf}[] = $r;
+			$this->items[] = $r;
 		}
 		
 		$this->paginate('holder_id');

@@ -56,7 +56,7 @@ class BrandMembers extends Collection {
 		foreach($items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?member_id=". $r['member_id'];
 			$r['holdings'] = "$this->root/member/". $r['member_id'] ."/accounts";
-			$this->{$this->collectionOf}[] = $r;
+			$this->items[] = $r;
 		}
 		
 		$this->paginate('member_id');

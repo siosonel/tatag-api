@@ -1,121 +1,118 @@
 {
-	"public": {
-		"promos": {
-			"items": {
-				"#": "promo"
-			}
-		},
-		"brands": {
-			"items": {
-				"#": "brand"
-			}
-		}
-	},
-
-	"my": {
-		"me": {
-			"memberships": {
-				"items": {
-					"#": "membership"
-				}
-			}, 
-			"holdings": {		
-				"items": {				
-					"#": "holding",
-					"account": {
-						"records": {
-							"items": {
-								"#": "account-record"
-							}
-						}
-					},
-					"#forms": [
-						"edit",
-						"budget-add", 
-						"budget-transfer", 
-						"budget-use"
-					]
-				}
-			},
-			"ratings": {
-				"items": {
-					"#": "rating"
-				}
-			},
-			"about": {},
-			"logout": "",
-			"teams": {},
-			"brands": {}
-		}
-	},
-
-	"team": {
-		"me": {
-			"teams": {
-				"brand": {
-					"members": {
-						"items": {
-							"#": "member"
-						}
-					},
-					"accounts": {
-						"items": {
-							"#": "account"
-						}
-					},
-					"promos": {
-						"items": {
-							"#": "promo"
-						}
-					},
-					"throttles": {
-						"throttle": {}
-					},
-					"tally": {}
-				}
-			}
-		}
-	},	
-
-	"admin": {
-		"me": {
-			"brands": {
-				"brand": {
-					"members": {
-						"items": {
-							"#": "member",
-							"accounts": {
-								"#": "member-holdings",
-								"items": {
-									"#": "member-holding",
-									"account": {}
-								}
-							}
-						}
-					},
-					"accounts": {
-						"items": {
-							"#": "account",
-							"holders": {
-								"#": "account-holders",
-								"items": {
-									"#": "account-holder"
-								}
-							}
-						}
-					},
-					"promos": {
-						"items": {
-							"#": "promo"
-						}
-					},
-					"throttles": {
-						"throttle": {}
-					},
-					"about": {},
-					"tally": {}
-				}
-			}
-		}
-	}
+    "public": {
+        "promos": {
+            "items": {
+                "#": "promo"
+            }
+        },
+        "brands": {
+            "items": {
+                "#": "brand"
+            }
+        }
+    },
+    "my": {
+        "me": {
+            "memberships": {
+                "items": {
+                    "#": "membership"
+                }
+            },
+            "holdings": {
+                "items": {
+                    "#": "holding",
+                    "account": {
+                        "records": {
+                            "items": {
+                                "#": "account-record"
+                            }
+                        }
+                    },
+                    "#forms": [
+                        "edit",
+                        "budget-add",
+                        "budget-transfer",
+                        "budget-use"
+                    ]
+                }
+            },
+            "ratings": {
+                "items": {
+                    "#": "rating"
+                }
+            },
+            "about": {},
+            "logout": "",
+            "teams": {},
+            "brands": {}
+        }
+    },
+    "team": {
+        "me": {
+            "teams": {
+                "brand": {
+                    "members": {
+                        "items": {
+                            "#": "member"
+                        }
+                    },
+                    "accounts": {
+                        "items": {
+                            "#": "account"
+                        }
+                    },
+                    "promos": {
+                        "items": {
+                            "#": "promo"
+                        }
+                    },
+                    "throttles": {
+                        "throttle": {}
+                    },
+                    "tally": {}
+                }
+            }
+        }
+    },
+    "admin": {
+        "me": {
+            "brands": {
+                "brand": {
+                    "members": {
+                        "items": {
+                            "#": "member",
+                            "holdings": {
+                                "#": "member-holdings",
+                                "items": {
+                                    "#": "member-holding",
+                                    "account": {}
+                                }
+                            }
+                        }
+                    },
+                    "accounts": {
+                        "items": {
+                            "#": "account",
+                            "holders": {
+                                "#": "account-holders",
+                                "items": {
+                                    "#": "account-holder"
+                                }
+                            }
+                        }
+                    },
+                    "promos": {
+                        "items": {
+                            "#": "promo"
+                        }
+                    },
+                    "throttles": {
+                        "throttle": {}
+                    },
+                    "about": {},
+                    "tally": {}
+                }
+            }
+        }
+    }
 }

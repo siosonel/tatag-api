@@ -1,59 +1,53 @@
 {
-	"public": [
-		"brands",
-		"brand",
-		"promos",
-		"promo"
-	],
-
-	"my": [
-		"me",		
-		"memberships",
-		"membership",
-		"holdings",
-		"holding",
-		"account",
-		"account-records",
-		"account-record",
-		"ratings",
-		"rating",
-		"about",
-		"teams",
-		"brands"
-	],
-
-	"team": [
-		"brand",
-		"members",
-		"member",		
-		"accounts",	
-		"account",
-		"promos",
-		"promo",
-		"throttles",
-		"throttle"
-	],
-
-	"admin": [
-		"brand",
-		"members",
-		"member",
-		"member-holdings",
-		"member-holding",
-		"accounts",
-		"account",
-		"account-holders",
-		"account-holder",
-		"about",
-		"tally",
-		"promos",
-		"promo",
-		"throttles",
-		"throttle"
-	]
+    "public": [
+        "brands",
+        "brand",
+        "promos",
+        "promo"
+    ],
+    "my": [
+        "me",
+        "memberships",
+        "membership",
+        "holdings",
+        "holding",
+        "account",
+        "account-records",
+        "account-record",
+        "ratings",
+        "rating",
+        "about",
+        "teams",
+        "brands"
+    ],
+    "team": [
+        "teams",
+        "brand",
+        "members",
+        "member",
+        "accounts",
+        "account",
+        "promos",
+        "promo",
+        "throttles",
+        "throttle"
+    ],
+    "admin": [
+        "brands",
+        "brand",
+        "members",
+        "member",
+        "member-holdings",
+        "member-holding",
+        "accounts",
+        "account",
+        "account-holders",
+        "account-holder",
+        "about",
+        "tally",
+        "promos",
+        "promo",
+        "throttles",
+        "throttle"
+    ]
 }
-
-
-
-			
-	

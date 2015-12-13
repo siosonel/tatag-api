@@ -1,22 +1,9 @@
 <?php
 
 class Home {
-	function __construct() {
-		//$this->links = json_decode(file_get_contents("ref/tentativeLinks.json"),true);
-		//$this->links['navDirections'] = json_decode(file_get_contents("ref/examples/nav-directions.json"),true);
-	}
+	function __construct() {}
 	
-	function get() {
-		//$this->links['@id'] = Router::$root;
-		//$this->links['user'] = Router::$root . str_replace("{user_id}", Requester::$user_id, $this->links['user']);
-		
-		/*if (is_array($this->links['userResource'])) {
-			foreach($this->links['userResource'] AS $key=>$val) {
-				if (substr($val,0,1)=="/") $val = Router::$root . $val;
-				$user[$key] = str_replace("{user_id}", Requester::$user_id, $val);
-			}
-		}*/
-		
+	function get() {		
 		$home = json_decode(file_get_contents("ref/examples/wip/home.json"),true);
 		$home['@graph'][0]['linkTerms'] = json_decode(file_get_contents("ref/examples/wip/linkTerms.json"),true);
 		$home['@graph'][0]['navDirections'] = json_decode(file_get_contents("ref/examples/wip/navDirections.json"),true);
