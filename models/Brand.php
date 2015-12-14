@@ -7,6 +7,7 @@ class Brand extends Base {
 	
 		$this->{"@type"} = 'brand';
 		$this->{"@id"} = "$this->root/brand/$this->brand_id";
+		$this->role = "admin";
 		$this->table = "brands";
 		
 		$this->init($data);
