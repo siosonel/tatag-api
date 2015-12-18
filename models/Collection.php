@@ -80,7 +80,7 @@ class Collection extends Base {
 		//embed forms only in the first page
 		if ($this->limitIdArr OR $_GET['itemsLimit']) $this->embedForms = false;
 		
-		//$this->setForms();
+		$this->setForms();
 		
 		//
 		if (!count($items)) {

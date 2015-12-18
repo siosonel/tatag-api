@@ -8,7 +8,7 @@ class BrandPromos extends PromoCollection {
 		
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "The requester is not a member of brand #$this->brand_id.");
 		
-		$this->{"@type"} = "promos";
+		$this->{"@type"} = "brandPromos";
 		$params = $_GET ? '?'. http_build_query($_GET) : '';
 		$this->{'@id'} = "$this->root/brand/$this->brand_id/promos".$params;
 		$this->table = "promos";

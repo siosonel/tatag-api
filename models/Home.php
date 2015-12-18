@@ -22,7 +22,7 @@ class Home {
 		$home['@graph'][] = (new UserTeams())->get()[0];
 		$home['@graph'][] = (new UserBrands())->get()[0];
 		
-		return $home['@graph'];
+		return array_merge($home['@graph'], Requester::$graph);
 	}
 	
 	function deprecationSupport($user=array()) {

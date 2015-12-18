@@ -15,12 +15,14 @@ class UserBrands extends Base {
 	}
 	
 	function get() {
+	
 		$sql = "SELECT brand_id FROM members WHERE user_id=$this->user_id AND ended IS NULL AND role='admin'";
 		$items = DBquery::get($sql, array($this->user_id));
 		foreach($items AS $i) {
 			$this->brand[] = "/brand/$i[brand_id]";
 		}
 		
+		$this->setForms();
 		return array($this);
 	}
 }

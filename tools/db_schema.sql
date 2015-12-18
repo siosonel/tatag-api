@@ -452,31 +452,35 @@ END;;
 
 DROP PROCEDURE IF EXISTS `accountRecords`;;
 
-CREATE PROCEDURE `accountRecords` (
+CREATE PROCEDURE `accountRecords`(
 	IN acctID INT,
 	IN maxRecordID INT,
-	IN itemsLimit INT
+	IN itemsLimit INT,
+	IN minUpdated INT,
+	IN cutoffID INT
 )
 BEGIN
 
 SELECT record_id, txntype, 'to' AS direction, r.throttle_id,
 	to_acct AS other_acct,
-	a.brand_id, b.name AS brand_name, amount, r.created, `status`, note 
+	a.brand_id, b.name AS brand_name, amount, 
+	r.created, `status`, note, UNIX_TIMESTAMP(r.updated) as updated
 FROM records r 
 JOIN accounts a ON a.account_id = r.to_acct
 JOIN brands b ON a.brand_id = b.brand_id
-WHERE from_acct=acctID AND record_id < maxRecordID
-
+WHERE from_acct=acctID AND record_id < maxRecordID AND record_id > cutoffID
+	AND (r.updated IS NULL OR UNIX_TIMESTAMP(r.updated) > minUpdated)
 UNION ALL 
 
 SELECT record_id, txntype, 'from' AS direction, r.throttle_id,
 	from_acct AS other_acct,
-	a.brand_id, b.name AS brand_name, amount, r.created, `status`, note
+	a.brand_id, b.name AS brand_name, amount, 
+	r.created, `status`, note, UNIX_TIMESTAMP(r.updated) as updated
 FROM records r 
 JOIN accounts a ON a.account_id = r.from_acct
 JOIN brands b ON a.brand_id = b.brand_id
-WHERE to_acct=acctID AND record_id < maxRecordID
-
+WHERE to_acct=acctID AND record_id < maxRecordID AND record_id > cutoffID
+	AND (r.updated IS NULL OR UNIX_TIMESTAMP(r.updated) > minUpdated)
 ORDER BY record_id DESC 
 LIMIT itemsLimit;
 
