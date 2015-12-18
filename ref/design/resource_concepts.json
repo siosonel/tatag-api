@@ -21,7 +21,6 @@
         "brands"
     ],
     "team": [
-        "teams",
         "brand",
         "members",
         "member",
@@ -33,7 +32,6 @@
         "throttle"
     ],
     "admin": [
-        "brands",
         "brand",
         "members",
         "member",

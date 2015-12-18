@@ -102,40 +102,7 @@ A bit of a dance using Oauth.
 These resources do not require a user to be logged-in.
 
 
-## public-promos
-
-```
-
-api.loadConcept('public-promos').then('...')
-
-```
-
-A list of promotions that any user could pay for, such as for purchasing products, 
-funding nonprofit campaigns, or supporting team projects.
-
-
-## public-ratings
-
-## public-users
-
-```
-api.loadConcept('public-promos').then('...')
-
-```
-
-A paged list of registered users, containing non-sensitive user information.
-
-
-
-## public-brands
-
-
-```
-api.loadConcept('public-brands')
-
-```
-
-A paged list of registered brands.
+===public===
 
 
 
@@ -143,172 +110,8 @@ A paged list of registered brands.
 
 These are resources that belong to the current user and are meant for private viewing. 
 
-## my-me
 
-```
-api.loadConcept('me').then(...)
-```
-
-> Status 200
-
-```
-{{examples/wip/my-me.json}}
-```
-
-
-The currently logged-in user.
-
-_table:examples/wip/my-me.json
-
-
-
-## my-about
-
-```javascript
-
-// Concept-based
-api.loadConcept('my-about');
-
-```
-
-> Status 200
-
-```
-{{examples/wip/my-about.json}}
-```
-
-
-Public information about the currently logged-in user.
-
-_table:examples/wip/my-about.json
-
-
-
-
-## my-memberships
-
-
-```javascript
-
-phlat.loadConcept('my-memberships');
-
-```
-
-> Status 200
-
-```
-{{examples/wip/my-memberships.json}}
-```
-
-
-The current user's paged collection of membership information.
-
-_table:examples/wip/my-memberships.json
-
-
-
-
-## my-membership
-
-
-```javascript
-
-phlat.request('my-membership');
-
-```
-
-> Status 200
-
-```
-{{examples/wip/my-membership.json}}
-```
-
-
-The current user's membership information, presented as an array
-(a user could belong to multiple one team).
-
-_table:examples/wip/my-membership.json
-
-
-
-## my-holdings
-
-```javascript
-
-phlat.loadConcept('my-holdings');
-
-```
-
-> Status 200
-
-```
-{{examples/wip/my-holdings.json}}
-```
-
-
-The current user's paged collection of accountholdings.
-
-_table:examples/wip/my-holdings.json
-
-
-
-
-## my-holding
-
-```javascript
-
-phlat.loadConcept('my-holding');
-
-```
-
-> Status 200
-
-```
-{{examples/wip/my-holding.json}}
-```
-
-
-The current user's accountholdings, presented as an array.
-
-_table:examples/wip/my-holding.json
-
-
-
-## my-account-records
-
-```javascript
-
-api.loadConcept('my-account-records');
-
-```
-
-> Status 200
-
-```
-{{examples/wip/my-account-records.json}}
-```
-
-
-
-The account's transaction records, most recent first.
-
-_table:examples/wip/my-account-records.json
-
-
-
-## my-account-record
-
-```javascript
-
-api.loadConcept('my-account-record');
-
-```
-
-> Status 200
-
-```
-{{examples/wip/my-account-record.json}}
-```
+===my===
 
 
 # Team Resources
@@ -316,15 +119,8 @@ api.loadConcept('my-account-record');
 All members of a team share access to these resources. The accessible resources are based on the membership of the currently logged-in user.
 
 
-## team
+===team===
 
-## team-members
-
-## team-member
-
-## team-accounts
-
-## team-account
 
 
 
@@ -333,27 +129,7 @@ All members of a team share access to these resources. The accessible resources 
 The admins of a brand share access to these resources. The accessible resources are based on the admin status of the currently logged-in user.
 
 
-## brand
-
-## brand-about
-
-Public information about a team.
-
-## brand-members
-
-## brand-member
-
-## brand-member-holdings
-
-## brand-member-holding
-
-## brand-accounts
-
-## brand-account
-
-## brand-account-holders
-
-## brand-account-holder
+===admin===
 
 
 

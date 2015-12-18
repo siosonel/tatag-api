@@ -8,11 +8,13 @@
     ],
     "team": [
         "me",
-        "tally"
+        "tally",
+        "teams"
     ],
     "admin": [
         "me",
         "holdings",
-        "holders"
+        "holders",
+        "brands"
     ]
 }

@@ -1,0 +1,170 @@
+{
+     "public-promos": {
+		      "description": "A collection or paged list of public-promo."
+		 },
+		 
+     "public-promo": {
+		      "description": "Anything that a participant could pay for, such as for purchasing products, funding nonprofit campaigns, or supporting team projects with donations."
+     },
+		 
+     "public-brands": {
+		      "description": "A collection or paged list of public-brand."		 
+		 },
+		 
+     "public-brand": {
+		      "description": "A registered team that issues its own currency."
+     },
+		 
+		 
+		 
+     "my-me": {
+		      "description": "The currently logged-in user."
+     },
+		 
+     "my-memberships": {
+		      "description": "The current user's collection of membership information."
+     },
+		 
+     "my-membership": {
+		      "description": "The current user's membership information. A user may belong to one or more brands."
+     },
+		 
+		 "my-holdings": {
+		      "description": "The current user's collection of accountholdings."
+     },
+		 
+		 "my-holding": {
+		      "description": "The current user's accountholdings."
+     },
+		 
+     "my-account": {
+		      "description": "The account referenced in an accountholding."
+     },
+		 
+     "my-account-records": {
+		      "description": "A collection of account transaction records, most recent first."
+     },
+		 
+		 "my-account-record": {
+		      "description": "An account's transaction record."
+     },
+		 
+     "my-ratings": {
+		      "description": "A collection of my-rating."
+     },
+		 
+     "my-rating": {
+		      "description": "The rating given to current user to brands."
+     },
+		 
+		 
+     "my-about": {
+		      "description": "Public information about the currently logged-in user."
+     },
+		 
+     "my-teams": {
+		      "description": "A collection of the teams that the current user belongs to."
+     },
+		 
+     "my-brands": {
+		      "description": "A collection of the brands administered by the current user."
+     },
+		 
+		 
+     "team-brand": {
+		      "description": "A brand to which the current user belongs to."
+     },
+		 
+     "team-members": {
+		      "description": "A collection of team-member."
+     },
+		 
+		 "team-member": {
+		      "description": "A team member."
+     },
+		 
+     "team-accounts": {
+		      "description": "A collection of team-account, also referred to as a team ledger."
+     },
+		 
+     "team-account": {
+		      "description": "Accounts belonging to a team."
+     },
+		 
+     "team-promos": {
+		      "description": "A collection of team-promo."
+     },
+		 
+     "team-promo": {
+		      "description": "A promo that has been created by a team, intended to announce or advertise products, services, and projects that any user could help pay for."
+     },
+		 
+     "team-throttles": {
+		      "description": "A collection of team-throttle."
+     },
+		 
+     "team-throttle": {
+		      "description": "A set of periodic limits imposed on inflows or outflows from a team account."
+     },
+		 
+		
+     "admin-brand": {
+		      "description": "A brand that is administered by the current user."
+     },
+		 
+     "admin-members": {
+		      "description": "A collection of admin-member."
+     },
+		 
+     "admin-member": {
+		      "description": "A brand membership that is admininistered by the current user."
+     },
+		 
+     "admin-accounts": {
+		      "description": "A collection of admin-account."
+     },
+		 
+     "admin-account": {
+		      "description": "A brand account that is administered by the current user."
+     },
+		 
+     "admin-promos": {
+		      "description": "A page-colleciton of admin-promo."
+     },
+		 
+     "admin-promo": {
+		      "description": "A brand promo that is administered by the current user. A promo is intended to announce or advertise products, services, and projects that any user could help pay for."
+     },
+		 
+     "admin-throttles": {
+		      "description": "A collection of admin-throttle."
+     },
+		 
+     "admin-throttle": {
+		      "description": "A set of periodic limits imposed on inflows or outflows from an administered account."
+     },
+		 
+     "admin-about": {
+		      "description": "Public information about a brand."
+     },
+		 
+     "admin-tally": {
+		      "description": "A summary of a brand's budget balances and activity."
+     },
+     
+     "admin-member-holdings": {
+		      "description": "A collection of admin-member-holding."
+     },
+		 
+     "admin-member-holding": {
+		      "description": "An accountholding by a brand member that is administered by the current user."
+     },
+		 
+     "admin-account-holders": {
+		      "description": "A collection of admin-account-holder."
+     },
+		 
+     "admin-account-holder": {
+		      "description": "A holder of a brand account thta is administered by the current user."
+     }
+}
