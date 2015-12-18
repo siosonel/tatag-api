@@ -1,11 +1,11 @@
 {
     "@type": "userMemberships",
     "user_id": 21,
-    "@id": "/user/21/brands",
+    "@id": "/user/21/memberships",
     "actions": [
         "/form/member-edit"
     ],
     "items": [
-        "/user/21/brands?member_id=53"
+        "/user/21/memberships?member_id=53"
     ]
 }

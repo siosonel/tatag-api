@@ -5,7 +5,7 @@
         "role": "admin",
         "hours": 0,
         "@type": "userMembership",
-        "@id": "/user/21/brands?member_id=53",
+        "@id": "/user/21/memberships?member_id=53",
         "team": "/team/104",
         "brand": "/brand/104"
     }

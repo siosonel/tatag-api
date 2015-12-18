@@ -10,26 +10,20 @@
 						"promos": "/promo/collection",						
 						"brands": "/brand/collection",						
             "linkTerms": [],
-            "navDirections": {}
+            "navigation": "/api/ref/examples/navigation.json"
 				},
         {
             "@id": "/api/user/{user_id}",
 						"@type": "user",
             "user_id": "{user_id}",
-            "memberships": "/user/{user_id}/brands",
+            "memberships": "/user/{user_id}/memberships",
             "holdings": "/user/{user_id}/accounts",
             "ratings": "/user/{user_id}/ratings",
             "about": "/user/{user_id}/about",
             "name": "User One",
             "login_provider": "gp",
-						"teams": {
-							"@id": "/user/{user_id}/teams",
-							"brand": ["/team/104"]
-						},
-						"brands": {
-							"@id": "/user/{user_id}/brands",							
-							"brand": ["/brand/104"]
-						},
+						"teams": "/user/{user_id}/teams",
+						"brands": "/user/{user_id}/brands",
 						"promoSearch": "/form/promo-search"
         }
     ]

@@ -1,4 +1,6 @@
 {
+    "@type": "userTeams",
+    "user_id": 21,
     "@id": "/user/21/teams",
     "brand": [
         "/team/104"

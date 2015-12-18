@@ -1,4 +1,6 @@
 {
+    "@type": "userBrands",
+    "user_id": 21,
     "@id": "/user/21/brands",
     "brand": [
         "/brand/104"

@@ -15,15 +15,13 @@ class Home {
 			}
 		}
 		
-		//unset($this->links['userResource']);
+		include_once "models/UserTeams.php";
+		include_once "models/UserBrands.php";
 		
-		//$user['name'] = Requester::$name;
-		//$user['login_provider'] = Requester::$login_provider;
 		
-		//if (!Requester::$user_id) $this->links['userLoginPage'] = '/login.php';
+		$home['@graph'][] = (new UserTeams())->get()[0];
+		$home['@graph'][] = (new UserBrands())->get()[0];
 		
-		//$this->deprecationSupport($user);
-		//return array($this->links, $user);
 		return $home['@graph'];
 	}
 	
