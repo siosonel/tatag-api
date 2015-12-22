@@ -229,5 +229,9 @@
             "ended": null,
             "@id": "/user/21/ratings?rating_id=1"
         }
+    ],
+    "actions": [
+        "/form/rating-add",
+        "/form/rating-edit"
     ]
 }

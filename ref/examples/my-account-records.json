@@ -35,5 +35,10 @@
     "holder_id": 41,
     "limkey": "abc",
     "@type": "accountRecords",
-    "@id": "/account/92/records"
+    "@id": "/account/92/records",
+    "actions": [
+        "/form/record-hold",
+        "/form/record-approve",
+        "/form/record-reject"
+    ]
 }

@@ -568,5 +568,8 @@
             "imageTemplate": "/ui/logo.php",
             "promo-edit": "/form/promo-edit"
         }
+    ],
+    "actions": [
+        "/form/promo-search"
     ]
 }

@@ -276,7 +276,7 @@
     "collectionOf": "promo",
     "pageOf": "/brand/104/promos",
     "brand_id": 104,
-    "@type": "promos",
+    "@type": "brandPromos",
     "@id": "/brand/104/promos",
     "promo": [
         {
@@ -549,5 +549,8 @@
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/13"
         }
+    ],
+    "actions": [
+        "/form/promo-add"
     ]
 }

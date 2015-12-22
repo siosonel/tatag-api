@@ -68,5 +68,9 @@
             "created": "2015-01-05 11:53:32",
             "@id": "/member/53/accounts?holder_id=43"
         }
+    ],
+    "actions": [
+        "/form/admin-holder-edit",
+        "/form/holder-add"
     ]
 }

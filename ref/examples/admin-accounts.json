@@ -97,5 +97,9 @@
             "@id": "/brand/104/accounts?account_id=97",
             "holders": "/account/97/holders"
         }
+    ],
+    "actions": [
+        "/form/admin-account-edit",
+        "/form/account-add"
     ]
 }

@@ -204,5 +204,8 @@
     "@type": "brandCollection",
     "numBrands": 13,
     "earliest": "2015-01-05 11:53:31",
-    "latest": "2015-11-18 20:21:32"
+    "latest": "2015-11-18 20:21:32",
+    "actions": [
+        "/form/brand-registration"
+    ]
 }

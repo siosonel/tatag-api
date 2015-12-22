@@ -61,5 +61,9 @@
             "@id": "/brand/104/members?member_id=55",
             "holdings": "/member/55/accounts"
         }
+    ],
+    "actions": [
+        "/form/admin-member-edit",
+        "/form/member-add"
     ]
 }
