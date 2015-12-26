@@ -17,7 +17,7 @@
             "added": 1500.11,
             "intrause": 90.76,
             "inflow": 9.37,
-            "outflow": null,
+            "outflow": 0,
             "revBudget": 1399.98,
             "expBudget": 1409.35,
             "numMembers": 2,

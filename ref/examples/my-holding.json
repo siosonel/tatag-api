@@ -2,6 +2,7 @@
     {
         "alias": "Main Revenue",
         "user_id": 21,
+        "brand_logo": null,
         "holder_id": 41,
         "limkey": "abc",
         "holder_authcode": "cftix",
@@ -24,6 +25,7 @@
     {
         "alias": "Main Expense",
         "user_id": 21,
+        "brand_logo": null,
         "holder_id": 42,
         "limkey": "abc",
         "holder_authcode": "cftix",
@@ -46,6 +48,7 @@
     {
         "alias": "personal expense",
         "user_id": 21,
+        "brand_logo": null,
         "holder_id": 43,
         "limkey": "abc",
         "holder_authcode": "ftix",

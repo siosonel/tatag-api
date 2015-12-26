@@ -97,7 +97,14 @@ class Requester {
 	static function setDBs() {
 		global $dbs;
 		self::$db_default = 'tatagtest';
-		DBquery::init($dbs, array(self::$db_default));
+		
+		//override as needed
+		if (isset($_GET['db']) AND SITE!='live') {
+			self::$db_default = $_GET['db'];
+			unset($_GET['db']);
+		}
+		
+		DBquery::init($dbs, array(self::$db_default)); 
 	}
 	
 	static function login($pwd) {

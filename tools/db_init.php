@@ -23,5 +23,14 @@ else if ($step=='upload') {
 	if (SITE != 'live' AND isset($_GET['data']) AND $data = $_GET['data']) DBquery::set(file_get_contents("tools/$data"));
 	exit('{"status":"ok"}');
 } 
+else if ($step=="restore") {
+	$db = $_GET['db'];
+	DBquery::init($dbs, array($db));
+	$schema = file_get_contents("tools/$db.sql");
+	if (SITE=='dev') $schema = str_replace("InnoDB", "MEMORY", $schema);
+	
+	DBquery::set($schema);
+	exit('{"status":"ok"}');
+}
 else exit("Invalid step='$step'.");
 
