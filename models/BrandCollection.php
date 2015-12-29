@@ -12,7 +12,7 @@ class BrandCollection extends Collection {
 	}
 	
 	function add() {
-		include_once "models/Members.php";
+		include_once "models/BrandMembers.php";
 		include_once "models/Accounts.php";
 		include_once "models/Holders.php";
 		
@@ -31,14 +31,14 @@ class BrandCollection extends Collection {
 		$Brand->brand_id = $this->insert();		//print_r($Brand); print_r(Requester);
 		if (!$Brand->brand_id) Error::http(500, "Failed to fully create a new brand.");
 		
-		$Member = new Members(json_decode('{
+		$Members = new BrandMembers(json_decode('{
 			"brand_id":'.$Brand->brand_id.', 
 			"user_id":'. Requester::$user_id.', 
 			"role":"admin",
 			"hours":0
 		}'));
 		
-		$Brand->members[] = $Member->add();
+		$Brand->members = $Member->add();
 		
 		$MainRev = (new Accounts(json_decode('{
 			"brand_id": '. $Brand->brand_id .',

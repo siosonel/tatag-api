@@ -3,6 +3,7 @@
 class BrandMembers extends Collection {
 	function __construct($data='') {
 		$this->brand_id = $this->getID();
+		if (!$this->brand_id AND $data->brand_id) $this->brand_id = $data->brand_id;
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
 		
 		$this->{"@type"} = 'brandMembers';			
