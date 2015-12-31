@@ -99,7 +99,7 @@ class Requester {
 		self::$db_default = 'tatagtest';
 		
 		//override as needed
-		if (isset($_GET['db']) AND SITE!='live') {
+		if (isset($_GET['db']) AND $_GET['db'] AND SITE!='live') {
 			self::$db_default = $_GET['db'];
 			unset($_GET['db']);
 		}

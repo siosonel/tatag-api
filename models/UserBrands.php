@@ -1,17 +1,20 @@
 <?php
 
-class UserBrands extends Base {
+include_once "models/BrandCollection.php";
+
+class UserBrands extends BrandCollection {
 	function __construct($data='') {
 		$this->{"@type"} = 'userBrands';
 		$this->user_id =  Requester::$user_id;	
 		
 		$this->{"@id"} = "$this->root/user/$this->user_id/brands";
-		$this->table = "members";
-		$this->idkey = 'user_id';
+		$this->table = "brands";
+		$this->idkey = 'brand_id';
 		$this->init($data);
-		
-		$this->okToSet = array("joined","revoked");			
-		$this->okToFilterBy = array("member_id");
+	}
+	
+	function set() {
+		return $this->add();
 	}
 	
 	function get() {
@@ -23,7 +26,7 @@ class UserBrands extends Base {
 		}
 		
 		$this->setForms();
-		$this->add = $this->actions[0];
+		$this->add = "$this->root/form/brand-registration";
 		return array($this);
 	}
 }

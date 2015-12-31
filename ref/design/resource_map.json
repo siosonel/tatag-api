@@ -54,7 +54,11 @@
             "about": {},
             "logout": "",
             "teams": {},
-            "brands": {}
+            "brands": {
+                "#forms": [
+                    "add"
+                ]
+						}
         }
     },
     "team": {

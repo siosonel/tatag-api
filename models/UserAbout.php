@@ -30,6 +30,7 @@ class UserAbout extends Base {
 		
 		$rows = DBquery::get($sql, array($this->user_id));
 		foreach($rows[0] AS $k=>$v) $this->{$k} = $v;
+		$this->setForms();
 		return array($this);
 	}
 }
