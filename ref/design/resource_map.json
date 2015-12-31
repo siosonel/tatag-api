@@ -24,7 +24,14 @@
                     "account": {
                         "records": {
                             "items": {
-                                "#": "account-record"
+                                "#": "account-record",
+                                "#forms": [
+                                    "hold",
+                                    "approve",
+                                    "reject",
+                                    "unuse",
+                                    "unadd"
+                                ]
                             }
                         }
                     },

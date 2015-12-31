@@ -1,4 +1,9 @@
 [
+    "hold",
+    "approve",
+    "reject",
+    "unuse",
+    "unadd",
     "edit",
     "add",
     "transfer",
