@@ -46,7 +46,10 @@
             "ratings": {
                 "items": {
                     "#": "rating"
-                }
+                },
+                "#forms": [
+                    "add"
+                ]
             },
             "about": {},
             "logout": "",

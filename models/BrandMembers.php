@@ -90,6 +90,14 @@ class BrandMembers extends Collection {
 		
 		return;
 	}
+	
+	function resetSimMember() {
+		$sql = "UPDATE members m 
+		JOIN brands b USING (brand_id)
+		SET m.ended=NOW() 
+		WHERE member_id=? AND b.type_system='sim'";
+		DBquery::set($sql, array($this->member_id));
+	}
 }
 
 ?>

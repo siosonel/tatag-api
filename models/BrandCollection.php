@@ -59,7 +59,7 @@ class BrandCollection extends Collection {
 		$Brand->accounts = array($MainRev, $MainExp);
 		
 		if ($Brand->type_system=='sim') {
-			$Member->resetSimMember();
+			$Members->resetSimMember();
 		} 
 		else {
 			$Brand->holders[] =  (new Holders(json_decode('{

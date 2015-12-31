@@ -8,7 +8,8 @@
             "reason": "--social responsibility",
             "created": "2015-11-18 20:21:32",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=11"
+            "@id": "/user/21/ratings?rating_id=11",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 10,
@@ -18,7 +19,8 @@
             "reason": "++good school;",
             "created": "2015-11-18 10:50:05",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=10"
+            "@id": "/user/21/ratings?rating_id=10",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 9,
@@ -28,7 +30,8 @@
             "reason": "++environmental impact; ++community health",
             "created": "2015-08-08 18:53:23",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=9"
+            "@id": "/user/21/ratings?rating_id=9",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 8,
@@ -38,7 +41,8 @@
             "reason": "--dietary health; --environmental impact;",
             "created": "2015-08-08 18:49:43",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=8"
+            "@id": "/user/21/ratings?rating_id=8",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 7,
@@ -48,7 +52,8 @@
             "reason": "--social responsibility; --climate responsibility;",
             "created": "2015-08-08 18:47:43",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=7"
+            "@id": "/user/21/ratings?rating_id=7",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 6,
@@ -58,7 +63,8 @@
             "reason": "---social responsibility;",
             "created": "2015-08-08 18:46:25",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=6"
+            "@id": "/user/21/ratings?rating_id=6",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 5,
@@ -68,7 +74,8 @@
             "reason": "++social cause;",
             "created": "2015-08-08 18:45:35",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=5"
+            "@id": "/user/21/ratings?rating_id=5",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 4,
@@ -78,7 +85,8 @@
             "reason": "++social cause",
             "created": "2015-08-08 18:42:51",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=4"
+            "@id": "/user/21/ratings?rating_id=4",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 3,
@@ -88,7 +96,8 @@
             "reason": "++community involvement; -fair trade;",
             "created": "2015-08-08 18:40:26",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=3"
+            "@id": "/user/21/ratings?rating_id=3",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 2,
@@ -98,7 +107,8 @@
             "reason": "++technical excellence; ",
             "created": "2015-08-08 18:39:44",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=2"
+            "@id": "/user/21/ratings?rating_id=2",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 1,
@@ -108,7 +118,8 @@
             "reason": "++customer service; --community involvement;",
             "created": "2015-08-08 18:38:54",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=1"
+            "@id": "/user/21/ratings?rating_id=1",
+            "edit": "/form/rating-edit"
         }
     ],
     "pageOrder": "desc",
@@ -118,6 +129,7 @@
     "user_id": 21,
     "@type": "userRatings",
     "@id": "/user/21/ratings",
+    "add": "/form/rating-add",
     "rating": [
         {
             "rating_id": 11,
@@ -127,7 +139,8 @@
             "reason": "--social responsibility",
             "created": "2015-11-18 20:21:32",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=11"
+            "@id": "/user/21/ratings?rating_id=11",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 10,
@@ -137,7 +150,8 @@
             "reason": "++good school;",
             "created": "2015-11-18 10:50:05",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=10"
+            "@id": "/user/21/ratings?rating_id=10",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 9,
@@ -147,7 +161,8 @@
             "reason": "++environmental impact; ++community health",
             "created": "2015-08-08 18:53:23",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=9"
+            "@id": "/user/21/ratings?rating_id=9",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 8,
@@ -157,7 +172,8 @@
             "reason": "--dietary health; --environmental impact;",
             "created": "2015-08-08 18:49:43",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=8"
+            "@id": "/user/21/ratings?rating_id=8",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 7,
@@ -167,7 +183,8 @@
             "reason": "--social responsibility; --climate responsibility;",
             "created": "2015-08-08 18:47:43",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=7"
+            "@id": "/user/21/ratings?rating_id=7",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 6,
@@ -177,7 +194,8 @@
             "reason": "---social responsibility;",
             "created": "2015-08-08 18:46:25",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=6"
+            "@id": "/user/21/ratings?rating_id=6",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 5,
@@ -187,7 +205,8 @@
             "reason": "++social cause;",
             "created": "2015-08-08 18:45:35",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=5"
+            "@id": "/user/21/ratings?rating_id=5",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 4,
@@ -197,7 +216,8 @@
             "reason": "++social cause",
             "created": "2015-08-08 18:42:51",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=4"
+            "@id": "/user/21/ratings?rating_id=4",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 3,
@@ -207,7 +227,8 @@
             "reason": "++community involvement; -fair trade;",
             "created": "2015-08-08 18:40:26",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=3"
+            "@id": "/user/21/ratings?rating_id=3",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 2,
@@ -217,7 +238,8 @@
             "reason": "++technical excellence; ",
             "created": "2015-08-08 18:39:44",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=2"
+            "@id": "/user/21/ratings?rating_id=2",
+            "edit": "/form/rating-edit"
         },
         {
             "rating_id": 1,
@@ -227,7 +249,8 @@
             "reason": "++customer service; --community involvement;",
             "created": "2015-08-08 18:38:54",
             "ended": null,
-            "@id": "/user/21/ratings?rating_id=1"
+            "@id": "/user/21/ratings?rating_id=1",
+            "edit": "/form/rating-edit"
         }
     ],
     "actions": [

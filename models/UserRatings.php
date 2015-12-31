@@ -73,7 +73,9 @@ class UserRatings extends Collection {
 		}
 	}
 	
-	function get() {		
+	function get() {			
+		$this->add = "/form/rating-add";
+	
 		$sql = "SELECT rating_id, r.brand_id AS brand_id, b.name AS brand_name, rating, reason, r.created, r.ended
 			FROM ratings r
 			JOIN brands b ON b.brand_id = r.brand_id 
@@ -82,7 +84,10 @@ class UserRatings extends Collection {
 			LIMIT $this->itemsLimit";
 		
 		$items = DBquery::get($sql, array($this->user_id));
-		foreach($items AS &$item) $item['@id'] = $this->{"@id"} ."?rating_id=". $item['rating_id']; 
+		foreach($items AS &$item) {
+			$item['@id'] = $this->{"@id"} ."?rating_id=". $item['rating_id'];
+			$item['edit'] = "$this->root/form/rating-edit";
+		}
 		
 		$this->{$this->collectionOf} = $items;
 		
