@@ -1109,7 +1109,7 @@
 				
 				"inputs": {
 					"from": "42-abc",
-					"to": "promo-1",
+					"to": "ad-1",
 					"note": "test budget use"
 				},
 				"status": 200

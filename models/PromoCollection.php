@@ -82,7 +82,7 @@ class PromoCollection extends Collection {
 			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[promo_id]";
 			$r['recipientToken'] = "$r[keyword]-$r[promo_id]";
 			
-			$r['relay']['budget-use'] = 'promo-'. $r['promo_id'];
+			$r['relay']['use'] = 'promo-'. $r['promo_id'];
 			
 			if (!$r['imageURL']) {
 				//$r['imageURL'] = "/ui/logo.php?brand=". $r['brand_name'];

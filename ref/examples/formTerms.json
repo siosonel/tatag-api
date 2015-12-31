@@ -1,6 +1,6 @@
 [
     "edit",
-    "budget-add",
-    "budget-transfer",
-    "budget-use"
+    "add",
+    "transfer",
+    "use"
 ]

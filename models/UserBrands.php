@@ -23,6 +23,7 @@ class UserBrands extends Base {
 		}
 		
 		$this->setForms();
+		$this->add = $this->actions[0];
 		return array($this);
 	}
 }

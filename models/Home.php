@@ -6,6 +6,7 @@ class Home {
 	function get() {		
 		$home = json_decode(file_get_contents("ref/examples/home.json"),true);
 		$home['@graph'][0]['linkTerms'] = json_decode(file_get_contents("ref/examples/linkTerms.json"),true);
+		$home['@graph'][0]['formTerms'] = json_decode(file_get_contents("ref/examples/formTerms.json"),true);
 		$home['@graph'][0]['navDirections'] = json_decode(file_get_contents("ref/examples/navDirections.json"),true);
 		
 		foreach($home['@graph'] AS &$r) {

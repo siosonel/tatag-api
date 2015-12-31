@@ -105,16 +105,16 @@ class UserAccounts extends Base {
 		$r['relay']['default'] = $r['holder_id']."-".$r['limkey'];
 		
 		if (strpos($auth,"c")) {
-			if ($account['sign']==1) $r['relay']['budget-add'] = $r['holder_id']."-".$r['limkey']."-c";
-			else $r['budget-add'] = "$this->root/form/budget-add";
+			if ($account['sign']==1) $r['relay']['add'] = $r['holder_id']."-".$r['limkey']."-c";
+			else $r['add'] = "$this->root/form/budget-add";
 		}
 
-		if (strpos($auth,"f")) $r['budget-transfer'] = "$this->root/form/budget-transfer";
-		if (strpos($auth,"t")) $r['relay']['budget-transfer'] = $r['holder_id']."-".$r['limkey']."-t";
+		if (strpos($auth,"f")) $r['transfer'] = "$this->root/form/budget-transfer";
+		if (strpos($auth,"t")) $r['relay']['transfer'] = $r['holder_id']."-".$r['limkey']."-t";
 		
 		if (strpos($auth,"i") OR strpos($auth,"x")) {
-			if ($account['sign']==-1) $r['relay']['budget-use'] = $r['holder_id']."-".$r['limkey']."-ix";
-			else $r['budget-use'] = "$this->root/form/budget-use";
+			if ($account['sign']==-1) $r['relay']['use'] = $r['holder_id']."-".$r['limkey']."-ix";
+			else $r['use'] = "$this->root/form/budget-use";
 		}
 		
 		unset($r['authcode']);

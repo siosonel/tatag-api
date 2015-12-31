@@ -181,7 +181,7 @@ class Base {
 		
 		if ($actions) {
 			foreach($actions AS $form) {
-				if ($relatedForms) unset($form->examples);
+				if ($relatedForms AND SITE!='dev') unset($form->examples);
 				$link = trim($form->{'@id'});
 				
 				if (!$relatedForms OR in_array($link,$relatedForms)) { 

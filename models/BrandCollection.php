@@ -38,7 +38,7 @@ class BrandCollection extends Collection {
 			"hours":0
 		}'));
 		
-		$Brand->members = $Member->add();
+		$Brand->members = $Members->add();
 		
 		$MainRev = (new Accounts(json_decode('{
 			"brand_id": '. $Brand->brand_id .',
