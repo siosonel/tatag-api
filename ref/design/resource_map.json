@@ -85,7 +85,10 @@
                     "promos": {
                         "items": {
                             "#": "promo"
-                        }
+                        },
+                        "#forms": [
+                          "add"
+                        ]												
                     },
                     "throttles": {
                         "throttle": {}

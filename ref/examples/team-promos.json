@@ -23,7 +23,7 @@
             "payLink": "http://tatag.dev/for/ad-1",
             "recipientToken": "ad-1",
             "promoPage": "http://tatag.dev/ad/25.00",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/1"
         },
@@ -50,7 +50,7 @@
             "payLink": "http://tatag.dev/for/ad-3",
             "recipientToken": "ad-3",
             "promoPage": "http://tatag.dev/ad/57.57",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/5"
         },
@@ -77,7 +77,7 @@
             "payLink": "http://tatag.dev/for/ad-4",
             "recipientToken": "ad-4",
             "promoPage": "http://tatag.dev/ad/57.69",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/6"
         },
@@ -104,7 +104,7 @@
             "payLink": "http://tatag.dev/for/ad-5",
             "recipientToken": "ad-5",
             "promoPage": "http://tatag.dev/ad/57.71",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/7"
         },
@@ -131,7 +131,7 @@
             "payLink": "http://tatag.dev/for/ad-6",
             "recipientToken": "ad-6",
             "promoPage": "http://tatag.dev/ad/57.71",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/8"
         },
@@ -158,7 +158,7 @@
             "payLink": "http://tatag.dev/for/ad-7",
             "recipientToken": "ad-7",
             "promoPage": "http://tatag.dev/ad/7.77",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/9"
         },
@@ -185,7 +185,7 @@
             "payLink": "http://tatag.dev/for/ad-8",
             "recipientToken": "ad-8",
             "promoPage": "http://tatag.dev/ad/44.44",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/10"
         },
@@ -212,7 +212,7 @@
             "payLink": "http://tatag.dev/for/ad-9",
             "recipientToken": "ad-9",
             "promoPage": "http://tatag.dev/ad/3.33",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/11"
         },
@@ -239,7 +239,7 @@
             "payLink": "http://tatag.dev/for/ad-10",
             "recipientToken": "ad-10",
             "promoPage": "http://tatag.dev/ad/2.22",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/12"
         },
@@ -266,7 +266,7 @@
             "payLink": "http://tatag.dev/for/ad-11",
             "recipientToken": "ad-11",
             "promoPage": "http://tatag.dev/ad/1.11",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/13"
         }
@@ -278,6 +278,7 @@
     "brand_id": 104,
     "@type": "brandPromos",
     "@id": "/brand/104/promos",
+    "add": "/form/promo-add",
     "promo": [
         {
             "promo_id": 1,
@@ -302,7 +303,7 @@
             "payLink": "http://tatag.dev/for/ad-1",
             "recipientToken": "ad-1",
             "promoPage": "http://tatag.dev/ad/25.00",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/1"
         },
@@ -329,7 +330,7 @@
             "payLink": "http://tatag.dev/for/ad-3",
             "recipientToken": "ad-3",
             "promoPage": "http://tatag.dev/ad/57.57",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/5"
         },
@@ -356,7 +357,7 @@
             "payLink": "http://tatag.dev/for/ad-4",
             "recipientToken": "ad-4",
             "promoPage": "http://tatag.dev/ad/57.69",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/6"
         },
@@ -383,7 +384,7 @@
             "payLink": "http://tatag.dev/for/ad-5",
             "recipientToken": "ad-5",
             "promoPage": "http://tatag.dev/ad/57.71",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/7"
         },
@@ -410,7 +411,7 @@
             "payLink": "http://tatag.dev/for/ad-6",
             "recipientToken": "ad-6",
             "promoPage": "http://tatag.dev/ad/57.71",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/8"
         },
@@ -437,7 +438,7 @@
             "payLink": "http://tatag.dev/for/ad-7",
             "recipientToken": "ad-7",
             "promoPage": "http://tatag.dev/ad/7.77",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/9"
         },
@@ -464,7 +465,7 @@
             "payLink": "http://tatag.dev/for/ad-8",
             "recipientToken": "ad-8",
             "promoPage": "http://tatag.dev/ad/44.44",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/10"
         },
@@ -491,7 +492,7 @@
             "payLink": "http://tatag.dev/for/ad-9",
             "recipientToken": "ad-9",
             "promoPage": "http://tatag.dev/ad/3.33",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/11"
         },
@@ -518,7 +519,7 @@
             "payLink": "http://tatag.dev/for/ad-10",
             "recipientToken": "ad-10",
             "promoPage": "http://tatag.dev/ad/2.22",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/12"
         },
@@ -545,7 +546,7 @@
             "payLink": "http://tatag.dev/for/ad-11",
             "recipientToken": "ad-11",
             "promoPage": "http://tatag.dev/ad/1.11",
-            "promo-edit": "/form/promo-edit",
+            "edit": "/form/promo-edit",
             "relay-edit": "/form/relay-edit",
             "relay-edit-target": "/relay/13"
         }
