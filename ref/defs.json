@@ -103,8 +103,9 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
-			"title": "Accept or Rescind Membership",
+		"actions": [
+		{
+			"title": "Edit membership",
 			"@type": "form",
 			"@id": "/form/member-edit",
 			"method": "POST",
@@ -120,17 +121,6 @@
 			},
 			
 			"examples": [{
-				"label": "should allow a member to edit joined or revoked date",
-				"target": "/user/21/brands",
-				"method": "POST",				
-				"query": {
-					"member_id": 53
-				},				
-				"inputs": {
-					"joined": "{xtime}"
-				},
-				"status": 200
-			},{
 				"label": "should NOT allow non-admin edits of a member's hours",
 				"target": "/user/21/brands",
 				"method": "POST",				
@@ -142,6 +132,53 @@
 				},
 				"status": 403
 			}]
+		},
+		{
+			"title": "Accept Membership",
+			"@type": "form",
+			"@id": "/form/member-accept",
+			"method": "POST",
+			
+			"query": {
+				"required": ["member_id"],
+				"optional": []				
+			},
+			
+			"inputs": {
+				"required": ["joined"],
+				"optional": []	
+			},
+			
+			"examples": [{
+				"label": "should allow a member to accept membership by providing a joined date",
+				"target": "/team/104/",
+				"method": "POST",				
+				"query": {
+					"member_id": 53
+				},				
+				"inputs": {
+					"joined": "{date}"
+				},
+				"status": 200
+			}]
+		},
+		{
+			"title": "Revoke Membership",
+			"@type": "form",
+			"@id": "/form/member-revoke",
+			"method": "POST",
+			
+			"query": {
+				"required": ["member_id"],
+				"optional": []				
+			},
+			
+			"inputs": {
+				"required": ["revoked"],
+				"optional": []	
+			},
+			
+			"examples": []
 		}]
 	},
 
@@ -1315,55 +1352,7 @@
 			],
 			"optional": ["links", "actions", "type_system", "type_id", "country_code", "area_code", "area_name", "brand_name"]
 		},
-		
-		"actions": [
-		{
-			"title": "Accept Membership",
-			"@type": "form",
-			"@id": "/form/member-accept",
-			"method": "POST",
-			
-			"query": {
-				"required": ["member_id"],
-				"optional": []				
-			},
-			
-			"inputs": {
-				"required": ["joined"],
-				"optional": []	
-			},
-			
-			"examples": [{
-				"label": "should allow a member to accept membership by providing a joined date",
-				"target": "/team/104/",
-				"method": "POST",				
-				"query": {
-					"member_id": 53
-				},				
-				"inputs": {
-					"joined": "{xtime}"
-				},
-				"status": 200
-			}]
-		},
-		{
-			"title": "Revoke Membership",
-			"@type": "form",
-			"@id": "/form/member-revoke",
-			"method": "POST",
-			
-			"query": {
-				"required": ["member_id"],
-				"optional": []				
-			},
-			
-			"inputs": {
-				"required": ["revoked"],
-				"optional": []	
-			},
-			
-			"examples": []
-		}]
+		"actions": []
 	},
 
 	"teamMembers": {

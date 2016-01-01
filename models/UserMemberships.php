@@ -39,14 +39,23 @@ class UserMemberships extends Base {
 	
 	function get() {
 		$forms = array();
-		$graph = array($this);
+		
+		if (!isset($_GET['member_id'])) {
+			$graph = array($this);
+			$otherCond = "";
+			$vals = array($this->user_id);
+		}
+		else {
+			$otherCond = "AND member_id=?";
+			$vals = array($this->user_id, $_GET['member_id']);
+		}
 	
-		$sql = "SELECT brand_id, b.name AS brand_name, member_id, m.created AS joined, role, hours 
+		$sql = "SELECT brand_id, b.name AS brand_name, member_id, m.joined AS joined, role, hours 
 			FROM members m
 			JOIN brands b USING (brand_id)
-			WHERE user_id=? AND m.ended IS NULL AND revoked IS NULL AND type_system != 'sim'";
+			WHERE user_id=? AND m.ended IS NULL AND revoked IS NULL AND type_system != 'sim' $otherCond";
 		
-		$items = DBquery::get($sql, array($this->user_id));
+		$items = DBquery::get($sql, $vals);
 		$this->setForms();
 		$tracked = array();
 		
@@ -54,7 +63,13 @@ class UserMemberships extends Base {
 			$r['@type'] = 'userMembership';
 			$r['@id'] = $this->{'@id'} ."?member_id=". $r['member_id'];
 			$r["team"] = "$this->root/team/".$r['brand_id'];			
-			if ($r['role']=='admin') $r["brand"] = "$this->root/brand/".$r['brand_id'];			
+			if ($r['role']=='admin') $r["admin"] = "$this->root/brand/".$r['brand_id'];			
+			
+			$r['edit'] = "/form/member-edit";
+			if (!$r['joined']) $r['accept'] = "/form/member-accept";
+			$r['revoke'] = "/form/member-revoke";
+			
+			$graph[] = $r;
 			
 			$brand = $this->transferProps($r, array("brand_id"), array("name"=>"brand_name"));
 			if (!in_array($r['brand'], $tracked)) {
@@ -65,8 +80,8 @@ class UserMemberships extends Base {
 				$tracked[] = $r['brand'];
 			}
 			
-			$graph[] = $r;			
-			$this->items[] = $r['@id'];
+			//$graph[] = $r;			
+			if (!isset($_GET['member_id'])) $this->items[] = $r['@id'];
 		}
 		
 		return $graph;

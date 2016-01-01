@@ -15,7 +15,11 @@
         "me": {
             "memberships": {
                 "items": {
-                    "#": "membership"
+                    "#": "membership",
+                    "#forms": [
+                        "accept",
+                        "revoke"
+                    ]
                 }
             },
             "holdings": {
@@ -45,7 +49,10 @@
             },
             "ratings": {
                 "items": {
-                    "#": "rating"
+                    "#": "rating",
+                    "#forms": [
+                        "edit"
+                    ]
                 },
                 "#forms": [
                     "add"

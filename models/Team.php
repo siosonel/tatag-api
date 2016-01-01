@@ -30,7 +30,7 @@ class Team extends Base {
 	}
 	
 	function get() {
-		$this->getRole();		
+		//$this->getRole();		
 		$this->getInfo();
 		
 		$startDate = "2015-01-01 00:00:00";
@@ -68,7 +68,7 @@ class Team extends Base {
 		if ($row[0]) {
 			$about = new stdClass();
 			foreach($row[0] AS $key=>$val) $about->$key = $val;
-			$this->brand_name = $this->name;
+			$this->name = $row[0]['name'];
 			
 			$this->members = "$this->root/team/$this->brand_id/members";
 			$this->accounts = "$this->root/team/$this->brand_id/accounts";							
@@ -80,12 +80,12 @@ class Team extends Base {
 	}
 	
 	function getRole() {		
-		$sql = "SELECT member_id, role, hours, m.created, u.name, m.joined, m.revoked
+		$sql = "SELECT role, hours, m.created, u.name, m.joined, m.revoked
 			FROM members m
 			JOIN users u ON u.user_id=m.user_id 
 			WHERE brand_id=? AND m.user_id=?
 			AND m.ended IS NULL AND m.revoked IS NULL 
-			ORDER BY member_id DESC";
+			ORDER BY m.created DESC";
 		
 		$row = DBquery::get($sql, array($this->brand_id, Requester::$user_id));
 		

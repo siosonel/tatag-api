@@ -1,4 +1,6 @@
 [
+    "accept",
+    "revoke",
     "hold",
     "approve",
     "reject",
