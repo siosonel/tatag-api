@@ -13,7 +13,14 @@ class BrandAbout extends Base {
 		$this->okToGet = array("brand_id", "name", "mission", "description");
 		
 		$this->init($data);
+		$this->okToSet = array("name", "ended", "mission", "description", "url", "advisor", "type_system", "type_id", "country_code", "area_code", "logo");
+		$this->okToFilterBy = array("brand_id");
 	}	
+	
+	function set() {	
+		$this->update(array("brand_id"=>$this->brand_id));
+		return array($this->obj);
+	}
 	
 	function get() {
 		$this->getInfo();

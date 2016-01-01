@@ -567,7 +567,7 @@
 				
 				"inputs": {
 					"name": "my -{xtime}",
-					"authcode": "ft -{random}"
+					"authcode": "ft -w"
 				},
 				"status": 200
 			},{
@@ -652,7 +652,7 @@
 				},					
 				
 				"inputs": {
-					"authcode": "ftix -{random}"
+					"authcode": "ftix -w"
 				},
 				"status": 200
 			},{
@@ -786,11 +786,11 @@
 		
 			"examples": [{
 				"label": "should allow an admin to edit a holder's authcode",
-				"target": "/member/57/accounts?holder_id=46",
+				"target": "/member/55/accounts?holder_id=46",
 				"method": "POST",
 				
 				"inputs": {
-					"authcode": "ftix -{random}"					
+					"authcode": "ftix -w"					
 				},
 				"status": 200
 			},{
@@ -817,7 +817,7 @@
 			
 			"examples": [{
 				"label": "should allow an admin to add a new accountholder",
-				"target": "/member/57/accounts",
+				"target": "/member/55/accounts",
 				"method": "POST",
 				
 				"inputs": {
@@ -1546,7 +1546,7 @@
 				
 				"inputs": {
 					"name": "{hex}",
-					"amount": "{random}"
+					"amount": "8.97"
 				},
 				"status": 200
 			},{
@@ -1556,7 +1556,7 @@
 				
 				"inputs": {
 					"name": "{hex}",
-					"amount": "{random}"
+					"amount": "7.98"
 				},
 				"status": 403
 			}]
@@ -1595,7 +1595,7 @@
 				"inputs": {
 					"name": "product promo {hex}",
 					"description": "a brand 104 promo {hex}",
-					"amount": "{random}",
+					"amount": "5.43",
 					"holder_id": 41					
 				},
 				"status": 200
@@ -1607,7 +1607,7 @@
 				"inputs": {
 					"name": "product promo {hex}",
 					"description": "a brand 105 promo {hex}",
-					"amount": "{random}"
+					"amount": "3.45"
 				},
 				"status": 403
 			},{
@@ -1618,7 +1618,7 @@
 				"inputs": {
 					"name": "product promo {hex}",
 					"description": "a brand 104 promo {hex}",
-					"amount": "{random}",
+					"amount": "5.43",
 					"holder_id": 41					
 				},
 				"status": 200

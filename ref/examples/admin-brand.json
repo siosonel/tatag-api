@@ -1,10 +1,10 @@
 [
     {
         "brand_id": 104,
-        "role": "admin",
-        "name": "abc",
         "@type": "brand",
         "@id": "/brand/104",
+        "role": "admin",
+        "name": "abc",
         "brand_name": "abc",
         "members": "/brand/104/members",
         "accounts": "/brand/104/accounts",
@@ -23,6 +23,7 @@
             "numMembers": 2,
             "totalMemberHours": 0
         },
+        "edit": "/form/brand-edit",
         "actions": [
             "/form/brand-edit"
         ]

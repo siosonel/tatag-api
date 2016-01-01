@@ -31,7 +31,9 @@ class AccountHolders extends BrandHolders {
 		return;
 	}
 	
-	function get() {
+	function get() {		
+		$this->add = "$this->root/form/holder-add";
+	
 		$sql = "SELECT holder_id, h.authcode, h.account_id, a.brand_id, a.name, h.created, member_id, h.user_id, u.name
 			FROM holders h
 			JOIN accounts a ON h.account_id=a.account_id
@@ -47,6 +49,7 @@ class AccountHolders extends BrandHolders {
 		$this->{$this->collectionOf} = array();
 		foreach($items AS &$r) {
 			$r['@id'] = $this->{'@id'} ."?holder_id=". $r['holder_id'];
+			$r['edit'] = "$this->root/form/admin-holder-edit";
 			$this->{$this->collectionOf}[] = $r;
 		}
 		

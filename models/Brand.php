@@ -30,7 +30,7 @@ class Brand extends Base {
 		if (!$tally) return array(null);
 		$this->tally = array_merge(array("@type" => "budgetTally"),$tally);
 		
-		
+		$this->edit = "$this->root/form/brand-edit";
 		$this->setForms();	
 		
 		include_once "models/BrandMembers.php";

@@ -44,6 +44,8 @@ class BrandMembers extends Collection {
 	}
 	
 	function get() {
+		$this->add = "/form/member-add";
+	
 		$sql = "SELECT member_id, brand_id, m.user_id, role, hours, m.created, u.name, m.joined, m.revoked
 			FROM members m
 			JOIN users u ON u.user_id=m.user_id 
@@ -57,6 +59,7 @@ class BrandMembers extends Collection {
 		foreach($items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?member_id=". $r['member_id'];
 			$r['holdings'] = "$this->root/member/". $r['member_id'] ."/accounts";
+			$r['edit'] = "$this->root/form/admin-member-edit";
 			$this->items[] = $r;
 		}
 		

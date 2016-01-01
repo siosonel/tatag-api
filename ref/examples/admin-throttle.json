@@ -10,7 +10,8 @@
         "updated": null,
         "ended": null,
         "productURL": null,
-        "@id": "/throttle/1"
+        "@id": "/throttle/1",
+        "edit": "/form/admin-throttle-edit"
     },
     {
         "throttle_id": 2,
@@ -23,7 +24,8 @@
         "updated": null,
         "ended": null,
         "productURL": null,
-        "@id": "/throttle/2"
+        "@id": "/throttle/2",
+        "edit": "/form/admin-throttle-edit"
     },
     {
         "throttle_id": 3,
@@ -36,7 +38,8 @@
         "updated": null,
         "ended": null,
         "productURL": null,
-        "@id": "/throttle/3"
+        "@id": "/throttle/3",
+        "edit": "/form/admin-throttle-edit"
     },
     {
         "throttle_id": 4,
@@ -49,6 +52,7 @@
         "updated": null,
         "ended": null,
         "productURL": null,
-        "@id": "/throttle/4"
+        "@id": "/throttle/4",
+        "edit": "/form/admin-throttle-edit"
     }
 ]

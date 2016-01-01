@@ -28,6 +28,7 @@ class BrandPromos extends PromoCollection {
 	}
 	
 	function get() {
+		$this->add = "$this->root/form/promo-add";
 		$this->setFilters($_GET);		
 	
 		$sql = "SELECT promo_id, brand_id, brands.name AS brand_name, 
@@ -52,7 +53,7 @@ class BrandPromos extends PromoCollection {
 			
 			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[amount]";
 			
-			$r['promo-edit'] = '/form/promo-edit';
+			$r['edit'] = '/form/promo-edit';
 			
 			$relayHoldings = array();
 			

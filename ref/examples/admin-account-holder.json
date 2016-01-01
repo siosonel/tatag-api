@@ -8,6 +8,7 @@
         "created": "2015-01-05 11:53:31",
         "member_id": 53,
         "user_id": 21,
-        "@id": "/account/92/holders?holder_id=41"
+        "@id": "/account/92/holders?holder_id=41",
+        "edit": "/form/admin-holder-edit"
     }
 ]

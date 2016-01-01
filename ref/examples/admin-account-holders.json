@@ -9,7 +9,8 @@
             "created": "2015-01-05 11:53:31",
             "member_id": 53,
             "user_id": 21,
-            "@id": "/account/92/holders?holder_id=41"
+            "@id": "/account/92/holders?holder_id=41",
+            "edit": "/form/admin-holder-edit"
         }
     ],
     "pageOrder": "asc",
@@ -20,6 +21,7 @@
     "brand_id": 104,
     "@type": "accountHolders",
     "@id": "/account/92/holders",
+    "add": "/form/holder-add",
     "holder": [
         {
             "holder_id": 41,
@@ -30,7 +32,8 @@
             "created": "2015-01-05 11:53:31",
             "member_id": 53,
             "user_id": 21,
-            "@id": "/account/92/holders?holder_id=41"
+            "@id": "/account/92/holders?holder_id=41",
+            "edit": "/form/admin-holder-edit"
         }
     ],
     "actions": []

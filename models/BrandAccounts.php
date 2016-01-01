@@ -35,14 +35,17 @@ class BrandAccounts extends Collection {
 		return array($this);
 	}
 	
-	function get() {	
+	function get() {
+		$this->add = "$this->root/form/account-add";
+	
 		$sql = "CALL brandAccountsAsc($this->brand_id, 0, 100)";		
 		$items = DBquery::get($sql);
 		
 		$this->{$this->collectionOf} = array();
 		foreach($items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?account_id=". $r['account_id'];
-			$r['holders'] = "$this->root/account/". $r['account_id'] ."/holders";
+			$r['holders'] = "$this->root/account/". $r['account_id'] ."/holders";			
+			$r['edit'] = "$this->root/form/admin-account-edit";
 			$this->items[] = $r;
 		}
 		

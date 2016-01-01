@@ -26,13 +26,16 @@ class BudgetThrottles extends Base {
 	
 	function get() {
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "Only brand #$this->brand_id members have access to this brandThrottles view.");
-	
+		
+		$this->add = "$this->throttle/form/throttle-add";
+		
 		$sql = "SELECT * FROM $this->table WHERE brand_id=? AND ended IS NULL"; 		
 		$items = DBquery::get($sql, array($this->brand_id));
 		
 		$this->{$this->collectionOf} = array();
 		foreach($items AS &$t) {
 			$t['@id'] = "$this->root/throttle/". $t['throttle_id'];
+			$t['edit'] = "$this->root/form/admin-throttle-edit";
 			$this->{$this->collectionOf}[] = $t;
 		}
 		

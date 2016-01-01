@@ -99,6 +99,9 @@
         "me": {
             "brands": {
                 "brand": {
+                    "#forms": [
+                        "edit"
+                    ],
                     "members": {
                         "items": {
                             "#": "member",
@@ -106,10 +109,22 @@
                                 "#": "member-holdings",
                                 "items": {
                                     "#": "member-holding",
-                                    "account": {}
-                                }
-                            }
-                        }
+                                    "account": {},
+                                    "#forms": [
+                                        "edit"
+                                    ]
+                                },
+                                "#forms": [
+                                    "add"
+                                ]
+                            },
+                            "#forms": [
+                                "edit"
+                            ]
+                        },
+                        "#forms": [
+                            "add"
+                        ]
                     },
                     "accounts": {
                         "items": {
@@ -117,18 +132,43 @@
                             "holders": {
                                 "#": "account-holders",
                                 "items": {
-                                    "#": "account-holder"
-                                }
-                            }
-                        }
+                                    "#": "account-holder",
+                                    "#forms": [
+                                        "edit"
+                                    ]
+                                },
+                                "#forms": [
+                                    "add"
+                                ]
+                            },
+                            "#forms": [
+                                "edit"
+                            ]
+                        },
+                        "#forms": [
+                            "add"
+                        ]
                     },
                     "promos": {
                         "items": {
-                            "#": "promo"
-                        }
+                            "#": "promo",
+                            "#forms": [
+                                "edit"
+                            ]
+                        },
+                        "#forms": [
+                            "add"
+                        ]
                     },
                     "throttles": {
-                        "throttle": {}
+                        "throttle": {
+                            "#forms": [
+                                "edit"
+                            ]												
+												},
+                        "#forms": [
+                            "add"
+                        ]
                     },
                     "about": {},
                     "tally": {}

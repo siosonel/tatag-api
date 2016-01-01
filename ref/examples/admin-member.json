@@ -10,7 +10,8 @@
         "joined": "2015-11-17 04:15:14",
         "revoked": null,
         "@id": "/brand/104/members?member_id=53",
-        "holdings": "/member/53/accounts"
+        "holdings": "/member/53/accounts",
+        "edit": "/form/admin-member-edit"
     },
     {
         "member_id": 55,
@@ -23,6 +24,7 @@
         "joined": null,
         "revoked": null,
         "@id": "/brand/104/members?member_id=55",
-        "holdings": "/member/55/accounts"
+        "holdings": "/member/55/accounts",
+        "edit": "/form/admin-member-edit"
     }
 ]

@@ -7,7 +7,8 @@
             "brand_id": 104,
             "name": "Main Revenue",
             "created": "2015-01-05 11:53:31",
-            "@id": "/member/53/accounts?holder_id=41"
+            "@id": "/member/53/accounts?holder_id=41",
+            "edit": "/form/admin-holder-edit"
         },
         {
             "holder_id": 42,
@@ -16,7 +17,8 @@
             "brand_id": 104,
             "name": "Main Expense",
             "created": "2015-01-05 11:53:31",
-            "@id": "/member/53/accounts?holder_id=42"
+            "@id": "/member/53/accounts?holder_id=42",
+            "edit": "/form/admin-holder-edit"
         },
         {
             "holder_id": 43,
@@ -25,7 +27,8 @@
             "brand_id": 104,
             "name": "Personal Expense",
             "created": "2015-01-05 11:53:32",
-            "@id": "/member/53/accounts?holder_id=43"
+            "@id": "/member/53/accounts?holder_id=43",
+            "edit": "/form/admin-holder-edit"
         }
     ],
     "pageOrder": "asc",
@@ -40,6 +43,7 @@
     "created": "2015-01-05 11:53:31",
     "@type": "memberAccounts",
     "@id": "/member/53/accounts",
+    "add": "/form/holder-add",
     "holding": [
         {
             "holder_id": 41,
@@ -48,7 +52,8 @@
             "brand_id": 104,
             "name": "Main Revenue",
             "created": "2015-01-05 11:53:31",
-            "@id": "/member/53/accounts?holder_id=41"
+            "@id": "/member/53/accounts?holder_id=41",
+            "edit": "/form/admin-holder-edit"
         },
         {
             "holder_id": 42,
@@ -57,7 +62,8 @@
             "brand_id": 104,
             "name": "Main Expense",
             "created": "2015-01-05 11:53:31",
-            "@id": "/member/53/accounts?holder_id=42"
+            "@id": "/member/53/accounts?holder_id=42",
+            "edit": "/form/admin-holder-edit"
         },
         {
             "holder_id": 43,
@@ -66,7 +72,8 @@
             "brand_id": 104,
             "name": "Personal Expense",
             "created": "2015-01-05 11:53:32",
-            "@id": "/member/53/accounts?holder_id=43"
+            "@id": "/member/53/accounts?holder_id=43",
+            "edit": "/form/admin-holder-edit"
         }
     ],
     "actions": [
