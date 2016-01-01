@@ -22,7 +22,7 @@
         "promoPage": "http://tatag.dev/ad/11",
         "recipientToken": "ad-11",
         "relay": {
-            "budget-use": "promo-11"
+            "use": "promo-11"
         },
         "imageTemplate": "/ui/logo.php",
         "promo-edit": "/form/promo-edit"
@@ -50,7 +50,7 @@
         "promoPage": "http://tatag.dev/ad/10",
         "recipientToken": "ad-10",
         "relay": {
-            "budget-use": "promo-10"
+            "use": "promo-10"
         },
         "imageTemplate": "/ui/logo.php",
         "promo-edit": "/form/promo-edit"
@@ -78,7 +78,7 @@
         "promoPage": "http://tatag.dev/ad/9",
         "recipientToken": "ad-9",
         "relay": {
-            "budget-use": "promo-9"
+            "use": "promo-9"
         },
         "imageTemplate": "/ui/logo.php",
         "promo-edit": "/form/promo-edit"
@@ -106,7 +106,7 @@
         "promoPage": "http://tatag.dev/ad/8",
         "recipientToken": "ad-8",
         "relay": {
-            "budget-use": "promo-8"
+            "use": "promo-8"
         },
         "imageTemplate": "/ui/logo.php",
         "promo-edit": "/form/promo-edit"
@@ -134,7 +134,7 @@
         "promoPage": "http://tatag.dev/ad/7",
         "recipientToken": "ad-7",
         "relay": {
-            "budget-use": "promo-7"
+            "use": "promo-7"
         },
         "imageTemplate": "/ui/logo.php",
         "promo-edit": "/form/promo-edit"
@@ -162,7 +162,7 @@
         "promoPage": "http://tatag.dev/ad/6",
         "recipientToken": "ad-6",
         "relay": {
-            "budget-use": "promo-6"
+            "use": "promo-6"
         },
         "imageTemplate": "/ui/logo.php",
         "promo-edit": "/form/promo-edit"
@@ -190,7 +190,7 @@
         "promoPage": "http://tatag.dev/ad/5",
         "recipientToken": "ad-5",
         "relay": {
-            "budget-use": "promo-5"
+            "use": "promo-5"
         },
         "imageTemplate": "/ui/logo.php",
         "promo-edit": "/form/promo-edit"
@@ -218,7 +218,7 @@
         "promoPage": "http://tatag.dev/ad/4",
         "recipientToken": "ad-4",
         "relay": {
-            "budget-use": "promo-4"
+            "use": "promo-4"
         },
         "imageTemplate": "/ui/logo.php",
         "promo-edit": "/form/promo-edit"
@@ -246,7 +246,7 @@
         "promoPage": "http://tatag.dev/ad/3",
         "recipientToken": "ad-3",
         "relay": {
-            "budget-use": "promo-3"
+            "use": "promo-3"
         },
         "imageTemplate": "/ui/logo.php",
         "promo-edit": "/form/promo-edit"
@@ -274,7 +274,7 @@
         "promoPage": "http://tatag.dev/ad/1",
         "recipientToken": "ad-1",
         "relay": {
-            "budget-use": "promo-1"
+            "use": "promo-1"
         },
         "imageTemplate": "/ui/logo.php",
         "promo-edit": "/form/promo-edit"

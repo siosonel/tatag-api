@@ -8,16 +8,16 @@
         "holder_authcode": "cftix",
         "relay": {
             "default": "41-abc",
-            "budget-transfer": "41-abc-t",
-            "budget-use": "41-abc-ix"
+            "transfer": "41-abc-t",
+            "use": "41-abc-ix"
         },
         "@type": "userAccount",
         "@id": "/user/21/accounts?holder_id=41",
         "_brand": "/brand/104/about",
         "account": "/account/92",
         "user": "/user/21",
-        "budget-add": "/form/budget-add",
-        "budget-transfer": "/form/budget-transfer",
+        "add": "/form/budget-add",
+        "transfer": "/form/budget-transfer",
         "holder-edit": "/form/holder-edit",
         "edit": "/form/holder-edit",
         "relays": "/holder/41/relays"
@@ -31,16 +31,16 @@
         "holder_authcode": "cftix",
         "relay": {
             "default": "42-abc",
-            "budget-add": "42-abc-c",
-            "budget-transfer": "42-abc-t"
+            "add": "42-abc-c",
+            "transfer": "42-abc-t"
         },
         "@type": "userAccount",
         "@id": "/user/21/accounts?holder_id=42",
         "_brand": "/brand/104/about",
         "account": "/account/93",
         "user": "/user/21",
-        "budget-transfer": "/form/budget-transfer",
-        "budget-use": "/form/budget-use",
+        "transfer": "/form/budget-transfer",
+        "use": "/form/budget-use",
         "holder-edit": "/form/holder-edit",
         "edit": "/form/holder-edit",
         "relays": "/holder/42/relays"
@@ -54,14 +54,14 @@
         "holder_authcode": "ftix",
         "relay": {
             "default": "43-abc",
-            "budget-transfer": "43-abc-t"
+            "transfer": "43-abc-t"
         },
         "@type": "userAccount",
         "@id": "/user/21/accounts?holder_id=43",
         "_brand": "/brand/104/about",
         "account": "/account/94",
         "user": "/user/21",
-        "budget-use": "/form/budget-use",
+        "use": "/form/budget-use",
         "holder-edit": "/form/holder-edit",
         "edit": "/form/holder-edit",
         "relays": "/holder/43/relays"
