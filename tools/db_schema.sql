@@ -143,7 +143,7 @@ CREATE TABLE `ratings` (
   `rating_id` int(11) NOT NULL AUTO_INCREMENT,
   `brand_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `rating` smallint(6) DEFAULT NULL,
+  `score` smallint(6) DEFAULT NULL,
   `reason` varchar(150) DEFAULT NULL,
   `created` timestamp NULL DEFAULT NULL,
   `updated` timestamp NULL DEFAULT NULL,

@@ -298,7 +298,7 @@
 			"method": "POST",
 			
 			"inputs": {
-				"required": ["brand_id", "rating", "reason"],
+				"required": ["brand_id", "score", "reason"],
 				"optional": []
 			},
 			
@@ -309,7 +309,7 @@
 				
 				"inputs": {
 					"brand_id": 105,
-					"rating": 0,
+					"score": 0,
 					"reason": "polluter"
 				},
 				"status": 200
@@ -320,7 +320,7 @@
 				
 				"inputs": {
 					"brand_id": "test test test {random}",
-					"rating": 0,
+					"score": 0,
 					"reason": "polluter"
 				},
 				"status": 200
@@ -331,7 +331,7 @@
 				
 				"inputs": {
 					"brand_id": 105,
-					"rating": 0,
+					"score": 0,
 					"reason": "polluter"
 				},
 				"status": 200
@@ -345,7 +345,7 @@
 			
 			"inputs": {
 				"required": [],
-				"optional": ["rating","reason","ended"]
+				"optional": ["score","reason","ended"]
 			},
 			
 			"query": {
@@ -359,7 +359,7 @@
 				"method": "POST",
 				
 				"inputs": {
-					"rating": 1,
+					"score": 1,
 					"reason": "non-polluter {random}"
 				},
 				"status": 200

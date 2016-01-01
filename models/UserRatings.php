@@ -17,8 +17,8 @@ class UserRatings extends Collection {
 		$this->pageOrder = "desc";
 		$this->init($data);
 		
-		$this->okToAdd = array("brand_id", "user_id", "rating", "reason");	
-		$this->okToSet = array("rating", "reason", "ended");	
+		$this->okToAdd = array("brand_id", "user_id", "score", "reason");	
+		$this->okToSet = array("score", "reason", "ended");	
 		$this->okToFilterBy = array("rating_id");
 	}
 	
@@ -76,7 +76,7 @@ class UserRatings extends Collection {
 	function get() {			
 		$this->add = "/form/rating-add";
 	
-		$sql = "SELECT rating_id, r.brand_id AS brand_id, b.name AS brand_name, rating, reason, r.created, r.ended
+		$sql = "SELECT rating_id, r.brand_id AS brand_id, b.name AS brand_name, score, reason, r.created, r.ended
 			FROM ratings r
 			JOIN brands b ON b.brand_id = r.brand_id 
 			WHERE r.user_id=? AND rating_id $this->ltgt $this->limitID
