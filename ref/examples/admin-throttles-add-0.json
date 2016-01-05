@@ -1,0 +1,15 @@
+{
+    "brand_id": 104,
+    "@type": "budgetThrottles",
+    "@id": "/budget/104/throttles",
+    "collectionOf": "throttle",
+    "period": 360000,
+    "by_all": 100,
+    "by_brand": 20,
+    "by_user": 2,
+    "throttle_id": 4,
+    "created": "2016-01-04 21:52:11",
+    "updated": null,
+    "ended": null,
+    "productURL": null
+}

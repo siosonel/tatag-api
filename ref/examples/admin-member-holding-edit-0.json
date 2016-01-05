@@ -1,0 +1,16 @@
+{
+    "items": [],
+    "pageOrder": "asc",
+    "itemsLimit": 50,
+    "collectionOf": "holding",
+    "pageOf": null,
+    "member_id": 55,
+    "brand_id": 104,
+    "user_id": 23,
+    "role": "assistant -1451973130",
+    "hours": 44,
+    "created": "2015-01-05 11:53:31",
+    "@type": "memberAccounts",
+    "@id": "/member/55/accounts",
+    "authcode": "ftix -w"
+}

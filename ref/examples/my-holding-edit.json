@@ -1,0 +1,45 @@
+{
+    "title": "Edit",
+    "@type": "form",
+    "@id": "/form/holder-edit",
+    "method": "POST",
+    "query": {
+        "required": [
+            "holder_id"
+        ],
+        "optional": []
+    },
+    "inputs": {
+        "required": [],
+        "optional": [
+            "alias",
+            "limkey"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow a holder to edit the accountholding's alias",
+            "target": "/user/21/accounts",
+            "method": "POST",
+            "query": {
+                "holder_id": 41
+            },
+            "inputs": {
+                "alias": "nickname-{xtime}"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-holder to edit an account's alias",
+            "target": "/user/21/accounts",
+            "method": "POST",
+            "query": {
+                "holder_id": 44
+            },
+            "inputs": {
+                "alias": "nickname-{xtime}"
+            },
+            "status": 403
+        }
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "title": "Edit",
+    "@type": "form",
+    "@id": "/form/promo-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [],
+        "optional": [
+            "name",
+            "description",
+            "amount",
+            "imageURL",
+            "infoURL",
+            "expires",
+            "keyword"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow a brand admin to edit a promo specification",
+            "target": "/promo/1",
+            "method": "POST",
+            "inputs": {
+                "name": "{hex}",
+                "amount": 8.97
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-brand admin to edit a promo specification",
+            "target": "/promo/2",
+            "method": "POST",
+            "inputs": {
+                "name": "{hex}",
+                "amount": 7.98
+            },
+            "status": 403
+        }
+    ]
+}

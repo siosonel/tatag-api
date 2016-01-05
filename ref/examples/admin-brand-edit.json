@@ -1,0 +1,47 @@
+{
+    "title": "Edit",
+    "@type": "form",
+    "@id": "/form/brand-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [],
+        "optional": [
+            "name",
+            "url",
+            "mission",
+            "description",
+            "url",
+            "advisor",
+            "type_system",
+            "type_id",
+            "country_code",
+            "area_code",
+            "logo"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an admin to edit a brand's info",
+            "target": "/brand/104",
+            "method": "POST",
+            "inputs": {
+                "mission": "another mission -{xtime}",
+                "description": "another description -{xtime}"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-admin to edit a brand's alias",
+            "target": "/brand/105",
+            "method": "POST",
+            "query": {
+                "holder_id": 44
+            },
+            "inputs": {
+                "mission": "non-admin's brand mission -{xtime}",
+                "description": "non-admin's brand description -{xtime}"
+            },
+            "status": 403
+        }
+    ]
+}

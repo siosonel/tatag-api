@@ -1,0 +1,6 @@
+{
+    "@context": "/api/ref/context.php",
+    "error": "Cannot insert values for these object properties: hours",
+    "hints": [],
+    "@graph": []
+}

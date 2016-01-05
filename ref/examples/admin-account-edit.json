@@ -1,0 +1,42 @@
+{
+    "title": "Edit",
+    "@type": "form",
+    "@id": "/form/admin-account-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [],
+        "optional": [
+            "name",
+            "authcode",
+            "throttle_id"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an admin to edit an account's info",
+            "target": "/brand/104/accounts",
+            "method": "POST",
+            "query": {
+                "account_id": 94
+            },
+            "inputs": {
+                "name": "my -{xtime}",
+                "authcode": "ft -w"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-admin to edit an account's info",
+            "target": "/brand/105/accounts",
+            "method": "POST",
+            "query": {
+                "account_id": 97
+            },
+            "inputs": {
+                "name": "my -{xtime}",
+                "authcode": "{random}"
+            },
+            "status": 403
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "items": [],
+    "pageOrder": "asc",
+    "itemsLimit": 50,
+    "collectionOf": "holder",
+    "pageOf": null,
+    "brand_id": 104,
+    "@type": "brandHolders",
+    "@id": "/brand/104/holders",
+    "authcode": "ftix -w"
+}

@@ -1,0 +1,61 @@
+{
+    "title": "Add",
+    "@type": "form",
+    "@id": "/form/promo-add",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "name",
+            "description",
+            "amount",
+            "holder_id"
+        ],
+        "optional": [
+            "imageURL",
+            "infoURL",
+            "expires",
+            "by_all_limit",
+            "by_brand_limit",
+            "by_user_limit",
+            "by_user_wait",
+            "keyword"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow a brand member to add a promo specification",
+            "target": "/brand/104/promos",
+            "method": "POST",
+            "inputs": {
+                "name": "product promo {hex}",
+                "description": "a brand 104 promo {hex}",
+                "amount": 5.43,
+                "holder_id": 41
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-brand member to add a promo specification",
+            "target": "/brand/105/promos",
+            "method": "POST",
+            "inputs": {
+                "name": "product promo {hex}",
+                "description": "a brand 105 promo {hex}",
+                "amount": 3.45
+            },
+            "status": 403
+        },
+        {
+            "label": "should allow a brand member to add using the promo/collection endpoint",
+            "target": "/promo/collection",
+            "method": "POST",
+            "inputs": {
+                "name": "product promo {hex}",
+                "description": "a brand 104 promo {hex}",
+                "amount": 5.43,
+                "holder_id": 41
+            },
+            "status": 200
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "@type": "budgetUsed",
+    "brand_id": 104,
+    "@id": "/budgets/104/used",
+    "note": "test budget use",
+    "from_acct": 93,
+    "from_user": 21,
+    "amount": 0.01,
+    "txntype": "pn",
+    "throttle_id": 0,
+    "relay_id": 3,
+    "promo_id": 0,
+    "record_id": 41
+}

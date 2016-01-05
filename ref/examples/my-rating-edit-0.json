@@ -1,0 +1,12 @@
+{
+    "items": [],
+    "pageOrder": "desc",
+    "itemsLimit": 50,
+    "collectionOf": "rating",
+    "pageOf": null,
+    "user_id": 21,
+    "@type": "userRatings",
+    "@id": "/user/21/ratings",
+    "score": 1,
+    "reason": "non-polluter 293"
+}

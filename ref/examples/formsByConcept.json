@@ -1,0 +1,73 @@
+{
+    "my-membership": [
+        "accept",
+        "revoke"
+    ],
+    "my-holding": [
+        "edit",
+        "add",
+        "transfer",
+        "use"
+    ],
+    "my-account-record": [
+        "hold",
+        "approve",
+        "reject",
+        "unuse",
+        "unadd"
+    ],
+    "my-ratings": [
+        "add"
+    ],
+    "my-rating": [
+        "edit"
+    ],
+    "my-brands": [
+        "add"
+    ],
+    "team-promos": [
+        "add"
+    ],
+    "team-promo": [
+        "edit"
+    ],
+    "admin-brand": [
+        "edit"
+    ],
+    "admin-members": [
+        "add"
+    ],
+    "admin-member": [
+        "edit"
+    ],
+    "admin-member-holdings": [
+        "add"
+    ],
+    "admin-member-holding": [
+        "edit"
+    ],
+    "admin-accounts": [
+        "add"
+    ],
+    "admin-account": [
+        "edit"
+    ],
+    "admin-account-holders": [
+        "add"
+    ],
+    "admin-account-holder": [
+        "edit"
+    ],
+    "admin-promos": [
+        "add"
+    ],
+    "admin-promo": [
+        "edit"
+    ],
+    "admin-throttles": [
+        "add"
+    ],
+    "admin-throttle": [
+        "edit"
+    ]
+}

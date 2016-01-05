@@ -1,0 +1,12 @@
+{
+    "@type": "budgetIssued",
+    "brand_id": 104,
+    "@id": "/budgets/104/issued",
+    "amount": 200,
+    "note": "test budget issuance",
+    "from_acct": 92,
+    "from_user": 21,
+    "txntype": "np",
+    "record_id": 37,
+    "status": 7
+}

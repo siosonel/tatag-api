@@ -1,0 +1,6 @@
+{
+    "@context": "/api/ref/context.php",
+    "error": "The requester cannot set another holder's information. \n\t\t\t\tPlease check that requester (#21) is filtering by his or her own holder_id (#44).",
+    "hints": [],
+    "@graph": []
+}

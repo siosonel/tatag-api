@@ -1,0 +1,33 @@
+{
+    "title": "Edit membership",
+    "@type": "form",
+    "@id": "/form/member-edit",
+    "method": "POST",
+    "query": {
+        "required": [
+            "member_id"
+        ],
+        "optional": []
+    },
+    "inputs": {
+        "required": [],
+        "optional": [
+            "joined",
+            "revoked"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should NOT allow non-admin edits of a member's hours",
+            "target": "/user/21/brands",
+            "method": "POST",
+            "query": {
+                "member_id": 54
+            },
+            "inputs": {
+                "hours": "{random}"
+            },
+            "status": 403
+        }
+    ]
+}

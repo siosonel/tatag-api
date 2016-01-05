@@ -1,0 +1,38 @@
+{
+    "title": "Add a member",
+    "@type": "form",
+    "@id": "/form/member-add",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "user_id",
+            "role",
+            "hours"
+        ],
+        "optional": []
+    },
+    "examples": [
+        {
+            "label": "should allow an admin to add a brand member",
+            "target": "/brand/104/members",
+            "method": "POST",
+            "inputs": {
+                "user_id": 24,
+                "role": "dev-{xtime}",
+                "hours": "{random}"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-admin to add a member",
+            "target": "/brand/105/members",
+            "method": "POST",
+            "inputs": {
+                "user_id": 24,
+                "role": "dev-{xtime}",
+                "hours": "{random}"
+            },
+            "status": 403
+        }
+    ]
+}

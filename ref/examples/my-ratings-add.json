@@ -1,0 +1,49 @@
+{
+    "title": "Add a rating",
+    "@type": "form",
+    "@id": "/form/rating-add",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "brand_id",
+            "score",
+            "reason"
+        ],
+        "optional": []
+    },
+    "examples": [
+        {
+            "label": "should allow a user to add a new rating",
+            "target": "/user/21/ratings",
+            "method": "POST",
+            "inputs": {
+                "brand_id": 105,
+                "score": 0,
+                "reason": "polluter"
+            },
+            "status": 200
+        },
+        {
+            "label": "should allow a user to add a new rating for a previously unregistered brand",
+            "target": "/user/21/ratings",
+            "method": "POST",
+            "inputs": {
+                "brand_id": "test test test {random}",
+                "score": 0,
+                "reason": "polluter"
+            },
+            "status": 200
+        },
+        {
+            "label": "should not allow a user to duplicate an existing rating, by other_id",
+            "target": "/user/21/ratings",
+            "method": "POST",
+            "inputs": {
+                "brand_id": 105,
+                "score": 0,
+                "reason": "polluter"
+            },
+            "status": 200
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+{
+    "title": "Add an inflow throttle",
+    "@type": "form",
+    "@id": "/form/throttle-add",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "period",
+            "by_all",
+            "by_brand",
+            "by_user"
+        ],
+        "optional": []
+    },
+    "examples": [
+        {
+            "label": "should allow an admin to add a new throttle",
+            "target": "/budget/104/throttles",
+            "method": "POST",
+            "inputs": {
+                "period": 360000,
+                "by_all": 100,
+                "by_brand": 20,
+                "by_user": 2
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-admin to add a throttle",
+            "target": "/budget/105/throttles",
+            "method": "POST",
+            "inputs": {
+                "period": 360000,
+                "by_all": 100,
+                "by_brand": 20,
+                "by_user": 2
+            },
+            "status": 403
+        }
+    ]
+}

@@ -1,0 +1,44 @@
+{
+    "title": "Brand registration",
+    "@type": "form",
+    "@id": "/form/brand-registration",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "name",
+            "mission",
+            "description"
+        ],
+        "optional": [
+            "url",
+            "advisor",
+            "type_system",
+            "type_id",
+            "country_code",
+            "area_code"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow registration by a brand new user",
+            "target": "/user/21/brands",
+            "method": "POST",
+            "inputs": {
+                "name": "abc-{xtime}.org",
+                "mission": "To be the third brand - {xtime}",
+                "description": "the third brand"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow user registration with missing mission",
+            "target": "/user/21/brands",
+            "method": "POST",
+            "inputs": {
+                "name": "xyz-{xtime}.org",
+                "description": "the third brand"
+            },
+            "status": 403
+        }
+    ]
+}

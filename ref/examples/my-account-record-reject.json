@@ -1,0 +1,37 @@
+{
+    "title": "Manually reject transaction",
+    "@type": "form",
+    "@id": "/form/record-reject",
+    "method": "POST",
+    "query": {
+        "required": [
+            "record_id"
+        ],
+        "optional": []
+    },
+    "inputs": {
+        "required": [
+            "status"
+        ],
+        "optional": [],
+        "valueRestrictions": {
+            "status": [
+                -10
+            ]
+        }
+    },
+    "examples": [
+        {
+            "label": "should allow record rejection",
+            "target": "/account/92/records",
+            "method": "POST",
+            "query": {
+                "record_id": 30
+            },
+            "inputs": {
+                "status": -10
+            },
+            "status": 200
+        }
+    ]
+}

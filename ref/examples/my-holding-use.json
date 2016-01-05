@@ -1,0 +1,94 @@
+{
+    "title": "Use budget",
+    "@type": "form",
+    "@id": "/form/budget-use",
+    "method": "POST",
+    "target": "/budget/used",
+    "query": {
+        "required": [
+            "brand_id"
+        ],
+        "optional": []
+    },
+    "inputs": {
+        "required": [
+            "from",
+            "to",
+            "amount",
+            "note"
+        ],
+        "optional": []
+    },
+    "examples": [
+        {
+            "label": "should allow an accountholding with an 'x' to use budgets.",
+            "target": "/budget/104/used",
+            "method": "POST",
+            "inputs": {
+                "from": "42-abc",
+                "to": "44-abc",
+                "amount": 11.11,
+                "note": "test budget use"
+            },
+            "status": 200
+        },
+        {
+            "label": "should allow the use of a valid relay credential to authorize a transaction.",
+            "target": "/budget/104/used",
+            "method": "POST",
+            "inputs": {
+                "from": "42-abc",
+                "to": "3.xyz",
+                "amount": 1.11,
+                "note": "test budget use"
+            },
+            "status": 200
+        },
+        {
+            "label": "should void the transaction when the transaction amount is not within a relay's amount_min and _max",
+            "target": "/budget/104/used",
+            "method": "POST",
+            "inputs": {
+                "from": "42-abc",
+                "to": "3.xyz",
+                "amount": 51.11,
+                "note": "test budget use"
+            },
+            "status": 403
+        },
+        {
+            "label": "should fill-in missing transaction amount",
+            "target": "/budget/104/used",
+            "method": "POST",
+            "inputs": {
+                "from": "42-abc",
+                "to": "3.xyz",
+                "note": "test budget use"
+            },
+            "status": 200
+        },
+        {
+            "label": "should not allow relay usage that exceeds limits",
+            "target": "/budget/104/used",
+            "method": "POST",
+            "inputs": {
+                "from": "42-abc",
+                "to": "4.qrs",
+                "amount": 0.12,
+                "note": "test budget use"
+            },
+            "status": 403
+        },
+        {
+            "label": "should convert promo to correct record info",
+            "target": "/budget/104/used",
+            "method": "POST",
+            "inputs": {
+                "from": "42-abc",
+                "to": "ad-1",
+                "note": "test budget use"
+            },
+            "status": 200
+        }
+    ]
+}

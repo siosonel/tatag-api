@@ -1,0 +1,6 @@
+{
+    "@context": "/api/ref/context.php",
+    "error": "The user is not a member of the brand that owns this promo and does not have accees to its details.",
+    "hints": [],
+    "@graph": []
+}

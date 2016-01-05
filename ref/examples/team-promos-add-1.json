@@ -1,0 +1,6 @@
+{
+    "@context": "/api/ref/context.php",
+    "error": "The requester is not a member of brand #105.",
+    "hints": [],
+    "@graph": []
+}

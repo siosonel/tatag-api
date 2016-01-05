@@ -1,0 +1,12 @@
+{
+    "@type": "budgetTransferred",
+    "brand_id": 104,
+    "@id": "/budgets/104/transferred",
+    "amount": 22,
+    "note": "test budget transfer",
+    "from_acct": 93,
+    "from_user": 21,
+    "txntype": "pp",
+    "record_id": 38,
+    "status": 7
+}

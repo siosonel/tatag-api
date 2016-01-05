@@ -1,0 +1,6 @@
+{
+    "@context": "/api/ref/context.php",
+    "error": "The user relay usage limit of 0 within the last seven days has been reached or exceeded (counted 0 uses).",
+    "hints": [],
+    "@graph": []
+}

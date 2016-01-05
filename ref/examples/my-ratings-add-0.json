@@ -1,0 +1,14 @@
+{
+    "items": [],
+    "pageOrder": "desc",
+    "itemsLimit": 50,
+    "collectionOf": "rating",
+    "pageOf": null,
+    "user_id": 21,
+    "@type": "userRatings",
+    "@id": "/user/21/ratings",
+    "brand_id": 105,
+    "score": 0,
+    "reason": "polluter",
+    "rating_id": 10
+}

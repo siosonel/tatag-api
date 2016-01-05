@@ -1,0 +1,32 @@
+{
+    "title": "Update a rating",
+    "@type": "form",
+    "@id": "/form/rating-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [],
+        "optional": [
+            "score",
+            "reason",
+            "ended"
+        ]
+    },
+    "query": {
+        "required": [
+            "rating_id"
+        ],
+        "optional": []
+    },
+    "examples": [
+        {
+            "label": "should allow a user to update a rating",
+            "target": "/user/21/ratings?rating_id=1",
+            "method": "POST",
+            "inputs": {
+                "score": 1,
+                "reason": "non-polluter {random}"
+            },
+            "status": 200
+        }
+    ]
+}

@@ -84,7 +84,10 @@
                     },
                     "promos": {
                         "items": {
-                            "#": "promo"
+                            "#": "promo",
+                            "#forms": [
+                                "edit"
+                            ]
                         },
                         "#forms": [
                           "add"
