@@ -1,6 +1,8 @@
 <?php
 
 class Team extends Base {
+	public $id;
+
 	function __construct($data='') {
 		$this->brand_id = $this->getID();		
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "The '/team/$this->brand_id' resource is only viewable by members of brand #$this->brand_id.");
@@ -52,6 +54,7 @@ class Team extends Base {
 		include_once "models/BrandPromos.php";
 		
 		$obj = json_decode('{"brand_id":' . $this->brand_id .'}');
+		unset($this->brand_id);
 		
 		return array(
 			$this,
@@ -63,12 +66,15 @@ class Team extends Base {
 	}	
 	
 	function getInfo() {
-		$sql = "SELECT name FROM brands WHERE brand_id=?";
+		$sql = "SELECT name, logo FROM brands WHERE brand_id=?";
 		$row = DBquery::get($sql, array($this->brand_id));
 		if ($row[0]) {
 			$about = new stdClass();
 			foreach($row[0] AS $key=>$val) $about->$key = $val;
+			
+			$this->id = $this->brand_id;
 			$this->name = $row[0]['name'];
+			$this->logo = $row[0]['logo'];
 			
 			$this->members = "$this->root/team/$this->brand_id/members";
 			$this->accounts = "$this->root/team/$this->brand_id/accounts";							

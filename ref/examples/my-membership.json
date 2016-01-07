@@ -1,15 +1,14 @@
 [
     {
-        "brand_id": 104,
-        "brand_name": "abc",
-        "member_id": 53,
+        "id": 53,
         "joined": "2015-11-17 04:15:14",
         "role": "admin",
         "hours": 0,
-        "@type": "userMembership",
-        "@id": "/user/21/memberships?member_id=53",
         "team": "/team/104",
         "admin": "/brand/104",
+        "brand": "/team/104",
+        "@type": "userMembership",
+        "@id": "/user/21/memberships?member_id=53",
         "edit": "/form/member-edit",
         "revoke": "/form/member-revoke"
     }

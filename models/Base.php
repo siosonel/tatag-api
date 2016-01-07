@@ -193,37 +193,35 @@ class Base {
 					list($term, $subprop) = explode("_", $k, 2); //if ($prefix=='brand_') echo "[$k = $term + $subprop]";
 					if (!isset($r[$term])) $r[$term] = array(); 
 					
-					$r[$term][$subprop] = $v;
-					
-					if (isset($templates[$subprop])) {
-						list($derivedKey, $derivedTemplate) = explode("=", $templates[$subprop]); //echo "\n[$subprop ... $derivedKey]";
-						$r[$term][$derivedKey] = str_replace("{".$subprop."}", $v, $derivedTemplate);
-					}
-					
+					$r[$term][$subprop] = $v;					
 					unset($r[$k]);
-					if (!isset($subResources[$term])) {
-						$subResources[$term] = 1;
-						if (isset($templates['#'])) {
-							foreach($templates['#'] AS $propName=>$defaultVal) {
-								$r[$term][$propName] = $defaultVal;
-							};
-						} 
-					}
+					if (!isset($subResources[$term])) $subResources[$term] = 1;
 				}
 			}
 		}
 		
 		$currDepth++;
-		foreach($subResources AS $term=>$s) {
-			$s = $r[$term];
-		
-			if ($s['@id']) {	
+		foreach($subResources AS $term=>$i) {
+			$s = &$r[$term];
+			
+			// create derived keys based on nestingRef templates
+			foreach($s AS $k=>&$v) {
+				if (isset($nestingRef[$term."_"])) {
+					foreach($nestingRef[$term."_"] AS $derivedKey=>$template) {
+						if (!$r[$term][$derivedKey]) $r[$term][$derivedKey] = $template;
+						$r[$term][$derivedKey] = str_replace("{".$k."}", $v, $r[$term][$derivedKey]);
+					}
+				}
+			}
+			
+			// recursively nest subresources and, as needed, sideload resource and track by @id; 
+			if ($s['@id']) {
 				if ($currDepth<3) {
 					$this->nestResources($r[$term], $nestingRef, $graph, $tracked, $currDepth);
 				}
 				
 				if (!in_array($s['@id'], $tracked)) {
-					$tracked[] = $s['@id'];
+					$tracked[$s['@id']] = count($graph);
 					$graph[] = $r[$term]; //this adds a *copy* of the reduced subresource to the graph
 				}
 				

@@ -1,11 +1,11 @@
 [
     {
+        "id": 41,
         "alias": "Main Revenue",
-        "user_id": 21,
-        "brand_logo": null,
-        "holder_id": 41,
         "limkey": "abc",
-        "holder_authcode": "cftix",
+        "authcode": "cftix",
+        "account": "/account/92",
+        "user": "/user/21",
         "relay": {
             "default": "41-abc",
             "transfer": "41-abc-t",
@@ -13,9 +13,6 @@
         },
         "@type": "userAccount",
         "@id": "/user/21/accounts?holder_id=41",
-        "_brand": "/brand/104/about",
-        "account": "/account/92",
-        "user": "/user/21",
         "add": "/form/budget-add",
         "transfer": "/form/budget-transfer",
         "holder-edit": "/form/holder-edit",
@@ -23,12 +20,12 @@
         "relays": "/holder/41/relays"
     },
     {
+        "id": 42,
         "alias": "Main Expense",
-        "user_id": 21,
-        "brand_logo": null,
-        "holder_id": 42,
         "limkey": "abc",
-        "holder_authcode": "cftix",
+        "authcode": "cftix",
+        "account": "/account/93",
+        "user": "/user/21",
         "relay": {
             "default": "42-abc",
             "add": "42-abc-c",
@@ -36,9 +33,6 @@
         },
         "@type": "userAccount",
         "@id": "/user/21/accounts?holder_id=42",
-        "_brand": "/brand/104/about",
-        "account": "/account/93",
-        "user": "/user/21",
         "transfer": "/form/budget-transfer",
         "use": "/form/budget-use",
         "holder-edit": "/form/holder-edit",
@@ -46,21 +40,18 @@
         "relays": "/holder/42/relays"
     },
     {
+        "id": 43,
         "alias": "personal expense",
-        "user_id": 21,
-        "brand_logo": null,
-        "holder_id": 43,
         "limkey": "abc",
-        "holder_authcode": "ftix",
+        "authcode": "ti",
+        "account": "/account/94",
+        "user": "/user/21",
         "relay": {
             "default": "43-abc",
             "transfer": "43-abc-t"
         },
         "@type": "userAccount",
         "@id": "/user/21/accounts?holder_id=43",
-        "_brand": "/brand/104/about",
-        "account": "/account/94",
-        "user": "/user/21",
         "use": "/form/budget-use",
         "holder-edit": "/form/holder-edit",
         "edit": "/form/holder-edit",

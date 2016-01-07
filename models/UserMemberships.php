@@ -59,10 +59,14 @@ class UserMemberships extends Base {
 		$this->setForms();
 		$tracked = array();
 		$nestingRef = array(
-			"brand_" => array("id"=>"@id=$this->root/team/{id}", "#"=>array("@type"=>"brand"))
+			"brand_" => array(
+				"@id" => "$this->root/team/{id}", 
+				"@type"=> "brand"
+			)
 		);
 		
 		foreach($items AS &$r) {
+			$graph[] = &$r;
 			$r["team"] = "$this->root/team/$r[brand_id]";			
 			if ($r['role']=='admin') $r["admin"] = "$this->root/brand/$r[brand_id]";		
 			
@@ -75,8 +79,6 @@ class UserMemberships extends Base {
 			if (!$r['joined']) $r['accept'] = "/form/member-accept";
 			$r['revoke'] = "/form/member-revoke";
 			
-			$graph[] = $r;
-					
 			if (!isset($_GET['member_id'])) $this->items[] = $r['@id'];
 		}
 		

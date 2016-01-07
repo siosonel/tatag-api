@@ -716,16 +716,29 @@ CREATE PROCEDURE `userAccounts` (
 )
 BEGIN
 
-SELECT a.account_id AS account_id, 
-	a.name AS account_name, alias,
-	h.user_id, a.brand_id AS brand_id, b.name AS brand_name, b.logo AS brand_logo,
-	sign, balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0)) AS balance, unit,
-	holder_id, limkey, a.authcode as account_authcode, h.authcode as holder_authcode,
-	m.role As role, a.throttle_id
+SELECT 
+	h.holder_id AS id, 
+	h.alias,
+	h.limkey, 
+	h.authcode AS authcode,
+
+	h.user_id AS user_id, 
+
+	a.account_id AS account_id, 
+	a.name AS account_name, 
+	a.sign AS account_sign, 
+	a.balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0)) AS account_balance, 
+	a.unit AS account_unit,
+	a.authcode AS account_authcode, 
+
+	a.brand_id AS account_brand_id,
+	b.name AS account_brand_name, 
+	b.logo AS account_brand_logo,
+
+	a.throttle_id AS account_throttle_id
 FROM accounts a
 JOIN brands b ON a.brand_id = b.brand_id
 JOIN holders h ON a.account_id=h.account_id AND h.user_id=userID
-JOIN members m ON m.brand_id = a.brand_id
 LEFT JOIN (
 	SELECT from_acct, SUM(amount) AS amount 
 	FROM records

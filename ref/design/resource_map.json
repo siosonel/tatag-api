@@ -16,6 +16,7 @@
             "memberships": {
                 "items": {
                     "#": "membership",
+                    "team": {},
                     "#forms": [
                         "accept",
                         "revoke"

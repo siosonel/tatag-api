@@ -1,0 +1,44 @@
+{
+	"id": "A numeric identifier for a resource, that is unique for a given resource type.",
+	"name": "The name of the resource.",
+	"created": "The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.",
+	"updated": "The UNIX timestamp when a resource was last updated.",
+	"role": "A user's role within the given context, such as a team member role.",
+	
+	"add": "A form for adding a resource to a collection, or for adding to a resource's tracked quantity.",
+	"edit": "A form for updating a resource.",
+	"transfer": "A form for transferring a resource between collections, or for transferring tracked quantities between resources.",
+	"use": "A form for using a resource or its tracked quantity.",
+	
+	"unadd": "A form for reversing a previous approved 'add' action.",
+	"unuse": "A form for reversing a previously approved 'use' action.",
+	
+	"hold": "A form for preventing the auto-approval or auto-rejection of a pending resource action.",
+	"approve": "A form for approving the completion of a pending resource action.",
+	"reject": "A form for rejecting the completion of a pending resource action.",
+	
+	"my-": "A prefix that indicates 'personal' resources.",
+	"team-": "A prefix that indicates team-member resources.",
+	"admin-": "A prefix that indicates brand administrator resources.",
+	"public-": "A prefix that indicates publicly accessible resources.",
+	
+	"me": "Information and resources that relates to the currently logged-on user.",	
+	"user": "A person-resource.",
+	"teams": "A collection of brand-resources to which a user belongs as a member.",
+	"issuers": "A collection of brand-resources to which a user has a member role of admin.",
+	
+	"brand": "The currency issuer related to this resource.",
+	"members": "A collection of brand members.",
+	"member": "A user that is a member of a brand.",
+	"accounts": "A collection of brand accounts, that is, a brand's ledger.",
+	"account": "A brand account.",
+	"holdings": "A collection of accountholdings.",
+	"holding": "An accountholding.",
+	"holders": "A collection of accountholders.",
+	"holder": "An accountholder.",
+	
+	"promos": "A collection of brand promotions.",
+	"promo": "A brand promotion, used to advertise anything that could be the target of a payment.",
+	"relays": "A collection of relay tokens.",
+	"relay": "A token that is used to preauthorize the use of a recipient account."	
+}

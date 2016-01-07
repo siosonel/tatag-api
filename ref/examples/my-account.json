@@ -1,13 +1,13 @@
 {
-    "account_id": 92,
+    "id": 92,
+    "name": "Main Revenue",
+    "sign": -1,
     "balance": 1399.98,
     "unit": "hour",
-    "sign": -1,
-    "throttle_id": 0,
-    "name": "Main Revenue",
     "authcode": "cftix",
-    "@type": "account",
     "@id": "/account/92",
-    "brand": "/brand/104",
-    "records": "/account/92/records"
+    "@type": "account",
+    "records": "/account/92/records",
+    "brand": "/team/104",
+    "throttle": "/throttle/0"
 }

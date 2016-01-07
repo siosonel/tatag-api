@@ -1,9 +1,10 @@
 [
     {
-        "brand_id": 104,
-        "@type": "team",
-        "@id": "/team/104",
+        "id": 104,
         "name": "abc",
+        "logo": null,
+        "@id": "/team/104",
+        "@type": "team",
         "members": "/team/104/members",
         "accounts": "/team/104/accounts",
         "throttles": "/team/104/throttles",
