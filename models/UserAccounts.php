@@ -46,47 +46,25 @@ class UserAccounts extends Base {
 		$items = DBquery::get($sql, array($this->user_id));
 		$this->setForms();
 		$tracked = array();
+		$nestingRef = array(
+			"account_" => array("id"=>"@id=$this->root/account/{id}", "#"=>array("@type"=>"account")),
+			"brand_" => array("id"=>"@id=$this->root/team/{id}", "#"=>array("@type"=>"brand")),
+			"user_" =>  array("id"=>"@id=$this->root/user/{id}", "#"=>array("@type"=>"user"))
+		);
 		
 		foreach($items AS &$r) {
 			if (!$r['alias']) $r['alias'] = $r['account_name']; 
-		
+			
+			$this->nestResources($r, $nestingRef, $graph, $tracked);
+			
 			$r['relay'] = array();
 			$r['@type'] = 'userAccount';
-			$r['@id'] = $this->{'@id'} ."?holder_id=$r[holder_id]"; 	
-			$r["_brand"] = "$this->root/brand/$r[brand_id]/about";
-			$r['account'] = "$this->root/account/$r[account_id]";
-			$r['user'] = "$this->root/user/21";
-			
-			$account = $this->transferProps($r, array(
-				"account_id", "balance", "unit", "sign", "throttle_id"
-			), array(
-				"name"=>"account_name", "authcode"=>"account_authcode"
-			));
-			
-			if (!in_array($r['account'], $tracked)) {				
-				$account["@type"] = "account";
-				$account["@id"] = $r['account'];
-				$account["balance"] = number_format(1*$account['balance'], 2, ".", "");
-				$account["brand"] = "$this->root/brand/$r[brand_id]";
-				$account['records'] = "$this->root/account/$account[account_id]/records";
-				
-				$graph[] = $account;
-				$tracked[] = $r['account'];
-				
-				$brand = $this->transferProps($r, array("brand_id","role"), array("name"=>"brand_name"));
-				if (!in_array($account['brand'], $tracked)) {				
-					$brand['@type'] = 'brand';
-					$brand["@id"] = $account['brand'];
-					
-					$graph[] = $brand; 
-					$tracked[] = $account['brand'];
-				}
-			}
+			$r['@id'] = $this->{'@id'} ."?holder_id=$r[id]"; 
 			
 			$this->setAllowedActions($r, $account);
 			$r['holder-edit'] = "$this->root/form/holder-edit";
 			$r['edit'] = "$this->root/form/holder-edit";
-			$r['relays'] = "$this->root/holder/$r[holder_id]/relays";
+			$r['relays'] = "$this->root/holder/$r[id]/relays";
 			$graph[] = $r;
 			$this->items[] = $r['@id'];
 		}

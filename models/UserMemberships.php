@@ -50,7 +50,7 @@ class UserMemberships extends Base {
 			$vals = array($this->user_id, $_GET['member_id']);
 		}
 	
-		$sql = "SELECT brand_id, b.name AS brand_name, member_id, m.joined AS joined, role, hours 
+		$sql = "SELECT brand_id, b.name AS brand_name, member_id AS id, m.joined AS joined, role, hours 
 			FROM members m
 			JOIN brands b USING (brand_id)
 			WHERE user_id=? AND m.ended IS NULL AND revoked IS NULL AND type_system != 'sim' $otherCond";
@@ -58,29 +58,25 @@ class UserMemberships extends Base {
 		$items = DBquery::get($sql, $vals);
 		$this->setForms();
 		$tracked = array();
+		$nestingRef = array(
+			"brand_" => array("id"=>"@id=$this->root/team/{id}", "#"=>array("@type"=>"brand"))
+		);
 		
 		foreach($items AS &$r) {
+			$r["team"] = "$this->root/team/$r[brand_id]";			
+			if ($r['role']=='admin') $r["admin"] = "$this->root/brand/$r[brand_id]";		
+			
+			$this->nestResources($r, $nestingRef, $graph, $tracked);
+			
 			$r['@type'] = 'userMembership';
-			$r['@id'] = $this->{'@id'} ."?member_id=". $r['member_id'];
-			$r["team"] = "$this->root/team/".$r['brand_id'];			
-			if ($r['role']=='admin') $r["admin"] = "$this->root/brand/".$r['brand_id'];			
+			$r['@id'] = $this->{'@id'} ."?member_id=". $r['id'];
 			
 			$r['edit'] = "/form/member-edit";
 			if (!$r['joined']) $r['accept'] = "/form/member-accept";
 			$r['revoke'] = "/form/member-revoke";
 			
 			$graph[] = $r;
-			
-			$brand = $this->transferProps($r, array("brand_id"), array("name"=>"brand_name"));
-			if (!in_array($r['brand'], $tracked)) {
-				$brand['@type'] = 'brand';
-				$brand['@id'] = $r['brand'];
-				
-				$graph[] = $brand;
-				$tracked[] = $r['brand'];
-			}
-			
-			//$graph[] = $r;			
+					
 			if (!isset($_GET['member_id'])) $this->items[] = $r['@id'];
 		}
 		

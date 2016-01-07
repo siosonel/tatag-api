@@ -151,22 +151,6 @@ class Base {
 		$this->filterValArr = $valArr;
 	}
 	
-	function transferProps(&$r, $props=array(), $renames=array()) {
-		$arr = array(); 
-		
-		foreach($props AS $key) {
-			$arr[$key] = $r[$key];
-			unset($r[$key]);
-		}
-		
-		foreach($renames AS $newname=>$prop) {
-			$arr[$newname] = $r[$prop];
-			unset($r[$prop]);
-		}
-		
-		return $arr;
-	}
-	
 	function getViewable($arr=array()) {	
 		$cols = implode(",", $this->okToGet);
 		$sql = "SELECT $cols FROM $this->table WHERE $this->filterCond"; 
@@ -197,6 +181,54 @@ class Base {
 	
 		if (!$relatedType AND Requester::$defs->$type->relatedActions) {
 			foreach(Requester::$defs->$type->relatedActions AS $t => $a) $this->setForms($t, $a);
+		}
+	}
+	
+	function nestResources(&$r, &$nestingRef, &$graph, &$tracked, $currDepth=0) {
+		$subResources = array();
+		
+		foreach($nestingRef AS $prefix => $templates) {
+			foreach($r AS $k=>$v) {
+				if (strpos($k, $prefix)===0) { 
+					list($term, $subprop) = explode("_", $k, 2); //if ($prefix=='brand_') echo "[$k = $term + $subprop]";
+					if (!isset($r[$term])) $r[$term] = array(); 
+					
+					$r[$term][$subprop] = $v;
+					
+					if (isset($templates[$subprop])) {
+						list($derivedKey, $derivedTemplate) = explode("=", $templates[$subprop]); //echo "\n[$subprop ... $derivedKey]";
+						$r[$term][$derivedKey] = str_replace("{".$subprop."}", $v, $derivedTemplate);
+					}
+					
+					unset($r[$k]);
+					if (!isset($subResources[$term])) {
+						$subResources[$term] = 1;
+						if (isset($templates['#'])) {
+							foreach($templates['#'] AS $propName=>$defaultVal) {
+								$r[$term][$propName] = $defaultVal;
+							};
+						} 
+					}
+				}
+			}
+		}
+		
+		$currDepth++;
+		foreach($subResources AS $term=>$s) {
+			$s = $r[$term];
+		
+			if ($s['@id']) {	
+				if ($currDepth<3) {
+					$this->nestResources($r[$term], $nestingRef, $graph, $tracked, $currDepth);
+				}
+				
+				if (!in_array($s['@id'], $tracked)) {
+					$tracked[] = $s['@id'];
+					$graph[] = $r[$term]; //this adds a *copy* of the reduced subresource to the graph
+				}
+				
+				$r[$term] = $s['@id'];
+			}
 		}
 	}
 }
