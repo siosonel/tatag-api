@@ -23,7 +23,7 @@
             "name": "User One",
             "login_provider": "gp",
 						"teams": "/user/{user_id}/teams",
-						"brands": "/user/{user_id}/brands",
+						"issuers": "/user/{user_id}/brands",
 						"promoSearch": "/form/promo-search"
         }
     ]

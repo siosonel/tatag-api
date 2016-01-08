@@ -17,6 +17,7 @@
                 "items": {
                     "#": "membership",
                     "team": {},
+                    "issuer": {},
                     "#forms": [
                         "accept",
                         "revoke"
@@ -62,7 +63,7 @@
             "about": {},
             "logout": "",
             "teams": {},
-            "brands": {
+            "issuers": {
                 "#forms": [
                     "add"
                 ]
@@ -104,7 +105,7 @@
     },
     "admin": {
         "me": {
-            "brands": {
+            "issuers": {
                 "brand": {
                     "#forms": [
                         "edit"

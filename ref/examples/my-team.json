@@ -1,0 +1,25 @@
+{
+    "id": 104,
+    "name": "abc",
+    "logo": null,
+    "@id": "/team/104",
+    "@type": "team",
+    "members": "/team/104/members",
+    "accounts": "/team/104/accounts",
+    "throttles": "/team/104/throttles",
+    "records": "/budget/104/records",
+    "about": "/brand/104/about",
+    "promos": "/brand/104/promos",
+    "tally": {
+        "@type": "budgetTally",
+        "added": 1500.11,
+        "intrause": 90.76,
+        "inflow": 9.37,
+        "outflow": 0,
+        "revBudget": 1399.98,
+        "expBudget": 1409.35,
+        "numMembers": 2,
+        "totalMemberHours": 0
+    },
+    "actions": []
+}

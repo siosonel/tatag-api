@@ -9,6 +9,8 @@
         "me",
         "memberships",
         "membership",
+        "team",
+        "issuer",				
         "holdings",
         "holding",
         "account",
@@ -18,7 +20,7 @@
         "rating",
         "about",
         "teams",
-        "brands"
+        "issuers"
     ],
     "team": [
         "brand",

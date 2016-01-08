@@ -9,6 +9,6 @@
     "name": "User One",
     "login_provider": "gp",
     "teams": "/user/21/teams",
-    "brands": "/user/21/brands",
+    "issuers": "/user/21/brands",
     "promoSearch": "/form/promo-search"
 }

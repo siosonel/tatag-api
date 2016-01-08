@@ -12,6 +12,18 @@
         "me",
         "memberships"
     ],
+    "my-team": [
+        "me",
+        "memberships",
+        "items",
+        "team"
+    ],
+    "my-issuer": [
+        "me",
+        "memberships",
+        "items",
+        "issuer"
+    ],
     "my-holdings": [
         "me",
         "holdings"
@@ -41,9 +53,9 @@
         "me",
         "teams"
     ],
-    "my-brands": [
+    "my-issuers": [
         "me",
-        "brands"
+        "issuers"
     ],
     "team-brand": [
         "me",
@@ -83,56 +95,56 @@
     ],
     "admin-brand": [
         "me",
-        "brands",
+        "issuers",
         "brand"
     ],
     "admin-members": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "members"
     ],
     "admin-account": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "accounts",
         "items"
     ],
     "admin-accounts": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "accounts"
     ],
     "admin-promos": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "promos"
     ],
     "admin-throttles": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "throttles"
     ],
     "admin-throttle": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "throttles",
         "throttle"
     ],
     "admin-about": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "about"
     ],
     "admin-tally": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "tally"
     ],
@@ -190,14 +202,14 @@
     ],
     "admin-member": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "members",
         "items"
     ],
     "admin-member-holdings": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "members",
         "items",
@@ -205,7 +217,7 @@
     ],
     "admin-member-holding": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "members",
         "items",
@@ -214,7 +226,7 @@
     ],
     "admin-account-holders": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "accounts",
         "items",
@@ -222,7 +234,7 @@
     ],
     "admin-account-holder": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "accounts",
         "items",
@@ -231,7 +243,7 @@
     ],
     "admin-promo": [
         "me",
-        "brands",
+        "issuers",
         "brand",
         "promos",
         "items"

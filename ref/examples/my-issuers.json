@@ -1,0 +1,17 @@
+{
+    "items": [],
+    "pageOrder": null,
+    "itemsLimit": 50,
+    "collectionOf": null,
+    "pageOf": null,
+    "@type": "userBrands",
+    "user_id": 21,
+    "@id": "/user/21/brands",
+    "brand": [
+        "/brand/104"
+    ],
+    "actions": [
+        "/form/brand-registration"
+    ],
+    "add": "/form/brand-registration"
+}
