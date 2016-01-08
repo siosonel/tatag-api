@@ -601,7 +601,7 @@ CREATE PROCEDURE `brandAccountsAsc` (
 )
 BEGIN
 
-SELECT accounts.account_id, name, 
+SELECT accounts.account_id AS id, name, 
 	sign*(balance+sign*(COALESCE(t.amount,0) - COALESCE(f.amount,0))) AS balance,
 	unit, authcode, created, throttle_id			
 FROM accounts

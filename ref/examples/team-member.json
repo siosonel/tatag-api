@@ -1,7 +1,6 @@
 [
     {
-        "member_id": 53,
-        "brand_id": 104,
+        "id": 53,
         "user_id": 21,
         "role": "admin",
         "hours": 0,
@@ -9,11 +8,11 @@
         "name": "User One",
         "joined": "2015-11-17 04:15:14",
         "revoked": null,
-        "@id": "/team/104/members?member_id=53"
+        "@id": "/team/104/members?member_id=53",
+        "brand": "/team/104"
     },
     {
-        "member_id": 55,
-        "brand_id": 104,
+        "id": 55,
         "user_id": 23,
         "role": "staff",
         "hours": 0,
@@ -21,6 +20,7 @@
         "name": "User Three",
         "joined": null,
         "revoked": null,
-        "@id": "/team/104/members?member_id=55"
+        "@id": "/team/104/members?member_id=55",
+        "brand": "/team/104"
     }
 ]

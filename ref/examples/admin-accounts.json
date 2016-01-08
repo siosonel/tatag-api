@@ -1,7 +1,7 @@
 {
     "items": [
         {
-            "account_id": 92,
+            "id": 92,
             "name": "Main Revenue",
             "balance": -1399.98,
             "unit": "hour",
@@ -13,7 +13,7 @@
             "edit": "/form/admin-account-edit"
         },
         {
-            "account_id": 93,
+            "id": 93,
             "name": "Main Expense",
             "balance": 1221.82,
             "unit": "hour",
@@ -25,7 +25,7 @@
             "edit": "/form/admin-account-edit"
         },
         {
-            "account_id": 94,
+            "id": 94,
             "name": "Personal Expense",
             "balance": 187.53,
             "unit": "hour",
@@ -37,7 +37,7 @@
             "edit": "/form/admin-account-edit"
         },
         {
-            "account_id": 97,
+            "id": 97,
             "name": "Test Expense",
             "balance": 0,
             "unit": "hour",
@@ -59,7 +59,7 @@
     "add": "/form/account-add",
     "account": [
         {
-            "account_id": 92,
+            "id": 92,
             "name": "Main Revenue",
             "balance": -1399.98,
             "unit": "hour",
@@ -71,7 +71,7 @@
             "edit": "/form/admin-account-edit"
         },
         {
-            "account_id": 93,
+            "id": 93,
             "name": "Main Expense",
             "balance": 1221.82,
             "unit": "hour",
@@ -83,7 +83,7 @@
             "edit": "/form/admin-account-edit"
         },
         {
-            "account_id": 94,
+            "id": 94,
             "name": "Personal Expense",
             "balance": 187.53,
             "unit": "hour",
@@ -95,7 +95,7 @@
             "edit": "/form/admin-account-edit"
         },
         {
-            "account_id": 97,
+            "id": 97,
             "name": "Test Expense",
             "balance": 0,
             "unit": "hour",

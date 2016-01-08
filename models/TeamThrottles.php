@@ -19,7 +19,11 @@ class TeamThrottles extends Base {
 		$sql = "SELECT * FROM $this->table WHERE brand_id=? AND ended IS NULL"; 		
 		$items = DBquery::get($sql, array($this->brand_id));
 		foreach($items AS &$t) {
-			$t['@id'] = "$this->root/throttle/". $t['throttle_id'];
+			$t['id'] = $t['throttle_id'];
+			unset($t['throttle_id']);
+			$t['@id'] = "$this->root/throttle/". $t['id'];
+			$t['brand'] = "$this->root/team/$this->brand_id";
+			unset($t['brand_id']);
 			$this->{$this->collectionOf}[] = $t;
 		}
 		

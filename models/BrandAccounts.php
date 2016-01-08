@@ -43,8 +43,8 @@ class BrandAccounts extends Collection {
 		
 		$this->{$this->collectionOf} = array();
 		foreach($items AS &$r) {
-			$r['@id'] = $this->{"@id"} ."?account_id=". $r['account_id'];
-			$r['holders'] = "$this->root/account/". $r['account_id'] ."/holders";			
+			$r['@id'] = $this->{"@id"} ."?account_id=". $r['id'];
+			$r['holders'] = "$this->root/account/". $r['id'] ."/holders";			
 			$r['edit'] = "$this->root/form/admin-account-edit";
 			$this->items[] = $r;
 		}

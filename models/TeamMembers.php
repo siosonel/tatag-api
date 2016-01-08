@@ -18,7 +18,7 @@ class TeamMembers extends Collection {
 	}
 	
 	function get() {		
-		$sql = "SELECT member_id, brand_id, m.user_id, role, hours, m.created, u.name, m.joined, m.revoked
+		$sql = "SELECT member_id AS id, m.user_id, role, hours, m.created, u.name, m.joined, m.revoked
 			FROM members m
 			JOIN users u ON u.user_id=m.user_id 
 			WHERE brand_id=? 
@@ -28,7 +28,8 @@ class TeamMembers extends Collection {
 		
 		$items = DBquery::get($sql, array($this->brand_id));		
 		foreach($items AS &$r) {
-			$r['@id'] = $this->{"@id"} ."?member_id=". $r['member_id'];
+			$r['@id'] = $this->{"@id"} ."?member_id=". $r['id'];
+			$r['brand'] = "$this->root/team/$this->brand_id";
 			$this->{$this->collectionOf}[] = $r;
 		}
 		

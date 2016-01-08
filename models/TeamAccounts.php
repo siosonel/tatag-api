@@ -22,6 +22,7 @@ class TeamAccounts extends Collection {
 		
 		foreach($items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?account_id=". $r['account_id'];
+			$r['brand'] = "$this->root/team/$this->brand_id";
 			$this->{$this->collectionOf}[] = $r;
 		}
 		
