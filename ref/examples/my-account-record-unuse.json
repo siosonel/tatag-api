@@ -1,0 +1,38 @@
+{
+    "title": "Reverse used budget",
+    "@type": "form",
+    "@id": "/form/budget-unuse",
+    "method": "POST",
+    "target": "/budget/used",
+    "query": {
+        "required": [
+            "brand_id"
+        ],
+        "optional": []
+    },
+    "inputs": {
+        "required": [
+            "from",
+            "to",
+            "amount",
+            "note",
+            "orig_record_id"
+        ],
+        "optional": []
+    },
+    "examples": [
+        {
+            "label": "should allow reversal of used budget",
+            "target": "/budget/104/used",
+            "method": "POST",
+            "inputs": {
+                "from": "45-abc",
+                "to": "41-abc",
+                "amount": -1.01,
+                "note": "test used budget reversal",
+                "orig_record_id": 34
+            },
+            "status": 200
+        }
+    ]
+}

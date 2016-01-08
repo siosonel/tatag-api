@@ -1,0 +1,15 @@
+{
+    "@type": "budgetUsed",
+    "brand_id": 104,
+    "@id": "/budgets/104/used",
+    "amount": -1.01,
+    "note": "test used budget reversal",
+    "from_acct": 96,
+    "from_user": 22,
+    "txntype": "pn",
+    "throttle_id": 0,
+    "relay_id": 0,
+    "promo_id": 0,
+    "record_id": 42,
+    "reversal_id": 0
+}

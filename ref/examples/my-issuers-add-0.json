@@ -1,0 +1,49 @@
+{
+    "name": "abc-1452291437.org",
+    "mission": "To be the third brand - 1452291437",
+    "description": "the third brand",
+    "brand_id": 116,
+    "members": [
+        {
+            "brand_id": 116,
+            "user_id": 21,
+            "role": "admin",
+            "hours": 0,
+            "member_id": 57
+        }
+    ],
+    "accounts": [
+        {
+            "account_id": 118,
+            "brand_id": 116,
+            "name": "Main Revenue",
+            "authcode": "cftix",
+            "unit": "hour",
+            "sign": -1
+        },
+        {
+            "account_id": 119,
+            "brand_id": 116,
+            "name": "Main Expense",
+            "authcode": "cftix",
+            "unit": "hour",
+            "sign": 1
+        }
+    ],
+    "holders": [
+        {
+            "holder_id": 46,
+            "account_id": 118,
+            "user_id": 21,
+            "authcode": "cftix",
+            "limkey": "abc"
+        },
+        {
+            "holder_id": 47,
+            "account_id": 119,
+            "user_id": 21,
+            "authcode": "cftix",
+            "limkey": "abc"
+        }
+    ]
+}
