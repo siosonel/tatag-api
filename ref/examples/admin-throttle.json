@@ -1,7 +1,6 @@
 [
     {
-        "throttle_id": 1,
-        "brand_id": 104,
+        "id": 1,
         "period": 172800,
         "by_all": 100,
         "by_brand": 20,
@@ -11,11 +10,11 @@
         "ended": null,
         "productURL": null,
         "@id": "/throttle/1",
-        "edit": "/form/admin-throttle-edit"
+        "edit": "/form/admin-throttle-edit",
+        "brand": "/brand/104"
     },
     {
-        "throttle_id": 2,
-        "brand_id": 104,
+        "id": 2,
         "period": 3600,
         "by_all": 10,
         "by_brand": 2,
@@ -25,11 +24,11 @@
         "ended": null,
         "productURL": null,
         "@id": "/throttle/2",
-        "edit": "/form/admin-throttle-edit"
+        "edit": "/form/admin-throttle-edit",
+        "brand": "/brand/104"
     },
     {
-        "throttle_id": 3,
-        "brand_id": 104,
+        "id": 3,
         "period": 9999999,
         "by_all": 100,
         "by_brand": 20,
@@ -39,11 +38,11 @@
         "ended": null,
         "productURL": null,
         "@id": "/throttle/3",
-        "edit": "/form/admin-throttle-edit"
+        "edit": "/form/admin-throttle-edit",
+        "brand": "/brand/104"
     },
     {
-        "throttle_id": 4,
-        "brand_id": 104,
+        "id": 4,
         "period": 360000,
         "by_all": 11,
         "by_brand": 5,
@@ -53,6 +52,7 @@
         "ended": null,
         "productURL": null,
         "@id": "/throttle/4",
-        "edit": "/form/admin-throttle-edit"
+        "edit": "/form/admin-throttle-edit",
+        "brand": "/brand/104"
     }
 ]

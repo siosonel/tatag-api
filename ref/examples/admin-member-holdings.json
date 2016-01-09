@@ -1,80 +1,26 @@
 {
+    "id": 53,
     "items": [
-        {
-            "holder_id": 41,
-            "authcode": "cftix",
-            "account_id": 92,
-            "brand_id": 104,
-            "name": "Main Revenue",
-            "created": "2015-01-05 11:53:31",
-            "@id": "/member/53/accounts?holder_id=41",
-            "edit": "/form/admin-holder-edit"
-        },
-        {
-            "holder_id": 42,
-            "authcode": "cftix",
-            "account_id": 93,
-            "brand_id": 104,
-            "name": "Main Expense",
-            "created": "2015-01-05 11:53:31",
-            "@id": "/member/53/accounts?holder_id=42",
-            "edit": "/form/admin-holder-edit"
-        },
-        {
-            "holder_id": 43,
-            "authcode": "ftix",
-            "account_id": 94,
-            "brand_id": 104,
-            "name": "Personal Expense",
-            "created": "2015-01-05 11:53:32",
-            "@id": "/member/53/accounts?holder_id=43",
-            "edit": "/form/admin-holder-edit"
-        }
+        "/member/53/accounts?holder_id=41",
+        "/member/53/accounts?holder_id=42",
+        "/member/53/accounts?holder_id=43"
     ],
     "pageOrder": "asc",
     "itemsLimit": 50,
     "collectionOf": "holding",
     "pageOf": "/member/53/accounts",
-    "member_id": 53,
-    "brand_id": 104,
     "user_id": 21,
     "role": "admin",
     "hours": 0,
     "created": "2015-01-05 11:53:31",
+    "brand": "/brand/104",
     "@type": "memberAccounts",
     "@id": "/member/53/accounts",
     "add": "/form/holder-add",
     "holding": [
-        {
-            "holder_id": 41,
-            "authcode": "cftix",
-            "account_id": 92,
-            "brand_id": 104,
-            "name": "Main Revenue",
-            "created": "2015-01-05 11:53:31",
-            "@id": "/member/53/accounts?holder_id=41",
-            "edit": "/form/admin-holder-edit"
-        },
-        {
-            "holder_id": 42,
-            "authcode": "cftix",
-            "account_id": 93,
-            "brand_id": 104,
-            "name": "Main Expense",
-            "created": "2015-01-05 11:53:31",
-            "@id": "/member/53/accounts?holder_id=42",
-            "edit": "/form/admin-holder-edit"
-        },
-        {
-            "holder_id": 43,
-            "authcode": "ftix",
-            "account_id": 94,
-            "brand_id": 104,
-            "name": "Personal Expense",
-            "created": "2015-01-05 11:53:32",
-            "@id": "/member/53/accounts?holder_id=43",
-            "edit": "/form/admin-holder-edit"
-        }
+        "/member/53/accounts?holder_id=41",
+        "/member/53/accounts?holder_id=42",
+        "/member/53/accounts?holder_id=43"
     ],
     "actions": [
         "/form/admin-holder-edit",

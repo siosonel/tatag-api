@@ -9,7 +9,8 @@
         "throttle_id": 0,
         "@id": "/brand/104/accounts?account_id=92",
         "holders": "/account/92/holders",
-        "edit": "/form/admin-account-edit"
+        "edit": "/form/admin-account-edit",
+        "brand": "/brand/104"
     },
     {
         "id": 93,
@@ -21,7 +22,8 @@
         "throttle_id": 0,
         "@id": "/brand/104/accounts?account_id=93",
         "holders": "/account/93/holders",
-        "edit": "/form/admin-account-edit"
+        "edit": "/form/admin-account-edit",
+        "brand": "/brand/104"
     },
     {
         "id": 94,
@@ -33,7 +35,8 @@
         "throttle_id": 0,
         "@id": "/brand/104/accounts?account_id=94",
         "holders": "/account/94/holders",
-        "edit": "/form/admin-account-edit"
+        "edit": "/form/admin-account-edit",
+        "brand": "/brand/104"
     },
     {
         "id": 97,
@@ -45,6 +48,7 @@
         "throttle_id": 0,
         "@id": "/brand/104/accounts?account_id=97",
         "holders": "/account/97/holders",
-        "edit": "/form/admin-account-edit"
+        "edit": "/form/admin-account-edit",
+        "brand": "/brand/104"
     }
 ]

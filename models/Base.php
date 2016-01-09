@@ -220,7 +220,7 @@ class Base {
 					$this->nestResources($r[$term], $nestingRef, $graph, $tracked, $currDepth);
 				}
 				
-				if (!in_array($s['@id'], $tracked)) {
+				if (!isset($tracked[$s['@id']])) {
 					$tracked[$s['@id']] = count($graph);
 					$graph[] = $r[$term]; //this adds a *copy* of the reduced subresource to the graph
 				}

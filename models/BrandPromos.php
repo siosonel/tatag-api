@@ -81,7 +81,8 @@ class BrandPromos extends PromoCollection {
 			}
 			
 			$r['brand'] = "$this->root/brand/$this->brand_id";
-			$this->{$this->collectionOf}[] = $r;
+			$this->{$this->collectionOf}[] = $r['@id'];
+			$graph[] = $r;
 		}
 		
 		$this->paginate('promo_id');

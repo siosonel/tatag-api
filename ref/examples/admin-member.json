@@ -1,7 +1,6 @@
 [
     {
-        "member_id": 53,
-        "brand_id": 104,
+        "id": 53,
         "user_id": 21,
         "role": "admin",
         "hours": 0,
@@ -11,11 +10,11 @@
         "revoked": null,
         "@id": "/brand/104/members?member_id=53",
         "holdings": "/member/53/accounts",
-        "edit": "/form/admin-member-edit"
+        "edit": "/form/admin-member-edit",
+        "brand": "/brand/104"
     },
     {
-        "member_id": 55,
-        "brand_id": 104,
+        "id": 55,
         "user_id": 23,
         "role": "staff",
         "hours": 0,
@@ -25,6 +24,7 @@
         "revoked": null,
         "@id": "/brand/104/members?member_id=55",
         "holdings": "/member/55/accounts",
-        "edit": "/form/admin-member-edit"
+        "edit": "/form/admin-member-edit",
+        "brand": "/brand/104"
     }
 ]

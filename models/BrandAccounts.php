@@ -36,6 +36,7 @@ class BrandAccounts extends Collection {
 	}
 	
 	function get() {
+		$graph = array($this);
 		$this->add = "$this->root/form/account-add";
 	
 		$sql = "CALL brandAccountsAsc($this->brand_id, 0, 100)";		
@@ -46,13 +47,15 @@ class BrandAccounts extends Collection {
 			$r['@id'] = $this->{"@id"} ."?account_id=". $r['id'];
 			$r['holders'] = "$this->root/account/". $r['id'] ."/holders";			
 			$r['edit'] = "$this->root/form/admin-account-edit";
-			$this->items[] = $r;
+			$r['brand'] = "$this->root/brand/$this->brand_id";
+			$this->{$this->collectionOf}[] = $r['@id'];
+			$graph[] = $r;
 		}
 		
 		//the paginate function will call setForms() when there are no next/prev pages to set
 		//that is, only embed forms in the first page
 		$this->paginate('account_id');		
-		return array($this);
+		return $graph;
 	}
 }
 

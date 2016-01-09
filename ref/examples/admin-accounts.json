@@ -1,53 +1,9 @@
 {
     "items": [
-        {
-            "id": 92,
-            "name": "Main Revenue",
-            "balance": -1399.98,
-            "unit": "hour",
-            "authcode": "cftix",
-            "created": "2015-01-05 11:53:31",
-            "throttle_id": 0,
-            "@id": "/brand/104/accounts?account_id=92",
-            "holders": "/account/92/holders",
-            "edit": "/form/admin-account-edit"
-        },
-        {
-            "id": 93,
-            "name": "Main Expense",
-            "balance": 1221.82,
-            "unit": "hour",
-            "authcode": "cftix",
-            "created": "2015-01-05 11:53:31",
-            "throttle_id": 0,
-            "@id": "/brand/104/accounts?account_id=93",
-            "holders": "/account/93/holders",
-            "edit": "/form/admin-account-edit"
-        },
-        {
-            "id": 94,
-            "name": "Personal Expense",
-            "balance": 187.53,
-            "unit": "hour",
-            "authcode": "ti",
-            "created": "2015-01-05 11:53:32",
-            "throttle_id": 0,
-            "@id": "/brand/104/accounts?account_id=94",
-            "holders": "/account/94/holders",
-            "edit": "/form/admin-account-edit"
-        },
-        {
-            "id": 97,
-            "name": "Test Expense",
-            "balance": 0,
-            "unit": "hour",
-            "authcode": "ftix",
-            "created": "2015-01-05 11:53:33",
-            "throttle_id": 0,
-            "@id": "/brand/104/accounts?account_id=97",
-            "holders": "/account/97/holders",
-            "edit": "/form/admin-account-edit"
-        }
+        "/brand/104/accounts?account_id=92",
+        "/brand/104/accounts?account_id=93",
+        "/brand/104/accounts?account_id=94",
+        "/brand/104/accounts?account_id=97"
     ],
     "pageOrder": "asc",
     "itemsLimit": 50,
@@ -58,54 +14,10 @@
     "@id": "/brand/104/accounts",
     "add": "/form/account-add",
     "account": [
-        {
-            "id": 92,
-            "name": "Main Revenue",
-            "balance": -1399.98,
-            "unit": "hour",
-            "authcode": "cftix",
-            "created": "2015-01-05 11:53:31",
-            "throttle_id": 0,
-            "@id": "/brand/104/accounts?account_id=92",
-            "holders": "/account/92/holders",
-            "edit": "/form/admin-account-edit"
-        },
-        {
-            "id": 93,
-            "name": "Main Expense",
-            "balance": 1221.82,
-            "unit": "hour",
-            "authcode": "cftix",
-            "created": "2015-01-05 11:53:31",
-            "throttle_id": 0,
-            "@id": "/brand/104/accounts?account_id=93",
-            "holders": "/account/93/holders",
-            "edit": "/form/admin-account-edit"
-        },
-        {
-            "id": 94,
-            "name": "Personal Expense",
-            "balance": 187.53,
-            "unit": "hour",
-            "authcode": "ti",
-            "created": "2015-01-05 11:53:32",
-            "throttle_id": 0,
-            "@id": "/brand/104/accounts?account_id=94",
-            "holders": "/account/94/holders",
-            "edit": "/form/admin-account-edit"
-        },
-        {
-            "id": 97,
-            "name": "Test Expense",
-            "balance": 0,
-            "unit": "hour",
-            "authcode": "ftix",
-            "created": "2015-01-05 11:53:33",
-            "throttle_id": 0,
-            "@id": "/brand/104/accounts?account_id=97",
-            "holders": "/account/97/holders",
-            "edit": "/form/admin-account-edit"
-        }
+        "/brand/104/accounts?account_id=92",
+        "/brand/104/accounts?account_id=93",
+        "/brand/104/accounts?account_id=94",
+        "/brand/104/accounts?account_id=97"
     ],
     "actions": [
         "/form/admin-account-edit",

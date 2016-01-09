@@ -3,6 +3,11 @@
 require_once "models/BrandHolders.php";
 
 class MemberAccounts extends BrandHolders {
+	public $id;
+	protected $member_id;
+	protected $account_id;
+	protected $brand_id;
+	
 	function __construct($data='') {		
 		$this->member_id = $this->getID();
 		$this->setDetails();
@@ -22,7 +27,7 @@ class MemberAccounts extends BrandHolders {
 		$this->okToFilterBy =  array("holder_id");	
 	}
 	
-	function setDetails() {		
+	function setDetails() {			
 		$sql = "SELECT brand_id, user_id, role, hours, created FROM members WHERE member_id=? AND ended IS NULL";
 		$row = DBquery::get($sql, array($this->member_id));
 		
@@ -30,13 +35,36 @@ class MemberAccounts extends BrandHolders {
 			foreach($row[0] AS $key=>$val) $this->$key = $val;
 		}
 		
+		$this->brand = "$this->root/brand/". $row[0]['brand_id'];		
+		$this->id = $this->member_id;
+		
 		return;
 	}
 	
 	function get() {
 		$this->add = "$this->root/form/holder-add";
-	
-		$sql = "SELECT holder_id, h.authcode, h.account_id, a.brand_id, a.name, h.created
+		
+		$graph = array($this);
+		$tracked = array();
+		
+		$nestingRef = array(
+			"account_" => array(
+				"@id" => "$this->root/account/{id}", 
+				"@type" => "account",
+				"records" => "$this->root/account/{id}/records"
+			),
+			"brand_" => array(
+				"@id" => "$this->root/brand/{id}", 
+				"@type" => "brand"
+			)	
+		);
+		
+		$sql = "SELECT holder_id AS id, 
+				h.authcode AS authcode, 
+				h.account_id AS account_id, 
+				a.brand_id AS account_brand_id, 
+				a.name AS account_name, 
+				h.created
 			FROM holders h
 			JOIN accounts a ON h.account_id=a.account_id
 			JOIN members m ON h.user_id=m.user_id AND a.brand_id=m.brand_id
@@ -49,12 +77,15 @@ class MemberAccounts extends BrandHolders {
 		
 		$this->{$this->collectionOf} = array();
 		foreach($items AS &$r) {
-			$r['@id'] = $this->{'@id'} ."?holder_id=". $r['holder_id'];
+			$this->nestResources($r, $nestingRef, $graph, $tracked);
+			
+			$r['@id'] = $this->{'@id'} ."?holder_id=". $r['id'];
 			$r['edit'] = "$this->root/form/admin-holder-edit";
-			$this->items[] = $r;
+			$this->items[] = $r['@id'];
+			$graph[] = $r;
 		}
 		
-		$this->paginate('holder_id');
-		return array($this);
+		$this->paginate('id');
+		return $graph;
 	}
 }

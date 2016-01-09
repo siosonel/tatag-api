@@ -2,7 +2,7 @@
 
 class Brand extends Base {	
 	public $id;
-	//protected $brand_id;
+	protected $brand_id;
 
 	function __construct($data='') {
 		$this->brand_id = $this->getID();		

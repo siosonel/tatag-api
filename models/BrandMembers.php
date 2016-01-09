@@ -44,9 +44,10 @@ class BrandMembers extends Collection {
 	}
 	
 	function get() {
+		$graph = array($this);
 		$this->add = "/form/member-add";
 	
-		$sql = "SELECT member_id, brand_id, m.user_id, role, hours, m.created, u.name, m.joined, m.revoked
+		$sql = "SELECT member_id AS id, m.user_id, role, hours, m.created, u.name, m.joined, m.revoked
 			FROM members m
 			JOIN users u ON u.user_id=m.user_id 
 			WHERE brand_id=? AND m.ended IS NULL AND m.revoked IS NULL AND member_id $this->ltgt $this->limitID
@@ -57,14 +58,16 @@ class BrandMembers extends Collection {
 
 		$this->{$this->collectionOf} = array();
 		foreach($items AS &$r) {
-			$r['@id'] = $this->{"@id"} ."?member_id=". $r['member_id'];
-			$r['holdings'] = "$this->root/member/". $r['member_id'] ."/accounts";
+			$r['@id'] = $this->{"@id"} ."?member_id=". $r['id'];
+			$r['holdings'] = "$this->root/member/". $r['id'] ."/accounts";
 			$r['edit'] = "$this->root/form/admin-member-edit";
-			$this->items[] = $r;
+			$r['brand'] = "$this->root/brand/$this->brand_id";
+			$this->{$this->collectionOf}[] = $r['@id'];
+			$graph[] = $r;
 		}
 		
 		$this->paginate('member_id');
-		return array($this);
+		return $graph;
 	}
 	
 	function getMemberId($brand_id=0,$user_id=0) {
