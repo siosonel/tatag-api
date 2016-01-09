@@ -1,6 +1,9 @@
 <?php
 
 class Brand extends Base {	
+	public $id;
+	//protected $brand_id;
+
 	function __construct($data='') {
 		$this->brand_id = $this->getID();		
 		if (!Requester::isBrandAdmin($this->brand_id)) Error::http(403, "The requester is not an admin for brand #$this->brand_id.");
@@ -39,6 +42,8 @@ class Brand extends Base {
 		include_once "models/BrandPromos.php";
 		include_once "models/BudgetThrottles.php";
 		$obj = json_decode('{"brand_id":' . $this->brand_id .'}');
+		
+		$this->id = $this->brand_id;
 		
 		return array_merge(
 			array($this),

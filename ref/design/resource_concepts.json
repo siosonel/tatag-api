@@ -16,6 +16,8 @@
         "account",
         "account-records",
         "account-record",
+        "relays",
+        "relay",
         "ratings",
         "rating",
         "about",

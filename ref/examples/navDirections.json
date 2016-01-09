@@ -41,6 +41,12 @@
         "account",
         "records"
     ],
+    "my-relays": [
+        "me",
+        "holdings",
+        "items",
+        "relays"
+    ],
     "my-ratings": [
         "me",
         "ratings"
@@ -172,6 +178,13 @@
         "items",
         "account",
         "records",
+        "items"
+    ],
+    "my-relay": [
+        "me",
+        "holdings",
+        "items",
+        "relays",
         "items"
     ],
     "my-rating": [

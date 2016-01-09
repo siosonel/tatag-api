@@ -1,6 +1,8 @@
 <?php
 
 class Relay extends Base {
+	public $id;
+
 	function __construct($data='') { 		
 		$this->relay_id = $this->getID();
 		
@@ -33,8 +35,8 @@ class Relay extends Base {
 		return array($this->obj);
 	}
 	
-	function get() {				
-		$sql = "SELECT relay_id, r.holder_id, user_id, account_id, amount_min, amount_max, redirect, secret, tag, txntype, r.created, r.updated, r.ended, 
+	function get() {
+		$sql = "SELECT relay_id AS id, r.holder_id, user_id, account_id, amount_min, amount_max, redirect, secret, tag, txntype, r.created, r.updated, r.ended, 
 		by_all_limit, by_brand_limit, by_user_limit, by_user_wait
 			FROM relays r
 			JOIN holders h ON h.holder_id=r.holder_id
@@ -49,6 +51,7 @@ class Relay extends Base {
 		
 		$this->setForms();
 		foreach($rows[0] AS $k=>$v) $this->$k = $v;
+		unset($this->relay_id);
 		return array($this);
 	}
 	

@@ -16,13 +16,19 @@
         "unuse",
         "unadd"
     ],
+    "my-relays": [
+        "add"
+    ],
+    "my-relay": [
+        "edit"
+    ],
     "my-ratings": [
         "add"
     ],
     "my-rating": [
         "edit"
     ],
-    "my-brands": [
+    "my-issuers": [
         "add"
     ],
     "team-promos": [

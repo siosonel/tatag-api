@@ -41,6 +41,17 @@
                             }
                         }
                     },
+                    "relays": {
+                        "items": {
+                            "#": "relay",
+                            "#forms": [
+                                "edit"
+                            ]
+												},
+                        "#forms": [
+                            "add"
+                        ]
+										},
                     "#forms": [
                         "edit",
                         "add",

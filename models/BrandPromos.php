@@ -28,10 +28,24 @@ class BrandPromos extends PromoCollection {
 	}
 	
 	function get() {
+		$graph = array($this);
+		$tracked = array();
 		$this->add = "$this->root/form/promo-add";
 		$this->setFilters($_GET);		
-	
-		$sql = "SELECT promo_id, brand_id, brands.name AS brand_name, 
+		
+		$nestingRef = array(
+			"brand_" => array(
+				"@id" => "$this->root/team/{id}", 
+				"@type" => "brand"
+			),
+			"relay_" => array(
+				"@id" => "$this->root/relay/{id}", 
+				"@type" => "relay",
+				"edit" => "/form/relay-edit"
+			)
+		);
+		
+		$sql = "SELECT promo_id AS id, brand_id, brands.name AS brand_name, 
 				p.name AS name, p.description AS description, amount, imageURL, infoURL, 
 				p.created, p.updated, expires, 
 				relay_id, keyword, 
@@ -40,18 +54,21 @@ class BrandPromos extends PromoCollection {
 			JOIN relays r USING (relay_id)
 			JOIN brands USING (brand_id)
 			WHERE brand_id=$this->brand_id $this->filterCond AND promo_id $this->ltgt $this->limitID
-			ORDER BY promo_id ASC
+			ORDER BY id ASC
 			LIMIT $this->itemsLimit";
 		
 		$items = DBquery::get($sql, $this->filterValArr);		
 		
 		foreach($items AS &$r) {
-			$r['@id'] = "$this->root/promo/". $r['promo_id'];
-			$r['@type'] = 'promo';
-			$r['payLink'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";
-			$r['recipientToken'] = "$r[keyword]-$r[promo_id]";
+			$this->nestResources($r, $nestingRef, $graph, $tracked);
 			
-			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[amount]";
+			$r['@id'] = "$this->root/promo/". $r['id'];
+			$r['@type'] = 'promo';
+			$r['payLink'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[id]";
+			$r['recipientToken'] = "$r[keyword]-$r[id]";
+			
+			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[id]";
+			if (!$r['infoURL']) $r['infoURL'] = $r['promoPage'];
 			
 			$r['edit'] = '/form/promo-edit';
 			
@@ -63,11 +80,12 @@ class BrandPromos extends PromoCollection {
 				$r['relay-edit-target'] = "/relay/".$r['relay_id'];
 			}
 			
+			$r['brand'] = "$this->root/brand/$this->brand_id";
 			$this->{$this->collectionOf}[] = $r;
 		}
 		
 		$this->paginate('promo_id');
-		return array($this);
+		return $graph;
 	}
 }
 
