@@ -49,7 +49,7 @@ class User extends Base {
 		foreach($memberships AS $i=>$m) {
 			if ($i>0 AND $m['@type']=='userMembership') {
 				if (isset($m['team'])) $this->team[] = $m['team'];
-				if (isset($m['brand'])) $this->brand[] = $m['brand'];
+				if (isset($m['brand'])) $this->issuer[] = $m['brand'];
 			}
 		}
 		

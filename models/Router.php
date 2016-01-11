@@ -10,11 +10,22 @@ class Router {
 	public static $deprecationDate=0;
 	
 	public static function run() {	
+		self::renameGETparams();
 		self::parseURL();		
 		self::setMethod();
 		$output = self::getResource(self::getData());
 		DBquery::$conn = NULL;
 		PhlatMedia::write($output);
+	}
+	
+	public static function renameGETparams() {
+		foreach($_GET AS $k=>&$v) {
+			if (strpos($k, "-id")) {
+				$arr = explode("-", $k);
+				$_GET[implode("_", array_slice($arr, -2))] = $v;
+				unset($_GET[$k]);
+			}
+		}
 	}
 	
 	public static function parseURL() {

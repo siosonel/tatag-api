@@ -7,7 +7,7 @@ class Team extends Base {
 		$this->brand_id = $this->getID();		
 		if (!Requester::isMember($this->brand_id)) Error::http(403, "The '/team/$this->brand_id' resource is only viewable by members of brand #$this->brand_id.");
 	
-		$this->{"@type"} = 'team';
+		$this->{"@type"} = 'brand';
 		$this->{"@id"} = "$this->root/team/$this->brand_id";
 		$this->table = "members";
 		

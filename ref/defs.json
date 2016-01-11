@@ -72,16 +72,18 @@
 			
 			"examples": [{
 				"label": "should allow edits to username",
-				"target": "/user/21",
-				"method": "POST",
+				"resource": {
+					"@id": "/user/21"					
+				},				
 				"inputs": {
 					"name": "esoi-{xtime}"
 				},
 				"status": 200
 			},{
 				"label": "should not allow edits to registered date",
-				"target": "/user/21",
-				"method": "POST",
+				"resource": {	
+					"@id": "/user/21"
+				},				
 				"inputs": {
 					"created": "2015-01-01"
 				},
@@ -110,22 +112,15 @@
 			"@id": "/form/member-edit",
 			"method": "POST",
 			
-			"query": {
-				"required": ["member_id"],
-				"optional": []				
-			},
-			
 			"inputs": {
 				"required": [],
 				"optional": ["joined","revoked"]	
 			},
 			
 			"examples": [{
-				"label": "should NOT allow non-admin edits of a member's hours",
-				"target": "/user/21/brands",
-				"method": "POST",				
-				"query": {
-					"member_id": 54
+				"label": "should NOT allow non-admin edits of a member's hours",				
+				"resource": {
+					"@id": "/user/21/memberships?member_id=53"
 				},				
 				"inputs": {
 					"hours": "{random}"
@@ -139,11 +134,6 @@
 			"@id": "/form/member-accept",
 			"method": "POST",
 			
-			"query": {
-				"required": ["member_id"],
-				"optional": []				
-			},
-			
 			"inputs": {
 				"required": ["joined"],
 				"optional": []	
@@ -151,14 +141,12 @@
 			
 			"examples": [{
 				"label": "should allow a member to accept membership by providing a joined date",
-				"target": "/team/104/",
-				"method": "POST",				
-				"query": {
-					"member_id": 53
-				},				
+				"resource": {
+					"@id": "/user/21/memberships?member_id=53"
+				},								
 				"inputs": {
 					"joined": "{date}"
-				},
+				},				
 				"status": 200
 			}]
 		},
@@ -167,11 +155,6 @@
 			"@type": "form",
 			"@id": "/form/member-revoke",
 			"method": "POST",
-			
-			"query": {
-				"required": ["member_id"],
-				"optional": []				
-			},
 			
 			"inputs": {
 				"required": ["revoked"],
@@ -196,11 +179,6 @@
 			"@id": "/form/holder-edit",
 			"method": "POST",
 			
-			"query": {
-				"required": ["holder_id"],
-				"optional": []
-			},
-			
 			"inputs": {
 				"required": [],
 				"optional": ["alias", "limkey"]
@@ -208,10 +186,8 @@
 			
 			"examples": [{
 				"label": "should allow a holder to edit the accountholding's alias",
-				"target": "/user/21/accounts",
-				"method": "POST",				
-				"query": {
-					"holder_id": 41
+				"resource": {
+					"@id": "/user/21/accounts?holder_id=41"
 				},				
 				"inputs": {
 					"alias": "nickname-{xtime}"
@@ -219,11 +195,9 @@
 				"status": 200
 			},{
 				"label": "should NOT allow a non-holder to edit an account's alias",
-				"target": "/user/21/accounts",
-				"method": "POST",				
-				"query": {
-					"holder_id": 44
-				},				
+				"resource": {
+					"@id": "/user/21/accounts?holder_id=44"
+				},								
 				"inputs": {
 					"alias": "nickname-{xtime}"
 				},
@@ -251,6 +225,7 @@
 			"@type": "form",
 			"@id": "/form/user-registration",
 			"method": "POST",
+			"target": "/user/collection",
 			
 			"inputs": {
 				"required": ["email", "password", "name"],
@@ -259,9 +234,7 @@
 			
 			"examples": [{
 				"label": "should allow registration by a brand new user",
-				"target": "/user/collection",
-				"method": "POST",			
-				
+				"resource": {},
 				"inputs": {
 					"email": "john-{random}@test.org",
 					"name": "John-{random}",
@@ -270,9 +243,7 @@
 				"status": 200
 			},{
 				"label": "should NOT allow user registration with missing email",
-				"target": "/user/collection",
-				"method": "POST",				
-						
+				"resource": {},		
 				"inputs": {
 					"name": "John-{random}",
 					"password": "pass2"
@@ -304,9 +275,9 @@
 			
 			"examples": [{
 				"label": "should allow a user to add a new rating",
-				"target": "/user/21/ratings",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/user/21/ratings"				
+				},
 				"inputs": {
 					"brand_id": 105,
 					"score": 0,
@@ -315,9 +286,9 @@
 				"status": 200
 			},{
 				"label": "should allow a user to add a new rating for a previously unregistered brand",
-				"target": "/user/21/ratings",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/user/21/ratings"				
+				},
 				"inputs": {
 					"brand_id": "test test test {random}",
 					"score": 0,
@@ -326,9 +297,9 @@
 				"status": 200
 			},{
 				"label": "should not allow a user to duplicate an existing rating, by other_id",
-				"target": "/user/21/ratings",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/user/21/ratings"				
+				},
 				"inputs": {
 					"brand_id": 105,
 					"score": 0,
@@ -348,16 +319,11 @@
 				"optional": ["score","reason","ended"]
 			},
 			
-			"query": {
-				"required": ["rating_id"],
-				"optional": []				
-			},
-			
 			"examples": [{
 				"label": "should allow a user to update a rating",
-				"target": "/user/21/ratings?rating_id=1",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/user/21/ratings?rating_id=1"				
+				},
 				"inputs": {
 					"score": 1,
 					"reason": "non-polluter {random}"
@@ -383,9 +349,9 @@
 			
 			"examples": [{
 				"label": "should allow registration by a brand new user",
-				"target": "/user/21/brands",
-				"method": "POST",			
-				
+				"resource": {
+					"@id": "/user/21/brands"
+				},
 				"inputs": {
 					"name": "abc-{xtime}.org",
 					"mission": "To be the third brand - {xtime}",
@@ -394,9 +360,9 @@
 				"status": 200
 			},{
 				"label": "should NOT allow user registration with missing mission",
-				"target": "/user/21/brands",
-				"method": "POST",				
-							
+				"resource": {
+					"@id": "/user/21/brands"
+				},
 				"inputs": {
 					"name": "xyz-{xtime}.org",
 					"description": "the third brand"
@@ -427,8 +393,9 @@
 			
 			"examples": [{
 				"label": "should allow an admin to edit a brand's info",
-				"target": "/brand/104",
-				"method": "POST",
+				"resource": {
+					"@id": "/brand/104"
+				},
 				"inputs": {
 					"mission": "another mission -{xtime}",
 					"description": "another description -{xtime}"
@@ -436,10 +403,8 @@
 				"status": 200
 			},{
 				"label": "should NOT allow a non-admin to edit a brand's alias",
-				"target": "/brand/105",
-				"method": "POST",				
-				"query": {
-					"holder_id": 44
+				"resource": {
+					"@id": "/brand/105"
 				},				
 				"inputs": {
 					"mission": "non-admin's brand mission -{xtime}",
@@ -472,13 +437,9 @@
 			
 			"examples": [{
 				"label": "should allow an admin to edit a member's info",
-				"target": "/brand/104/members",
-				"method": "POST",
-				
-				"query": {
-					"member_id": 55
-				},					
-				
+				"resource": {
+					"@id": "/brand/104/members?member_id=55"
+				},				
 				"inputs": {
 					"role": "assistant -{xtime}",
 					"hours": "{random}"
@@ -486,12 +447,9 @@
 				"status": 200
 			},{
 				"label": "should NOT allow a non-admin to edit a member's info",
-				"target": "/brand/105/members",
-				"method": "POST",				
-				"query": {
-					"member_id": 54
-				},					
-				
+				"resource": {
+					"@id": "/brand/105/members?member_id=54"
+				},				
 				"inputs": {
 					"role": "assistant -{xtime}",
 					"hours": "{random}"
@@ -512,8 +470,9 @@
 			
 			"examples": [{
 				"label": "should allow an admin to add a brand member",
-				"target": "/brand/104/members",
-				"method": "POST",
+				"resource": {
+					"@id": "/brand/104/members"
+				},
 				
 				"inputs": {
 					"user_id": 24,
@@ -523,9 +482,9 @@
 				"status": 200
 			},{
 				"label": "should NOT allow a non-admin to add a member",
-				"target": "/brand/105/members",
-				"method": "POST",				
-				
+				"resource": {
+					"@id": "/brand/105/members"
+				},
 				"inputs": {
 					"user_id": 24,
 					"role": "dev-{xtime}",
@@ -557,27 +516,20 @@
 			},
 			
 			"examples": [{
-				"label": "should allow an admin to edit an account's info",
-				"target": "/brand/104/accounts",
-				"method": "POST",
-				
-				"query": {
-					"account_id": 94
-				},					
-				
+				"label": "should allow an admin to edit an account's info",				
+				"resource": {
+					"@id": "/brand/104/accounts?account_id=94"
+				},				
 				"inputs": {
 					"name": "my -{xtime}",
 					"authcode": "ft -w"
 				},
 				"status": 200
 			},{
-				"label": "should NOT allow a non-admin to edit an account's info",
-				"target": "/brand/105/accounts",
-				"method": "POST",				
-				"query": {
-					"account_id": 97
-				},					
-				
+				"label": "should NOT allow a non-admin to edit an account's info",								
+				"resource": {
+					"@id": "/brand/105/accounts?account_id=97"
+				},				
 				"inputs": {
 					"name": "my -{xtime}",
 					"authcode": "{random}"
@@ -598,9 +550,9 @@
 			
 			"examples": [{
 				"label": "should allow an admin to add a new account",
-				"target": "/brand/104/accounts",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/brand/104/accounts"
+				},				
 				"inputs": {
 					"name": "test -{xtime}",
 					"authcode": "cftix",
@@ -608,10 +560,10 @@
 				},
 				"status": 200
 			},{
-				"label": "should NOT allow a non-admin to add a member",
-				"target": "/brand/105/accounts",
-				"method": "POST",				
-				
+				"label": "should NOT allow a non-admin to add an account",
+				"resource": {
+					"@id": "/brand/105/accounts"
+				},
 				"inputs": {
 					"name": "test -{xtime}",
 					"authcode": "cftix",
@@ -643,26 +595,19 @@
 			},		
 		
 			"examples": [{
-				"label": "should allow an admin to edit a holder's authcode",
-				"target": "/brand/104/holders",
-				"method": "POST",
-				
-				"query": {
-					"holder_id": 43
-				},					
-				
+				"label": "should allow an admin to edit a holder's authcode",				
+				"resource": {
+					"@id": "/brand/104/holders?holder_id=43"
+				},				
 				"inputs": {
 					"authcode": "ftix -w"
 				},
 				"status": 200
 			},{
-				"label": "should NOT allow a non-admin to edit an account's info",
-				"target": "/brand/105/holders",
-				"method": "POST",				
-				"query": {
-					"holder_id": 44
-				},					
-				
+				"label": "should NOT allow a non-admin to edit an account's info",								
+				"resource": {
+					"@id": "/brand/104/holders?holder_id=44"
+				},				
 				"inputs": {
 					"name": "my -{xtime}",
 					"authcode": "{random}"
@@ -682,10 +627,10 @@
 			},
 			
 			"examples": [{
-				"label": "should allow an admin to add a new accountholder",
-				"target": "/brand/104/holders",
-				"method": "POST",
-				
+				"label": "should allow an admin to add a new accountholder",								
+				"resource": {
+					"@id": "/brand/104/holders"
+				},				
 				"inputs": {
 					"user_id": 24,
 					"account_id": 94,
@@ -694,9 +639,9 @@
 				"status": 200
 			},{
 				"label": "should NOT allow an admin to add a new accountholder",
-				"target": "/brand/105/holders",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/brand/105/holders"
+				},				
 				"inputs": {
 					"user_id": 24,
 					"account_id": 96,
@@ -733,9 +678,9 @@
 			
 			"examples": [{
 				"label": "should allow an admin to add a new throttle",
-				"target": "/budget/104/throttles",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/budget/104/throttles"
+				},				
 				"inputs": {
 					"period": "360000",
 					"by_all": "100",
@@ -745,9 +690,9 @@
 				"status": 200
 			},{
 				"label": "should NOT allow a non-admin to add a throttle",
-				"target": "/budget/105/throttles",
-				"method": "POST",				
-				
+				"resource": {
+					"@id": "/budget/105/throttles"
+				},				
 				"inputs": {
 					"period": "360000",
 					"by_all": "100",
@@ -786,17 +731,18 @@
 		
 			"examples": [{
 				"label": "should allow an admin to edit a holder's authcode",
-				"target": "/member/55/accounts?holder_id=46",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/member/55/accounts?holder_id=46"
+				},				
 				"inputs": {
 					"authcode": "ftix -w"					
 				},
 				"status": 200
 			},{
 				"label": "should NOT allow a non-admin to edit an account's info",
-				"target": "/member/54/accounts?holder_id=45",
-				"method": "POST",					
+				"resource": {
+					"@id": "/member/55/accounts?holder_id=45"
+				},
 				"inputs": {
 					"name": "my -{xtime}",
 					"authcode": "{random}"
@@ -817,9 +763,9 @@
 			
 			"examples": [{
 				"label": "should allow an admin to add a new accountholder",
-				"target": "/member/55/accounts",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/member/55/accounts"
+				},				
 				"inputs": {
 					"user_id": 24,
 					"account_id": 92,
@@ -828,9 +774,9 @@
 				"status": 200
 			},{
 				"label": "should NOT allow a non-admin to add a new accountholder",
-				"target": "/member/54/accounts",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/member/54/accounts"
+				},				
 				"inputs": {
 					"user_id": 22,
 					"account_id": 92,
@@ -851,7 +797,7 @@
 		},
 		
 		"relatedActions": {
-			"brandHolders": ["/form/admin-holder-edit", "forms#holder-add"]
+			"brandHolders": ["/form/admin-holder-edit", "forms/holder-add"]
 		},
 		
 		"actions": []
@@ -890,9 +836,7 @@
 			
 			"examples": [{
 				"label": "should allow registration by a brand new user",
-				"target": "/brand/collection",
-				"method": "POST",			
-				
+				"resource": {},				
 				"inputs": {
 					"name": "abc-{xtime}.org",
 					"mission": "To be the third brand - {xtime}",
@@ -901,9 +845,7 @@
 				"status": 200
 			},{
 				"label": "should NOT allow user registration with missing mission",
-				"target": "/brand/collection",
-				"method": "POST",				
-							
+				"resource": {},							
 				"inputs": {
 					"name": "xyz-{xtime}.org",
 					"description": "the third brand"
@@ -931,7 +873,7 @@
 			"target": "/budget/issued",
 			
 			"query": {
-				"required": ["brand_id"],
+				"required": ["account-brand-id"],
 				"optional": []				
 			},
 			
@@ -942,9 +884,13 @@
 			
 			"examples": [{
 				"label": "should allow an accountholding with a 'c' authcode to issue budget",
-				"target": "/budget/104/issued",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},
 				"inputs": {
 					"from": "41-abc",
 					"to": "42-abc",
@@ -954,9 +900,13 @@
 				"status": 200
 			},{
 				"label": "should NOT allow an accountholding without a 'c' authcode to issue budget",
-				"target": "/budget/104/issued",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},				
 				"inputs": {
 					"from": "41-abc",
 					"to": "43-abc",
@@ -974,7 +924,7 @@
 			"target": "/budget/issued",
 			
 			"query": {
-				"required": ["brand_id"],
+				"required": ["account-brand-id"],
 				"optional": []				
 			},
 			
@@ -985,9 +935,13 @@
 		
 			"examples": [{
 				"label": "should allow reversal of issued budget",
-				"target": "/budget/104/issued",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},				
 				"inputs": {
 					"from": "41-abc",
 					"to": "42-abc",
@@ -1002,7 +956,6 @@
 	
 	"budgetTransferred": {
 		"description": "The intermediate part of the budget lifecycle, with budgets being transferred between accounts of the same brand.",
-		"testURL": "/budget/104/transferred",
 	
 		"properties": {
 			"required": ["@type", "@id", "brand_id", "items"],
@@ -1018,7 +971,7 @@
 			"target": "/budget/transferred",
 			
 			"query": {
-				"required": ["brand_id"],
+				"required": ["account-brand-id"],
 				"optional": []				
 			},
 			
@@ -1029,9 +982,13 @@
 			
 			"examples": [{
 				"label": "should allow an originating accountholding with an 'f' and destination accountholding with a 't' authcode to transfer budgets.",
-				"target": "/budget/104/transferred",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},				
 				"inputs": {
 					"from": "42-abc",
 					"to": "43-abc",
@@ -1049,7 +1006,7 @@
 			"target": "/budget/transferred",
 			
 			"query": {
-				"required": ["brand_id"],
+				"required": ["account-brand-id"],
 				"optional": []				
 			},
 			
@@ -1060,9 +1017,13 @@
 			
 			"examples": [{
 				"label": "should allow reversal of transferred budget",
-				"target": "/budget/104/transferred",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},			
 				"inputs": {
 					"from": "42-abc",
 					"to": "43-abc",
@@ -1093,7 +1054,7 @@
 			"target": "/budget/used",
 			
 			"query": {
-				"required": ["brand_id"],
+				"required": ["account-brand-id"],
 				"optional": []				
 			},
 			
@@ -1104,9 +1065,13 @@
 			
 			"examples": [{
 				"label": "should allow an accountholding with an 'x' to use budgets.",
-				"target": "/budget/104/used",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},				
 				"inputs": {
 					"from": "42-abc",
 					"to": "44-abc",
@@ -1116,9 +1081,13 @@
 				"status": 200
 			},{
 				"label": "should allow the use of a valid relay credential to authorize a transaction.",
-				"target": "/budget/104/used",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},				
 				"inputs": {
 					"from": "42-abc",
 					"to": "3.xyz",
@@ -1128,9 +1097,13 @@
 				"status": 200
 			},{
 				"label": "should void the transaction when the transaction amount is not within a relay's amount_min and _max",
-				"target": "/budget/104/used",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},				
 				"inputs": {
 					"from": "42-abc",
 					"to": "3.xyz",
@@ -1140,9 +1113,13 @@
 				"status": 403
 			},{
 				"label": "should fill-in missing transaction amount",
-				"target": "/budget/104/used",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},				
 				"inputs": {
 					"from": "42-abc",
 					"to": "3.xyz",
@@ -1151,9 +1128,13 @@
 				"status": 200
 			},{
 				"label": "should not allow relay usage that exceeds limits",
-				"target": "/budget/104/used",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},				
 				"inputs": {
 					"from": "42-abc",
 					"to": "4.qrs",
@@ -1163,9 +1144,13 @@
 				"status": 403
 			},{
 				"label": "should convert promo to correct record info",
-				"target": "/budget/104/used",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},				
 				"inputs": {
 					"from": "42-abc",
 					"to": "ad-1",
@@ -1182,7 +1167,7 @@
 			"target": "/budget/used",
 			
 			"query": {
-				"required": ["brand_id"],
+				"required": ["account-brand-id"],
 				"optional": []				
 			},
 			
@@ -1193,9 +1178,13 @@
 			
 			"examples": [{
 				"label": "should allow reversal of used budget",
-				"target": "/budget/104/used",
-				"method": "POST",
-				
+				"resource": {
+					"account": {
+						"brand": {
+							"id": 104
+						}
+					}
+				},				
 				"inputs": {
 					"from": "45-abc",
 					"to": "41-abc",
@@ -1230,11 +1219,6 @@
 			"@id": "/form/record-hold",
 			"method": "POST",
 			
-			"query": {
-				"required": ["record_id"],
-				"optional": []				
-			},
-			
 			"inputs": {
 				"required": ["status"],
 				"optional": [],
@@ -1245,13 +1229,9 @@
 			
 			"examples": [{
 				"label": "should allow putting record on hold",
-				"target": "/account/92/records",
-				"method": "POST",
-				
-				"query": {
-					"record_id": 30
-				},
-				
+				"resource": {
+					"@id": "/account/92/records?record_id=30"
+				},				
 				"inputs": {
 					"status": 5
 				},
@@ -1264,11 +1244,6 @@
 			"@id": "/form/record-approve",
 			"method": "POST",
 			
-			"query": {
-				"required": ["record_id"],
-				"optional": []				
-			},
-			
 			"inputs": {
 				"required": ["status"],
 				"optional": [],
@@ -1279,13 +1254,9 @@
 			
 			"examples": [{
 				"label": "should allow record approval",
-				"target": "/account/92/records",
-				"method": "POST",
-				
-				"query": {
-					"record_id": 30
-				},
-				
+				"resource": {
+					"@id": "/account/92/records?record_id=30"
+				},				
 				"inputs": {
 					"status": 7
 				},
@@ -1297,29 +1268,18 @@
 			"@type": "form",
 			"@id": "/form/record-reject",
 			"method": "POST",
-			
-			"query": {
-				"required": ["record_id"],
-				"optional": []				
-			},
-			
 			"inputs": {
 				"required": ["status"],
 				"optional": [],
 				"valueRestrictions": {
 					"status": [-10]
 				}
-			},
-			
+			},			
 			"examples": [{
 				"label": "should allow record rejection",
-				"target": "/account/92/records",
-				"method": "POST",
-				
-				"query": {
-					"record_id": 30
+				"resource": {
+					"@id": "/account/92/records?record_id=30"
 				},
-				
 				"inputs": {
 					"status": -10
 				},
@@ -1407,9 +1367,9 @@
 			
 			"examples": [{
 				"label": "should allow an admin to edit a throttle's specifications",
-				"target": "/throttle/1",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/throttle/1"
+				},
 				"inputs": {
 					"period": "99999999"
 				},
@@ -1445,9 +1405,9 @@
 			
 			"examples": [{
 				"label": "should allow an accountholder to add a relay specification",
-				"target": "/holder/41/relays",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/holder/41/relays"
+				},				
 				"inputs": {
 					"amount_min": 0,
 					"amount_max": "{random}"
@@ -1455,9 +1415,9 @@
 				"status": 200
 			},{
 				"label": "should NOT allow a non-accountholder to add a relay specification",
-				"target": "/holder/44/relays",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/holder/44/relays"
+				},				
 				"inputs": {
 					"amount_min": 0,
 					"amount_max": "{random}"
@@ -1491,9 +1451,9 @@
 			
 			"examples": [{
 				"label": "should allow an accountholder to edit a relay specification",
-				"target": "/relay/1",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/relay/1"
+				},				
 				"inputs": {
 					"secret": "{hex}",
 					"amount_max": "{random}"
@@ -1501,9 +1461,9 @@
 				"status": 200
 			},{
 				"label": "should NOT allow a non-accountholder to edit a relay specification",
-				"target": "/relay/3",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/relay/3"
+				},				
 				"inputs": {
 					"secret": "{hex}",
 					"amount_max": "{random}"
@@ -1541,9 +1501,9 @@
 			
 			"examples": [{
 				"label": "should allow a brand admin to edit a promo specification",
-				"target": "/promo/1",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/promo/1"
+				},				
 				"inputs": {
 					"name": "{hex}",
 					"amount": "8.97"
@@ -1551,9 +1511,9 @@
 				"status": 200
 			},{
 				"label": "should NOT allow a non-brand admin to edit a promo specification",
-				"target": "/promo/2",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/promo/2"
+				},				
 				"inputs": {
 					"name": "{hex}",
 					"amount": "7.98"
@@ -1589,9 +1549,9 @@
 			
 			"examples": [{
 				"label": "should allow a brand member to add a promo specification",
-				"target": "/brand/104/promos",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/brand/104/promos"
+				},				
 				"inputs": {
 					"name": "product promo {hex}",
 					"description": "a brand 104 promo {hex}",
@@ -1602,8 +1562,9 @@
 			},{
 				"label": "should NOT allow a non-brand member to add a promo specification",
 				"target": "/brand/105/promos",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/brand/105/promos"
+				},				
 				"inputs": {
 					"name": "product promo {hex}",
 					"description": "a brand 105 promo {hex}",
@@ -1612,9 +1573,9 @@
 				"status": 403
 			},{
 				"label": "should allow a brand member to add using the promo/collection endpoint",
-				"target": "/promo/collection",
-				"method": "POST",
-				
+				"resource": {
+					"@id": "/promo/collection"
+				},
 				"inputs": {
 					"name": "product promo {hex}",
 					"description": "a brand 104 promo {hex}",

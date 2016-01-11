@@ -4,8 +4,9 @@ class PhlatMedia {
 	private static $format = "formatDefault";
 	public static $hints = array();
 
-	public static function write($output, $error="") {		
+	public static function write($output, $error="") {	
 		$response = self::{self::$format}($output, $error);
+		$response->requestURI = $_SERVER['REQUEST_URI'];
 		
 		foreach (getallheaders() as $key => $value) {
 			if ($key=='X-Request-ID') header("X-Request-ID: $value");
