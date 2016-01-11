@@ -1,10 +1,10 @@
 [
     {
         "id": 104,
+        "@type": "brand",
+        "@id": "/team/104",
         "name": "abc",
         "logo": null,
-        "@id": "/team/104",
-        "@type": "brand",
         "members": "/team/104/members",
         "accounts": "/team/104/accounts",
         "throttles": "/team/104/throttles",

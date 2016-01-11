@@ -1,5 +1,5 @@
 {
-    "@id": "/api/user/21",
+    "@id": "/user/21",
     "@type": "user",
     "user_id": 21,
     "memberships": "/user/21/memberships",
@@ -10,5 +10,6 @@
     "login_provider": "gp",
     "teams": "/user/21/teams",
     "issuers": "/user/21/brands",
-    "promoSearch": "/form/promo-search"
+    "promoSearch": "/form/promo-search",
+    "id": 21
 }
