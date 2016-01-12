@@ -157,19 +157,18 @@ class Base {
 		return DBquery::get($sql, $this->filterValArr);
 	}
 	
-	function setForms($relatedType='', $relatedForms=array()) { 
+	function setForms($relatedType='', $relatedForms=array()) {
 		$type = ($relatedType) ? $relatedType : $this->{'@type'};
 	
 		$actions = Requester::$defs->$type->actions;
-		if (!isset($this->actions)) $this->actions = array();
 		
 		if ($actions) {
-			foreach($actions AS $form) {
+			foreach($actions AS $action => $form) {
 				if ($relatedForms AND SITE!='dev') unset($form->examples);
 				$link = trim($form->{'@id'});
 				
 				if (!$relatedForms OR in_array($link,$relatedForms)) { 
-					if (!$relatedType AND !in_array($link, $this->actions)) $this->actions[] = $link; 
+					if (!$relatedType) $this->$action = $link; 
 					
 					if ($this->embedForms AND !Requester::$graphRefs[$link]) {
 						Requester::$graph[] = $form;

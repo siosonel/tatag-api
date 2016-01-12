@@ -41,12 +41,7 @@ class Team extends Base {
 		if (!$tally) return array(null);
 		$this->tally = array_merge(array("@type" => "budgetTally"),$tally);
 		
-		$this->setForms();
-		if (!$this->member_id OR $this->revoked) 
-			$this->actions = array_values(array_diff($this->actions, array("$this->root/form/member-revoke")));
-		if ($this->joined) 
-			$this->actions = array_values(array_diff($this->actions, array("$this->root/form/member-accept")));
-		
+		$this->setForms();		
 		
 		include_once "models/TeamMembers.php";
 		include_once "models/TeamAccounts.php";

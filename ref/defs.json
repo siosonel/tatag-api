@@ -5,6 +5,7 @@
 	"resourceTypes": [
 		"user",
 		"userMemberships",
+		"userMembership",
 		"userAccounts",
 		"userRatings",
 		"userBrands",
@@ -47,7 +48,8 @@
 	],
 
 	"user": {		
-		"description": "Personal information for the authorized user.", 		
+		"description": "Personal information for the authorized user.", 
+		"concept": "my-me",
 		
 		"properties": {
 			"required": ["@type", "@id", "user_id", "name", "email"],
@@ -59,42 +61,45 @@
 			"promoCollection": ["/form/promo-search"]
 		},
 		
-		"actions": [{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/form/user-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"optional": ["name","email"],
-				"required": []
+		"actions": {
+			"edit": {
+				"title": "Edit",
+				"@type": "form",
+				"@id": "/form/user-edit",
+				"method": "POST",
+				
+				"inputs": {
+					"optional": ["name","email"],
+					"required": []
+				},
+				
+				"examples": [{
+					"label": "should allow edits to username",
+					"resource": {
+						"@id": "/user/21"					
+					},				
+					"inputs": {
+						"name": "esoi-{xtime}"
+					},
+					"status": 200
+				},{
+					"label": "should not allow edits to registered date",
+					"resource": {	
+						"@id": "/user/21"
+					},				
+					"inputs": {
+						"created": "2015-01-01"
+					},
+					"status": 403
+				}]
 			},
-			
-			"examples": [{
-				"label": "should allow edits to username",
-				"resource": {
-					"@id": "/user/21"					
-				},				
-				"inputs": {
-					"name": "esoi-{xtime}"
-				},
-				"status": 200
-			},{
-				"label": "should not allow edits to registered date",
-				"resource": {	
-					"@id": "/user/21"
-				},				
-				"inputs": {
-					"created": "2015-01-01"
-				},
-				"status": 403
-			}]
-		},{
-			"title": "Deactivate",
-			"@type": "form",
-			"@id": "/form/user-deactivate",
-			"method": "DELETE"
-		}]
+			"deactivate": {
+				"title": "Deactivate",
+				"@type": "form",
+				"@id": "/form/user-deactivate",
+				"method": "DELETE"
+			}
+		}
 	},
 
 	"userMemberships": {
@@ -105,64 +110,78 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [
-		{
-			"title": "Edit membership",
-			"@type": "form",
-			"@id": "/form/member-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["joined","revoked"]	
-			},
-			
-			"examples": [{
-				"label": "should NOT allow non-admin edits of a member's hours",				
-				"resource": {
-					"@id": "/user/21/memberships?member_id=53"
-				},				
+		"relatedActions": {
+			"userMembership": ["/form/member-edit", "/form/member-accept", "/form/member-revoke"]
+		}
+	},
+	
+	"userMembership": {
+		"description": "A user's membership information in a brands.",
+		
+		"properties": {
+			"required": ["@type", "@id", "user_id", "items"],
+			"optional": ["links", "actions"]
+		},
+		
+		"actions": {
+			"edit": {
+				"title": "Edit membership",
+				"@type": "form",
+				"@id": "/form/member-edit",
+				"method": "POST",
+				
 				"inputs": {
-					"hours": "{random}"
+					"required": [],
+					"optional": ["joined","revoked"]	
 				},
-				"status": 403
-			}]
-		},
-		{
-			"title": "Accept Membership",
-			"@type": "form",
-			"@id": "/form/member-accept",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["joined"],
-				"optional": []	
+				
+				"examples": [{
+					"label": "should NOT allow non-admin edits of a member's hours",				
+					"resource": {
+						"@id": "/user/21/memberships?member_id=53"
+					},				
+					"inputs": {
+						"hours": "{random}"
+					},
+					"status": 403
+				}]
 			},
-			
-			"examples": [{
-				"label": "should allow a member to accept membership by providing a joined date",
-				"resource": {
-					"@id": "/user/21/memberships?member_id=53"
-				},								
+			"accept": {
+				"title": "Accept Membership",
+				"@type": "form",
+				"@id": "/form/member-accept",
+				"method": "POST",
+				
 				"inputs": {
-					"joined": "{date}"
-				},				
-				"status": 200
-			}]
-		},
-		{
-			"title": "Revoke Membership",
-			"@type": "form",
-			"@id": "/form/member-revoke",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["revoked"],
-				"optional": []	
+					"required": ["joined"],
+					"optional": []	
+				},
+				
+				"examples": [{
+					"label": "should allow a member to accept membership by providing a joined date",
+					"resource": {
+						"@id": "/user/21/memberships?member_id=53"
+					},								
+					"inputs": {
+						"joined": "{date}"
+					},				
+					"status": 200
+				}]
 			},
-			
-			"examples": []
-		}]
+			"revoke": {
+				"title": "Revoke Membership",
+				"@type": "form",
+				"@id": "/form/member-revoke",
+				"method": "POST",
+				
+				"inputs": {
+					"required": ["revoked"],
+					"optional": []	
+				},
+				
+				"examples": []
+			}
+		}
 	},
 
 	"userAccounts": {
@@ -173,37 +192,39 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/form/holder-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["alias", "limkey"]
-			},
-			
-			"examples": [{
-				"label": "should allow a holder to edit the accountholding's alias",
-				"resource": {
-					"@id": "/user/21/accounts?holder_id=41"
-				},				
+		"actions": {
+			"edit": {
+				"title": "Edit",
+				"@type": "form",
+				"@id": "/form/holder-edit",
+				"method": "POST",
+				
 				"inputs": {
-					"alias": "nickname-{xtime}"
+					"required": [],
+					"optional": ["alias", "limkey"]
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-holder to edit an account's alias",
-				"resource": {
-					"@id": "/user/21/accounts?holder_id=44"
-				},								
-				"inputs": {
-					"alias": "nickname-{xtime}"
-				},
-				"status": 403
-			}]
-		}],
+				
+				"examples": [{
+					"label": "should allow a holder to edit the accountholding's alias",
+					"resource": {
+						"@id": "/user/21/accounts?holder_id=41"
+					},				
+					"inputs": {
+						"alias": "nickname-{xtime}"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-holder to edit an account's alias",
+					"resource": {
+						"@id": "/user/21/accounts?holder_id=44"
+					},								
+					"inputs": {
+						"alias": "nickname-{xtime}"
+					},
+					"status": 403
+				}]
+			}
+		},
 		
 		"relatedActions": {
 			"budgetIssued": ["/form/budget-add"],
@@ -220,37 +241,39 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
-			"title": "User registration",
-			"@type": "form",
-			"@id": "/form/user-registration",
-			"method": "POST",
-			"target": "/user/collection",
-			
-			"inputs": {
-				"required": ["email", "password", "name"],
-				"optional": []
-			},
-			
-			"examples": [{
-				"label": "should allow registration by a brand new user",
-				"resource": {},
+		"actions": {
+			"add": {
+				"title": "User registration",
+				"@type": "form",
+				"@id": "/form/user-registration",
+				"method": "POST",
+				"target": "/user/collection",
+				
 				"inputs": {
-					"email": "john-{random}@test.org",
-					"name": "John-{random}",
-					"password": "pass2"
+					"required": ["email", "password", "name"],
+					"optional": []
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow user registration with missing email",
-				"resource": {},		
-				"inputs": {
-					"name": "John-{random}",
-					"password": "pass2"
-				},
-				"status": 400
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow registration by a brand new user",
+					"resource": {},
+					"inputs": {
+						"email": "john-{random}@test.org",
+						"name": "John-{random}",
+						"password": "pass2"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow user registration with missing email",
+					"resource": {},		
+					"inputs": {
+						"name": "John-{random}",
+						"password": "pass2"
+					},
+					"status": 400
+				}]
+			}
+		}
 	},
 	
 	"userRatings": {
@@ -261,115 +284,119 @@
 			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
-		"actions": [
-		{
-			"title": "Add a rating",
-			"@type": "form",
-			"@id": "/form/rating-add",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["brand_id", "score", "reason"],
-				"optional": []
+		"actions": {
+			"add": {
+				"title": "Add a rating",
+				"@type": "form",
+				"@id": "/form/rating-add",
+				"method": "POST",
+				
+				"inputs": {
+					"required": ["brand_id", "score", "reason"],
+					"optional": []
+				},
+				
+				"examples": [{
+					"label": "should allow a user to add a new rating",
+					"resource": {
+						"@id": "/user/21/ratings"				
+					},
+					"inputs": {
+						"brand_id": 105,
+						"score": 0,
+						"reason": "polluter"
+					},
+					"status": 200
+				},{
+					"label": "should allow a user to add a new rating for a previously unregistered brand",
+					"resource": {
+						"@id": "/user/21/ratings"				
+					},
+					"inputs": {
+						"brand_id": "test test test {random}",
+						"score": 0,
+						"reason": "polluter"
+					},
+					"status": 200
+				},{
+					"label": "should not allow a user to duplicate an existing rating, by other_id",
+					"resource": {
+						"@id": "/user/21/ratings"				
+					},
+					"inputs": {
+						"brand_id": 105,
+						"score": 0,
+						"reason": "polluter"
+					},
+					"status": 200
+				}]
 			},
-			
-			"examples": [{
-				"label": "should allow a user to add a new rating",
-				"resource": {
-					"@id": "/user/21/ratings"				
-				},
+			"edit": {
+				"title": "Update a rating",
+				"@type": "form",
+				"@id": "/form/rating-edit",
+				"method": "POST",
+				
 				"inputs": {
-					"brand_id": 105,
-					"score": 0,
-					"reason": "polluter"
+					"required": [],
+					"optional": ["score","reason","ended"]
 				},
-				"status": 200
-			},{
-				"label": "should allow a user to add a new rating for a previously unregistered brand",
-				"resource": {
-					"@id": "/user/21/ratings"				
-				},
-				"inputs": {
-					"brand_id": "test test test {random}",
-					"score": 0,
-					"reason": "polluter"
-				},
-				"status": 200
-			},{
-				"label": "should not allow a user to duplicate an existing rating, by other_id",
-				"resource": {
-					"@id": "/user/21/ratings"				
-				},
-				"inputs": {
-					"brand_id": 105,
-					"score": 0,
-					"reason": "polluter"
-				},
-				"status": 200
-			}]
-		},
-		{
-			"title": "Update a rating",
-			"@type": "form",
-			"@id": "/form/rating-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["score","reason","ended"]
-			},
-			
-			"examples": [{
-				"label": "should allow a user to update a rating",
-				"resource": {
-					"@id": "/user/21/ratings?rating_id=1"				
-				},
-				"inputs": {
-					"score": 1,
-					"reason": "non-polluter {random}"
-				},
-				"status": 200
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow a user to update a rating",
+					"resource": {
+						"@id": "/user/21/ratings?rating_id=1"				
+					},
+					"inputs": {
+						"score": 1,
+						"reason": "non-polluter {random}"
+					},
+					"status": 200
+				}]
+			}
+		}
 	},
 	
 	"userBrands": {
 		"description": "A collection of brands that a user administers.",
 		"properties": [],
-		"actions": [{
-			"title": "Brand registration",
-			"@type": "form",
-			"@id": "/form/brand-registration",			
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["name", "mission", "description"],
-				"optional": ["url", "advisor", "type_system", "type_id", "country_code", "area_code"]
-			},
-			
-			"examples": [{
-				"label": "should allow registration by a brand new user",
-				"resource": {
-					"@id": "/user/21/brands"
-				},
+		
+		"actions": {
+			"add": {
+				"title": "Brand registration",
+				"@type": "form",
+				"@id": "/form/brand-registration",			
+				"method": "POST",
+				
 				"inputs": {
-					"name": "abc-{xtime}.org",
-					"mission": "To be the third brand - {xtime}",
-					"description": "the third brand"
+					"required": ["name", "mission", "description"],
+					"optional": ["url", "advisor", "type_system", "type_id", "country_code", "area_code"]
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow user registration with missing mission",
-				"resource": {
-					"@id": "/user/21/brands"
-				},
-				"inputs": {
-					"name": "xyz-{xtime}.org",
-					"description": "the third brand"
-				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow registration by a brand new user",
+					"resource": {
+						"@id": "/user/21/brands"
+					},
+					"inputs": {
+						"name": "abc-{xtime}.org",
+						"mission": "To be the third brand - {xtime}",
+						"description": "the third brand"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow user registration with missing mission",
+					"resource": {
+						"@id": "/user/21/brands"
+					},
+					"inputs": {
+						"name": "xyz-{xtime}.org",
+						"description": "the third brand"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 	
 	"brand": {
@@ -380,39 +407,41 @@
 			"optional": ["links", "actions", "url", "advisor", "type_system", "type_id", "country_code", "area_code", "logo", "brand_name"]
 		},
 		
-		"actions": [{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/form/brand-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["name", "url", "mission", "description", "url", "advisor", "type_system", "type_id", "country_code", "area_code", "logo"]
-			},
-			
-			"examples": [{
-				"label": "should allow an admin to edit a brand's info",
-				"resource": {
-					"@id": "/brand/104"
-				},
+		"actions": {
+			"edit": {
+				"title": "Edit",
+				"@type": "form",
+				"@id": "/form/brand-edit",
+				"method": "POST",
+				
 				"inputs": {
-					"mission": "another mission -{xtime}",
-					"description": "another description -{xtime}"
+					"required": [],
+					"optional": ["name", "url", "mission", "description", "url", "advisor", "type_system", "type_id", "country_code", "area_code", "logo"]
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-admin to edit a brand's alias",
-				"resource": {
-					"@id": "/brand/105"
-				},				
-				"inputs": {
-					"mission": "non-admin's brand mission -{xtime}",
-					"description": "non-admin's brand description -{xtime}"
-				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow an admin to edit a brand's info",
+					"resource": {
+						"@id": "/brand/104"
+					},
+					"inputs": {
+						"mission": "another mission -{xtime}",
+						"description": "another description -{xtime}"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-admin to edit a brand's alias",
+					"resource": {
+						"@id": "/brand/105"
+					},				
+					"inputs": {
+						"mission": "non-admin's brand mission -{xtime}",
+						"description": "non-admin's brand description -{xtime}"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 	
 	"brandMembers": {
@@ -423,76 +452,77 @@
 			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
-		"actions": [
-		{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/form/admin-member-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["role", "hours"]
-			},
-			
-			"examples": [{
-				"label": "should allow an admin to edit a member's info",
-				"resource": {
-					"@id": "/brand/104/members?member_id=55"
-				},				
-				"inputs": {
-					"role": "assistant -{xtime}",
-					"hours": "{random}"
-				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-admin to edit a member's info",
-				"resource": {
-					"@id": "/brand/105/members?member_id=54"
-				},				
-				"inputs": {
-					"role": "assistant -{xtime}",
-					"hours": "{random}"
-				},
-				"status": 403
-			}]
-		},
-		{
-			"title": "Add a member",
-			"@type": "form",
-			"@id": "/form/member-add",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["user_id", "role", "hours"],
-				"optional": []
-			},
-			
-			"examples": [{
-				"label": "should allow an admin to add a brand member",
-				"resource": {
-					"@id": "/brand/104/members"
-				},
+		"actions": {
+			"edit": {
+				"title": "Edit",
+				"@type": "form",
+				"@id": "/form/admin-member-edit",
+				"method": "POST",
 				
 				"inputs": {
-					"user_id": 24,
-					"role": "dev-{xtime}",
-					"hours": "{random}"
+					"required": [],
+					"optional": ["role", "hours"]
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-admin to add a member",
-				"resource": {
-					"@id": "/brand/105/members"
-				},
+				
+				"examples": [{
+					"label": "should allow an admin to edit a member's info",
+					"resource": {
+						"@id": "/brand/104/members?member_id=55"
+					},				
+					"inputs": {
+						"role": "assistant -{xtime}",
+						"hours": "{random}"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-admin to edit a member's info",
+					"resource": {
+						"@id": "/brand/105/members?member_id=54"
+					},				
+					"inputs": {
+						"role": "assistant -{xtime}",
+						"hours": "{random}"
+					},
+					"status": 403
+				}]
+			},
+			"add": {
+				"title": "Add a member",
+				"@type": "form",
+				"@id": "/form/member-add",
+				"method": "POST",
+				
 				"inputs": {
-					"user_id": 24,
-					"role": "dev-{xtime}",
-					"hours": "{random}"
+					"required": ["user_id", "role", "hours"],
+					"optional": []
 				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow an admin to add a brand member",
+					"resource": {
+						"@id": "/brand/104/members"
+					},
+					
+					"inputs": {
+						"user_id": 24,
+						"role": "dev-{xtime}",
+						"hours": "{random}"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-admin to add a member",
+					"resource": {
+						"@id": "/brand/105/members"
+					},
+					"inputs": {
+						"user_id": 24,
+						"role": "dev-{xtime}",
+						"hours": "{random}"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 	
 	"brandAccounts": {
@@ -503,75 +533,76 @@
 			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
-		"actions": [
-		{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/form/admin-account-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["name", "authcode", "throttle_id"]
+		"actions": {
+			"edit": {
+				"title": "Edit",
+				"@type": "form",
+				"@id": "/form/admin-account-edit",
+				"method": "POST",
+				
+				"inputs": {
+					"required": [],
+					"optional": ["name", "authcode", "throttle_id"]
+				},
+				
+				"examples": [{
+					"label": "should allow an admin to edit an account's info",				
+					"resource": {
+						"@id": "/brand/104/accounts?account_id=94"
+					},				
+					"inputs": {
+						"name": "my -{xtime}",
+						"authcode": "ft -w"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-admin to edit an account's info",								
+					"resource": {
+						"@id": "/brand/105/accounts?account_id=97"
+					},				
+					"inputs": {
+						"name": "my -{xtime}",
+						"authcode": "{random}"
+					},
+					"status": 403
+				}]
 			},
-			
-			"examples": [{
-				"label": "should allow an admin to edit an account's info",				
-				"resource": {
-					"@id": "/brand/104/accounts?account_id=94"
-				},				
+			"add": {
+				"title": "Add an account",
+				"@type": "form",
+				"@id": "/form/account-add",
+				"method": "POST",
+				
 				"inputs": {
-					"name": "my -{xtime}",
-					"authcode": "ft -w"
+					"required": ["name", "authcode", "unit", "sign"],
+					"optional": []
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-admin to edit an account's info",								
-				"resource": {
-					"@id": "/brand/105/accounts?account_id=97"
-				},				
-				"inputs": {
-					"name": "my -{xtime}",
-					"authcode": "{random}"
-				},
-				"status": 403
-			}]
-		},
-		{
-			"title": "Add an account",
-			"@type": "form",
-			"@id": "/form/account-add",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["name", "authcode", "unit", "sign"],
-				"optional": []
-			},
-			
-			"examples": [{
-				"label": "should allow an admin to add a new account",
-				"resource": {
-					"@id": "/brand/104/accounts"
-				},				
-				"inputs": {
-					"name": "test -{xtime}",
-					"authcode": "cftix",
-					"unit": "hour"
-				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-admin to add an account",
-				"resource": {
-					"@id": "/brand/105/accounts"
-				},
-				"inputs": {
-					"name": "test -{xtime}",
-					"authcode": "cftix",
-					"unit": "hour"
-				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow an admin to add a new account",
+					"resource": {
+						"@id": "/brand/104/accounts"
+					},				
+					"inputs": {
+						"name": "test -{xtime}",
+						"authcode": "cftix",
+						"unit": "hour"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-admin to add an account",
+					"resource": {
+						"@id": "/brand/105/accounts"
+					},
+					"inputs": {
+						"name": "test -{xtime}",
+						"authcode": "cftix",
+						"unit": "hour"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 	
 	"brandHolders": {
@@ -582,74 +613,75 @@
 			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
-		"actions": [
-		{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/form/admin-holder-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["authcode"],
-				"optional": []
-			},		
-		
-			"examples": [{
-				"label": "should allow an admin to edit a holder's authcode",				
-				"resource": {
-					"@id": "/brand/104/holders?holder_id=43"
-				},				
+		"actions": {
+			"edit": {
+				"title": "Edit",
+				"@type": "form",
+				"@id": "/form/admin-holder-edit",
+				"method": "POST",
+				
 				"inputs": {
-					"authcode": "ftix -w"
-				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-admin to edit an account's info",								
-				"resource": {
-					"@id": "/brand/104/holders?holder_id=44"
-				},				
-				"inputs": {
-					"name": "my -{xtime}",
-					"authcode": "{random}"
-				},
-				"status": 403
-			}]
-		},
-		{
-			"title": "Add an account holder",
-			"@type": "form",
-			"@id": "/form/holder-add",
-			"method": "POST",
+					"required": ["authcode"],
+					"optional": []
+				},		
 			
-			"inputs": {
-				"required": ["user_id", "account_id", "authcode"],
-				"optional": []
+				"examples": [{
+					"label": "should allow an admin to edit a holder's authcode",				
+					"resource": {
+						"@id": "/brand/104/holders?holder_id=43"
+					},				
+					"inputs": {
+						"authcode": "ftix -w"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-admin to edit an account's info",								
+					"resource": {
+						"@id": "/brand/104/holders?holder_id=44"
+					},				
+					"inputs": {
+						"name": "my -{xtime}",
+						"authcode": "{random}"
+					},
+					"status": 403
+				}]
 			},
-			
-			"examples": [{
-				"label": "should allow an admin to add a new accountholder",								
-				"resource": {
-					"@id": "/brand/104/holders"
-				},				
+			"add": {
+				"title": "Add an account holder",
+				"@type": "form",
+				"@id": "/form/holder-add",
+				"method": "POST",
+				
 				"inputs": {
-					"user_id": 24,
-					"account_id": 94,
-					"authcode": "cftix"
+					"required": ["user_id", "account_id", "authcode"],
+					"optional": []
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow an admin to add a new accountholder",
-				"resource": {
-					"@id": "/brand/105/holders"
-				},				
-				"inputs": {
-					"user_id": 24,
-					"account_id": 96,
-					"authcode": "cftix"
-				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow an admin to add a new accountholder",								
+					"resource": {
+						"@id": "/brand/104/holders"
+					},				
+					"inputs": {
+						"user_id": 24,
+						"account_id": 94,
+						"authcode": "cftix"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow an admin to add a new accountholder",
+					"resource": {
+						"@id": "/brand/105/holders"
+					},				
+					"inputs": {
+						"user_id": 24,
+						"account_id": 96,
+						"authcode": "cftix"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 	
 	"budgetThrottles": {
@@ -664,44 +696,45 @@
 			"throttle": ["/form/admin-throttle-edit"]
 		},
 		
-		"actions": [
-		{
-			"title": "Add an inflow throttle",
-			"@type": "form",
-			"@id": "/form/throttle-add",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["period", "by_all", "by_brand", "by_user"],
-				"optional": []
-			},
-			
-			"examples": [{
-				"label": "should allow an admin to add a new throttle",
-				"resource": {
-					"@id": "/budget/104/throttles"
-				},				
+		"actions": {
+			"add": {
+				"title": "Add an inflow throttle",
+				"@type": "form",
+				"@id": "/form/throttle-add",
+				"method": "POST",
+				
 				"inputs": {
-					"period": "360000",
-					"by_all": "100",
-					"by_brand": "20",
-					"by_user": "2"
+					"required": ["period", "by_all", "by_brand", "by_user"],
+					"optional": []
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-admin to add a throttle",
-				"resource": {
-					"@id": "/budget/105/throttles"
-				},				
-				"inputs": {
-					"period": "360000",
-					"by_all": "100",
-					"by_brand": "20",
-					"by_user": "2"
-				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow an admin to add a new throttle",
+					"resource": {
+						"@id": "/budget/104/throttles"
+					},				
+					"inputs": {
+						"period": "360000",
+						"by_all": "100",
+						"by_brand": "20",
+						"by_user": "2"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-admin to add a throttle",
+					"resource": {
+						"@id": "/budget/105/throttles"
+					},				
+					"inputs": {
+						"period": "360000",
+						"by_all": "100",
+						"by_brand": "20",
+						"by_user": "2"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 		
 	"memberAccounts": {
@@ -717,74 +750,75 @@
 			"brandHolders": ["/form/admin-holder-edit", "forms#holder-add"]
 		},
 		
-		"actions": [
-		{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/form/admin-holder-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["authcode"],
-				"optional": []
-			},		
-		
-			"examples": [{
-				"label": "should allow an admin to edit a holder's authcode",
-				"resource": {
-					"@id": "/member/55/accounts?holder_id=46"
-				},				
+		"actions": {
+			"edit": {
+				"title": "Edit",
+				"@type": "form",
+				"@id": "/form/admin-holder-edit",
+				"method": "POST",
+				
 				"inputs": {
-					"authcode": "ftix -w"					
-				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-admin to edit an account's info",
-				"resource": {
-					"@id": "/member/55/accounts?holder_id=45"
-				},
-				"inputs": {
-					"name": "my -{xtime}",
-					"authcode": "{random}"
-				},
-				"status": 403
-			}]
-		},
-		{
-			"title": "Add an account holder",
-			"@type": "form",
-			"@id": "/form/holder-add",
-			"method": "POST",
+					"required": ["authcode"],
+					"optional": []
+				},		
 			
-			"inputs": {
-				"required": ["user_id", "account_id", "authcode"],
-				"optional": []
+				"examples": [{
+					"label": "should allow an admin to edit a holder's authcode",
+					"resource": {
+						"@id": "/member/55/accounts?holder_id=46"
+					},				
+					"inputs": {
+						"authcode": "ftix -w"					
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-admin to edit an account's info",
+					"resource": {
+						"@id": "/member/55/accounts?holder_id=45"
+					},
+					"inputs": {
+						"name": "my -{xtime}",
+						"authcode": "{random}"
+					},
+					"status": 403
+				}]
 			},
-			
-			"examples": [{
-				"label": "should allow an admin to add a new accountholder",
-				"resource": {
-					"@id": "/member/55/accounts"
-				},				
+			"add": {
+				"title": "Add an account holder",
+				"@type": "form",
+				"@id": "/form/holder-add",
+				"method": "POST",
+				
 				"inputs": {
-					"user_id": 24,
-					"account_id": 92,
-					"authcode": "cftix"
+					"required": ["user_id", "account_id", "authcode"],
+					"optional": []
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-admin to add a new accountholder",
-				"resource": {
-					"@id": "/member/54/accounts"
-				},				
-				"inputs": {
-					"user_id": 22,
-					"account_id": 92,
-					"authcode": "cftix"
-				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow an admin to add a new accountholder",
+					"resource": {
+						"@id": "/member/55/accounts"
+					},				
+					"inputs": {
+						"user_id": 24,
+						"account_id": 92,
+						"authcode": "cftix"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-admin to add a new accountholder",
+					"resource": {
+						"@id": "/member/54/accounts"
+					},				
+					"inputs": {
+						"user_id": 22,
+						"account_id": 92,
+						"authcode": "cftix"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 	
 	"accountHolders": {
@@ -822,37 +856,39 @@
 			"optional": ["links", "actions", "pageOrder", "itemsLimit", "next", "prev"]
 		},
 		
-		"actions": [{
-			"title": "Brand registration",
-			"@type": "form",
-			"@id": "/form/brand-registration",			
-			"method": "POST",
-			"target": "/brand/collection",
-			
-			"inputs": {
-				"required": ["name", "mission", "description"],
-				"optional": ["url", "advisor", "type_system", "type_id", "country_code", "area_code"]
-			},
-			
-			"examples": [{
-				"label": "should allow registration by a brand new user",
-				"resource": {},				
+		"actions": {
+			"add": {
+				"title": "Brand registration",
+				"@type": "form",
+				"@id": "/form/brand-registration",			
+				"method": "POST",
+				"target": "/brand/collection",
+				
 				"inputs": {
-					"name": "abc-{xtime}.org",
-					"mission": "To be the third brand - {xtime}",
-					"description": "the third brand"
+					"required": ["name", "mission", "description"],
+					"optional": ["url", "advisor", "type_system", "type_id", "country_code", "area_code"]
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow user registration with missing mission",
-				"resource": {},							
-				"inputs": {
-					"name": "xyz-{xtime}.org",
-					"description": "the third brand"
-				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow registration by a brand new user",
+					"resource": {},				
+					"inputs": {
+						"name": "abc-{xtime}.org",
+						"mission": "To be the third brand - {xtime}",
+						"description": "the third brand"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow user registration with missing mission",
+					"resource": {},							
+					"inputs": {
+						"name": "xyz-{xtime}.org",
+						"description": "the third brand"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 	
 	"budgetIssued": {
@@ -864,94 +900,96 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [
-		{
-			"title": "Issue budget",
-			"@type": "form",
-			"@id": "/form/budget-add",			
-			"method": "POST",
-			"target": "/budget/issued",
-			
-			"query": {
-				"required": ["account-brand-id"],
-				"optional": []				
-			},
-			
-			"inputs": {
-				"required": ["from", "to", "amount", "note"],
-				"optional": []
-			},
-			
-			"examples": [{
-				"label": "should allow an accountholding with a 'c' authcode to issue budget",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
-						}
-					}
+		"actions": {
+			"add": {
+				"title": "Issue budget",
+				"@type": "form",
+				"@id": "/form/budget-add",			
+				"method": "POST",
+				"target": "/budget/issued",
+				
+				"query": {
+					"required": ["account-brand-id"],
+					"optional": []				
 				},
+				
 				"inputs": {
-					"from": "41-abc",
-					"to": "42-abc",
-					"amount": 200,
-					"note": "test budget issuance"
+					"required": ["from", "to", "amount", "note"],
+					"optional": []
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow an accountholding without a 'c' authcode to issue budget",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
+				
+				"examples": [{
+					"label": "should allow an accountholding with a 'c' authcode to issue budget",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
 						}
-					}
-				},				
-				"inputs": {
-					"from": "41-abc",
-					"to": "43-abc",
-					"amount": 200,
-					"note": "test budget issuance"
-				},
-				"status": 403
-			}]
-		},
-		{
-			"title": "Reverse issued budget",
-			"@type": "form",
-			"@id": "/form/budget-unadd",
-			"method": "POST",
-			"target": "/budget/issued",
-			
-			"query": {
-				"required": ["account-brand-id"],
-				"optional": []				
+					},
+					"inputs": {
+						"from": "41-abc",
+						"to": "42-abc",
+						"amount": 200,
+						"note": "test budget issuance"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow an accountholding without a 'c' authcode to issue budget",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
+						}
+					},				
+					"inputs": {
+						"from": "41-abc",
+						"to": "43-abc",
+						"amount": 200,
+						"note": "test budget issuance"
+					},
+					"status": 403
+				}]
 			},
 			
-			"inputs": {
-				"required": ["from", "to", "amount", "note", "orig_record_id"],
-				"optional": []
-			},
-		
-			"examples": [{
-				"label": "should allow reversal of issued budget",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
-						}
-					}
-				},				
-				"inputs": {
-					"from": "41-abc",
-					"to": "42-abc",
-					"amount": -20,
-					"note": "test issued budget reversal",
-					"orig_record_id": 30
+			"unadd": {
+				"title": "Reverse issued budget",
+				"@type": "form",
+				"@id": "/form/budget-unadd",
+				"method": "POST",
+				"target": "/budget/issued",
+				
+				"query": {
+					"required": ["account-brand-id"],
+					"optional": []				
 				},
-				"status": 200
-			}]
-		}]
+				
+				"inputs": {
+					"required": ["from", "to", "amount", "note", "orig_record_id"],
+					"optional": []
+				},
+			
+				"examples": [{
+					"label": "should allow reversal of issued budget",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
+						}
+					},				
+					"inputs": {
+						"from": "41-abc",
+						"to": "42-abc",
+						"amount": -20,
+						"note": "test issued budget reversal",
+						"orig_record_id": 30
+					},
+					"status": 200
+				}]
+			}
+		}
 	},	
 	
 	"budgetTransferred": {
@@ -962,78 +1000,79 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [
-		{
-			"title": "Transfer budget",
-			"@type": "form",
-			"@id": "/form/budget-transfer",
-			"method": "POST",
-			"target": "/budget/transferred",
-			
-			"query": {
-				"required": ["account-brand-id"],
-				"optional": []				
-			},
-			
-			"inputs": {
-				"required": ["from", "to", "amount", "note"],
-				"optional": []
-			},
-			
-			"examples": [{
-				"label": "should allow an originating accountholding with an 'f' and destination accountholding with a 't' authcode to transfer budgets.",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
-						}
-					}
-				},				
-				"inputs": {
-					"from": "42-abc",
-					"to": "43-abc",
-					"amount": 22.00,
-					"note": "test budget transfer"
+		"actions": {
+			"transfer": {
+				"title": "Transfer budget",
+				"@type": "form",
+				"@id": "/form/budget-transfer",
+				"method": "POST",
+				"target": "/budget/transferred",
+				
+				"query": {
+					"required": ["account-brand-id"],
+					"optional": []				
 				},
-				"status": 200
-			}]
-		},
-		{
-			"title": "Reverse transferred budget",
-			"@type": "form",
-			"@id": "/form/budget-untransfer",
-			"method": "POST",
-			"target": "/budget/transferred",
-			
-			"query": {
-				"required": ["account-brand-id"],
-				"optional": []				
-			},
-			
-			"inputs": {
-				"required": ["from", "to", "amount", "note", "orig_record_id"],
-				"optional": []
-			},
-			
-			"examples": [{
-				"label": "should allow reversal of transferred budget",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
-						}
-					}
-				},			
+				
 				"inputs": {
-					"from": "42-abc",
-					"to": "43-abc",
-					"amount": -2.05,
-					"note": "test transferred budget reversal",
-					"orig_record_id": 31
+					"required": ["from", "to", "amount", "note"],
+					"optional": []
 				},
-				"status": 200
-			}]			
-		}]
+				
+				"examples": [{
+					"label": "should allow an originating accountholding with an 'f' and destination accountholding with a 't' authcode to transfer budgets.",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
+						}
+					},				
+					"inputs": {
+						"from": "42-abc",
+						"to": "43-abc",
+						"amount": 22.00,
+						"note": "test budget transfer"
+					},
+					"status": 200
+				}]
+			},
+			"untransfer": {
+				"title": "Reverse transferred budget",
+				"@type": "form",
+				"@id": "/form/budget-untransfer",
+				"method": "POST",
+				"target": "/budget/transferred",
+				
+				"query": {
+					"required": ["account-brand-id"],
+					"optional": []				
+				},
+				
+				"inputs": {
+					"required": ["from", "to", "amount", "note", "orig_record_id"],
+					"optional": []
+				},
+				
+				"examples": [{
+					"label": "should allow reversal of transferred budget",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
+						}
+					},			
+					"inputs": {
+						"from": "42-abc",
+						"to": "43-abc",
+						"amount": -2.05,
+						"note": "test transferred budget reversal",
+						"orig_record_id": 31
+					},
+					"status": 200
+				}]			
+			}
+		}
 	},
 	
 	"budgetUsed": {
@@ -1045,156 +1084,157 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [
-		{
-			"title": "Use budget",
-			"@type": "form",
-			"@id": "/form/budget-use",
-			"method": "POST",
-			"target": "/budget/used",
-			
-			"query": {
-				"required": ["account-brand-id"],
-				"optional": []				
+		"actions": {
+			"use": {
+				"title": "Use budget",
+				"@type": "form",
+				"@id": "/form/budget-use",
+				"method": "POST",
+				"target": "/budget/used",
+				
+				"query": {
+					"required": ["account-brand-id"],
+					"optional": []				
+				},
+				
+				"inputs": {
+					"required": ["from", "to", "amount", "note"],
+					"optional": []
+				},
+				
+				"examples": [{
+					"label": "should allow an accountholding with an 'x' to use budgets.",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
+						}
+					},				
+					"inputs": {
+						"from": "42-abc",
+						"to": "44-abc",
+						"amount": 11.11,
+						"note": "test budget use"
+					},
+					"status": 200
+				},{
+					"label": "should allow the use of a valid relay credential to authorize a transaction.",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
+						}
+					},				
+					"inputs": {
+						"from": "42-abc",
+						"to": "3.xyz",
+						"amount": 1.11,
+						"note": "test budget use"
+					},
+					"status": 200
+				},{
+					"label": "should void the transaction when the transaction amount is not within a relay's amount_min and _max",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
+						}
+					},				
+					"inputs": {
+						"from": "42-abc",
+						"to": "3.xyz",
+						"amount": 51.11,
+						"note": "test budget use"
+					},
+					"status": 403
+				},{
+					"label": "should fill-in missing transaction amount",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
+						}
+					},				
+					"inputs": {
+						"from": "42-abc",
+						"to": "3.xyz",
+						"note": "test budget use"
+					},
+					"status": 200
+				},{
+					"label": "should not allow relay usage that exceeds limits",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
+						}
+					},				
+					"inputs": {
+						"from": "42-abc",
+						"to": "4.qrs",
+						"amount": 0.12,
+						"note": "test budget use"
+					},
+					"status": 403
+				},{
+					"label": "should convert promo to correct record info",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
+						}
+					},				
+					"inputs": {
+						"from": "42-abc",
+						"to": "ad-1",
+						"note": "test budget use"
+					},
+					"status": 200
+				}]
 			},
-			
-			"inputs": {
-				"required": ["from", "to", "amount", "note"],
-				"optional": []
-			},
-			
-			"examples": [{
-				"label": "should allow an accountholding with an 'x' to use budgets.",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
-						}
-					}
-				},				
-				"inputs": {
-					"from": "42-abc",
-					"to": "44-abc",
-					"amount": 11.11,
-					"note": "test budget use"
+			"unuse": {
+				"title": "Reverse used budget",
+				"@type": "form",
+				"@id": "/form/budget-unuse",
+				"method": "POST",
+				"target": "/budget/used",
+				
+				"query": {
+					"required": ["account-brand-id"],
+					"optional": []				
 				},
-				"status": 200
-			},{
-				"label": "should allow the use of a valid relay credential to authorize a transaction.",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
-						}
-					}
-				},				
+				
 				"inputs": {
-					"from": "42-abc",
-					"to": "3.xyz",
-					"amount": 1.11,
-					"note": "test budget use"
+					"required": ["from", "to", "amount", "note", "orig_record_id"],
+					"optional": []
 				},
-				"status": 200
-			},{
-				"label": "should void the transaction when the transaction amount is not within a relay's amount_min and _max",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
+				
+				"examples": [{
+					"label": "should allow reversal of used budget",
+					"resource": {
+						"account": {
+							"brand": {
+								"id": 104
+							}
 						}
-					}
-				},				
-				"inputs": {
-					"from": "42-abc",
-					"to": "3.xyz",
-					"amount": 51.11,
-					"note": "test budget use"
-				},
-				"status": 403
-			},{
-				"label": "should fill-in missing transaction amount",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
-						}
-					}
-				},				
-				"inputs": {
-					"from": "42-abc",
-					"to": "3.xyz",
-					"note": "test budget use"
-				},
-				"status": 200
-			},{
-				"label": "should not allow relay usage that exceeds limits",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
-						}
-					}
-				},				
-				"inputs": {
-					"from": "42-abc",
-					"to": "4.qrs",
-					"amount": 0.12,
-					"note": "test budget use"
-				},
-				"status": 403
-			},{
-				"label": "should convert promo to correct record info",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
-						}
-					}
-				},				
-				"inputs": {
-					"from": "42-abc",
-					"to": "ad-1",
-					"note": "test budget use"
-				},
-				"status": 200
-			}]
-		},
-		{
-			"title": "Reverse used budget",
-			"@type": "form",
-			"@id": "/form/budget-unuse",
-			"method": "POST",
-			"target": "/budget/used",
-			
-			"query": {
-				"required": ["account-brand-id"],
-				"optional": []				
-			},
-			
-			"inputs": {
-				"required": ["from", "to", "amount", "note", "orig_record_id"],
-				"optional": []
-			},
-			
-			"examples": [{
-				"label": "should allow reversal of used budget",
-				"resource": {
-					"account": {
-						"brand": {
-							"id": 104
-						}
-					}
-				},				
-				"inputs": {
-					"from": "45-abc",
-					"to": "41-abc",
-					"amount": -1.01,
-					"note": "test used budget reversal",
-					"orig_record_id": 34
-				},
-				"status": 200
-			}]
-		}]
+					},				
+					"inputs": {
+						"from": "45-abc",
+						"to": "41-abc",
+						"amount": -1.01,
+						"note": "test used budget reversal",
+						"orig_record_id": 34
+					},
+					"status": 200
+				}]
+			}
+		}
 	},
 	
 	"accountRecords": {
@@ -1212,80 +1252,81 @@
 			"budgetUsed": ["/form/budget-unuse"]
 		},
 		
-		"actions": [
-		{
-			"title": "Hold transaction (disable auto-approval)",
-			"@type": "form",
-			"@id": "/form/record-hold",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["status"],
-				"optional": [],
-				"valueRestrictions": {
-					"status": [5]
-				}
+		"actions": {
+			"hold": {
+				"title": "Hold transaction (disable auto-approval)",
+				"@type": "form",
+				"@id": "/form/record-hold",
+				"method": "POST",
+				
+				"inputs": {
+					"required": ["status"],
+					"optional": [],
+					"valueRestrictions": {
+						"status": [5]
+					}
+				},
+				
+				"examples": [{
+					"label": "should allow putting record on hold",
+					"resource": {
+						"@id": "/account/92/records?record_id=30"
+					},				
+					"inputs": {
+						"status": 5
+					},
+					"status": 200
+				}]
 			},
-			
-			"examples": [{
-				"label": "should allow putting record on hold",
-				"resource": {
-					"@id": "/account/92/records?record_id=30"
-				},				
+			"approve": {
+				"title": "Manually approve transaction",
+				"@type": "form",
+				"@id": "/form/record-approve",
+				"method": "POST",
+				
 				"inputs": {
-					"status": 5
+					"required": ["status"],
+					"optional": [],
+					"valueRestrictions": {
+						"status": [7]
+					}
 				},
-				"status": 200
-			}]
-		},
-		{
-			"title": "Manually approve transaction",
-			"@type": "form",
-			"@id": "/form/record-approve",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["status"],
-				"optional": [],
-				"valueRestrictions": {
-					"status": [7]
-				}
+				
+				"examples": [{
+					"label": "should allow record approval",
+					"resource": {
+						"@id": "/account/92/records?record_id=30"
+					},				
+					"inputs": {
+						"status": 7
+					},
+					"status": 200
+				}]
 			},
-			
-			"examples": [{
-				"label": "should allow record approval",
-				"resource": {
-					"@id": "/account/92/records?record_id=30"
-				},				
+			"reject": {
+				"title": "Manually reject transaction",
+				"@type": "form",
+				"@id": "/form/record-reject",
+				"method": "POST",
 				"inputs": {
-					"status": 7
-				},
-				"status": 200
-			}]
-		},
-		{
-			"title": "Manually reject transaction",
-			"@type": "form",
-			"@id": "/form/record-reject",
-			"method": "POST",
-			"inputs": {
-				"required": ["status"],
-				"optional": [],
-				"valueRestrictions": {
-					"status": [-10]
-				}
-			},			
-			"examples": [{
-				"label": "should allow record rejection",
-				"resource": {
-					"@id": "/account/92/records?record_id=30"
-				},
-				"inputs": {
-					"status": -10
-				},
-				"status": 200
-			}]
-		}]
+					"required": ["status"],
+					"optional": [],
+					"valueRestrictions": {
+						"status": [-10]
+					}
+				},			
+				"examples": [{
+					"label": "should allow record rejection",
+					"resource": {
+						"@id": "/account/92/records?record_id=30"
+					},
+					"inputs": {
+						"status": -10
+					},
+					"status": 200
+				}]
+			}
+		}
 	},
 
 	"budgetRecords": {
@@ -1354,28 +1395,30 @@
 			"optional": ["links", "actions"]
 		},
 		
-		"actions": [{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/form/admin-throttle-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["period", "by_all", "by_brand", "by_user"]
-			},
-			
-			"examples": [{
-				"label": "should allow an admin to edit a throttle's specifications",
-				"resource": {
-					"@id": "/throttle/1"
-				},
+		"actions": {
+			"edit": {
+				"title": "Edit",
+				"@type": "form",
+				"@id": "/form/admin-throttle-edit",
+				"method": "POST",
+				
 				"inputs": {
-					"period": "99999999"
+					"required": [],
+					"optional": ["period", "by_all", "by_brand", "by_user"]
 				},
-				"status": 200
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow an admin to edit a throttle's specifications",
+					"resource": {
+						"@id": "/throttle/1"
+					},
+					"inputs": {
+						"period": "99999999"
+					},
+					"status": 200
+				}]
+			}
+		}
 	},
 	
 	"holderRelays": {	
@@ -1391,40 +1434,42 @@
 			"relay": ["/form/relay-edit"]
 		},
 		
-		"actions": [{
-			"title": "Add",
-			"@type": "form",
-			"@id": "/form/holder-relays-add",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["amount_min", "amount_max", "redirect", "tag", "secret", "txntype", "ended",
-				"by_all_limit","by_brand_limit","by_user_limit","by_user_wait"]
-			},
-			
-			"examples": [{
-				"label": "should allow an accountholder to add a relay specification",
-				"resource": {
-					"@id": "/holder/41/relays"
-				},				
+		"actions": {
+			"add": {
+				"title": "Add",
+				"@type": "form",
+				"@id": "/form/holder-relays-add",
+				"method": "POST",
+				
 				"inputs": {
-					"amount_min": 0,
-					"amount_max": "{random}"
+					"required": [],
+					"optional": ["amount_min", "amount_max", "redirect", "tag", "secret", "txntype", "ended",
+					"by_all_limit","by_brand_limit","by_user_limit","by_user_wait"]
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-accountholder to add a relay specification",
-				"resource": {
-					"@id": "/holder/44/relays"
-				},				
-				"inputs": {
-					"amount_min": 0,
-					"amount_max": "{random}"
-				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow an accountholder to add a relay specification",
+					"resource": {
+						"@id": "/holder/41/relays"
+					},				
+					"inputs": {
+						"amount_min": 0,
+						"amount_max": "{random}"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-accountholder to add a relay specification",
+					"resource": {
+						"@id": "/holder/44/relays"
+					},				
+					"inputs": {
+						"amount_min": 0,
+						"amount_max": "{random}"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 	
 	"relay": {	
@@ -1437,40 +1482,42 @@
 			"optional": ["links", "actions", "user_id", "account_id", "created", "updated"]
 		},
 		
-		"actions": [{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/form/relay-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["amount_min", "amount_max", "redirect", "tag", "secret", "txntype", "ended",
-				"by_all_limit","by_brand_limit","by_user_limit","by_user_wait"]
-			},
-			
-			"examples": [{
-				"label": "should allow an accountholder to edit a relay specification",
-				"resource": {
-					"@id": "/relay/1"
-				},				
+		"actions": {
+			"edit": {
+				"title": "Edit",
+				"@type": "form",
+				"@id": "/form/relay-edit",
+				"method": "POST",
+				
 				"inputs": {
-					"secret": "{hex}",
-					"amount_max": "{random}"
+					"required": [],
+					"optional": ["amount_min", "amount_max", "redirect", "tag", "secret", "txntype", "ended",
+					"by_all_limit","by_brand_limit","by_user_limit","by_user_wait"]
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-accountholder to edit a relay specification",
-				"resource": {
-					"@id": "/relay/3"
-				},				
-				"inputs": {
-					"secret": "{hex}",
-					"amount_max": "{random}"
-				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow an accountholder to edit a relay specification",
+					"resource": {
+						"@id": "/relay/1"
+					},				
+					"inputs": {
+						"secret": "{hex}",
+						"amount_max": "{random}"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-accountholder to edit a relay specification",
+					"resource": {
+						"@id": "/relay/3"
+					},				
+					"inputs": {
+						"secret": "{hex}",
+						"amount_max": "{random}"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 	
 	"promo": {	
@@ -1488,39 +1535,41 @@
 			"relay": ["/form/relay-edit"]
 		},
 		
-		"actions": [{
-			"title": "Edit",
-			"@type": "form",
-			"@id": "/form/promo-edit",
-			"method": "POST",
-			
-			"inputs": {
-				"required": [],
-				"optional": ["name", "description", "amount", "imageURL", "infoURL", "expires", "keyword"]
-			},
-			
-			"examples": [{
-				"label": "should allow a brand admin to edit a promo specification",
-				"resource": {
-					"@id": "/promo/1"
-				},				
+		"actions": {
+			"edit": {
+				"title": "Edit",
+				"@type": "form",
+				"@id": "/form/promo-edit",
+				"method": "POST",
+				
 				"inputs": {
-					"name": "{hex}",
-					"amount": "8.97"
+					"required": [],
+					"optional": ["name", "description", "amount", "imageURL", "infoURL", "expires", "keyword"]
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-brand admin to edit a promo specification",
-				"resource": {
-					"@id": "/promo/2"
-				},				
-				"inputs": {
-					"name": "{hex}",
-					"amount": "7.98"
-				},
-				"status": 403
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow a brand admin to edit a promo specification",
+					"resource": {
+						"@id": "/promo/1"
+					},				
+					"inputs": {
+						"name": "{hex}",
+						"amount": "8.97"
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-brand admin to edit a promo specification",
+					"resource": {
+						"@id": "/promo/2"
+					},				
+					"inputs": {
+						"name": "{hex}",
+						"amount": "7.98"
+					},
+					"status": 403
+				}]
+			}
+		}
 	},
 	
 	"brandPromos": {	
@@ -1536,55 +1585,57 @@
 			"relay": ["/form/relay-edit"]
 		},
 		
-		"actions": [{
-			"title": "Add",
-			"@type": "form",
-			"@id": "/form/promo-add",
-			"method": "POST",
-			
-			"inputs": {
-				"required": ["name", "description", "amount", "holder_id"],
-				"optional": ["imageURL", "infoURL", "expires", "by_all_limit", "by_brand_limit", "by_user_limit", "by_user_wait","keyword"]
-			},
-			
-			"examples": [{
-				"label": "should allow a brand member to add a promo specification",
-				"resource": {
-					"@id": "/brand/104/promos"
-				},				
+		"actions": {
+			"add": {
+				"title": "Add",
+				"@type": "form",
+				"@id": "/form/promo-add",
+				"method": "POST",
+				
 				"inputs": {
-					"name": "product promo {hex}",
-					"description": "a brand 104 promo {hex}",
-					"amount": "5.43",
-					"holder_id": 41					
+					"required": ["name", "description", "amount", "holder_id"],
+					"optional": ["imageURL", "infoURL", "expires", "by_all_limit", "by_brand_limit", "by_user_limit", "by_user_wait","keyword"]
 				},
-				"status": 200
-			},{
-				"label": "should NOT allow a non-brand member to add a promo specification",
-				"target": "/brand/105/promos",
-				"resource": {
-					"@id": "/brand/105/promos"
-				},				
-				"inputs": {
-					"name": "product promo {hex}",
-					"description": "a brand 105 promo {hex}",
-					"amount": "3.45"
-				},
-				"status": 403
-			},{
-				"label": "should allow a brand member to add using the promo/collection endpoint",
-				"resource": {
-					"@id": "/promo/collection"
-				},
-				"inputs": {
-					"name": "product promo {hex}",
-					"description": "a brand 104 promo {hex}",
-					"amount": "5.43",
-					"holder_id": 41					
-				},
-				"status": 200
-			}]
-		}]
+				
+				"examples": [{
+					"label": "should allow a brand member to add a promo specification",
+					"resource": {
+						"@id": "/brand/104/promos"
+					},				
+					"inputs": {
+						"name": "product promo {hex}",
+						"description": "a brand 104 promo {hex}",
+						"amount": "5.43",
+						"holder_id": 41					
+					},
+					"status": 200
+				},{
+					"label": "should NOT allow a non-brand member to add a promo specification",
+					"target": "/brand/105/promos",
+					"resource": {
+						"@id": "/brand/105/promos"
+					},				
+					"inputs": {
+						"name": "product promo {hex}",
+						"description": "a brand 105 promo {hex}",
+						"amount": "3.45"
+					},
+					"status": 403
+				},{
+					"label": "should allow a brand member to add using the promo/collection endpoint",
+					"resource": {
+						"@id": "/promo/collection"
+					},
+					"inputs": {
+						"name": "product promo {hex}",
+						"description": "a brand 104 promo {hex}",
+						"amount": "5.43",
+						"holder_id": 41					
+					},
+					"status": 200
+				}]
+			}
+		}
 	},
 	
 	"promoCollection": {	
@@ -1601,22 +1652,24 @@
 			"promo": ["/form/promo-edit"]
 		},
 		
-		"actions": [{
-			"title": "Search",
-			"@type": "form",
-			"@id": "/form/promo-search",
-			"method": "POST",
-			"target": "/promo/collection",
-			
-			"query": {
-				"required": [],
-				"optional": ["for"]				
-			},
-			
-			"inputs": {},
-			
-			"examples": []
-		}]
+		"actions": {
+			"search": {
+				"title": "Search",
+				"@type": "form",
+				"@id": "/form/promo-search",
+				"method": "POST",
+				"target": "/promo/collection",
+				
+				"query": {
+					"required": [],
+					"optional": ["for"]				
+				},
+				
+				"inputs": {},
+				
+				"examples": []
+			}
+		}
 	}
 }
 	
