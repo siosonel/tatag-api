@@ -14,8 +14,9 @@
     "examples": [
         {
             "label": "should allow an admin to add a brand member",
-            "target": "/brand/104/members",
-            "method": "POST",
+            "resource": {
+                "@id": "/brand/104/members"
+            },
             "inputs": {
                 "user_id": 24,
                 "role": "dev-{xtime}",
@@ -25,8 +26,9 @@
         },
         {
             "label": "should NOT allow a non-admin to add a member",
-            "target": "/brand/105/members",
-            "method": "POST",
+            "resource": {
+                "@id": "/brand/105/members"
+            },
             "inputs": {
                 "user_id": 24,
                 "role": "dev-{xtime}",

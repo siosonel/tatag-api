@@ -2,5 +2,6 @@
     "@context": "/api/ref/context.php",
     "error": "The requester is not an admin for brand #105.",
     "hints": [],
-    "@graph": []
+    "@graph": [],
+    "requestURI": "/brand/105/accounts"
 }

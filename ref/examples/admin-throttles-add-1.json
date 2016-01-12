@@ -2,5 +2,6 @@
     "@context": "/api/ref/context.php",
     "error": "Only brand #105 admins can add throttling specifications.",
     "hints": [],
-    "@graph": []
+    "@graph": [],
+    "requestURI": "/budget/105/throttles"
 }

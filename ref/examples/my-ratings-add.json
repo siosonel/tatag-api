@@ -14,8 +14,9 @@
     "examples": [
         {
             "label": "should allow a user to add a new rating",
-            "target": "/user/21/ratings",
-            "method": "POST",
+            "resource": {
+                "@id": "/user/21/ratings"
+            },
             "inputs": {
                 "brand_id": 105,
                 "score": 0,
@@ -25,8 +26,9 @@
         },
         {
             "label": "should allow a user to add a new rating for a previously unregistered brand",
-            "target": "/user/21/ratings",
-            "method": "POST",
+            "resource": {
+                "@id": "/user/21/ratings"
+            },
             "inputs": {
                 "brand_id": "test test test {random}",
                 "score": 0,
@@ -36,8 +38,9 @@
         },
         {
             "label": "should not allow a user to duplicate an existing rating, by other_id",
-            "target": "/user/21/ratings",
-            "method": "POST",
+            "resource": {
+                "@id": "/user/21/ratings"
+            },
             "inputs": {
                 "brand_id": 105,
                 "score": 0,

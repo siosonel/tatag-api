@@ -22,8 +22,9 @@
     "examples": [
         {
             "label": "should allow an accountholder to edit a relay specification",
-            "target": "/relay/1",
-            "method": "POST",
+            "resource": {
+                "@id": "/relay/1"
+            },
             "inputs": {
                 "secret": "{hex}",
                 "amount_max": "{random}"
@@ -32,8 +33,9 @@
         },
         {
             "label": "should NOT allow a non-accountholder to edit a relay specification",
-            "target": "/relay/3",
-            "method": "POST",
+            "resource": {
+                "@id": "/relay/3"
+            },
             "inputs": {
                 "secret": "{hex}",
                 "amount_max": "{random}"

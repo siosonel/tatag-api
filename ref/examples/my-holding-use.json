@@ -6,7 +6,7 @@
     "target": "/budget/used",
     "query": {
         "required": [
-            "brand_id"
+            "account-brand-id"
         ],
         "optional": []
     },
@@ -22,8 +22,13 @@
     "examples": [
         {
             "label": "should allow an accountholding with an 'x' to use budgets.",
-            "target": "/budget/104/used",
-            "method": "POST",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
             "inputs": {
                 "from": "42-abc",
                 "to": "44-abc",
@@ -34,8 +39,13 @@
         },
         {
             "label": "should allow the use of a valid relay credential to authorize a transaction.",
-            "target": "/budget/104/used",
-            "method": "POST",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
             "inputs": {
                 "from": "42-abc",
                 "to": "3.xyz",
@@ -46,8 +56,13 @@
         },
         {
             "label": "should void the transaction when the transaction amount is not within a relay's amount_min and _max",
-            "target": "/budget/104/used",
-            "method": "POST",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
             "inputs": {
                 "from": "42-abc",
                 "to": "3.xyz",
@@ -58,8 +73,13 @@
         },
         {
             "label": "should fill-in missing transaction amount",
-            "target": "/budget/104/used",
-            "method": "POST",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
             "inputs": {
                 "from": "42-abc",
                 "to": "3.xyz",
@@ -69,8 +89,13 @@
         },
         {
             "label": "should not allow relay usage that exceeds limits",
-            "target": "/budget/104/used",
-            "method": "POST",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
             "inputs": {
                 "from": "42-abc",
                 "to": "4.qrs",
@@ -81,8 +106,13 @@
         },
         {
             "label": "should convert promo to correct record info",
-            "target": "/budget/104/used",
-            "method": "POST",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
             "inputs": {
                 "from": "42-abc",
                 "to": "ad-1",

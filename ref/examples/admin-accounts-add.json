@@ -15,8 +15,9 @@
     "examples": [
         {
             "label": "should allow an admin to add a new account",
-            "target": "/brand/104/accounts",
-            "method": "POST",
+            "resource": {
+                "@id": "/brand/104/accounts"
+            },
             "inputs": {
                 "name": "test -{xtime}",
                 "authcode": "cftix",
@@ -25,9 +26,10 @@
             "status": 200
         },
         {
-            "label": "should NOT allow a non-admin to add a member",
-            "target": "/brand/105/accounts",
-            "method": "POST",
+            "label": "should NOT allow a non-admin to add an account",
+            "resource": {
+                "@id": "/brand/105/accounts"
+            },
             "inputs": {
                 "name": "test -{xtime}",
                 "authcode": "cftix",

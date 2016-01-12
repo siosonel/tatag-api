@@ -6,7 +6,7 @@
     "target": "/budget/transferred",
     "query": {
         "required": [
-            "brand_id"
+            "account-brand-id"
         ],
         "optional": []
     },
@@ -22,8 +22,13 @@
     "examples": [
         {
             "label": "should allow an originating accountholding with an 'f' and destination accountholding with a 't' authcode to transfer budgets.",
-            "target": "/budget/104/transferred",
-            "method": "POST",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
             "inputs": {
                 "from": "42-abc",
                 "to": "43-abc",

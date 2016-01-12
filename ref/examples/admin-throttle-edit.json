@@ -15,8 +15,9 @@
     "examples": [
         {
             "label": "should allow an admin to edit a throttle's specifications",
-            "target": "/throttle/1",
-            "method": "POST",
+            "resource": {
+                "@id": "/throttle/1"
+            },
             "inputs": {
                 "period": 99999999
             },

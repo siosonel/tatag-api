@@ -18,8 +18,9 @@
     "examples": [
         {
             "label": "should allow a brand admin to edit a promo specification",
-            "target": "/promo/1",
-            "method": "POST",
+            "resource": {
+                "@id": "/promo/1"
+            },
             "inputs": {
                 "name": "{hex}",
                 "amount": 8.97
@@ -28,8 +29,9 @@
         },
         {
             "label": "should NOT allow a non-brand admin to edit a promo specification",
-            "target": "/promo/2",
-            "method": "POST",
+            "resource": {
+                "@id": "/promo/2"
+            },
             "inputs": {
                 "name": "{hex}",
                 "amount": 7.98

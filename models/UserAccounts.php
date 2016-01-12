@@ -54,7 +54,14 @@ class UserAccounts extends Base {
 			),
 			"brand_" => array(
 				"@id" => "$this->root/team/{id}", 
-				"@type" => "brand"
+				"@type" => "brand",
+				"members"=> "$this->root/team/{id}/members",
+				"accounts"=> "$this->root/team/{id}/accounts",
+				"throttles"=> "$this->root/team/{id}/throttles",
+				"records"=> "$this->root/budget/{id}/records",
+				"about"=> "$this->root/brand/{id}/about",
+				"promos"=> "$this->root/brand/{id}/promos",
+				"edit"=> "/form/brand-edit"
 			),
 			"user_" =>  array(
 				"@id" => "$this->root/user/{id}", 
@@ -69,7 +76,7 @@ class UserAccounts extends Base {
 		foreach($items AS &$r) {
 			if (!$r['alias']) $r['alias'] = $r['account_name']; 
 			
-			$this->nestResources($r, $nestingRef, $graph, $tracked);
+			$this->nestResources($r, $nestingRef, $graph, $tracked, $skip);
 			
 			$r['relay'] = array();
 			$r['@type'] = 'userAccount';

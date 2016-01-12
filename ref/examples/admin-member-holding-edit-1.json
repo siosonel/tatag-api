@@ -1,6 +1,7 @@
 {
     "@context": "/api/ref/context.php",
-    "error": "Only brand admins can access member accounts resource.",
+    "error": "These parameters may not be set by the user: [\"name\"].",
     "hints": [],
-    "@graph": []
+    "@graph": [],
+    "requestURI": "/member/55/accounts?holder_id=45"
 }

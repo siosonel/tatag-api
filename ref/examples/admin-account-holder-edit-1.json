@@ -1,6 +1,7 @@
 {
     "@context": "/api/ref/context.php",
-    "error": "The requester is not an admin for brand #105.",
+    "error": "These parameters may not be set by the user: [\"name\"].",
     "hints": [],
-    "@graph": []
+    "@graph": [],
+    "requestURI": "/brand/104/holders?holder_id=44"
 }

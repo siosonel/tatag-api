@@ -11,17 +11,12 @@
             "ended"
         ]
     },
-    "query": {
-        "required": [
-            "rating_id"
-        ],
-        "optional": []
-    },
     "examples": [
         {
             "label": "should allow a user to update a rating",
-            "target": "/user/21/ratings?rating_id=1",
-            "method": "POST",
+            "resource": {
+                "@id": "/user/21/ratings?rating_id=1"
+            },
             "inputs": {
                 "score": 1,
                 "reason": "non-polluter {random}"

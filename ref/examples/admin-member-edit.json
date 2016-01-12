@@ -13,10 +13,8 @@
     "examples": [
         {
             "label": "should allow an admin to edit a member's info",
-            "target": "/brand/104/members",
-            "method": "POST",
-            "query": {
-                "member_id": 55
+            "resource": {
+                "@id": "/brand/104/members?member_id=55"
             },
             "inputs": {
                 "role": "assistant -{xtime}",
@@ -26,10 +24,8 @@
         },
         {
             "label": "should NOT allow a non-admin to edit a member's info",
-            "target": "/brand/105/members",
-            "method": "POST",
-            "query": {
-                "member_id": 54
+            "resource": {
+                "@id": "/brand/105/members?member_id=54"
             },
             "inputs": {
                 "role": "assistant -{xtime}",

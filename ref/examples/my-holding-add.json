@@ -6,7 +6,7 @@
     "target": "/budget/issued",
     "query": {
         "required": [
-            "brand_id"
+            "account-brand-id"
         ],
         "optional": []
     },
@@ -22,8 +22,13 @@
     "examples": [
         {
             "label": "should allow an accountholding with a 'c' authcode to issue budget",
-            "target": "/budget/104/issued",
-            "method": "POST",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
             "inputs": {
                 "from": "41-abc",
                 "to": "42-abc",
@@ -34,8 +39,13 @@
         },
         {
             "label": "should NOT allow an accountholding without a 'c' authcode to issue budget",
-            "target": "/budget/104/issued",
-            "method": "POST",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
             "inputs": {
                 "from": "41-abc",
                 "to": "43-abc",

@@ -15,8 +15,9 @@
     "examples": [
         {
             "label": "should allow an admin to add a new throttle",
-            "target": "/budget/104/throttles",
-            "method": "POST",
+            "resource": {
+                "@id": "/budget/104/throttles"
+            },
             "inputs": {
                 "period": 360000,
                 "by_all": 100,
@@ -27,8 +28,9 @@
         },
         {
             "label": "should NOT allow a non-admin to add a throttle",
-            "target": "/budget/105/throttles",
-            "method": "POST",
+            "resource": {
+                "@id": "/budget/105/throttles"
+            },
             "inputs": {
                 "period": 360000,
                 "by_all": 100,

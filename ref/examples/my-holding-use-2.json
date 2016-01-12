@@ -2,5 +2,6 @@
     "@context": "/api/ref/context.php",
     "error": "The amount must be between 0.01 and 50.00.",
     "hints": [],
-    "@graph": []
+    "@graph": [],
+    "requestURI": "/budget/used?account-brand-id=104"
 }

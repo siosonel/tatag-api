@@ -18,7 +18,7 @@ class UserTeams extends Base {
 		$sql = "SELECT brand_id FROM members WHERE user_id=$this->user_id AND ended IS NULL";
 		$items = DBquery::get($sql, array($this->user_id));
 		foreach($items AS $i) {
-			$this->brand[] = "/team/$i[brand_id]";
+			$this->brand[] = "$this->root/team/$i[brand_id]";
 		}
 		
 		return array($this);

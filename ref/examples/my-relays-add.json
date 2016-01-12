@@ -22,8 +22,9 @@
     "examples": [
         {
             "label": "should allow an accountholder to add a relay specification",
-            "target": "/holder/41/relays",
-            "method": "POST",
+            "resource": {
+                "@id": "/holder/41/relays"
+            },
             "inputs": {
                 "amount_min": 0,
                 "amount_max": "{random}"
@@ -32,8 +33,9 @@
         },
         {
             "label": "should NOT allow a non-accountholder to add a relay specification",
-            "target": "/holder/44/relays",
-            "method": "POST",
+            "resource": {
+                "@id": "/holder/44/relays"
+            },
             "inputs": {
                 "amount_min": 0,
                 "amount_max": "{random}"

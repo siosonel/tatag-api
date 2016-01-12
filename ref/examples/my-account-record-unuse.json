@@ -6,7 +6,7 @@
     "target": "/budget/used",
     "query": {
         "required": [
-            "brand_id"
+            "account-brand-id"
         ],
         "optional": []
     },
@@ -23,8 +23,13 @@
     "examples": [
         {
             "label": "should allow reversal of used budget",
-            "target": "/budget/104/used",
-            "method": "POST",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
             "inputs": {
                 "from": "45-abc",
                 "to": "41-abc",

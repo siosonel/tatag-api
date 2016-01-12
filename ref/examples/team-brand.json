@@ -1,16 +1,17 @@
 [
     {
         "id": 104,
-        "@type": "brand",
-        "@id": "/team/104",
         "name": "abc",
         "logo": null,
+        "@id": "/team/104",
+        "@type": "brand",
         "members": "/team/104/members",
         "accounts": "/team/104/accounts",
         "throttles": "/team/104/throttles",
         "records": "/budget/104/records",
         "about": "/brand/104/about",
         "promos": "/brand/104/promos",
+        "edit": "/form/brand-edit",
         "tally": {
             "@type": "budgetTally",
             "added": 1500.11,
@@ -22,6 +23,8 @@
             "numMembers": 2,
             "totalMemberHours": 0
         },
-        "actions": []
+        "actions": [
+            "/form/brand-edit"
+        ]
     }
 ]

@@ -3,12 +3,6 @@
     "@type": "form",
     "@id": "/form/member-edit",
     "method": "POST",
-    "query": {
-        "required": [
-            "member_id"
-        ],
-        "optional": []
-    },
     "inputs": {
         "required": [],
         "optional": [
@@ -19,10 +13,8 @@
     "examples": [
         {
             "label": "should NOT allow non-admin edits of a member's hours",
-            "target": "/user/21/brands",
-            "method": "POST",
-            "query": {
-                "member_id": 54
+            "resource": {
+                "@id": "/user/21/memberships?member_id=53"
             },
             "inputs": {
                 "hours": "{random}"

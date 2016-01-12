@@ -14,10 +14,8 @@
     "examples": [
         {
             "label": "should allow an admin to edit an account's info",
-            "target": "/brand/104/accounts",
-            "method": "POST",
-            "query": {
-                "account_id": 94
+            "resource": {
+                "@id": "/brand/104/accounts?account_id=94"
             },
             "inputs": {
                 "name": "my -{xtime}",
@@ -27,10 +25,8 @@
         },
         {
             "label": "should NOT allow a non-admin to edit an account's info",
-            "target": "/brand/105/accounts",
-            "method": "POST",
-            "query": {
-                "account_id": 97
+            "resource": {
+                "@id": "/brand/105/accounts?account_id=97"
             },
             "inputs": {
                 "name": "my -{xtime}",

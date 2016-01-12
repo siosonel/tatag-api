@@ -14,8 +14,9 @@
     "examples": [
         {
             "label": "should allow an admin to add a new accountholder",
-            "target": "/member/55/accounts",
-            "method": "POST",
+            "resource": {
+                "@id": "/member/55/accounts"
+            },
             "inputs": {
                 "user_id": 24,
                 "account_id": 92,
@@ -25,8 +26,9 @@
         },
         {
             "label": "should NOT allow a non-admin to add a new accountholder",
-            "target": "/member/54/accounts",
-            "method": "POST",
+            "resource": {
+                "@id": "/member/54/accounts"
+            },
             "inputs": {
                 "user_id": 22,
                 "account_id": 92,

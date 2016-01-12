@@ -3,12 +3,6 @@
     "@type": "form",
     "@id": "/form/record-hold",
     "method": "POST",
-    "query": {
-        "required": [
-            "record_id"
-        ],
-        "optional": []
-    },
     "inputs": {
         "required": [
             "status"
@@ -23,10 +17,8 @@
     "examples": [
         {
             "label": "should allow putting record on hold",
-            "target": "/account/92/records",
-            "method": "POST",
-            "query": {
-                "record_id": 30
+            "resource": {
+                "@id": "/account/92/records?record_id=30"
             },
             "inputs": {
                 "status": 5

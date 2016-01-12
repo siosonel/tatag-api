@@ -24,8 +24,9 @@
     "examples": [
         {
             "label": "should allow a brand member to add a promo specification",
-            "target": "/brand/104/promos",
-            "method": "POST",
+            "resource": {
+                "@id": "/brand/104/promos"
+            },
             "inputs": {
                 "name": "product promo {hex}",
                 "description": "a brand 104 promo {hex}",
@@ -37,7 +38,9 @@
         {
             "label": "should NOT allow a non-brand member to add a promo specification",
             "target": "/brand/105/promos",
-            "method": "POST",
+            "resource": {
+                "@id": "/brand/105/promos"
+            },
             "inputs": {
                 "name": "product promo {hex}",
                 "description": "a brand 105 promo {hex}",
@@ -47,8 +50,9 @@
         },
         {
             "label": "should allow a brand member to add using the promo/collection endpoint",
-            "target": "/promo/collection",
-            "method": "POST",
+            "resource": {
+                "@id": "/promo/collection"
+            },
             "inputs": {
                 "name": "product promo {hex}",
                 "description": "a brand 104 promo {hex}",
