@@ -109,7 +109,14 @@
                     "throttles": {
                         "throttle": {}
                     },
-                    "tally": {}
+                    "tally": {},
+                    "orders": {
+                        "order": {
+                            "#forms": [
+                                "update"
+                            ]
+                        }                        
+                    }
                 }
             }
         }

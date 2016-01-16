@@ -1,0 +1,33 @@
+{
+    "title": "Update the status of an order",
+    "@type": "form",
+    "@id": "/form/order-update",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "order_step"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow a brand member to update an order_step",
+            "resource": {
+                "@id": "/team/104/orders?record_id=34"
+            },
+            "inputs": {
+                "order_step": 5
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-brand member to update an order step",
+            "resource": {
+                "@id": "/team/105/orders?record_id=37"
+            },
+            "inputs": {
+                "order_step": 5
+            },
+            "status": 403
+        }
+    ]
+}

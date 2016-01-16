@@ -176,6 +176,7 @@ CREATE TABLE `records` (
   `relay_id` int(11) DEFAULT '0',
   `promo_id` int(11) DEFAULT '0',
   `readkey` varchar(12) DEFAULT '0',
+  `order_step` tinyint(3) DEFAULT '0',
   PRIMARY KEY (`record_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

@@ -77,6 +77,7 @@ class Team extends Base {
 			$this->records = "$this->root/budget/$this->brand_id/records";	
 			$this->about = "$this->root/brand/$this->brand_id/about";
 			$this->promos = "$this->root/brand/$this->brand_id/promos";
+			$this->orders = "$this->root/team/$this->brand_id/orders";
 		}
 	}
 	

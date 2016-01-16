@@ -99,6 +99,19 @@
         "throttles",
         "throttle"
     ],
+    "team-orders": [
+        "me",
+        "teams",
+        "brand",
+        "orders"
+    ],
+    "team-order": [
+        "me",
+        "teams",
+        "brand",
+        "orders",
+        "order"
+    ],
     "admin-brand": [
         "me",
         "issuers",

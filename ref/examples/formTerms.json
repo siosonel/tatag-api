@@ -1,13 +1,14 @@
 [
     "accept",
     "revoke",
+    "edit",
+    "add",
+    "transfer",
+    "use",
     "hold",
     "approve",
     "reject",
     "unuse",
     "unadd",
-    "edit",
-    "add",
-    "transfer",
-    "use"
+    "update"
 ]

@@ -1,0 +1,11 @@
+{
+    "@context": "/api/ref/context.php",
+    "error": "Only members or admins of brand #105 can view its orders.",
+    "hints": [
+
+    ],
+    "@graph": [
+
+    ],
+    "requestURI": "/team/105/orders?record_id=37"
+}

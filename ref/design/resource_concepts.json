@@ -10,7 +10,7 @@
         "memberships",
         "membership",
         "team",
-        "issuer",				
+        "issuer",
         "holdings",
         "holding",
         "account",
@@ -33,7 +33,9 @@
         "promos",
         "promo",
         "throttles",
-        "throttle"
+        "throttle",
+        "orders",
+        "order"
     ],
     "admin": [
         "brand",

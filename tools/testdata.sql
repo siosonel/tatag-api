@@ -144,13 +144,14 @@ UNLOCK TABLES;
 LOCK TABLES `records` WRITE;
 /*!40000 ALTER TABLE `records` DISABLE KEYS */;
 INSERT INTO `records` VALUES 
-(30,'np',92,21,93,21,1000.00,'first budget','2015-01-05 19:53:32',NULL,0,7,0,0,0,0)
-,(31,'pp',93,21,94,21,35.87,'wages','2015-01-05 19:53:32',NULL,0,7,0,0,0,0)
-,(32,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-05 19:53:32',NULL,0,0,0,0,0,0)
-,(33,'np',95,22,96,22,1000.00,'first budget','2015-01-05 19:53:33',NULL,0,7,0,0,0,0)
-,(34,'pn',96,22,92,21,9.37,'first external budget use','2015-01-05 19:53:33',NULL,0,0,0,0,0,0)
-,(35,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:13:00',NULL,0,0,0,0,0,0)
-,(36,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:29:57',NULL,0,0,0,0,0,0);
+(30,'np',92,21,93,21,1000.00,'first budget','2015-01-05 19:53:32',NULL,0,7,0,0,0,0,0)
+,(31,'pp',93,21,94,21,35.87,'wages','2015-01-05 19:53:32',NULL,0,7,0,0,0,0,0)
+,(32,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-05 19:53:32',NULL,0,0,0,0,0,0,0)
+,(33,'np',95,22,96,22,1000.00,'first budget','2015-01-05 19:53:33',NULL,0,7,0,0,0,0,0)
+,(34,'pn',96,22,92,21,9.37,'first external budget use','2015-01-05 19:53:33',NULL,0,0,0,0,0,0,0)
+,(35,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:13:00',NULL,0,0,0,0,0,0,0)
+,(36,'pn',94,21,92,21,2.05,'disounted employee purchase','2015-01-06 03:29:57',NULL,0,0,0,0,0,0,0)
+,(37,'pn',94,21,95,22,0.73,'disounted employee purchase','2015-01-06 03:29:57',NULL,0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `records` ENABLE KEYS */;
 UNLOCK TABLES;
 
