@@ -37,6 +37,9 @@
     "team-promo": [
         "edit"
     ],
+    "team-order": [
+        "update"
+    ],
     "admin-brand": [
         "edit"
     ],
