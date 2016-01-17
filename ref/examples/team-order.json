@@ -1,47 +1,22 @@
 [
     {
         "txntype": "pn",
-        "record_id": 34,
-        "created": "2015-01-05 11:53:33",
-        "from": "def",
+        "record_id": 40,
+        "created": "2015-11-18 07:21:15",
         "to": 92,
-        "amount": 9.37,
-        "note": "first external budget use",
+        "amount": 25,
+        "note": "for ad-1",
         "order_step": 0,
-        "updated": null,
-        "@id": "/team/104/orders?record_id=34",
-        "update": {
-            "title": "Update the status of an order",
-            "@type": "form",
-            "@id": "/form/order-update",
-            "method": "POST",
-            "inputs": {
-                "required": [
-                    "order_step"
-                ]
-            },
-            "examples": [
-                {
-                    "label": "should allow a brand member to update an order_step",
-                    "resource": {
-                        "@id": "/team/104/orders?record_id=34"
-                    },
-                    "inputs": {
-                        "order_step": 5
-                    },
-                    "status": 200
-                },
-                {
-                    "label": "should NOT allow a non-brand member to update an order step",
-                    "resource": {
-                        "@id": "/team/105/orders?record_id=37"
-                    },
-                    "inputs": {
-                        "order_step": 5
-                    },
-                    "status": 403
-                }
-            ]
-        }
+        "updated": "2015-11-18 23:10:25",
+        "@id": "/team/104/orders?record_id=40",
+        "update": "/form/order-update",
+        "promo": {
+            "id": 1,
+            "name": "Test promo",
+            "@id": "/promo/1",
+            "@type": "promo"
+        },
+        "user": "/user/21/about",
+        "from": "/brand/104/about"
     }
 ]
