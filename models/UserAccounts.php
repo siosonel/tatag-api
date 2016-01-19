@@ -61,6 +61,7 @@ class UserAccounts extends Base {
 				"records"=> "$this->root/budget/{id}/records",
 				"about"=> "$this->root/brand/{id}/about",
 				"promos"=> "$this->root/brand/{id}/promos",
+				"tally"=> "$this->root/brand/{id}/tally",
 				"edit"=> "/form/brand-edit"
 			),
 			"user_" =>  array(
