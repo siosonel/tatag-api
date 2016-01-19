@@ -1,44 +1,72 @@
 {
-	"id": "A numeric identifier for a resource, that is unique for a given resource type.",
-	"name": "The name of the resource.",
-	"created": "The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.",
-	"updated": "The UNIX timestamp when a resource was last updated.",
-	"role": "A user's role within the given context, such as a team member role.",
-	
-	"add": "A form for adding a resource to a collection, or for adding to a resource's tracked quantity.",
-	"edit": "A form for updating a resource.",
-	"transfer": "A form for transferring a resource between collections, or for transferring tracked quantities between resources.",
-	"use": "A form for using a resource or its tracked quantity.",
-	
-	"unadd": "A form for reversing a previous approved 'add' action.",
-	"unuse": "A form for reversing a previously approved 'use' action.",
-	
-	"hold": "A form for preventing the auto-approval or auto-rejection of a pending resource action.",
-	"approve": "A form for approving the completion of a pending resource action.",
-	"reject": "A form for rejecting the completion of a pending resource action.",
-	
 	"my-": "A prefix that indicates 'personal' resources.",
 	"team-": "A prefix that indicates team-member resources.",
 	"admin-": "A prefix that indicates brand administrator resources.",
 	"public-": "A prefix that indicates publicly accessible resources.",
-	
-	"me": "Information and resources that relates to the currently logged-on user.",	
-	"user": "A person-resource.",
-	"teams": "A collection of brand-resources to which a user belongs as a member.",
-	"issuers": "A collection of brand-resources to which a user has a member role of admin.",
-	
-	"brand": "The currency issuer related to this resource.",
-	"members": "A collection of brand members.",
-	"member": "A user that is a member of a brand.",
+
+	"about": "A web page that describes the current resource.",
+	"account": "A brand account. An account with a sign=-1 is a revenue budget that holds debits, with a normal balance of <= 0, to be used for receiving payments. An account with a sign=1 is an expense budget that holds credits, with a normal balance >=0, to be used as payment.",
 	"accounts": "A collection of brand accounts, that is, a brand's ledger.",
-	"account": "A brand account.",
-	"holdings": "A collection of accountholdings.",
-	"holding": "An accountholding.",
-	"holders": "A collection of accountholders.",
+	"add": "A form for adding a resource to a collection, or for adding to a resource's tracked quantity.",
+	"amount": "A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.",
+	"approve": "A form for approving the completion of a pending resource action.",
+	"area_code": "The phone area code where a brand is located. (optional, self-reported)",
+
+	"brand": "The currency issuer related to this resource.",
+	"by_all_limit": "This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. This is a weekly limit on the total inflow transaction amount for a given account or usage for a given product, regardless of the payor's brand or user id.",
+	"by_brand_limit": "This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's brand id.",
+	"by_user_limit": "This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's user id.",
+
+	"collectionOf": "The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].",
+	"country_code": "The ISO3 code of a brand location.",
+	"created": "The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.",
+
+	"edit": "A form for updating a resource.",
+	"ended": "The date of resource or relation deactivation, formatted as `YYYY-MM-DD hh:mm:ss`.",
+	"expires": "The date after which a given resource will no longer be available. For example, a promo may expire after a week.",
+
+	"hold": "A form for preventing the auto-approval or auto-rejection of a pending resource action.",
 	"holder": "An accountholder.",
+	"holders": "A collection of accountholders.",
+	"holding": "An accountholding.",
+	"holdings": "A collection of accountholdings.",
+
+	"id": "A numeric identifier for a resource, that is unique for a given resource type.",
+	"imageTemplate": "If given, a user interface provider may use this resource to display a brand icon or promo image.",
+	"imageURL": "If given, a user interface provider may use this link to display a brand icon or promo image.",
+	"about": "...",
+	"issuers": "A collection of brand-resources to which a user has a member role of admin.",
+	"itemsLimit": "The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.",
 	
-	"promos": "A collection of brand promotions.",
+	"keyword": "In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by makign it harder to guess the full value of a relay token.",
+
+	"me": "Information and resources that relates to the currently logged-on user.",
+	"member": "A user that is a member of a brand.",
+	"members": "A collection of brand members.",
+
+	"name": "The name of the resource.",
+	
+	"pageOf": "The '@id' of the collection to which the current collection page belongs. In other words, this is the link to the default collection resource without pagination.",
+	"pageOrder": "Either 'asc' or 'desc' based on item id's.",
 	"promo": "A brand promotion, used to advertise anything that could be the target of a payment.",
+	"promos": "A collection of brand promotions.",
+	
+	"reject": "A form for rejecting the completion of a pending resource action.",
+	"relay": "A token that is used to preauthorize the use of a recipient account.",
 	"relays": "A collection of relay tokens.",
-	"relay": "A token that is used to preauthorize the use of a recipient account."	
+	"role": "A user's role within the given context, such as a team member role.",
+
+	"teams": "A collection of brand-resources to which a user belongs as a member.",
+	"transfer": "A form for transferring a resource between collections, or for transferring tracked quantities between resources.",
+	"type_id": "A brand's self-reported classification.",
+	"type_system": "The classification system that is used to determine the brand type_id value.",
+
+	"unadd": "A form for reversing a previous approved 'add' action.",
+	"unuse": "A form for reversing a previously approved 'use' action.",
+	"updated": "The UNIX timestamp when a resource was last updated.",	
+	"url": "A link to a web page or image, typically not considered as an API data and therefore not expected to be dereferenced as part of the payload but instead opened as an external link or used in HTML representations.",
+	"use": "A form for using a resource or its tracked quantity.",	
+	"user": "A person-resource.",
+	
+	"#": "end"
 }

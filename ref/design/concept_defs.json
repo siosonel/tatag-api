@@ -1,7 +1,7 @@
 {
      "public-promos": {
 		      "description": "A collection or paged list of public-promo."
-		 },
+	},
 		 
      "public-promo": {
 		      "description": "Anything that a participant could pay for, such as for purchasing products, funding nonprofit campaigns, or supporting team projects with donations."
