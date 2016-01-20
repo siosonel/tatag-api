@@ -19,14 +19,11 @@
             "by_user_wait": 24,
             "@id": "/promo/11",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-11",
             "promoPage": "http://tatag.dev/ad/11",
-            "recipientToken": "ad-11",
-            "relay": {
-                "use": "promo-11"
-            },
+            "code": "ad-11",
+            "payURL": "http://tatag.dev/for/ad-11",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 10,
@@ -47,14 +44,11 @@
             "by_user_wait": 24,
             "@id": "/promo/10",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-10",
             "promoPage": "http://tatag.dev/ad/10",
-            "recipientToken": "ad-10",
-            "relay": {
-                "use": "promo-10"
-            },
+            "code": "ad-10",
+            "payURL": "http://tatag.dev/for/ad-10",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 9,
@@ -75,14 +69,11 @@
             "by_user_wait": 24,
             "@id": "/promo/9",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-9",
             "promoPage": "http://tatag.dev/ad/9",
-            "recipientToken": "ad-9",
-            "relay": {
-                "use": "promo-9"
-            },
+            "code": "ad-9",
+            "payURL": "http://tatag.dev/for/ad-9",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 8,
@@ -103,14 +94,11 @@
             "by_user_wait": 24,
             "@id": "/promo/8",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-8",
             "promoPage": "http://tatag.dev/ad/8",
-            "recipientToken": "ad-8",
-            "relay": {
-                "use": "promo-8"
-            },
+            "code": "ad-8",
+            "payURL": "http://tatag.dev/for/ad-8",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 7,
@@ -131,14 +119,11 @@
             "by_user_wait": 24,
             "@id": "/promo/7",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-7",
             "promoPage": "http://tatag.dev/ad/7",
-            "recipientToken": "ad-7",
-            "relay": {
-                "use": "promo-7"
-            },
+            "code": "ad-7",
+            "payURL": "http://tatag.dev/for/ad-7",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 6,
@@ -159,14 +144,11 @@
             "by_user_wait": 24,
             "@id": "/promo/6",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-6",
             "promoPage": "http://tatag.dev/ad/6",
-            "recipientToken": "ad-6",
-            "relay": {
-                "use": "promo-6"
-            },
+            "code": "ad-6",
+            "payURL": "http://tatag.dev/for/ad-6",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 5,
@@ -187,14 +169,11 @@
             "by_user_wait": 24,
             "@id": "/promo/5",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-5",
             "promoPage": "http://tatag.dev/ad/5",
-            "recipientToken": "ad-5",
-            "relay": {
-                "use": "promo-5"
-            },
+            "code": "ad-5",
+            "payURL": "http://tatag.dev/for/ad-5",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 4,
@@ -215,14 +194,11 @@
             "by_user_wait": 24,
             "@id": "/promo/4",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-4",
             "promoPage": "http://tatag.dev/ad/4",
-            "recipientToken": "ad-4",
-            "relay": {
-                "use": "promo-4"
-            },
+            "code": "ad-4",
+            "payURL": "http://tatag.dev/for/ad-4",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 3,
@@ -243,14 +219,11 @@
             "by_user_wait": 24,
             "@id": "/promo/3",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-3",
             "promoPage": "http://tatag.dev/ad/3",
-            "recipientToken": "ad-3",
-            "relay": {
-                "use": "promo-3"
-            },
+            "code": "ad-3",
+            "payURL": "http://tatag.dev/for/ad-3",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 1,
@@ -271,14 +244,11 @@
             "by_user_wait": 24,
             "@id": "/promo/1",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-1",
             "promoPage": "http://tatag.dev/ad/1",
-            "recipientToken": "ad-1",
-            "relay": {
-                "use": "promo-1"
-            },
+            "code": "ad-1",
+            "payURL": "http://tatag.dev/for/ad-1",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         }
     ],
     "pageOrder": "desc",
@@ -307,14 +277,11 @@
             "by_user_wait": 24,
             "@id": "/promo/11",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-11",
             "promoPage": "http://tatag.dev/ad/11",
-            "recipientToken": "ad-11",
-            "relay": {
-                "use": "promo-11"
-            },
+            "code": "ad-11",
+            "payURL": "http://tatag.dev/for/ad-11",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 10,
@@ -335,14 +302,11 @@
             "by_user_wait": 24,
             "@id": "/promo/10",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-10",
             "promoPage": "http://tatag.dev/ad/10",
-            "recipientToken": "ad-10",
-            "relay": {
-                "use": "promo-10"
-            },
+            "code": "ad-10",
+            "payURL": "http://tatag.dev/for/ad-10",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 9,
@@ -363,14 +327,11 @@
             "by_user_wait": 24,
             "@id": "/promo/9",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-9",
             "promoPage": "http://tatag.dev/ad/9",
-            "recipientToken": "ad-9",
-            "relay": {
-                "use": "promo-9"
-            },
+            "code": "ad-9",
+            "payURL": "http://tatag.dev/for/ad-9",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 8,
@@ -391,14 +352,11 @@
             "by_user_wait": 24,
             "@id": "/promo/8",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-8",
             "promoPage": "http://tatag.dev/ad/8",
-            "recipientToken": "ad-8",
-            "relay": {
-                "use": "promo-8"
-            },
+            "code": "ad-8",
+            "payURL": "http://tatag.dev/for/ad-8",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 7,
@@ -419,14 +377,11 @@
             "by_user_wait": 24,
             "@id": "/promo/7",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-7",
             "promoPage": "http://tatag.dev/ad/7",
-            "recipientToken": "ad-7",
-            "relay": {
-                "use": "promo-7"
-            },
+            "code": "ad-7",
+            "payURL": "http://tatag.dev/for/ad-7",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 6,
@@ -447,14 +402,11 @@
             "by_user_wait": 24,
             "@id": "/promo/6",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-6",
             "promoPage": "http://tatag.dev/ad/6",
-            "recipientToken": "ad-6",
-            "relay": {
-                "use": "promo-6"
-            },
+            "code": "ad-6",
+            "payURL": "http://tatag.dev/for/ad-6",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 5,
@@ -475,14 +427,11 @@
             "by_user_wait": 24,
             "@id": "/promo/5",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-5",
             "promoPage": "http://tatag.dev/ad/5",
-            "recipientToken": "ad-5",
-            "relay": {
-                "use": "promo-5"
-            },
+            "code": "ad-5",
+            "payURL": "http://tatag.dev/for/ad-5",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 4,
@@ -503,14 +452,11 @@
             "by_user_wait": 24,
             "@id": "/promo/4",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-4",
             "promoPage": "http://tatag.dev/ad/4",
-            "recipientToken": "ad-4",
-            "relay": {
-                "use": "promo-4"
-            },
+            "code": "ad-4",
+            "payURL": "http://tatag.dev/for/ad-4",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 3,
@@ -531,14 +477,11 @@
             "by_user_wait": 24,
             "@id": "/promo/3",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-3",
             "promoPage": "http://tatag.dev/ad/3",
-            "recipientToken": "ad-3",
-            "relay": {
-                "use": "promo-3"
-            },
+            "code": "ad-3",
+            "payURL": "http://tatag.dev/for/ad-3",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         },
         {
             "promo_id": 1,
@@ -559,17 +502,12 @@
             "by_user_wait": 24,
             "@id": "/promo/1",
             "@type": "promo",
-            "payLink": "http://tatag.dev/for/ad-1",
             "promoPage": "http://tatag.dev/ad/1",
-            "recipientToken": "ad-1",
-            "relay": {
-                "use": "promo-1"
-            },
+            "code": "ad-1",
+            "payURL": "http://tatag.dev/for/ad-1",
             "imageTemplate": "/ui/logo.php",
-            "promo-edit": "/form/promo-edit"
+            "edit": "/form/promo-edit"
         }
     ],
-    "actions": [
-        "/form/promo-search"
-    ]
+    "search": "/form/promo-search"
 }

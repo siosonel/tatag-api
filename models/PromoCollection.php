@@ -77,12 +77,10 @@ class PromoCollection extends Collection {
 		foreach($items AS &$r) {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
-			
-			$r['payLink'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";			
+						
 			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[promo_id]";
-			$r['recipientToken'] = "$r[keyword]-$r[promo_id]";
-			
-			$r['relay']['use'] = 'promo-'. $r['promo_id'];
+			$r['code'] = "$r[keyword]-$r[promo_id]";
+			$r['payURL'] = Requester::$ProtDomain ."/for/$r[code]";
 			
 			if (!$r['imageURL']) {
 				//$r['imageURL'] = "/ui/logo.php?brand=". $r['brand_name'];
@@ -93,10 +91,11 @@ class PromoCollection extends Collection {
 			}
 			
 			if (Requester::isMember($r['brand_id'])) {
-				$r['promo-edit'] = '/form/promo-edit';
+				$r['edit'] = '/form/promo-edit';
 			}
 			
 			if (!$r['expires']) $r['expires'] = "2019-12-31 11:59:59";
+		
 			$this->{$this->collectionOf}[] = $r;
 		}
 		

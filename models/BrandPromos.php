@@ -64,8 +64,8 @@ class BrandPromos extends PromoCollection {
 			
 			$r['@id'] = "$this->root/promo/". $r['id'];
 			$r['@type'] = 'promo';
-			$r['payLink'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[id]";
-			$r['recipientToken'] = "$r[keyword]-$r[id]";
+			$r['payURL'] = Requester::$ProtDomain ."/for/$r[keyword]-$r[id]";
+			$r['code'] = "$r[keyword]-$r[id]";
 			
 			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[id]";
 			if (!$r['infoURL']) $r['infoURL'] = $r['promoPage'];

@@ -49,9 +49,9 @@ class Promo extends Base {
 		foreach($r AS $k=>$v) $this->$k = $v;
 		if (!$this->imageURL) $this->imageURL = Requester::$ProtDomain ."/ui/css/logo5.png"; //."/ui/logo.php?brand=". $rows[0]['brand_name'];
 		
-		$this->payLink = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";
+		$this->payURL = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";
 		$this->promoPage = "/ad/$r[amount]";
-		$this->recipientToken = "$r[keyword]-$r[promo_id]";
+		$this->code = "$r[keyword]-$r[promo_id]";
 		if (!$this->expires) $this->expires = "2019-12-31 11:59:59";
 		
 		return array($this);

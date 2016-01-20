@@ -4,7 +4,7 @@
 	"admin-": "A prefix that indicates brand administrator resources.",
 	"public-": "A prefix that indicates publicly accessible resources.",
 
-	"about": "A web page that describes the current resource.",
+	"about": "Information about the current resource.",
 	"account": "A brand account. An account with a sign=-1 is a revenue budget that holds debits, with a normal balance of <= 0, to be used for receiving payments. An account with a sign=1 is an expense budget that holds credits, with a normal balance >=0, to be used as payment.",
 	"accounts": "A collection of brand accounts, that is, a brand's ledger.",
 	"add": "A form for adding a resource to a collection, or for adding to a resource's tracked quantity.",
@@ -13,10 +13,14 @@
 	"area_code": "The phone area code where a brand is located. (optional, self-reported)",
 
 	"brand": "The currency issuer related to this resource.",
-	"by_all_limit": "This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. This is a weekly limit on the total inflow transaction amount for a given account or usage for a given product, regardless of the payor's brand or user id.",
-	"by_brand_limit": "This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's brand id.",
-	"by_user_limit": "This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's user id.",
+	"brand_id": "(deprecated) The id of the related brand. Use the (sub)resource 'id' instead.",
+	"brand_name": "(deprecated) The name of the related brand. Use the (sub)resource 'name' instead.",
+	"by_all_limit": "This is a weekly limit on the total inflow transaction amount for a given account or usage for a given product, regardless of the payor's brand or user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. ",
+	"by_brand_limit": "A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's brand id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. ",
+	"by_user_limit": "A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. ",
+	"by_user_wait": "How long a user must wait after using a promo, before that user can reuse the same promo.",
 
+	"code": "An alpha-numeric string that a payment recipient shares with a payor to authorize a payment or promo use.",
 	"collectionOf": "The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].",
 	"country_code": "The ISO3 code of a brand location.",
 	"created": "The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.",
@@ -34,11 +38,11 @@
 	"id": "A numeric identifier for a resource, that is unique for a given resource type.",
 	"imageTemplate": "If given, a user interface provider may use this resource to display a brand icon or promo image.",
 	"imageURL": "If given, a user interface provider may use this link to display a brand icon or promo image.",
-	"about": "...",
+	"infoURL": "External web page about a resource.",
 	"issuers": "A collection of brand-resources to which a user has a member role of admin.",
 	"itemsLimit": "The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.",
 	
-	"keyword": "In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by makign it harder to guess the full value of a relay token.",
+	"keyword": "In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.",
 
 	"me": "Information and resources that relates to the currently logged-on user.",
 	"member": "A user that is a member of a brand.",
@@ -48,9 +52,12 @@
 	
 	"pageOf": "The '@id' of the collection to which the current collection page belongs. In other words, this is the link to the default collection resource without pagination.",
 	"pageOrder": "Either 'asc' or 'desc' based on item id's.",
+	"payURL": "A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.",
 	"promo": "A brand promotion, used to advertise anything that could be the target of a payment.",
 	"promos": "A collection of brand promotions.",
-	
+	"promoPage": "The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.",
+	"promo_id": "(deprecated) The id of the related promo. Use the (sub)resource 'id' instead.",
+
 	"reject": "A form for rejecting the completion of a pending resource action.",
 	"relay": "A token that is used to preauthorize the use of a recipient account.",
 	"relays": "A collection of relay tokens.",

@@ -1,0 +1,11 @@
+{
+    "@context": "/api/ref/context.php",
+    "error": "Missing object properties: mission",
+    "hints": [
+
+    ],
+    "@graph": [
+
+    ],
+    "requestURI": "/brand/collection"
+}
