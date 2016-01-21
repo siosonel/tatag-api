@@ -13,6 +13,5 @@
     "add": "/form/holder-add",
     "holder": [
         "/account/92/holders?holder_id=41"
-    ],
-    "actions": []
+    ]
 }

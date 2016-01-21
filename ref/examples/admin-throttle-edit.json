@@ -4,7 +4,9 @@
     "@id": "/form/admin-throttle-edit",
     "method": "POST",
     "inputs": {
-        "required": [],
+        "required": [
+
+        ],
         "optional": [
             "period",
             "by_all",

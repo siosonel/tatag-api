@@ -10,9 +10,6 @@
         "/throttle/3",
         "/throttle/4"
     ],
-    "actions": [
-        "/form/throttle-add"
-    ],
     "items": [
         "/throttle/1",
         "/throttle/2",

@@ -4,7 +4,9 @@
     "@id": "/form/brand-edit",
     "method": "POST",
     "inputs": {
-        "required": [],
+        "required": [
+
+        ],
         "optional": [
             "name",
             "url",

@@ -15,8 +15,5 @@
         "/brand/104/members?member_id=53",
         "/brand/104/members?member_id=55"
     ],
-    "actions": [
-        "/form/admin-member-edit",
-        "/form/member-add"
-    ]
+    "edit": "/form/admin-member-edit"
 }

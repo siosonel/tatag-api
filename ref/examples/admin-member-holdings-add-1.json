@@ -1,7 +1,11 @@
 {
     "@context": "/api/ref/context.php",
-    "error": "Only brand admins can access member accounts resource.",
-    "hints": [],
-    "@graph": [],
-    "requestURI": "/member/54/accounts"
+    "error": "The requester is not an admin for brand #105.",
+    "hints": [
+
+    ],
+    "@graph": [
+
+    ],
+    "requestURI": "/brand/105/holders"
 }

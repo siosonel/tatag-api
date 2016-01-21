@@ -18,12 +18,7 @@
     "@id": "/member/53/accounts",
     "add": "/form/holder-add",
     "holding": [
-        "/member/53/accounts?holder_id=41",
-        "/member/53/accounts?holder_id=42",
-        "/member/53/accounts?holder_id=43"
+
     ],
-    "actions": [
-        "/form/admin-holder-edit",
-        "/form/holder-add"
-    ]
+    "edit": "/form/admin-holder-edit"
 }

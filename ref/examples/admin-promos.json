@@ -30,8 +30,5 @@
         "/promo/9",
         "/promo/10",
         "/promo/11"
-    ],
-    "actions": [
-        "/form/promo-add"
     ]
 }

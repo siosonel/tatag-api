@@ -9,7 +9,9 @@
             "role",
             "hours"
         ],
-        "optional": []
+        "optional": [
+
+        ]
     },
     "examples": [
         {

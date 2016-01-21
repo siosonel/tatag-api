@@ -19,8 +19,5 @@
         "/brand/104/accounts?account_id=94",
         "/brand/104/accounts?account_id=97"
     ],
-    "actions": [
-        "/form/admin-account-edit",
-        "/form/account-add"
-    ]
+    "edit": "/form/admin-account-edit"
 }

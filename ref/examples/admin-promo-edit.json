@@ -4,7 +4,9 @@
     "@id": "/form/promo-edit",
     "method": "POST",
     "inputs": {
-        "required": [],
+        "required": [
+
+        ],
         "optional": [
             "name",
             "description",

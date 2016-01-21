@@ -1,18 +1,17 @@
 {
-    "id": 55,
-    "items": [],
+    "items": [
+
+    ],
     "pageOrder": "asc",
     "itemsLimit": 50,
-    "collectionOf": "holding",
+    "collectionOf": "holder",
     "pageOf": null,
+    "brand_id": 104,
+    "@type": "brandHolders",
+    "@id": "/brand/104/holders",
     "user_id": 24,
-    "role": "assistant -1452568901",
-    "hours": 343,
-    "created": "2015-01-05 11:53:31",
-    "brand": "/brand/104",
-    "@type": "memberAccounts",
-    "@id": "/member/55/accounts",
+    "account_id": 94,
     "authcode": "cftix",
     "limkey": "abc",
-    "holder_id": 48
+    "holder_id": 46
 }

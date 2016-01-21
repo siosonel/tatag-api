@@ -7,7 +7,7 @@
         "amount_min": 5.43,
         "amount_max": 5.43,
         "txntype": "pn",
-        "secret": "fca0",
+        "secret": "48c4",
         "by_all_limit": 25,
         "by_brand_limit": 5,
         "by_user_limit": 2,

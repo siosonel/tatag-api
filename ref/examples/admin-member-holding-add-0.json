@@ -7,12 +7,14 @@
     "itemsLimit": 50,
     "collectionOf": "holding",
     "pageOf": null,
-    "user_id": 23,
+    "user_id": 24,
     "role": "assistant -1453364051",
     "hours": 464,
     "created": "2015-01-05 11:53:31",
     "brand": "/brand/104",
     "@type": "memberAccounts",
     "@id": "/member/55/accounts",
-    "authcode": "ftix -w"
+    "authcode": "cftix",
+    "limkey": "abc",
+    "holder_id": 47
 }

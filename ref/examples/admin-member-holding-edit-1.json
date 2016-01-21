@@ -1,7 +1,11 @@
 {
     "@context": "/api/ref/context.php",
     "error": "These parameters may not be set by the user: [\"name\"].",
-    "hints": [],
-    "@graph": [],
+    "hints": [
+
+    ],
+    "@graph": [
+
+    ],
     "requestURI": "/member/55/accounts?holder_id=45"
 }
