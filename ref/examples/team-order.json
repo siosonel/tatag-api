@@ -1,21 +1,14 @@
 [
     {
-        "txntype": "pn",
         "record_id": 40,
         "created": "2015-11-18 07:21:15",
-        "to": 92,
         "amount": 25,
         "note": "for ad-1",
         "order_step": 0,
         "updated": "2015-11-18 23:10:25",
         "@id": "/team/104/orders?record_id=40",
         "update": "/form/order-update",
-        "promo": {
-            "id": 1,
-            "name": "Test promo",
-            "@id": "/promo/1",
-            "@type": "promo"
-        },
+        "promo": "/promo/1",
         "user": "/user/21/about",
         "from": "/brand/104/about"
     }
