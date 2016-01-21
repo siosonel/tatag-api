@@ -8,7 +8,9 @@
         "required": [
             "account-brand-id"
         ],
-        "optional": []
+        "optional": [
+
+        ]
     },
     "inputs": {
         "required": [
@@ -18,7 +20,9 @@
             "note",
             "orig_record_id"
         ],
-        "optional": []
+        "optional": [
+
+        ]
     },
     "examples": [
         {

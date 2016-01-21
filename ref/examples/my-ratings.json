@@ -253,8 +253,5 @@
             "edit": "/form/rating-edit"
         }
     ],
-    "actions": [
-        "/form/rating-add",
-        "/form/rating-edit"
-    ]
+    "edit": "/form/rating-edit"
 }

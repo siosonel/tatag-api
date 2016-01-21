@@ -4,7 +4,5 @@
     "name": "User One",
     "created": "2015-01-05 11:53:31",
     "numMemberships": 1,
-    "totalHours": 0,
-    "id": 21,
-    "@type": "user"
+    "totalHours": 0
 }

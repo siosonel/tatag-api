@@ -4,7 +4,9 @@
     "@id": "/form/member-edit",
     "method": "POST",
     "inputs": {
-        "required": [],
+        "required": [
+
+        ],
         "optional": [
             "joined",
             "revoked"

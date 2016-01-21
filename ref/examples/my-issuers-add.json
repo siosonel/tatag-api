@@ -21,7 +21,9 @@
     "examples": [
         {
             "label": "should allow registration by a brand new user",
-            "resource": {},
+            "resource": {
+                "@id": "/user/21/brands"
+            },
             "inputs": {
                 "name": "abc-{xtime}.org",
                 "mission": "To be the third brand - {xtime}",
@@ -31,13 +33,14 @@
         },
         {
             "label": "should NOT allow user registration with missing mission",
-            "resource": {},
+            "resource": {
+                "@id": "/user/21/brands"
+            },
             "inputs": {
                 "name": "xyz-{xtime}.org",
                 "description": "the third brand"
             },
             "status": 403
         }
-    ],
-    "target": "/brand/collection"
+    ]
 }

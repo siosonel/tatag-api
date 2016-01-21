@@ -10,7 +10,6 @@
     "records": "/budget/104/records",
     "about": "/brand/104/about",
     "promos": "/brand/104/promos",
-    "edit": "/form/brand-edit",
     "tally": {
         "@type": "budgetTally",
         "added": 1500.11,
@@ -22,7 +21,6 @@
         "numMembers": 2,
         "totalMemberHours": 0
     },
-    "actions": [
-        "/form/brand-edit"
-    ]
+    "edit": "/form/brand-edit",
+    "orders": "/team/104/orders"
 }

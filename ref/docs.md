@@ -133,27 +133,3 @@ The admins of a brand share access to these resources. The accessible resources 
 
 
 
-# Glossary
-
-## account
-
-## brand
-
-## holder
-
-## holding
-
-## items
-
-## membership
-
-## promo
-
-## rating
-
-## tally
-
-## team
-
-## user
-

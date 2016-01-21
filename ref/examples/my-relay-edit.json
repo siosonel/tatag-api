@@ -4,7 +4,9 @@
     "@id": "/form/relay-edit",
     "method": "POST",
     "inputs": {
-        "required": [],
+        "required": [
+
+        ],
         "optional": [
             "amount_min",
             "amount_max",

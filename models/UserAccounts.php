@@ -84,7 +84,7 @@ class UserAccounts extends Base {
 			$r['@id'] = $this->{'@id'} ."?holder_id=$r[id]";
 			
 			$this->setAllowedActions($r, $graph[$tracked[$r['account']]]);
-			$r['holder-edit'] = "$this->root/form/holder-edit";
+			//$r['holder-edit'] = "$this->root/form/holder-edit";
 			$r['edit'] = "$this->root/form/holder-edit";
 			$r['relays'] = "$this->root/holder/$r[id]/relays";
 			$graph[] = $r;

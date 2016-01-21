@@ -1,5 +1,7 @@
 {
-    "items": [],
+    "items": [
+
+    ],
     "pageOrder": "desc",
     "itemsLimit": 50,
     "collectionOf": "rating",

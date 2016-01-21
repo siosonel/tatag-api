@@ -13,8 +13,9 @@
 	"amount": "A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.",
 	"approve": "A form for approving the completion of a pending resource action.",
 	"area_code": "The phone area code where a brand is located. (optional, self-reported)",
-	"authcode": "The permissions related to a resource. In the case of an account or an accountholding, the authcode encodes which transaction activities are allowed based on the intersection of account.authcode x holder.authcode. The presence of the following characters in the authcode signify the corresponding permission: 'c' to add budget, 'f' to act as a budget transfer originator, 't' to act as a buget transfer recipient, 'i' for internal budget use within a brand, 'x' for external budget use between brands.",
+	"authcode": "The permissions related to a resource. In the case of an account or an accountholding, the authcode encodes which transaction activities are allowed based on the intersecting values between account.authcode and holder.authcode. The presence of the following characters in the authcode signify the corresponding permission: 'c' to add budget, 'f' to act as a budget transfer originator, 't' to act as a buget transfer recipient, 'i' for internal budget use within a brand, 'x' for external budget use between brands.",
 
+	"balance": "The available amount related to a resource, such as an account balance.",
 	"brand": "The currency issuer related to this resource.",
 	"brand_id": "(deprecated)",
 	"brand_name": "(deprecated) The name of the related brand. Use the (sub)resource 'name' instead.",
@@ -55,7 +56,7 @@
 
 	"keyword": "In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.",
 
-	"limkey": "Short for 'limited key', this is a semi-secret string that an accountholder shares as part of a token to pre-authorize a payment. The token is usually in the format 'holder_id(hyphen)limkey'.",
+	"limkey": "Short for 'limited key', this is a semi-secret string that an accountholder shares as part of a token to pre-authorize a payment. The token is usually in the format 'holder.id-limkey'.",
 	"login_provider": "The identity provider for the currently logged-in user, usually an OpenId provider.",
 
 	"me": "Information and resources that relates to the currently logged-on user.",
@@ -71,9 +72,10 @@
 	"other": "The other brand in a transaction record, from the viewpoint of an accountholder.",
 	"other_acct": "The other account in a transaction record, from the viewpoint of an accountholder.",
 	
-	"pageOf": "The '@id' of the collection to which the current collection page belongs. In other words, this is the link to the default collection resource without pagination.",
+	"pageOf": "The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.",
 	"pageOrder": "Either 'asc' or 'desc' based on item id's.",
 	"payURL": "A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.",
+	"period": "The time period that applies to a resource.",
 	"promo": "A brand promotion, used to advertise anything that could be the target of a payment.",
 	"promos": "A collection of brand promotions.",
 	"promoPage": "The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.",
@@ -89,6 +91,7 @@
 	"relay": "A token that is used to preauthorize the use of a recipient account.",
 	"relays": "A collection of relay tokens.",
 	"revoke": "A form for revoking a current relation between resources, such as user membership in a team.",
+	"revoked": "The date when a relation between resources was ended, such as when a member leaves a team.",
 	"role": "A user's role within the given context, such as a team member role.",
 
 	"sign": "Indicates whether an account is a revenue (-1) or expense (+1) budget.",

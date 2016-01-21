@@ -15,7 +15,6 @@
         "@id": "/user/21/accounts?holder_id=41",
         "add": "/form/budget-add",
         "transfer": "/form/budget-transfer",
-        "holder-edit": "/form/holder-edit",
         "edit": "/form/holder-edit",
         "relays": "/holder/41/relays"
     },
@@ -35,7 +34,6 @@
         "@id": "/user/21/accounts?holder_id=42",
         "transfer": "/form/budget-transfer",
         "use": "/form/budget-use",
-        "holder-edit": "/form/holder-edit",
         "edit": "/form/holder-edit",
         "relays": "/holder/42/relays"
     },
@@ -53,7 +51,6 @@
         "@type": "userAccount",
         "@id": "/user/21/accounts?holder_id=43",
         "use": "/form/budget-use",
-        "holder-edit": "/form/holder-edit",
         "edit": "/form/holder-edit",
         "relays": "/holder/43/relays"
     }

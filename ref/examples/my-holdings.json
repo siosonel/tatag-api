@@ -3,9 +3,7 @@
     "user_id": 21,
     "@id": "/user/21/accounts",
     "collectionOf": "holding",
-    "actions": [
-        "/form/holder-edit"
-    ],
+    "edit": "/form/holder-edit",
     "items": [
         "/user/21/accounts?holder_id=41",
         "/user/21/accounts?holder_id=42",

@@ -8,6 +8,6 @@
     "@id": "/account/92",
     "@type": "account",
     "records": "/account/92/records",
-    "brand": "/brand/104",
+    "brand": "/team/104",
     "throttle": "/throttle/0"
 }

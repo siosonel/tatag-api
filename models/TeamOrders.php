@@ -37,12 +37,11 @@ class TeamOrders extends Collection {
 			)
 		);
 
-		$sql = "SELECT txntype, 
-			record_id, 
+		$sql = "SELECT record_id, 
 			r.created, 
 			bf.brand_id AS from_id,
 			bf.name AS from_name,
-			to_acct AS `to`, 
+			-- to_acct AS `to`, 
 			r.amount,
 			r.`note`, 
 			r.order_step, 

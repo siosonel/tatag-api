@@ -9,7 +9,9 @@
             "score",
             "reason"
         ],
-        "optional": []
+        "optional": [
+
+        ]
     },
     "examples": [
         {

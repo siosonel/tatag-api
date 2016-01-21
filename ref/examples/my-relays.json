@@ -250,8 +250,5 @@
     "holder_id": 41,
     "@type": "holderRelays",
     "@id": "/holder/41/relays",
-    "actions": [
-        "/form/holder-relays-add"
-    ],
     "add": "/form/holder-relays-add"
 }

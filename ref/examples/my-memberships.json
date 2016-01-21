@@ -2,11 +2,6 @@
     "@type": "userMemberships",
     "user_id": 21,
     "@id": "/user/21/memberships",
-    "actions": [
-        "/form/member-edit",
-        "/form/member-accept",
-        "/form/member-revoke"
-    ],
     "items": [
         "/user/21/memberships?member_id=53"
     ]

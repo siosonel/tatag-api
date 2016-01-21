@@ -22,8 +22,5 @@
         "numMembers": 2,
         "totalMemberHours": 0
     },
-    "edit": "/form/brand-edit",
-    "actions": [
-        "/form/brand-edit"
-    ]
+    "edit": "/form/brand-edit"
 }

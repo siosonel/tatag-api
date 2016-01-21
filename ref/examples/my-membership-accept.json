@@ -1,5 +1,5 @@
 {
-    "title": "Accept Membership",
+    "title": "Accept membership",
     "@type": "form",
     "@id": "/form/member-accept",
     "method": "POST",
@@ -7,7 +7,9 @@
         "required": [
             "joined"
         ],
-        "optional": []
+        "optional": [
+
+        ]
     },
     "examples": [
         {

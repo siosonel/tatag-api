@@ -8,7 +8,9 @@
         "required": [
             "account-brand-id"
         ],
-        "optional": []
+        "optional": [
+
+        ]
     },
     "inputs": {
         "required": [
@@ -17,7 +19,9 @@
             "amount",
             "note"
         ],
-        "optional": []
+        "optional": [
+
+        ]
     },
     "examples": [
         {

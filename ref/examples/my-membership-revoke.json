@@ -1,0 +1,17 @@
+{
+    "title": "Revoke Membership",
+    "@type": "form",
+    "@id": "/form/member-revoke",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "revoked"
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+
+    ]
+}

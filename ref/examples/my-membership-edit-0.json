@@ -1,7 +1,11 @@
 {
     "@context": "/api/ref/context.php",
     "error": "These parameters may not be set by the user: [\"hours\"].",
-    "hints": [],
-    "@graph": [],
+    "hints": [
+
+    ],
+    "@graph": [
+
+    ],
     "requestURI": "/user/21/memberships?member_id=53"
 }
