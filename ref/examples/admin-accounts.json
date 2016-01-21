@@ -1,10 +1,4 @@
 {
-    "items": [
-        "/brand/104/accounts?account_id=92",
-        "/brand/104/accounts?account_id=93",
-        "/brand/104/accounts?account_id=94",
-        "/brand/104/accounts?account_id=97"
-    ],
     "pageOrder": "asc",
     "itemsLimit": 50,
     "collectionOf": "account",

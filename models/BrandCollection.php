@@ -5,6 +5,7 @@ class BrandCollection extends Collection {
 		$this->{"@id"} = "$this->root/brand/collection";
 		$this->{'@type'} = "brandCollection";
 		$this->table = "brands";
+		$this->collectionOf = "brand";
 		
 		$this->init($data);
 		
@@ -79,6 +80,8 @@ class BrandCollection extends Collection {
 	}
 	
 	function get() { 		
+		$graph = array($this);
+
 		$sql = "SELECT COUNT(*) AS numBrands, MIN(created) AS earliest, MAX(created) AS latest FROM brands";
 		$row = DBquery::get($sql);		
 		if (!$row) return array($this);				
@@ -90,11 +93,11 @@ class BrandCollection extends Collection {
 			ORDER BY brand_id $this->pageOrder
 			LIMIT $this->itemsLimit";
 	
-		$this->items = DBquery::get($sql);
-		foreach($this->items AS &$b) $b['@id'] = "$this->root/brand/". $b['brand_id'] ."/about";
+		$this->brand = DBquery::get($sql);
+		foreach($this->brand AS &$b) $b['@id'] = "$this->root/brand/". $b['brand_id'] ."/about";
 		
 		$this->paginate("brand_id");
-		return array($this);
+		return $graph;
 	}
 }
 

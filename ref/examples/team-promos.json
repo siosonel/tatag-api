@@ -1,16 +1,4 @@
 {
-    "items": [
-        "/promo/1",
-        "/promo/3",
-        "/promo/4",
-        "/promo/5",
-        "/promo/6",
-        "/promo/7",
-        "/promo/8",
-        "/promo/9",
-        "/promo/10",
-        "/promo/11"
-    ],
     "pageOrder": "desc",
     "itemsLimit": 50,
     "collectionOf": "promo",

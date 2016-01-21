@@ -8,6 +8,7 @@ class UserTeams extends Base {
 		$this->{"@id"} = "$this->root/user/$this->user_id/teams";
 		$this->table = "members";
 		$this->idkey = 'user_id';
+		$this->collectionOf = "brand";
 		$this->init($data);
 		
 		$this->okToSet = array("joined","revoked");			

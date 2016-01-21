@@ -1,21 +1,16 @@
 {
     "public": {
         "promos": {
-            "items": {
-                "#": "promo"
-            }
+            "promo": {}
         },
         "brands": {
-            "items": {
-                "#": "brand"
-            }
+            "brand": {}
         }
     },
     "my": {
         "me": {
             "memberships": {
-                "items": {
-                    "#": "membership",
+                "membership": {
                     "team": {},
                     "issuer": {},
                     "#forms": [
@@ -25,11 +20,10 @@
                 }
             },
             "holdings": {
-                "items": {
-                    "#": "holding",
+                "holding": {
                     "account": {
                         "records": {
-                            "items": {
+                            "record": {
                                 "#": "account-record",
                                 "#forms": [
                                     "hold",
@@ -42,16 +36,15 @@
                         }
                     },
                     "relays": {
-                        "items": {
-                            "#": "relay",
+                        "relay": {
                             "#forms": [
                                 "edit"
                             ]
-												},
+						},
                         "#forms": [
                             "add"
                         ]
-										},
+					},
                     "#forms": [
                         "edit",
                         "add",
@@ -61,8 +54,7 @@
                 }
             },
             "ratings": {
-                "items": {
-                    "#": "rating",
+                "rating": {
                     "#forms": [
                         "edit"
                     ]
@@ -78,7 +70,7 @@
                 "#forms": [
                     "add"
                 ]
-						}
+			}
         }
     },
     "team": {
@@ -86,18 +78,13 @@
             "teams": {
                 "brand": {
                     "members": {
-                        "items": {
-                            "#": "member"
-                        }
+                        "member": {}
                     },
                     "accounts": {
-                        "items": {
-                            "#": "account"
-                        }
+                        "account": {}
                     },
                     "promos": {
-                        "items": {
-                            "#": "promo",
+                        "promo": {
                             "#forms": [
                                 "edit"
                             ]
@@ -129,11 +116,11 @@
                         "edit"
                     ],
                     "members": {
-                        "items": {
+                        "member": {
                             "#": "member",
                             "holdings": {
                                 "#": "member-holdings",
-                                "items": {
+                                "holding": {
                                     "#": "member-holding",
                                     "account": {},
                                     "#forms": [
@@ -153,11 +140,10 @@
                         ]
                     },
                     "accounts": {
-                        "items": {
-                            "#": "account",
+                        "account": {
                             "holders": {
                                 "#": "account-holders",
-                                "items": {
+                                "holder": {
                                     "#": "account-holder",
                                     "#forms": [
                                         "edit"
@@ -176,8 +162,7 @@
                         ]
                     },
                     "promos": {
-                        "items": {
-                            "#": "promo",
+                        "promo": {
                             "#forms": [
                                 "edit"
                             ]
@@ -191,7 +176,7 @@
                             "#forms": [
                                 "edit"
                             ]												
-												},
+						},
                         "#forms": [
                             "add"
                         ]

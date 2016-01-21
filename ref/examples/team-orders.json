@@ -1,7 +1,4 @@
 {
-    "items": [
-        "/team/104/orders?record_id=40"
-    ],
     "pageOrder": "asc",
     "itemsLimit": 50,
     "collectionOf": "order",

@@ -15,6 +15,7 @@ class AccountRecords extends Collection {
 		$this->idkey = 'account_id';
 		
 		$this->pageOrder = "desc"; //prevents being reset
+		$this->collectionOf = "record";
 		
 		$this->init($data);
 		
@@ -84,7 +85,7 @@ class AccountRecords extends Collection {
 			}
 			
 			$graph[] = $r;
-			$this->items[] = $r['@id'];
+			$this->record[] = $r['@id'];
 		}
 		
 		$this->paginate('record_id', $graph);

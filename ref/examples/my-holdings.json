@@ -4,11 +4,6 @@
     "@id": "/user/21/accounts",
     "collectionOf": "holding",
     "edit": "/form/holder-edit",
-    "items": [
-        "/user/21/accounts?holder_id=41",
-        "/user/21/accounts?holder_id=42",
-        "/user/21/accounts?holder_id=43"
-    ],
     "holding": [
         "/user/21/accounts?holder_id=41",
         "/user/21/accounts?holder_id=42",

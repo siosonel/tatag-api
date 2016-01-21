@@ -145,17 +145,64 @@ api.loadConcept('public-brands');
 <pre><code>{
     "pageOrder": "asc",
     "itemsLimit": 50,
-    "collectionOf": null,
+    "collectionOf": "brand",
     "pageOf": "/brand/collection",
     "@id": "/brand/collection",
     "@type": "brandCollection",
     "numBrands": 13,
     "earliest": "2015-01-05 11:53:31",
     "latest": "2015-11-18 20:21:32",
+    "brand": [
+        {
+            "brand_id": 104,
+            "name": "abc",
+            "description": "for testing",
+            "created": "2015-01-05 11:53:31",
+            "updated": null,
+            "ended": null,
+            "url": null,
+            "advisor": "http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}",
+            "type_system": "for-profit",
+            "type_id": 9,
+            "country_code": "USA",
+            "area_code": 206,
+            "@id": "/brand/104/about"
+        },
+        {
+            "brand_id": 105,
+            "name": "def",
+            "description": "for testing",
+            "created": "2015-01-05 11:53:33",
+            "updated": null,
+            "ended": null,
+            "url": null,
+            "advisor": "http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}",
+            "type_system": "for-profit",
+            "type_id": 9,
+            "country_code": "USA",
+            "area_code": 206,
+            "@id": "/brand/105/about"
+        },
+        {
+            "brand_id": 106,
+            "name": "~Amazon.com, Boren Avenue North, Seattle, WA, United States",
+            "description": "This is a simulated brand to be used for testing the tatag system.",
+            "created": "2015-08-08 18:38:54",
+            "updated": null,
+            "ended": null,
+            "url": null,
+            "advisor": null,
+            "type_system": "sim",
+            "type_id": 10,
+            "country_code": "USA",
+            "area_code": 206,
+            "@id": "/brand/106/about"
+        }
+    ],
     "add": "/form/brand-registration"
 }</code></pre>
 <p>A collection or paged list of public-brand. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>NULL</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>earliest</td><td>string</td><td>...</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>latest</td><td>string</td><td>...</td></tr><tr><td>numBrands</td><td>integer</td><td>...</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#public-brands-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>earliest</td><td>string</td><td>...</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>latest</td><td>string</td><td>...</td></tr><tr><td>numBrands</td><td>integer</td><td>...</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#public-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#public-brands-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
 <h2 id="public-brand">public-brand</h2>
 <pre><code class="language-javascript">
 api.loadConcept('public-brand');
@@ -273,7 +320,7 @@ api.loadConcept('public-promos');
     "search": "/form/promo-search"
 }</code></pre>
 <p>A collection or paged list of public-promo. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td>search</td><td>string</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td><a href='#public-promo'>promo</a></td><td>link</td><td>A brand promotion, used to advertise anything that could be the target of a payment.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td>search</td><td>string</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#public-promo'>promo</a></td><td>link</td><td>A brand promotion, used to advertise anything that could be the target of a payment.</td></tr></tbody></table>
 <h2 id="public-promo">public-promo</h2>
 <pre><code class="language-javascript">
 api.loadConcept('public-promo');
@@ -345,10 +392,14 @@ api.loadConcept('my-memberships');
 <pre><code>{
     "@type": "userMemberships",
     "user_id": 21,
-    "@id": "/user/21/memberships"
+    "@id": "/user/21/memberships",
+    "collectionOf": "memberships",
+    "membership": [
+        "/user/21/memberships?member_id=53"
+    ]
 }</code></pre>
 <p>The current user's collection of membership information. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-membership'>membership</a></td><td>link</td><td>Team membership information for a user.</td></tr></tbody></table>
 <h2 id="my-membership">my-membership</h2>
 <pre><code class="language-javascript">
 api.loadConcept('my-membership');
@@ -454,22 +505,11 @@ api.loadConcept('my-team');
     "records": "/budget/104/records",
     "about": "/brand/104/about",
     "promos": "/brand/104/promos",
-    "tally": {
-        "@type": "budgetTally",
-        "added": 1500.11,
-        "intrause": 90.76,
-        "inflow": 9.37,
-        "outflow": 0,
-        "revBudget": 1399.98,
-        "expBudget": 1409.35,
-        "numMembers": 2,
-        "totalMemberHours": 0
-    },
-    "edit": "/form/brand-edit",
-    "orders": "/team/104/orders"
+    "tally": "/brand/104/tally",
+    "edit": "/form/brand-edit"
 }</code></pre>
 <p>blah blah blah </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>logo</td><td>NULL</td><td>...</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-about'>about</a></td><td>link</td><td>Information about the current resource.</td></tr><tr><td>accounts</td><td>link</td><td>A collection of brand accounts, that is, a brand's ledger.</td></tr><tr><td>members</td><td>link</td><td>A collection of brand members.</td></tr><tr><td>orders</td><td>link</td><td>...</td></tr><tr><td>promos</td><td>link</td><td>A collection of brand promotions.</td></tr><tr><td>records</td><td>link</td><td>A collection of 'record'.</td></tr><tr><td>tally</td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr><tr><td>throttles</td><td>link</td><td>A collection of 'throttle'.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-team-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>logo</td><td>NULL</td><td>An external link to an icon image that symbolizes a brand.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-about'>about</a></td><td>link</td><td>Information about the current resource.</td></tr><tr><td>accounts</td><td>link</td><td>A collection of brand accounts, that is, a brand's ledger.</td></tr><tr><td>members</td><td>link</td><td>A collection of brand members.</td></tr><tr><td>promos</td><td>link</td><td>A collection of brand promotions.</td></tr><tr><td>records</td><td>link</td><td>A collection of 'record'.</td></tr><tr><td>tally</td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr><tr><td>throttles</td><td>link</td><td>A collection of 'throttle'.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-team-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h2 id="my-issuer">my-issuer</h2>
 <pre><code class="language-javascript">
 api.loadConcept('my-issuer');
@@ -525,7 +565,7 @@ api.loadConcept('my-holdings');
     ]
 }</code></pre>
 <p>The current user's collection of accountholdings. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-holding'>holding</a></td><td>link</td><td>An accountholding.</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-holdings-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-holding'>holding</a></td><td>link</td><td>An accountholding.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-holdings-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h2 id="my-holding">my-holding</h2>
 <pre><code class="language-javascript">
 api.loadConcept('my-holding');
@@ -1041,7 +1081,7 @@ api.loadConcept('my-account-records');
 <pre><code>{
     "pageOrder": "desc",
     "itemsLimit": 50,
-    "collectionOf": null,
+    "collectionOf": "record",
     "pageOf": "/account/92/records",
     "account_id": 92,
     "brand_id": 104,
@@ -1049,12 +1089,17 @@ api.loadConcept('my-account-records');
     "limkey": "abc",
     "@type": "accountRecords",
     "@id": "/account/92/records",
+    "record": [
+        "/account/92/records?record_id=64",
+        "/account/92/records?record_id=63",
+        "/account/92/records?record_id=62"
+    ],
     "hold": "/form/record-hold",
     "approve": "/form/record-approve",
     "reject": "/form/record-reject"
 }</code></pre>
 <p>A collection of account transaction records, most recent first. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>account_id</td><td>integer</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>NULL</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>holder_id</td><td>integer</td><td>...</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>limkey</td><td>string</td><td>Short for 'limited key', this is a semi-secret string that an accountholder shares as part of a token to pre-authorize a payment. The token is usually in the format 'holder.id-limkey'.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-account-records-approve'>approve</a></td><td>form</td><td>A form for approving the completion of a pending resource action.</td></tr><tr><td><a href='#my-account-records-hold'>hold</a></td><td>form</td><td>A form for preventing the auto-approval or auto-rejection of a pending resource action.</td></tr><tr><td><a href='#my-account-records-reject'>reject</a></td><td>form</td><td>A form for rejecting the completion of a pending resource action.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>account_id</td><td>integer</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>holder_id</td><td>integer</td><td>...</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>limkey</td><td>string</td><td>Short for 'limited key', this is a semi-secret string that an accountholder shares as part of a token to pre-authorize a payment. The token is usually in the format 'holder.id-limkey'.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>record</td><td>link</td><td>Tracked information about a resource, usually involving lifecycle events, such as a transaction record.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-account-records-approve'>approve</a></td><td>form</td><td>A form for approving the completion of a pending resource action.</td></tr><tr><td><a href='#my-account-records-hold'>hold</a></td><td>form</td><td>A form for preventing the auto-approval or auto-rejection of a pending resource action.</td></tr><tr><td><a href='#my-account-records-reject'>reject</a></td><td>form</td><td>A form for rejecting the completion of a pending resource action.</td></tr></tbody></table>
 <h2 id="my-account-record">my-account-record</h2>
 <pre><code class="language-javascript">
 api.loadConcept('my-account-record');
@@ -1297,15 +1342,83 @@ api.loadConcept('my-relays');
 <pre><code>{
     "pageOrder": "desc",
     "itemsLimit": 50,
-    "collectionOf": null,
+    "collectionOf": "relay",
     "pageOf": "/holder/41/relays",
     "holder_id": 41,
     "@type": "holderRelays",
     "@id": "/holder/41/relays",
+    "relay": [
+        {
+            "id": 1,
+            "holder_id": 41,
+            "user_id": 21,
+            "account_id": 92,
+            "amount_min": 0.01,
+            "amount_max": 100,
+            "redirect": null,
+            "secret": null,
+            "tag": "test",
+            "txntype": "pn",
+            "created": "2014-12-31 16:00:00",
+            "updated": null,
+            "by_all_limit": 25,
+            "by_brand_limit": 5,
+            "by_user_limit": 25,
+            "by_user_wait": 24,
+            "token": 1,
+            "@id": "/relay/1",
+            "@type": "relay",
+            "edit": "/form/relay-edit"
+        },
+        {
+            "id": 2,
+            "holder_id": 41,
+            "user_id": 21,
+            "account_id": 92,
+            "amount_min": 5,
+            "amount_max": 10,
+            "redirect": null,
+            "secret": null,
+            "tag": "test",
+            "txntype": "pn",
+            "created": "2014-12-31 16:00:00",
+            "updated": null,
+            "by_all_limit": 25,
+            "by_brand_limit": 5,
+            "by_user_limit": 25,
+            "by_user_wait": 0,
+            "token": 2,
+            "@id": "/relay/2",
+            "@type": "relay",
+            "edit": "/form/relay-edit"
+        },
+        {
+            "id": 5,
+            "holder_id": 41,
+            "user_id": 21,
+            "account_id": 92,
+            "amount_min": 57.57,
+            "amount_max": 57.57,
+            "redirect": null,
+            "secret": "7d02",
+            "tag": null,
+            "txntype": "pn",
+            "created": "2015-11-17 16:15:57",
+            "updated": null,
+            "by_all_limit": 25,
+            "by_brand_limit": 5,
+            "by_user_limit": 2,
+            "by_user_wait": 24,
+            "token": "5.7d02",
+            "@id": "/relay/5",
+            "@type": "relay",
+            "edit": "/form/relay-edit"
+        }
+    ],
     "add": "/form/holder-relays-add"
 }</code></pre>
 <p>blah blah blah </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>NULL</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>holder_id</td><td>integer</td><td>...</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-relays-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>holder_id</td><td>integer</td><td>...</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-relay'>relay</a></td><td>link</td><td>A token that is used to preauthorize the use of a recipient account.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-relays-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
 <h3 id="my-relays-add">my-relays-add</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['add']).then(...);
@@ -1544,7 +1657,7 @@ api.loadConcept('my-ratings');
     "edit": "/form/rating-edit"
 }</code></pre>
 <p>A collection of my-rating. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td><a href='#my-rating'>rating</a></td><td>link</td><td>A value assigned by a user to a team or brand, recorded as a score and reason.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-ratings-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr><tr><td><a href='#my-ratings-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-rating'>rating</a></td><td>link</td><td>A value assigned by a user to a team or brand, recorded as a score and reason.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-ratings-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr><tr><td><a href='#my-ratings-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h3 id="my-ratings-add">my-ratings-add</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['add']).then(...);
@@ -1762,12 +1875,13 @@ api.loadConcept('my-teams');
     "@type": "userTeams",
     "user_id": 21,
     "@id": "/user/21/teams",
+    "collectionOf": "brand",
     "brand": [
         "/team/104"
     ]
 }</code></pre>
 <p>A collection of the teams that the current user belongs to. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>brand</td><td>link</td><td>The currency issuer related to this resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>brand</td><td>link</td><td>The currency issuer related to this resource.</td></tr></tbody></table>
 <h2 id="my-issuers">my-issuers</h2>
 <pre><code class="language-javascript">
 api.loadConcept('my-issuers');
@@ -1789,7 +1903,7 @@ api.loadConcept('my-issuers');
     "add": "/form/brand-registration"
 }</code></pre>
 <p>blah blah blah </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>NULL</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>NULL</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>brand</td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-issuers-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>NULL</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>NULL</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>brand</td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-issuers-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
 <h3 id="my-issuers-add">my-issuers-add</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['add']).then(...);
@@ -1946,7 +2060,7 @@ api.loadConcept('team-brand');
     }
 ]</code></pre>
 <p>A brand to which the current user belongs to. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>logo</td><td>NULL</td><td>...</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>about</td><td>link</td><td>Information about the current resource.</td></tr><tr><td><a href='#team-accounts'>accounts</a></td><td>link</td><td>A collection of brand accounts, that is, a brand's ledger.</td></tr><tr><td><a href='#team-members'>members</a></td><td>link</td><td>A collection of brand members.</td></tr><tr><td><a href='#team-orders'>orders</a></td><td>link</td><td>...</td></tr><tr><td><a href='#team-promos'>promos</a></td><td>link</td><td>A collection of brand promotions.</td></tr><tr><td>records</td><td>link</td><td>A collection of 'record'.</td></tr><tr><td>tally</td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr><tr><td><a href='#team-throttles'>throttles</a></td><td>link</td><td>A collection of 'throttle'.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#team-brand-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>logo</td><td>NULL</td><td>An external link to an icon image that symbolizes a brand.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>about</td><td>link</td><td>Information about the current resource.</td></tr><tr><td><a href='#team-accounts'>accounts</a></td><td>link</td><td>A collection of brand accounts, that is, a brand's ledger.</td></tr><tr><td><a href='#team-members'>members</a></td><td>link</td><td>A collection of brand members.</td></tr><tr><td><a href='#team-orders'>orders</a></td><td>link</td><td>...</td></tr><tr><td><a href='#team-promos'>promos</a></td><td>link</td><td>A collection of brand promotions.</td></tr><tr><td>records</td><td>link</td><td>A collection of 'record'.</td></tr><tr><td>tally</td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr><tr><td><a href='#team-throttles'>throttles</a></td><td>link</td><td>A collection of 'throttle'.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#team-brand-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h2 id="team-members">team-members</h2>
 <pre><code class="language-javascript">
 api.loadConcept('team-members');
@@ -1990,7 +2104,7 @@ api.loadConcept('team-members');
     ]
 }</code></pre>
 <p>A collection of team-member. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td><a href='#team-member'>member</a></td><td>link</td><td>A user that is a member of a brand.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#team-member'>member</a></td><td>link</td><td>A user that is a member of a brand.</td></tr></tbody></table>
 <h2 id="team-member">team-member</h2>
 <pre><code class="language-javascript">
 api.loadConcept('team-member');
@@ -2066,7 +2180,7 @@ api.loadConcept('team-accounts');
     ]
 }</code></pre>
 <p>A collection of team-account, also referred to as a team ledger. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#team-account'>account</a></td><td>link</td><td>A brand account. An account with a sign=-1 is a revenue budget that holds debits, with a normal balance of <= 0, to be used for receiving payments. An account with a sign=1 is an expense budget that holds credits, with a normal balance >=0, to be used as payment.</td></tr><tr><td>items</td><td>link</td><td>...</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#team-account'>account</a></td><td>link</td><td>A brand account. An account with a sign=-1 is a revenue budget that holds debits, with a normal balance of <= 0, to be used for receiving payments. An account with a sign=1 is an expense budget that holds credits, with a normal balance >=0, to be used as payment.</td></tr></tbody></table>
 <h2 id="team-account">team-account</h2>
 <pre><code class="language-javascript">
 api.loadConcept('team-account');
@@ -2112,7 +2226,7 @@ api.loadConcept('team-promos');
     ]
 }</code></pre>
 <p>A collection of team-promo. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td><a href='#team-promo'>promo</a></td><td>link</td><td>A brand promotion, used to advertise anything that could be the target of a payment.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#team-promos-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#team-promo'>promo</a></td><td>link</td><td>A brand promotion, used to advertise anything that could be the target of a payment.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#team-promos-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
 <h3 id="team-promos-add">team-promos-add</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['add']).then(...);
@@ -2399,7 +2513,7 @@ api.loadConcept('team-throttles');
     ]
 }</code></pre>
 <p>A collection of team-throttle. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td><a href='#team-throttle'>throttle</a></td><td>link</td><td>A limit on how much an account may be used for transactions for a given period, specified as amount per brand, amount per user, and amount by all.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#team-throttle'>throttle</a></td><td>link</td><td>A limit on how much an account may be used for transactions for a given period, specified as amount per brand, amount per user, and amount by all.</td></tr></tbody></table>
 <h2 id="team-throttle">team-throttle</h2>
 <pre><code class="language-javascript">
 api.loadConcept('team-throttle');
@@ -2445,7 +2559,7 @@ api.loadConcept('team-orders');
     "update": "/form/order-update"
 }</code></pre>
 <p>blah blah blah </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td><a href='#team-order'>order</a></td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#team-orders-update'>update</a></td><td>form</td><td>...</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#team-order'>order</a></td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#team-orders-update'>update</a></td><td>form</td><td>...</td></tr></tbody></table>
 <h2 id="team-order">team-order</h2>
 <pre><code class="language-javascript">
 api.loadConcept('team-order');
@@ -2666,7 +2780,7 @@ api.loadConcept('admin-members');
     "edit": "/form/admin-member-edit"
 }</code></pre>
 <p>A collection of admin-member. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td><a href='#admin-member'>member</a></td><td>link</td><td>A user that is a member of a brand.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-members-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr><tr><td><a href='#admin-members-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-member'>member</a></td><td>link</td><td>A user that is a member of a brand.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-members-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr><tr><td><a href='#admin-members-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h3 id="admin-members-add">admin-members-add</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['add']).then(...);
@@ -2861,12 +2975,14 @@ api.loadConcept('admin-member-holdings');
     "@id": "/member/53/accounts",
     "add": "/form/holder-add",
     "holding": [
-
+        "/member/53/accounts?holder_id=41",
+        "/member/53/accounts?holder_id=42",
+        "/member/53/accounts?holder_id=43"
     ],
     "edit": "/form/admin-holder-edit"
 }</code></pre>
 <p>A collection of admin-member-holding. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>hours</td><td>integer</td><td>The number of hours per week that a member spends towards contributing to the team goals.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td>role</td><td>string</td><td>A user's role within the given context, such as a team member role.</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td>holding</td><td>link</td><td>An accountholding.</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-member-holdings-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr><tr><td><a href='#admin-member-holdings-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>hours</td><td>integer</td><td>The number of hours per week that a member spends towards contributing to the team goals.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td>role</td><td>string</td><td>A user's role within the given context, such as a team member role.</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td>holding</td><td>link</td><td>An accountholding.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-member-holdings-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr><tr><td><a href='#admin-member-holdings-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h3 id="admin-member-holdings-add">admin-member-holdings-add</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['add']).then(...);
@@ -3070,7 +3186,7 @@ api.loadConcept('admin-accounts');
     "edit": "/form/admin-account-edit"
 }</code></pre>
 <p>A collection of admin-account. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-account'>account</a></td><td>link</td><td>A brand account. An account with a sign=-1 is a revenue budget that holds debits, with a normal balance of <= 0, to be used for receiving payments. An account with a sign=1 is an expense budget that holds credits, with a normal balance >=0, to be used as payment.</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-accounts-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr><tr><td><a href='#admin-accounts-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-account'>account</a></td><td>link</td><td>A brand account. An account with a sign=-1 is a revenue budget that holds debits, with a normal balance of <= 0, to be used for receiving payments. An account with a sign=1 is an expense budget that holds credits, with a normal balance >=0, to be used as payment.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-accounts-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr><tr><td><a href='#admin-accounts-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h3 id="admin-accounts-add">admin-accounts-add</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['add']).then(...);
@@ -3277,7 +3393,7 @@ api.loadConcept('admin-account-holders');
     ]
 }</code></pre>
 <p>A collection of admin-account-holder. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td>holder</td><td>link</td><td>An accountholder.</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-account-holders-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td>holder</td><td>link</td><td>An accountholder.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-account-holders-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
 <h3 id="admin-account-holders-add">admin-account-holders-add</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['add']).then(...);
@@ -3536,7 +3652,7 @@ api.loadConcept('admin-promos');
     ]
 }</code></pre>
 <p>A page-colleciton of admin-promo. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td><a href='#admin-promo'>promo</a></td><td>link</td><td>A brand promotion, used to advertise anything that could be the target of a payment.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-promos-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-promo'>promo</a></td><td>link</td><td>A brand promotion, used to advertise anything that could be the target of a payment.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-promos-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
 <h3 id="admin-promos-add">admin-promos-add</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['add']).then(...);
@@ -3788,7 +3904,7 @@ api.loadConcept('admin-throttles');
     ]
 }</code></pre>
 <p>A collection of admin-throttle. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>items</td><td>link</td><td>...</td></tr><tr><td><a href='#admin-throttle'>throttle</a></td><td>link</td><td>A limit on how much an account may be used for transactions for a given period, specified as amount per brand, amount per user, and amount by all.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-throttles-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-throttle'>throttle</a></td><td>link</td><td>A limit on how much an account may be used for transactions for a given period, specified as amount per brand, amount per user, and amount by all.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-throttles-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
 <h3 id="admin-throttles-add">admin-throttles-add</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['add']).then(...);

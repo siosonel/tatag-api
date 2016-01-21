@@ -1,5 +1,12 @@
 {
-    "items": [
+    "pageOrder": "desc",
+    "itemsLimit": 50,
+    "collectionOf": "relay",
+    "pageOf": "/holder/41/relays",
+    "holder_id": 41,
+    "@type": "holderRelays",
+    "@id": "/holder/41/relays",
+    "relay": [
         {
             "id": 1,
             "holder_id": 41,
@@ -243,12 +250,5 @@
             "edit": "/form/relay-edit"
         }
     ],
-    "pageOrder": "desc",
-    "itemsLimit": 50,
-    "collectionOf": null,
-    "pageOf": "/holder/41/relays",
-    "holder_id": 41,
-    "@type": "holderRelays",
-    "@id": "/holder/41/relays",
     "add": "/form/holder-relays-add"
 }

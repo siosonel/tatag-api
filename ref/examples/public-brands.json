@@ -1,5 +1,14 @@
 {
-    "items": [
+    "pageOrder": "asc",
+    "itemsLimit": 50,
+    "collectionOf": "brand",
+    "pageOf": "/brand/collection",
+    "@id": "/brand/collection",
+    "@type": "brandCollection",
+    "numBrands": 13,
+    "earliest": "2015-01-05 11:53:31",
+    "latest": "2015-11-18 20:21:32",
+    "brand": [
         {
             "brand_id": 104,
             "name": "abc",
@@ -196,14 +205,5 @@
             "@id": "/brand/116/about"
         }
     ],
-    "pageOrder": "asc",
-    "itemsLimit": 50,
-    "collectionOf": null,
-    "pageOf": "/brand/collection",
-    "@id": "/brand/collection",
-    "@type": "brandCollection",
-    "numBrands": 13,
-    "earliest": "2015-01-05 11:53:31",
-    "latest": "2015-11-18 20:21:32",
     "add": "/form/brand-registration"
 }

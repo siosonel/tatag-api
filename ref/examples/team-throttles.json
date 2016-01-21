@@ -56,59 +56,5 @@
             "@id": "/throttle/4",
             "brand": "/team/104"
         }
-    ],
-    "items": [
-        {
-            "period": 172800,
-            "by_all": 100,
-            "by_brand": 20,
-            "by_user": 2,
-            "created": "2015-02-24 02:48:00",
-            "updated": null,
-            "ended": null,
-            "productURL": null,
-            "id": 1,
-            "@id": "/throttle/1",
-            "brand": "/team/104"
-        },
-        {
-            "period": 3600,
-            "by_all": 10,
-            "by_brand": 2,
-            "by_user": 1,
-            "created": "2015-02-24 02:48:00",
-            "updated": null,
-            "ended": null,
-            "productURL": null,
-            "id": 2,
-            "@id": "/throttle/2",
-            "brand": "/team/104"
-        },
-        {
-            "period": 9999999,
-            "by_all": 100,
-            "by_brand": 20,
-            "by_user": 2,
-            "created": "2015-02-24 02:48:00",
-            "updated": null,
-            "ended": null,
-            "productURL": null,
-            "id": 3,
-            "@id": "/throttle/3",
-            "brand": "/team/104"
-        },
-        {
-            "period": 360000,
-            "by_all": 11,
-            "by_brand": 5,
-            "by_user": 1,
-            "created": "2015-11-17 21:16:54",
-            "updated": null,
-            "ended": null,
-            "productURL": null,
-            "id": 4,
-            "@id": "/throttle/4",
-            "brand": "/team/104"
-        }
     ]
 }

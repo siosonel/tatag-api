@@ -58,6 +58,7 @@
 
 	"limkey": "Short for 'limited key', this is a semi-secret string that an accountholder shares as part of a token to pre-authorize a payment. The token is usually in the format 'holder.id-limkey'.",
 	"login_provider": "The identity provider for the currently logged-in user, usually an OpenId provider.",
+	"logo": "An external link to an icon image that symbolizes a brand.",
 
 	"me": "Information and resources that relates to the currently logged-on user.",
 	"member": "A user that is a member of a brand.",

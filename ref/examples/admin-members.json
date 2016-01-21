@@ -1,8 +1,4 @@
 {
-    "items": [
-        "/brand/104/members?member_id=53",
-        "/brand/104/members?member_id=55"
-    ],
     "pageOrder": "asc",
     "itemsLimit": 50,
     "collectionOf": "member",

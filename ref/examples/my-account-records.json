@@ -1,5 +1,15 @@
 {
-    "items": [
+    "pageOrder": "desc",
+    "itemsLimit": 50,
+    "collectionOf": "record",
+    "pageOf": "/account/92/records",
+    "account_id": 92,
+    "brand_id": 104,
+    "holder_id": 41,
+    "limkey": "abc",
+    "@type": "accountRecords",
+    "@id": "/account/92/records",
+    "record": [
         "/account/92/records?record_id=64",
         "/account/92/records?record_id=63",
         "/account/92/records?record_id=62",
@@ -26,16 +36,6 @@
         "/account/92/records?record_id=32",
         "/account/92/records?record_id=30"
     ],
-    "pageOrder": "desc",
-    "itemsLimit": 50,
-    "collectionOf": null,
-    "pageOf": "/account/92/records",
-    "account_id": 92,
-    "brand_id": 104,
-    "holder_id": 41,
-    "limkey": "abc",
-    "@type": "accountRecords",
-    "@id": "/account/92/records",
     "hold": "/form/record-hold",
     "approve": "/form/record-approve",
     "reject": "/form/record-reject"

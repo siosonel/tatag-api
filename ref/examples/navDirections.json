@@ -2,8 +2,16 @@
     "public-promos": [
         "promos"
     ],
+    "public-promo": [
+        "promos",
+        "promo"
+    ],
     "public-brands": [
         "brands"
+    ],
+    "public-brand": [
+        "brands",
+        "brand"
     ],
     "my-me": [
         "me"
@@ -12,44 +20,74 @@
         "me",
         "memberships"
     ],
+    "my-membership": [
+        "me",
+        "memberships",
+        "membership"
+    ],
     "my-team": [
         "me",
         "memberships",
-        "items",
+        "membership",
         "team"
     ],
     "my-issuer": [
         "me",
         "memberships",
-        "items",
+        "membership",
         "issuer"
     ],
     "my-holdings": [
         "me",
         "holdings"
     ],
+    "my-holding": [
+        "me",
+        "holdings",
+        "holding"
+    ],
     "my-account": [
         "me",
         "holdings",
-        "items",
+        "holding",
         "account"
     ],
     "my-account-records": [
         "me",
         "holdings",
-        "items",
+        "holding",
         "account",
         "records"
+    ],
+    "my-account-record": [
+        "me",
+        "holdings",
+        "holding",
+        "account",
+        "records",
+        "record"
     ],
     "my-relays": [
         "me",
         "holdings",
-        "items",
+        "holding",
         "relays"
+    ],
+    "my-relay": [
+        "me",
+        "holdings",
+        "holding",
+        "relays",
+        "relay"
     ],
     "my-ratings": [
         "me",
         "ratings"
+    ],
+    "my-rating": [
+        "me",
+        "ratings",
+        "rating"
     ],
     "my-about": [
         "me",
@@ -74,17 +112,38 @@
         "brand",
         "members"
     ],
+    "team-member": [
+        "me",
+        "teams",
+        "brand",
+        "members",
+        "member"
+    ],
     "team-accounts": [
         "me",
         "teams",
         "brand",
         "accounts"
     ],
+    "team-account": [
+        "me",
+        "teams",
+        "brand",
+        "accounts",
+        "account"
+    ],
     "team-promos": [
         "me",
         "teams",
         "brand",
         "promos"
+    ],
+    "team-promo": [
+        "me",
+        "teams",
+        "brand",
+        "promos",
+        "promo"
     ],
     "team-throttles": [
         "me",
@@ -123,12 +182,36 @@
         "brand",
         "members"
     ],
+    "admin-member": [
+        "me",
+        "issuers",
+        "brand",
+        "members",
+        "member"
+    ],
+    "admin-member-holdings": [
+        "me",
+        "issuers",
+        "brand",
+        "members",
+        "member",
+        "holdings"
+    ],
+    "admin-member-holding": [
+        "me",
+        "issuers",
+        "brand",
+        "members",
+        "member",
+        "holdings",
+        "holding"
+    ],
     "admin-account": [
         "me",
         "issuers",
         "brand",
         "accounts",
-        "items"
+        "account"
     ],
     "admin-accounts": [
         "me",
@@ -136,11 +219,35 @@
         "brand",
         "accounts"
     ],
+    "admin-account-holders": [
+        "me",
+        "issuers",
+        "brand",
+        "accounts",
+        "account",
+        "holders"
+    ],
+    "admin-account-holder": [
+        "me",
+        "issuers",
+        "brand",
+        "accounts",
+        "account",
+        "holders",
+        "holder"
+    ],
     "admin-promos": [
         "me",
         "issuers",
         "brand",
         "promos"
+    ],
+    "admin-promo": [
+        "me",
+        "issuers",
+        "brand",
+        "promos",
+        "promo"
     ],
     "admin-throttles": [
         "me",
@@ -166,112 +273,5 @@
         "issuers",
         "brand",
         "tally"
-    ],
-    "public-promo": [
-        "promos",
-        "items"
-    ],
-    "public-brand": [
-        "brands",
-        "items"
-    ],
-    "my-membership": [
-        "me",
-        "memberships",
-        "items"
-    ],
-    "my-holding": [
-        "me",
-        "holdings",
-        "items"
-    ],
-    "my-account-record": [
-        "me",
-        "holdings",
-        "items",
-        "account",
-        "records",
-        "items"
-    ],
-    "my-relay": [
-        "me",
-        "holdings",
-        "items",
-        "relays",
-        "items"
-    ],
-    "my-rating": [
-        "me",
-        "ratings",
-        "items"
-    ],
-    "team-member": [
-        "me",
-        "teams",
-        "brand",
-        "members",
-        "items"
-    ],
-    "team-account": [
-        "me",
-        "teams",
-        "brand",
-        "accounts",
-        "items"
-    ],
-    "team-promo": [
-        "me",
-        "teams",
-        "brand",
-        "promos",
-        "items"
-    ],
-    "admin-member": [
-        "me",
-        "issuers",
-        "brand",
-        "members",
-        "items"
-    ],
-    "admin-member-holdings": [
-        "me",
-        "issuers",
-        "brand",
-        "members",
-        "items",
-        "holdings"
-    ],
-    "admin-member-holding": [
-        "me",
-        "issuers",
-        "brand",
-        "members",
-        "items",
-        "holdings",
-        "items"
-    ],
-    "admin-account-holders": [
-        "me",
-        "issuers",
-        "brand",
-        "accounts",
-        "items",
-        "holders"
-    ],
-    "admin-account-holder": [
-        "me",
-        "issuers",
-        "brand",
-        "accounts",
-        "items",
-        "holders",
-        "items"
-    ],
-    "admin-promo": [
-        "me",
-        "issuers",
-        "brand",
-        "promos",
-        "items"
     ]
 }

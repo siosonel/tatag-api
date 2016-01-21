@@ -2,6 +2,7 @@
     "@type": "userTeams",
     "user_id": 21,
     "@id": "/user/21/teams",
+    "collectionOf": "brand",
     "brand": [
         "/team/104"
     ]

@@ -81,7 +81,7 @@ class MemberAccounts extends BrandHolders {
 			
 			$r['@id'] = $this->{'@id'} ."?holder_id=". $r['id'];
 			$r['edit'] = "$this->root/form/admin-holder-edit";
-			$this->items[] = $r['@id'];
+			$this->holding[] = $r['@id'];
 			$graph[] = $r;
 		}
 		

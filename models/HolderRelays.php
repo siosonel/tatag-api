@@ -18,7 +18,7 @@ class HolderRelays extends Collection {
 		$this->{'@id'} = "$this->root/holder/$this->holder_id/relays". $params;
 		$this->table = "relays";
 		$this->idkey = 'relay_id';
-		
+		$this->collectionOf = "relay";
 		$this->pageOrder = "desc"; //prevents being reset
 		$this->init($data);
 		
@@ -52,6 +52,8 @@ class HolderRelays extends Collection {
 	}
 	
 	function get() {		
+		$graph = array($this);
+
 		$_GET['r.holder_id'] = $this->holder_id;
 		unset($_GET['holder_id']);
 		$this->setFilters($_GET);		
@@ -65,9 +67,9 @@ class HolderRelays extends Collection {
 			ORDER BY id ASC
 			LIMIT $this->itemsLimit";
 			
-		$this->items = DBquery::get($sql, array_merge($this->filterValArr));
+		$items = DBquery::get($sql, array_merge($this->filterValArr));
 		
-		foreach($this->items AS &$r) {
+		foreach($items AS &$r) {
 			if ($r['user_id'] != Requester::$user_id) Error::http(403, 
 				"The user is not the accountholder of this relay and does not have accees to its details.");
 			
@@ -75,11 +77,12 @@ class HolderRelays extends Collection {
 			$r['@id'] = "$this->root/relay/". $r['id'];
 			$r['@type'] = 'relay';
 			$r['edit'] = '/form/relay-edit';
+			$this->relay[] = $r;
 		}
 		
 		$this->paginate('relay_id');
 		$this->{'add'} = "/form/holder-relays-add";
-		return array($this);
+		return $graph;
 	}
 }
 

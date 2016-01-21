@@ -12,6 +12,7 @@ class UserMemberships extends Base {
 		$this->{"@id"} = "$this->root/user/$this->user_id/memberships";
 		$this->table = "members";
 		$this->idkey = 'user_id';
+		$this->collectionOf = "memberships";
 		$this->init($data);
 		
 		$this->okToSet = array("joined","revoked");			
@@ -72,7 +73,7 @@ class UserMemberships extends Base {
 			if (!$r['joined']) $r['accept'] = "/form/member-accept";
 			$r['revoke'] = "/form/member-revoke";
 			
-			if (!isset($_GET['member_id'])) $this->items[] = $r['@id'];
+			if (!isset($_GET['member_id'])) $this->membership[] = $r['@id'];
 		}
 		
 		return $graph;

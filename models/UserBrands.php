@@ -11,6 +11,7 @@ class UserBrands extends BrandCollection {
 		$this->{"collectionOf"} = "brand";
 		$this->table = "brands";
 		$this->idkey = 'brand_id';
+		$this->collectionOf = "brand";
 		$this->init($data);
 	}
 	

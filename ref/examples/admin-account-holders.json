@@ -1,8 +1,5 @@
 {
     "id": 92,
-    "items": [
-        "/account/92/holders?holder_id=41"
-    ],
     "pageOrder": "asc",
     "itemsLimit": 50,
     "collectionOf": "holder",
