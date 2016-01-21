@@ -8,6 +8,7 @@ class UserBrands extends BrandCollection {
 		$this->user_id =  Requester::$user_id;	
 		
 		$this->{"@id"} = "$this->root/user/$this->user_id/brands";
+		$this->{"collectionOf"} = "brand";
 		$this->table = "brands";
 		$this->idkey = 'brand_id';
 		$this->init($data);

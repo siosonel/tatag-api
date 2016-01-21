@@ -57,11 +57,32 @@ class PromoCollection extends Collection {
 	function get() {	
 		$this->setAddlCond(); 
 		//if (!$this->cond) $this->setForms();
+
+		$graph = array($this);
+		$tracked = array();
+		$nestingRef = array(
+			"brand_" => array(
+				"@id" => "$this->root/brand/{id}/about", 
+				"@type" => "brand"
+			)
+		);
 	
-		$sql = "SELECT promo_id, p.brand_id AS brand_id, brands.name AS brand_name, 
-				p.name AS name, p.description AS description, amount, imageURL, infoURL, 
-				p.created, p.updated, p.expires, keyword,
-				by_all_limit, by_brand_limit, by_user_limit, by_user_wait
+		$sql = "SELECT promo_id, 
+				p.brand_id AS brand_id, 
+				brands.name AS brand_name, 
+				p.name AS name, 
+				p.description AS description, 
+				amount, 
+				imageURL, 
+				infoURL, 
+				p.created, 
+				p.updated, 
+				p.expires, 
+				keyword,
+				by_all_limit, 
+				by_brand_limit, 
+				by_user_limit, 
+				by_user_wait
 			FROM promos p
 			JOIN relays USING (relay_id)
 			JOIN brands USING (brand_id)
@@ -75,8 +96,11 @@ class PromoCollection extends Collection {
 		Requester::detectMemberships();
 		
 		foreach($items AS &$r) {
+			$r['id'] = $r['promo_id'];
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
+
+			$this->nestResources($r, $nestingRef, $graph, $tracked);
 						
 			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[promo_id]";
 			$r['code'] = "$r[keyword]-$r[promo_id]";
@@ -95,14 +119,14 @@ class PromoCollection extends Collection {
 			}
 			
 			if (!$r['expires']) $r['expires'] = "2019-12-31 11:59:59";
-		
+
 			$this->{$this->collectionOf}[] = $r;
 		}
 		
 		$this->paginate('promo_id');
 		
-		if ($this->cond) return array($this);
-		return array_merge(array($this, BrandLogo::svgTemplate()));
+		if ($this->cond) return $graph;
+		return array_merge($graph, array(BrandLogo::svgTemplate()));
 	}
 	
 	function add() {

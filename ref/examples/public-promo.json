@@ -1,8 +1,6 @@
 [
     {
         "promo_id": 11,
-        "brand_id": 104,
-        "brand_name": "abc",
         "name": "finallyu",
         "description": "yes",
         "amount": 1.11,
@@ -16,18 +14,17 @@
         "by_brand_limit": 5,
         "by_user_limit": 2,
         "by_user_wait": 24,
+        "id": 11,
         "@id": "/promo/11",
         "@type": "promo",
+        "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/11",
         "code": "ad-11",
         "payURL": "http://tatag.dev/for/ad-11",
-        "imageTemplate": "/ui/logo.php",
-        "edit": "/form/promo-edit"
+        "imageTemplate": "/ui/logo.php"
     },
     {
         "promo_id": 10,
-        "brand_id": 104,
-        "brand_name": "abc",
         "name": "mmm",
         "description": "nnn",
         "amount": 2.22,
@@ -41,18 +38,17 @@
         "by_brand_limit": 5,
         "by_user_limit": 2,
         "by_user_wait": 24,
+        "id": 10,
         "@id": "/promo/10",
         "@type": "promo",
+        "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/10",
         "code": "ad-10",
         "payURL": "http://tatag.dev/for/ad-10",
-        "imageTemplate": "/ui/logo.php",
-        "edit": "/form/promo-edit"
+        "imageTemplate": "/ui/logo.php"
     },
     {
         "promo_id": 9,
-        "brand_id": 104,
-        "brand_name": "abc",
         "name": "raisins",
         "description": "test",
         "amount": 3.33,
@@ -66,18 +62,17 @@
         "by_brand_limit": 5,
         "by_user_limit": 2,
         "by_user_wait": 24,
+        "id": 9,
         "@id": "/promo/9",
         "@type": "promo",
+        "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/9",
         "code": "ad-9",
         "payURL": "http://tatag.dev/for/ad-9",
-        "imageTemplate": "/ui/logo.php",
-        "edit": "/form/promo-edit"
+        "imageTemplate": "/ui/logo.php"
     },
     {
         "promo_id": 8,
-        "brand_id": 104,
-        "brand_name": "abc",
         "name": "help me",
         "description": "test",
         "amount": 44.44,
@@ -91,18 +86,17 @@
         "by_brand_limit": 5,
         "by_user_limit": 2,
         "by_user_wait": 24,
+        "id": 8,
         "@id": "/promo/8",
         "@type": "promo",
+        "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/8",
         "code": "ad-8",
         "payURL": "http://tatag.dev/for/ad-8",
-        "imageTemplate": "/ui/logo.php",
-        "edit": "/form/promo-edit"
+        "imageTemplate": "/ui/logo.php"
     },
     {
         "promo_id": 7,
-        "brand_id": 104,
-        "brand_name": "abc",
         "name": "test",
         "description": "test",
         "amount": 7.77,
@@ -116,18 +110,17 @@
         "by_brand_limit": 5,
         "by_user_limit": 2,
         "by_user_wait": 24,
+        "id": 7,
         "@id": "/promo/7",
         "@type": "promo",
+        "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/7",
         "code": "ad-7",
         "payURL": "http://tatag.dev/for/ad-7",
-        "imageTemplate": "/ui/logo.php",
-        "edit": "/form/promo-edit"
+        "imageTemplate": "/ui/logo.php"
     },
     {
         "promo_id": 6,
-        "brand_id": 104,
-        "brand_name": "abc",
         "name": "product promo 3cc",
         "description": "a brand 104 promo 3cc",
         "amount": 57.71,
@@ -141,18 +134,17 @@
         "by_brand_limit": 5,
         "by_user_limit": 2,
         "by_user_wait": 24,
+        "id": 6,
         "@id": "/promo/6",
         "@type": "promo",
+        "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/6",
         "code": "ad-6",
         "payURL": "http://tatag.dev/for/ad-6",
-        "imageTemplate": "/ui/logo.php",
-        "edit": "/form/promo-edit"
+        "imageTemplate": "/ui/logo.php"
     },
     {
         "promo_id": 5,
-        "brand_id": 104,
-        "brand_name": "abc",
         "name": "product promo 3cc",
         "description": "a brand 104 promo 3cc",
         "amount": 57.71,
@@ -166,18 +158,17 @@
         "by_brand_limit": 5,
         "by_user_limit": 2,
         "by_user_wait": 24,
+        "id": 5,
         "@id": "/promo/5",
         "@type": "promo",
+        "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/5",
         "code": "ad-5",
         "payURL": "http://tatag.dev/for/ad-5",
-        "imageTemplate": "/ui/logo.php",
-        "edit": "/form/promo-edit"
+        "imageTemplate": "/ui/logo.php"
     },
     {
         "promo_id": 4,
-        "brand_id": 104,
-        "brand_name": "abc",
         "name": "product promo 67",
         "description": "a brand 104 promo 67",
         "amount": 57.69,
@@ -191,18 +182,17 @@
         "by_brand_limit": 5,
         "by_user_limit": 2,
         "by_user_wait": 24,
+        "id": 4,
         "@id": "/promo/4",
         "@type": "promo",
+        "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/4",
         "code": "ad-4",
         "payURL": "http://tatag.dev/for/ad-4",
-        "imageTemplate": "/ui/logo.php",
-        "edit": "/form/promo-edit"
+        "imageTemplate": "/ui/logo.php"
     },
     {
         "promo_id": 3,
-        "brand_id": 104,
-        "brand_name": "abc",
         "name": "product promo 1f8",
         "description": "a brand 104 promo 1f8",
         "amount": 57.57,
@@ -216,18 +206,17 @@
         "by_brand_limit": 5,
         "by_user_limit": 2,
         "by_user_wait": 24,
+        "id": 3,
         "@id": "/promo/3",
         "@type": "promo",
+        "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/3",
         "code": "ad-3",
         "payURL": "http://tatag.dev/for/ad-3",
-        "imageTemplate": "/ui/logo.php",
-        "edit": "/form/promo-edit"
+        "imageTemplate": "/ui/logo.php"
     },
     {
         "promo_id": 1,
-        "brand_id": 104,
-        "brand_name": "abc",
         "name": "Test promo",
         "description": "A brand #104 promo",
         "amount": 25,
@@ -241,12 +230,13 @@
         "by_brand_limit": 5,
         "by_user_limit": 25,
         "by_user_wait": 24,
+        "id": 1,
         "@id": "/promo/1",
         "@type": "promo",
+        "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/1",
         "code": "ad-1",
         "payURL": "http://tatag.dev/for/ad-1",
-        "imageTemplate": "/ui/logo.php",
-        "edit": "/form/promo-edit"
+        "imageTemplate": "/ui/logo.php"
     }
 ]
