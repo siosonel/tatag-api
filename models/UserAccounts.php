@@ -102,18 +102,21 @@ class UserAccounts extends Base {
 		
 		$auth = "_".$holder['authcode']; //indent to not have to use strict strpos false comparison
 		
-		$holder['relay']['default'] = $holder['id']."-".$holder['limkey'];
+		$holder['relayDefault'] = array(
+			"token" => "$holder[id]-$holder[limkey]",
+			"for" => array()
+		);
 		
 		if (strpos($auth,"c")) {
-			if ($account['sign']==1) $holder['relay']['add'] = $holder['id']."-".$holder['limkey']."-c";
+			if ($account['sign']==1) $holder["relayDefault"]["for"][] = "add";
 			else $holder['add'] = "$this->root/form/budget-add";
 		}
 
 		if (strpos($auth,"f")) $holder['transfer'] = "$this->root/form/budget-transfer";
-		if (strpos($auth,"t")) $holder['relay']['transfer'] = $holder['id']."-".$holder['limkey']."-t";
+		if (strpos($auth,"t")) $holder["relayDefault"]["for"][] = "transfer";
 		
 		if (strpos($auth,"i") OR strpos($auth,"x")) {
-			if ($account['sign']==-1) $holder['relay']['use'] = $holder['id']."-".$holder['limkey']."-ix";
+			if ($account['sign']==-1) $holder["relayDefault"]["for"][] = "use";
 			else $holder['use'] = "$this->root/form/budget-use";
 		}
 		

@@ -63,16 +63,19 @@ class AccountRecords extends Collection {
 			if ($amount > 0 AND $status==7) {
 				$action = $actions[$r['txntype']];
 				$r['orig_record_id'] = $r['record_id'];
+
+				$r['relayDefault'] = array(
+					"token" => $this->holder_id ."-". $this->limkey,
+					"for" => array()
+				);
 				
 				if ($action != 'transfer') {
-					if ($r['direction']=='from') $r["un$action"] = "$this->root/form/budget-un$action";
-					else $r['relay']["un$action"] = $this->holder_id ."-". $this->limkey ."-". $r['txntype'];
+					if ($r['role']=='from') $r["un$action"] = "$this->root/form/budget-un$action";
+					else $r["relayDefault"]["for"][] = "token-un$action";
 				}
-				
-				$r['relay']["default"] = $this->holder_id ."-". $this->limkey;
 			}
 			
-			if ($status>=0 AND $status<7 AND (($r['direction']=='from' AND $amount>0) OR ($r['direction']=='to' AND $amount<0))) {
+			if ($status>=0 AND $status<7 AND (($r['role']=='from' AND $amount>0) OR ($r['role']=='to' AND $amount<0))) {
 				if ($status==0) $r['hold']="$this->root/form/record-hold";
 				$r['approve']="$this->root/form/record-approve";
 				$r['reject']="$this->root/form/record-reject";

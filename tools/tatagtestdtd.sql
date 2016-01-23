@@ -688,7 +688,7 @@ CREATE PROCEDURE `accountRecords`(
 )
 BEGIN
 
-SELECT record_id, txntype, 'to' AS direction, r.throttle_id,
+SELECT record_id, txntype, 'to' AS role, r.throttle_id,
 	to_acct AS other_acct,
 	a.brand_id, b.name AS brand_name, amount, 
 	r.created, `status`, note, UNIX_TIMESTAMP(r.updated) as updated
@@ -699,7 +699,7 @@ WHERE from_acct=acctID AND record_id < maxRecordID AND record_id > cutoffID
 	AND (r.updated IS NULL OR UNIX_TIMESTAMP(r.updated) > minUpdated)
 UNION ALL 
 
-SELECT record_id, txntype, 'from' AS direction, r.throttle_id,
+SELECT record_id, txntype, 'from' AS role, r.throttle_id,
 	from_acct AS other_acct,
 	a.brand_id, b.name AS brand_name, amount, 
 	r.created, `status`, note, UNIX_TIMESTAMP(r.updated) as updated

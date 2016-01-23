@@ -29,7 +29,7 @@
 	"country_code": "The ISO3 code of a brand location.",
 	"created": "The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.",
 
-	"direction": "(deprecated) The direction in a transaction record signifies whether the accountholder acted as a payment originator ('from') or recipient ('to').",
+	"direction": "(deprecated) Synonym for transaction 'role' - the direction in a transaction record signifies whether the accountholder acted as a payment originator ('from') or recipient ('to').",
 
 	"edit": "A form for updating a resource.",
 	"ended": "The date of resource or relation deactivation, formatted as `YYYY-MM-DD hh:mm:ss`.",
@@ -50,6 +50,7 @@
 	"inputs": "A set of information that goes into a resource or submission. Within a form, these are the properties for which values are to be provided in a submission.",
 	"issuer": "When given as part of a resource, this links to an admin view of the related brand resource.",
 	"issuers": "A collection of brand-resources to which a user has a member role of admin.",
+	"items": "(deprecated) A synonym of resource[resource.collectionOf]. For convenience, the generic client copies the value of resource[resource.collectionOf] to resource.items.",
 	"itemsLimit": "The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.",
 	
 	"joined": "The date when a user joined a team.",
@@ -90,10 +91,11 @@
 	"records": "A collection of 'record'.",
 	"reject": "A form for rejecting the completion of a pending resource action.",
 	"relay": "A token that is used to preauthorize the use of a recipient account.",
+	"relayDefault": "The default relay associated with an accountholding; it does not require a user to create it but is instead based off the 'limkey' value.",
 	"relays": "A collection of relay tokens.",
 	"revoke": "A form for revoking a current relation between resources, such as user membership in a team.",
 	"revoked": "The date when a relation between resources was ended, such as when a member leaves a team.",
-	"role": "A user's role within the given context, such as a team member role.",
+	"role": "A user's role within the given context, such as a team member role or a payment role.",
 
 	"sign": "Indicates whether an account is a revenue (-1) or expense (+1) budget.",
 	"score": "A numeric value along a scale indicating low to high value. In the case a 'rating' resource, the score correlates to the reputation of a team or brand as a currency issuer.",

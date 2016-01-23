@@ -6,13 +6,18 @@
         "authcode": "cftix",
         "account": "/account/92",
         "user": "/user/21",
-        "relay": {
-            "default": "41-abc",
-            "transfer": "41-abc-t",
-            "use": "41-abc-ix"
-        },
+        "relay": [
+
+        ],
         "@type": "userAccount",
         "@id": "/user/21/accounts?holder_id=41",
+        "relayDefault": {
+            "token": "41-abc",
+            "for": [
+                "transfer",
+                "use"
+            ]
+        },
         "add": "/form/budget-add",
         "transfer": "/form/budget-transfer",
         "edit": "/form/holder-edit",
@@ -25,13 +30,18 @@
         "authcode": "cftix",
         "account": "/account/93",
         "user": "/user/21",
-        "relay": {
-            "default": "42-abc",
-            "add": "42-abc-c",
-            "transfer": "42-abc-t"
-        },
+        "relay": [
+
+        ],
         "@type": "userAccount",
         "@id": "/user/21/accounts?holder_id=42",
+        "relayDefault": {
+            "token": "42-abc",
+            "for": [
+                "add",
+                "transfer"
+            ]
+        },
         "transfer": "/form/budget-transfer",
         "use": "/form/budget-use",
         "edit": "/form/holder-edit",
@@ -44,12 +54,17 @@
         "authcode": "ti",
         "account": "/account/94",
         "user": "/user/21",
-        "relay": {
-            "default": "43-abc",
-            "transfer": "43-abc-t"
-        },
+        "relay": [
+
+        ],
         "@type": "userAccount",
         "@id": "/user/21/accounts?holder_id=43",
+        "relayDefault": {
+            "token": "43-abc",
+            "for": [
+                "transfer"
+            ]
+        },
         "use": "/form/budget-use",
         "edit": "/form/holder-edit",
         "relays": "/holder/43/relays"
