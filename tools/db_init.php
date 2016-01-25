@@ -7,7 +7,7 @@ $dumpfile = 'nplite.sql';
 $step = isset($_GET['step']) ? $_GET['step'] : '';
 
 chdir("../");
-include "models/Utils.php";
+include "utils/Utils.php";
 include "config.php";
 	
 
