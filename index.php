@@ -1,5 +1,5 @@
 <?php
-include_once "models/Requester.php";
+include_once "utils/Requester.php";
 
 Requester::init();
 Router::run();

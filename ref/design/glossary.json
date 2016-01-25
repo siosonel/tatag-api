@@ -57,7 +57,7 @@
 
 	"keyword": "In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.",
 
-	"limkey": "Short for 'limited key', this is a semi-secret string that an accountholder shares as part of a token to pre-authorize a payment. The token is usually in the format 'holder.id-limkey'.",
+	"limkey": "Short for 'limited key', this is a semi-secret string that an accountholder shares as part of the relayDefault token to pre-authorize a payment. The token is usually in the format 'holder.id-limkey'. This token should be used only with trusted cotransactors and should not be published. For published relays such as used in promo advertisements, see the <a href='#my-relay'>'my-relay'</a> resource.",
 	"login_provider": "The identity provider for the currently logged-in user, usually an OpenId provider.",
 	"logo": "An external link to an icon image that symbolizes a brand.",
 

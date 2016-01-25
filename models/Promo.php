@@ -1,11 +1,14 @@
 <?php
 
 class Promo extends Base {
+	public $id;
+
 	function __construct($data='') { 		
 		$this->promo_id = $this->getID();
 		
 		$this->{"@type"} = "promo";
 		$this->{'@id'} = "$this->root/promo/$this->promo_id";
+		$this->id = $this->promo_id;
 		$this->table = "promos";
 		$this->idkey = 'promo_id'; 
 		
@@ -25,6 +28,7 @@ class Promo extends Base {
 		if ($this->expires) $this->okToSet[] = 'expires';
 		
 		$this->update(array('promo_id'=>$this->promo_id));
+		//$this->obj->{'@id'} = $this->{'@id'};
 		return array($this->obj);
 	}
 	
@@ -53,6 +57,8 @@ class Promo extends Base {
 		$this->promoPage = "/ad/$r[amount]";
 		$this->code = "$r[keyword]-$r[promo_id]";
 		if (!$this->expires) $this->expires = "2019-12-31 11:59:59";
+
+		if (Requester::isMember($rows[0]['brand_id'])) $this->edit = "/form/promo-edit";
 		
 		return array($this);
 	}

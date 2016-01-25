@@ -48,6 +48,7 @@ class AccountRecords extends Collection {
 		foreach($items AS &$r) {
 			$r['@type'] = 'accountRecord';
 			$r['@id'] = $this->{'@id'} .'?record_id='. $r['record_id'];
+			$r['id'] = $r['record_id'];
 		
 			if ($r['brand_id']==$this->brand_id) {
 				$r['other'] = $r['other_acct'];

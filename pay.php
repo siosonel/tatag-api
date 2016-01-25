@@ -1,5 +1,5 @@
 <?php
-require_once "models/Requester.php";
+require_once "utils/Router.php";
 Requester::init();
 
 if (!Requester::$user_id) {

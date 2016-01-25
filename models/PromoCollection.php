@@ -100,11 +100,16 @@ class PromoCollection extends Collection {
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
 			$r['@type'] = 'promo';
 
+			if (Requester::isMember($r['brand_id'])) {
+				$r['edit'] = '/form/promo-edit';
+			}
+
 			$this->nestResources($r, $nestingRef, $graph, $tracked);
 						
 			$r['promoPage'] = Requester::$ProtDomain ."/ad/$r[promo_id]";
 			$r['code'] = "$r[keyword]-$r[promo_id]";
 			$r['payURL'] = Requester::$ProtDomain ."/for/$r[code]";
+			$r['amount'] = round($r['amount'],2);
 			
 			if (!$r['imageURL']) {
 				//$r['imageURL'] = "/ui/logo.php?brand=". $r['brand_name'];
@@ -114,13 +119,10 @@ class PromoCollection extends Collection {
 				$r['imageTemplate'] = "/ui/logo.php";
 			}
 			
-			if (Requester::isMember($r['brand_id'])) {
-				$r['edit'] = '/form/promo-edit';
-			}
-			
 			if (!$r['expires']) $r['expires'] = "2019-12-31 11:59:59";
 
-			$this->{$this->collectionOf}[] = $r;
+			$this->{$this->collectionOf}[] = $r['@id'];
+			$graph[] = $r;
 		}
 		
 		$this->paginate('promo_id');

@@ -25,7 +25,7 @@ class UserCollection extends Base {
 		$User = $this->obj;
 		$User->user_id = $this->insert();
 		
-		require_once "models/Requester.php";
+		require_once "utils/Router.php";
 		Requester::$user_id = $User->user_id;
 		
 		unset($User->password); //no need to communicate this back for privacy
