@@ -53,6 +53,8 @@ class BudgetUsed extends Base {
 		foreach($this AS $key=>$val) {
 			if (substr($key,0,3)==='to_') unset($this->$key);
 		}
+
+		$this->verifier->notifyRecipient($this->obj->to_user, "budget use $this->amount", "You don't have to do anything.");
 		
 		return array($this);
 	}	

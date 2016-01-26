@@ -95,7 +95,25 @@ class ForwardVerifier {
 		$this->txnType =  $fromType . $toType;
 		if (isset($this->relayTxnType) AND $this->relayTxnType AND $this->txnType != $this->relayTxnType)
 			Error::http(403, "The relay credential is not authorized for the detected transaction type of '$this->txntype'.");
-	}	
+	}
+
+	function notifyRecipient($to_user, $subject, $message) {
+		if (SITE=='dev') return;
+
+		$sql = "SELECT email FROM users WHERE user_id=$to_user";
+		$email = DBquery::get($sql)[0]['email'];
+		if (!$email) return;
+
+		$to      = $email;
+		$subject = $subject;
+		$message = $message;
+		$headers = 'From: do-not-reply@tatag.cc' . "\r\n" .
+				'Reply-To: do-not-reply@tatag.cc' . "\r\n" .
+				'Return-Path: do-not-reply@tatag.cc' . "\r\n" .
+				'X-Mailer: PHP/' . phpversion();
+
+		if (!mail($to, $subject, $message, $headers)) Error::http(500, "Unable to deliver mail to '$this->email'.");
+	}
 }
 
 ?>
