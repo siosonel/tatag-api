@@ -39,7 +39,10 @@ class Team extends Base {
 		$endDate = "2015-12-31 11:59:59";
 		$tally = DBquery::get("CALL tally($this->brand_id, '$startDate', '$endDate')")[0];
 		if (!$tally) return array(null);
-		$this->tally = array_merge(array("@type" => "budgetTally"),$tally);
+		$this->tally = array_merge(
+			array("@type" => "budgetTally", "@id"=>"/brand/$this->brand_id/tally"),
+			$tally
+		);
 		
 		$this->setForms();		
 		

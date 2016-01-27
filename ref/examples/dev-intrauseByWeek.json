@@ -1,0 +1,15 @@
+{
+    "@id": "/intrause/byWeek?db=tatagtestdtd",
+    "data": [
+        {
+            "brand_id": 104,
+            "intrause": [
+                {
+                    "week": 47,
+                    "brand": 104,
+                    "amount": 90.76
+                }
+            ]
+        }
+    ]
+}

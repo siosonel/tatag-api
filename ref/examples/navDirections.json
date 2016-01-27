@@ -101,6 +101,10 @@
         "me",
         "issuers"
     ],
+    "my-apps": [
+        "me",
+        "apps"
+    ],
     "team-brand": [
         "me",
         "teams",
@@ -272,6 +276,72 @@
         "me",
         "issuers",
         "brand",
+        "tally"
+    ],
+    "dev-app": [
+        "me",
+        "apps",
+        "app"
+    ],
+    "dev-budgetlog": [
+        "me",
+        "apps",
+        "app",
+        "budgetlog"
+    ],
+    "dev-tally": [
+        "me",
+        "apps",
+        "app",
+        "tally"
+    ],
+    "dev-addedByWeek": [
+        "me",
+        "apps",
+        "app",
+        "addedByWeek"
+    ],
+    "dev-inflowByWeek": [
+        "me",
+        "apps",
+        "app",
+        "inflowByWeek"
+    ],
+    "dev-outflowByWeek": [
+        "me",
+        "apps",
+        "app",
+        "outflowByWeek"
+    ],
+    "dev-intrauseByWeek": [
+        "me",
+        "apps",
+        "app",
+        "intrauseByWeek"
+    ],
+    "dev-flowMatrix": [
+        "me",
+        "apps",
+        "app",
+        "flowMatrix"
+    ],
+    "sys-trigger": [
+        "trigger"
+    ],
+    "sys-approve": [
+        "trigger",
+        "approve"
+    ],
+    "sys-add": [
+        "trigger",
+        "add"
+    ],
+    "sys-report": [
+        "trigger",
+        "report"
+    ],
+    "sys-tally": [
+        "trigger",
         "tally"
     ]
 }

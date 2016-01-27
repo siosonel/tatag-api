@@ -108,7 +108,7 @@ These resources do not require a user to be logged-in.
 
 # Personal Resources
 
-These are resources that belong to the current user and are meant for private viewing. 
+These are resources that belong to the current user and are meant for private viewing. These resources are inteded to be used for wallet type applications, and in order for such applications to act on behalf of a user, oauth-type authentication is required.
 
 
 ===my===
@@ -131,5 +131,26 @@ The admins of a brand share access to these resources. The accessible resources 
 
 ===admin===
 
+
+
+
+# Developer Resources
+
+These are application-related resources that belongs to a developer. The consumer id and secret are required fro authentication.
+
+
+===dev===
+
+
+
+
+
+
+# System Resources
+
+These are system administration related resources.
+
+
+===sys===
 
 

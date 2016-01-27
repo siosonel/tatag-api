@@ -6,15 +6,15 @@
             "@type": "root",
             "definitions": "/ref/defs.json",
             "me": "/user/{user_id}",
-						"ratings": "/rating/collection",
-						"promos": "/promo/collection",						
-						"brands": "/brand/collection",						
+			"ratings": "/rating/collection",
+			"promos": "/promo/collection",						
+			"brands": "/brand/collection",						
             "linkTerms": [],
             "navigation": "/api/ref/examples/navigation.json"
-				},
+		},
         {
             "@id": "/user/{user_id}",
-						"@type": "user",
+			"@type": "user",
             "user_id": "{user_id}",
             "memberships": "/user/{user_id}/memberships",
             "holdings": "/user/{user_id}/accounts",
@@ -22,9 +22,25 @@
             "about": "/user/{user_id}/about",
             "name": "User One",
             "login_provider": "gp",
-						"teams": "/user/{user_id}/teams",
-						"issuers": "/user/{user_id}/brands",
-						"promoSearch": "/form/promo-search"
+			"teams": "/user/{user_id}/teams",
+			"issuers": "/user/{user_id}/brands",
+            "apps": {
+                "app": [
+                    "/app/trial"
+                ]
+            },
+			"promoSearch": "/form/promo-search"
+        },
+        {
+            "@id": "/app/trial",
+            "@type": "appResources",
+            "budgetlog": "/report/addUse",
+            "tally": "/tally/",
+            "addedByWeek": "/added/byWeek",
+            "inflowByWeek": "/inflow/byWeek",
+            "outflowByWeek": "/outflow/byWeek",
+            "intrauseByWeek": "/intrause/byWeek",
+            "flowMatrix": "/flow/matrix"
         }
     ]
 }

@@ -1,0 +1,4 @@
+{
+    "@id": "/cron/budgetAdd",
+    "@type": "CronAdd"
+}

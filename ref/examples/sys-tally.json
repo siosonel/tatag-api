@@ -1,0 +1,7 @@
+{
+    "@id": "/cron/tally",
+    "@type": "cronTally",
+    "currWeek": 4,
+    "numBrands": 13,
+    "totalUpdates": 2
+}

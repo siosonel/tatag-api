@@ -5,6 +5,9 @@ class Home {
 	
 	function get() {		
 		$home = json_decode(file_get_contents("ref/examples/home.json"),true);
+		
+		if (SITE=='dev') $home['@graph'][0]['trigger'] = "/sys/trigger";
+
 		$home['@graph'][0]['linkTerms'] = json_decode(file_get_contents("ref/examples/linkTerms.json"),true);
 		$home['@graph'][0]['formTerms'] = json_decode(file_get_contents("ref/examples/formTerms.json"),true);
 		$home['@graph'][0]['navDirections'] = json_decode(file_get_contents("ref/examples/navDirections.json"),true);
@@ -17,8 +20,7 @@ class Home {
 		}
 		
 		include_once "models/UserTeams.php";
-		include_once "models/UserBrands.php";
-		
+		include_once "models/UserBrands.php";		
 		
 		$home['@graph'][] = (new UserTeams())->get()[0];
 		$home['@graph'][] = (new UserBrands())->get()[0];

@@ -70,7 +70,12 @@
                 "#forms": [
                     "add"
                 ]
-			}
+			},
+            "apps": {
+                "#forms": [
+                    "add"
+                ]
+            }
         }
     },
     "team": {
@@ -175,7 +180,7 @@
                         "throttle": {
                             "#forms": [
                                 "edit"
-                            ]												
+                            ]
 						},
                         "#forms": [
                             "add"
@@ -185,6 +190,32 @@
                     "tally": {}
                 }
             }
+        }
+    },
+    "dev": {
+        "me": {
+            "apps": {
+                "app": {
+                    "budgetlog": {},
+                    "tally": {},
+                    "addedByWeek": {},
+                    "inflowByWeek": {},
+                    "outflowByWeek": {},
+                    "intrauseByWeek": {},
+                    "flowMatrix": {},
+                    "#forms": [
+                        "edit"
+                    ]
+                }
+            }
+        }
+    },
+    "sys": {
+        "trigger": {
+            "approve": {},
+            "add": {},
+            "report": {},
+            "tally": {}
         }
     }
 }

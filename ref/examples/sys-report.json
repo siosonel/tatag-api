@@ -1,0 +1,9 @@
+{
+    "pageOrder": null,
+    "itemsLimit": 50,
+    "collectionOf": null,
+    "pageOf": null,
+    "@id": "/cron/report",
+    "@type": "report",
+    "numInserted": null
+}

@@ -3,11 +3,16 @@
 class CronBudgetAdd extends Base {
 	function __construct() {
 		if ($_SERVER['REMOTE_ADDR']!=$_SERVER['SERVER_ADDR'] AND $_SERVER['REMOTE_ADDR']!='127.0.0.1') {
-			Error::http(403, "Requests for the cron/report resource must originate from the server environment.");
+			Error::http(403, "Requests for cron resources must originate from the server environment.");
 		}
+
+		$this->{"@id"} = "/cron/budgetAdd";
+		$this->{"@type"} = "CronAdd";
 	}
 
 	function get() {
+		$graph = array($this);
+
 		$brands = "SELECT brand_id
 			FROM accounts a
 			INNER JOIN (
@@ -24,8 +29,6 @@ class CronBudgetAdd extends Base {
 			GROUP BY brand_id";
 
 		$rows = DBquery::get($sql);
-
-		$graph = array();
 		
 		foreach($rows AS $r) {
 			$sql = "CALL budgetRevExp($r[brand_id])";

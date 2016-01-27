@@ -3,19 +3,22 @@
 class CronReport extends Collection {
 	function __construct() {
 		if ($_SERVER['REMOTE_ADDR']!=$_SERVER['SERVER_ADDR'] AND $_SERVER['REMOTE_ADDR']!='127.0.0.1') {
-			Error::http(403, "Requests for the cron/report resource must originate from the server environment.");
+			Error::http(403, "Requests for cron resources must originate from the localhost environment.");
 		}
+
+		$this->{"@id"} = "/cron/report";
+		$this->{"@type"} = "report";
 	}
 
 	function get() {
-		
+		$graph = array($this);
 
 		$sql = "INSERT INTO reports 
-			(txntype, from_brand, to_brand, amount, max_id, max_updated)
+			(txntype, from_brand, to_brand, amount, max_id, max_updated, keyword)
 			SELECT txntype, 
 				f.brand_id AS from_brand, 
 				t.brand_id AS to_brand, 
-				SUM(amount) AS amount, 
+				SUM(r.amount) AS amount, 
 				MAX(record_id) AS max_id,
 				MAX(r.updated) AS max_updated,
 				p.keyword AS keyword
@@ -30,6 +33,8 @@ class CronReport extends Collection {
 
 		$numInserted = DBquery::set($sql);
 
-		return array("sql"=>$sql, "numInserted"=>$success);
+		//$this->sql = $sql;
+		$this->numInserted = $success;
+		return $graph;
 	}
 }

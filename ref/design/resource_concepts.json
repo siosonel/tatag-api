@@ -22,7 +22,8 @@
         "rating",
         "about",
         "teams",
-        "issuers"
+        "issuers",
+        "apps"
     ],
     "team": [
         "brand",
@@ -53,5 +54,22 @@
         "promo",
         "throttles",
         "throttle"
+    ],
+    "dev": [
+        "app",
+        "budgetlog",
+        "tally",
+        "addedByWeek",
+        "inflowByWeek",
+        "outflowByWeek",
+        "intrauseByWeek",
+        "flowMatrix"
+    ],
+    "sys": [
+        "trigger",
+        "approve",
+        "add",
+        "report",
+        "tally"
     ]
 }

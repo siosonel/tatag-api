@@ -1,0 +1,15 @@
+{
+    "@id": "/inflow/byWeek?db=tatagtestdtd",
+    "data": [
+        {
+            "brand_id": 104,
+            "inflow": [
+                {
+                    "week": 47,
+                    "brand": 104,
+                    "amount": 9.37
+                }
+            ]
+        }
+    ]
+}

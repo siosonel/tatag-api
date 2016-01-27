@@ -1,0 +1,15 @@
+{
+    "@id": "/outflow/byWeek?db=tatagtestdtd",
+    "data": [
+        {
+            "brand_id": 105,
+            "outflow": [
+                {
+                    "week": 47,
+                    "brand": 105,
+                    "amount": 9.37
+                }
+            ]
+        }
+    ]
+}

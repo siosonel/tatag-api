@@ -79,8 +79,13 @@ class Requester {
 			"", 
 			"collection", "about", "ts", "ranks", "tally", 
 			"flow", "inflow", "outflow", "added", "intrause",
-			"sim", "arRatio", "cron", "promo", "report"
+			"sim", "arRatio", "promo", "report", "trial"
 		);
+
+		if (SITE=='dev') {
+			$openAccess[] = "cron";
+			$openAccess[] = "sys";
+		}
 		
 		if (!isset($_SERVER['PHP_AUTH_USER'])
 			AND (AUDIENCE=='sim' 

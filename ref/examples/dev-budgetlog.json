@@ -1,0 +1,55 @@
+{
+    "pageOrder": "desc",
+    "itemsLimit": 1000,
+    "collectionOf": "data",
+    "pageOf": "/report/addUse",
+    "@id": "/report/addUse",
+    "@type": "dataset",
+    "data": [
+        {
+            "report_id": 12,
+            "txntype": "pn",
+            "from_brand": 105,
+            "to_brand": 104,
+            "amount": 9.37,
+            "updated": 1447917341,
+            "keyword": null
+        },
+        {
+            "report_id": 11,
+            "txntype": "pn",
+            "from_brand": 104,
+            "to_brand": 104,
+            "amount": 25,
+            "updated": 1447917025,
+            "keyword": "ad"
+        },
+        {
+            "report_id": 10,
+            "txntype": "pn",
+            "from_brand": 104,
+            "to_brand": 104,
+            "amount": 65.76,
+            "updated": 1448144507,
+            "keyword": null
+        },
+        {
+            "report_id": 9,
+            "txntype": "np",
+            "from_brand": 105,
+            "to_brand": 105,
+            "amount": 1000,
+            "updated": null,
+            "keyword": null
+        },
+        {
+            "report_id": 8,
+            "txntype": "np",
+            "from_brand": 104,
+            "to_brand": 104,
+            "amount": 1500.11,
+            "updated": 1447873251,
+            "keyword": null
+        }
+    ]
+}

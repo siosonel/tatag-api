@@ -357,7 +357,7 @@ api.loadConcept('public-promo');
 <p>Anything that a participant could pay for, such as for purchasing products, funding nonprofit campaigns, or supporting team projects with donations. </p>
 <table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>double</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>by_all_limit</td><td>integer</td><td>This is a weekly limit on the total inflow transaction amount for a given account or usage for a given product, regardless of the payor's brand or user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_brand_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's brand id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_wait</td><td>integer</td><td>How long a user must wait after using a promo, before that user can reuse the same promo.</td></tr><tr><td>code</td><td>string</td><td>An alpha-numeric string that a payment recipient shares with a payor to authorize a payment or promo use.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>expires</td><td>string</td><td>The date after which a given resource will no longer be available. For example, a promo may expire after a week.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>imageTemplate</td><td>string</td><td>If given, a user interface provider may use this resource to display a brand icon or promo image.</td></tr><tr><td>imageURL</td><td>string</td><td>If given, a user interface provider may use this link to display a brand icon or promo image.</td></tr><tr><td>infoURL</td><td>NULL</td><td>External web page about a resource.</td></tr><tr><td>keyword</td><td>string</td><td>In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>payURL</td><td>string</td><td>A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.</td></tr><tr><td>promoPage</td><td>string</td><td>The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.</td></tr><tr><td>promo_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>updated</td><td>NULL</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#public-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr></tbody></table>
 <h1 id="personal-resources">Personal Resources</h1>
-<p>These are resources that belong to the current user and are meant for private viewing. </p>
+<p>These are resources that belong to the current user and are meant for private viewing. These resources are inteded to be used for wallet type applications, and in order for such applications to act on behalf of a user, oauth-type authentication is required.</p>
 <h2 id="my-me">my-me</h2>
 <pre><code class="language-javascript">
 api.loadConcept('my-me');
@@ -2027,6 +2027,16 @@ api.submit(currResource, 'add', {
     ],
     "requestURI": "/user/21/brands"
 }</code></pre>
+<h2 id="my-apps">my-apps</h2>
+<pre><code class="language-javascript">
+api.loadConcept('my-apps');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>null</code></pre>
+<p>blah blah blah </p>
+<p>_table:examples/my-apps.json</p>
 <h1 id="team-resources">Team Resources</h1>
 <p>All members of a team share access to these resources. The accessible resources are based on the membership of the currently logged-in user.</p>
 <h2 id="team-brand">team-brand</h2>
@@ -4059,7 +4069,771 @@ api.submit(currResource, 'edit', {
 </blockquote>
 <pre><code>{
     "period": 99999999
-}</code></pre>				
+}</code></pre>
+<h1 id="developer-resources">Developer Resources</h1>
+<p>These are application-related resources that belongs to a developer. The consumer id and secret are required fro authentication.</p>
+<h2 id="dev-app">dev-app</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-app');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>[
+    {
+        "@id": "/app/trial",
+        "@type": "appResources",
+        "budgetlog": "/report/addUse",
+        "tally": "/tally/",
+        "addedByWeek": "/added/byWeek",
+        "inflowByWeek": "/inflow/byWeek",
+        "outflowByWeek": "/outflow/byWeek",
+        "intrauseByWeek": "/intrause/byWeek",
+        "flowMatrix": "/flow/matrix"
+    }
+]</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#dev-addedByWeek'>addedByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-budgetlog'>budgetlog</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-flowMatrix'>flowMatrix</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-inflowByWeek'>inflowByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-intrauseByWeek'>intrauseByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-outflowByWeek'>outflowByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-tally'>tally</a></td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr></tbody></table>
+<h2 id="dev-budgetlog">dev-budgetlog</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-budgetlog');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "pageOrder": "desc",
+    "itemsLimit": 1000,
+    "collectionOf": "data",
+    "pageOf": "/report/addUse",
+    "@id": "/report/addUse",
+    "@type": "dataset",
+    "data": [
+        {
+            "report_id": 12,
+            "txntype": "pn",
+            "from_brand": 105,
+            "to_brand": 104,
+            "amount": 9.37,
+            "updated": 1447917341,
+            "keyword": null
+        },
+        {
+            "report_id": 11,
+            "txntype": "pn",
+            "from_brand": 104,
+            "to_brand": 104,
+            "amount": 25,
+            "updated": 1447917025,
+            "keyword": "ad"
+        },
+        {
+            "report_id": 10,
+            "txntype": "pn",
+            "from_brand": 104,
+            "to_brand": 104,
+            "amount": 65.76,
+            "updated": 1448144507,
+            "keyword": null
+        }
+    ]
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>data</td><td>array</td><td>...</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr></tbody></table>
+<h2 id="dev-tally">dev-tally</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-tally');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody></tbody></table>
+<h2 id="dev-addedbyweek">dev-addedByWeek</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-addedByWeek');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "@id": "/added/byWeek?db=tatagtestdtd",
+    "data": [
+        {
+            "brand_id": 104,
+            "added": [
+                {
+                    "week": null,
+                    "brand": 104,
+                    "amount": 1000
+                },
+                {
+                    "week": 47,
+                    "brand": 104,
+                    "amount": 500.11
+                },
+                {
+                    "brand": 104,
+                    "week": 0,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 1,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 2,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 3,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 4,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 5,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 6,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 7,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 8,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 9,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 10,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 11,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 12,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 13,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 14,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 15,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 16,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 17,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 18,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 19,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 20,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 21,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 22,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 23,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 24,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 25,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 26,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 27,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 28,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 29,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 30,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 31,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 32,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 33,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 34,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 35,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 36,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 37,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 38,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 39,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 40,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 41,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 42,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 43,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 44,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 45,
+                    "amount": 0
+                },
+                {
+                    "brand": 104,
+                    "week": 46,
+                    "amount": 0
+                }
+            ]
+        },
+        {
+            "brand_id": 105,
+            "added": [
+                {
+                    "week": null,
+                    "brand": 105,
+                    "amount": 1000
+                },
+                {
+                    "brand": 105,
+                    "week": 0,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 1,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 2,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 3,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 4,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 5,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 6,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 7,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 8,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 9,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 10,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 11,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 12,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 13,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 14,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 15,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 16,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 17,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 18,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 19,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 20,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 21,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 22,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 23,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 24,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 25,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 26,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 27,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 28,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 29,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 30,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 31,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 32,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 33,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 34,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 35,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 36,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 37,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 38,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 39,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 40,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 41,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 42,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 43,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 44,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 45,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 46,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 47,
+                    "amount": 0
+                }
+            ]
+        }
+    ]
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>data</td><td>array</td><td>...</td></tr></tbody></table>
+<h2 id="dev-inflowbyweek">dev-inflowByWeek</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-inflowByWeek');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "@id": "/inflow/byWeek?db=tatagtestdtd",
+    "data": [
+        {
+            "brand_id": 104,
+            "inflow": [
+                {
+                    "week": 47,
+                    "brand": 104,
+                    "amount": 9.37
+                }
+            ]
+        }
+    ]
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>data</td><td>array</td><td>...</td></tr></tbody></table>
+<h2 id="dev-outflowbyweek">dev-outflowByWeek</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-outflowByWeek');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "@id": "/outflow/byWeek?db=tatagtestdtd",
+    "data": [
+        {
+            "brand_id": 105,
+            "outflow": [
+                {
+                    "week": 47,
+                    "brand": 105,
+                    "amount": 9.37
+                }
+            ]
+        }
+    ]
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>data</td><td>array</td><td>...</td></tr></tbody></table>
+<h2 id="dev-intrausebyweek">dev-intrauseByWeek</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-intrauseByWeek');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "@id": "/intrause/byWeek?db=tatagtestdtd",
+    "data": [
+        {
+            "brand_id": 104,
+            "intrause": [
+                {
+                    "week": 47,
+                    "brand": 104,
+                    "amount": 90.76
+                }
+            ]
+        }
+    ]
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>data</td><td>array</td><td>...</td></tr></tbody></table>
+<h2 id="dev-flowmatrix">dev-flowMatrix</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-flowMatrix');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "@id": "/flow/matrix?db=tatagtestdtd",
+    "brands": [
+
+    ],
+    "matrix": [
+
+    ]
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>matrix</td><td>array</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>brands</td><td>link</td><td>...</td></tr></tbody></table>
+<h1 id="system-resources">System Resources</h1>
+<p>These are system administration related resources.</p>
+<h2 id="sys-trigger">sys-trigger</h2>
+<pre><code class="language-javascript">
+api.loadConcept('sys-trigger');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "@id": "/sys/trigger",
+    "@type": "systemTrigger",
+    "approve": "/cron/records",
+    "add": "/cron/budgetAdd",
+    "report": "/cron/report",
+    "tally": "/cron/tally"
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#sys-report'>report</a></td><td>link</td><td>...</td></tr><tr><td><a href='#sys-tally'>tally</a></td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#sys-trigger-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr><tr><td><a href='#sys-trigger-approve'>approve</a></td><td>form</td><td>A form for approving the completion of a pending resource action.</td></tr></tbody></table>
+<h2 id="sys-approve">sys-approve</h2>
+<pre><code class="language-javascript">
+api.loadConcept('sys-approve');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "numApproved": 0
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>numApproved</td><td>integer</td><td>...</td></tr></tbody></table>
+<h2 id="sys-add">sys-add</h2>
+<pre><code class="language-javascript">
+api.loadConcept('sys-add');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "@id": "/cron/budgetAdd",
+    "@type": "CronAdd"
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr></tbody></table>
+<h2 id="sys-report">sys-report</h2>
+<pre><code class="language-javascript">
+api.loadConcept('sys-report');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "pageOrder": null,
+    "itemsLimit": 50,
+    "collectionOf": null,
+    "pageOf": null,
+    "@id": "/cron/report",
+    "@type": "report",
+    "numInserted": null
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>NULL</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>numInserted</td><td>NULL</td><td>...</td></tr><tr><td>pageOf</td><td>NULL</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>NULL</td><td>Either 'asc' or 'desc' based on item id's.</td></tr></tbody></table>
+<h2 id="sys-tally">sys-tally</h2>
+<pre><code class="language-javascript">
+api.loadConcept('sys-tally');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "@id": "/cron/tally",
+    "@type": "cronTally",
+    "currWeek": 4,
+    "numBrands": 13,
+    "totalUpdates": 2
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>currWeek</td><td>integer</td><td>...</td></tr><tr><td>numBrands</td><td>integer</td><td>...</td></tr><tr><td>totalUpdates</td><td>integer</td><td>...</td></tr></tbody></table>				
 		</div>
 		<div class="dark-box">
 			<div class="lang-selector">
