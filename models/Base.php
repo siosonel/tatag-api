@@ -159,7 +159,8 @@ class Base {
 	
 	function setForms($relatedType='', $relatedForms=array()) {
 		$type = ($relatedType) ? $relatedType : $this->{'@type'};
-	
+		if (!isset(Requester::$defs->$type)) return; 
+
 		$actions = Requester::$defs->$type->actions;
 		
 		if ($actions) {
