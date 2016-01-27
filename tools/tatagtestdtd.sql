@@ -365,6 +365,28 @@ UNLOCK TABLES;
 -- Table structure for table `reversals`
 --
 
+
+
+
+
+DROP TABLE IF EXISTS `reports`;
+
+CREATE TABLE `reports` (
+  `report_id` int(11) NOT NULL AUTO_INCREMENT,
+  `txntype` varchar(2) DEFAULT NULL,
+  `from_brand` int(11) DEFAULT NULL,
+  `to_brand` int(11) DEFAULT NULL,
+  `amount` decimal(9,2) DEFAULT '0.00',
+  `max_id` int(11) DEFAULT NULL,
+  `max_updated` timestamp NULL DEFAULT NULL,
+  `keyword` varchar(16) DEFAULT NULL,
+  PRIMARY KEY (`report_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+
+
+
+
 DROP TABLE IF EXISTS `reversals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1064,34 +1086,47 @@ CREATE PROCEDURE `detect_imbalance`(
 BEGIN
 select * from (
 	select account_id, sign, balance, 
-		(COALESCE(addedf,0) + COALESCE(addedt,0) - COALESCE(outflow,0) - COALESCE(inflow,0)) as actual,
-		COALESCE(addedf,0), COALESCE(addedt,0),
-		COALESCE(outflow,0), COALESCE(inflow,0)	
-	from accounts a
-	left join (
-		select from_acct, SUM(amount) as outflow
-		from records r
-		where status=7 and txntype='pn' and to_acct IS NOT NULL and from_acct IS NOT NULL
-		group by from_acct
-	) f on f.from_acct = a.account_id
-	left join (
-		select to_acct, SUM(amount) as inflow
-		from records r
-		where status=7 and txntype='pn' and to_acct IS NOT NULL and from_acct IS NOT NULL
-		group by to_acct
-	) t on t.to_acct = a.account_id
-	left join (
-		select from_acct, SUM(amount) as addedf
-		from records r
-		where status=7 and txntype='np' and to_acct IS NOT NULL and from_acct IS NOT NULL
-		group by from_acct
-	) addf on addf.from_acct = a.account_id
-	left join (
-		select to_acct, SUM(amount) as addedt
-		from records r
-		where status=7 and txntype='np' and to_acct IS NOT NULL and from_acct IS NOT NULL
-		group by to_acct
-	) addt on addt.to_acct = a.account_id
+    (COALESCE(addedf,0) + COALESCE(addedt,0) - COALESCE(outflow,0) - COALESCE(inflow,0) - COALESCE(transferredf,0) + COALESCE(transferredt,0)) as actual,
+    COALESCE(addedf,0), COALESCE(addedt,0),
+    COALESCE(outflow,0), COALESCE(inflow,0),
+    COALESCE(transferredf,0), COALESCE(transferredt,0)    
+  from accounts a
+  left join (
+    select from_acct, SUM(amount) as outflow
+    from records r
+    where status=7 and txntype='pn' and to_acct IS NOT NULL and from_acct IS NOT NULL
+    group by from_acct
+  ) f on f.from_acct = a.account_id
+  left join (
+    select to_acct, SUM(amount) as inflow
+    from records r
+    where status=7 and txntype='pn' and to_acct IS NOT NULL and from_acct IS NOT NULL
+    group by to_acct
+  ) t on t.to_acct = a.account_id
+  left join (
+    select from_acct, SUM(amount) as addedf
+    from records r
+    where status=7 and txntype='np' and to_acct IS NOT NULL and from_acct IS NOT NULL
+    group by from_acct
+  ) addf on addf.from_acct = a.account_id
+  left join (
+    select to_acct, SUM(amount) as addedt
+    from records r
+    where status=7 and txntype='np' and to_acct IS NOT NULL and from_acct IS NOT NULL
+    group by to_acct
+  ) addt on addt.to_acct = a.account_id
+  left join (
+    select from_acct, SUM(amount) as transferredf
+    from records r
+    where status=7 and (txntype='pp' OR txntype='nn') and to_acct IS NOT NULL and from_acct IS NOT NULL
+    group by from_acct
+  ) transf on transf.from_acct = a.account_id
+  left join (
+    select to_acct, SUM(amount) as transferredt
+    from records r
+    where status=7 and (txntype='pp' OR txntype='nn') and to_acct IS NOT NULL and from_acct IS NOT NULL
+    group by to_acct
+  ) transt on transt.to_acct = a.account_id
 ) byrec
 where balance<0 OR byrec.balance != actual
 ;
