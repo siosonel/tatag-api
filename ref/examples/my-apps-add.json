@@ -1,0 +1,28 @@
+{
+    "title": "Add a new application",
+    "@type": "form",
+    "@id": "/form/app-add",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "name",
+            "secret"
+        ],
+        "optional": [
+            "redirect_url"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow a user to add an application",
+            "resource": {
+                "@id": "/user/21/apps"
+            },
+            "inputs": {
+                "name": "my test app",
+                "secret": "Ksi380sgtrpeOiwskswidf120m75"
+            },
+            "status": 200
+        }
+    ]
+}

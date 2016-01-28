@@ -10,6 +10,7 @@
     "login_provider": "gp",
     "teams": "/user/21/teams",
     "issuers": "/user/21/brands",
+    "apps": "/user/21/apps",
     "promoSearch": "/form/promo-search",
     "id": 21
 }

@@ -1,0 +1,13 @@
+{
+    "pageOrder": "asc",
+    "itemsLimit": 50,
+    "collectionOf": "app",
+    "pageOf": "/user/21/apps",
+    "user_id": 21,
+    "@id": "/user/21/apps",
+    "@type": "userApps",
+    "app": [
+        "/app/trial"
+    ],
+    "add": "/form/app-add"
+}

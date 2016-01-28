@@ -24,11 +24,7 @@
             "login_provider": "gp",
 			"teams": "/user/{user_id}/teams",
 			"issuers": "/user/{user_id}/brands",
-            "apps": {
-                "app": [
-                    "/app/trial"
-                ]
-            },
+            "apps": "/user/{user_id}/apps",
 			"promoSearch": "/form/promo-search"
         },
         {

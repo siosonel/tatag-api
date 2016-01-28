@@ -7,6 +7,42 @@
     "@type": "dataset",
     "data": [
         {
+            "report_id": 16,
+            "txntype": "np",
+            "from_brand": 105,
+            "to_brand": 105,
+            "amount": -375,
+            "updated": 1453934401,
+            "keyword": null
+        },
+        {
+            "report_id": 15,
+            "txntype": "np",
+            "from_brand": 104,
+            "to_brand": 104,
+            "amount": 9.37,
+            "updated": 1453934401,
+            "keyword": null
+        },
+        {
+            "report_id": 14,
+            "txntype": "np",
+            "from_brand": 105,
+            "to_brand": 105,
+            "amount": -375,
+            "updated": 1453933226,
+            "keyword": null
+        },
+        {
+            "report_id": 13,
+            "txntype": "np",
+            "from_brand": 104,
+            "to_brand": 104,
+            "amount": 6454.4,
+            "updated": 1453933226,
+            "keyword": null
+        },
+        {
             "report_id": 12,
             "txntype": "pn",
             "from_brand": 105,

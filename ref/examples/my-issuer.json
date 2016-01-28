@@ -11,16 +11,6 @@
     "promos": "/brand/104/promos",
     "records": "/budget/104/records",
     "throttles": "/budget/104/throttles",
-    "tally": {
-        "@type": "budgetTally",
-        "added": 1500.11,
-        "intrause": 90.76,
-        "inflow": 9.37,
-        "outflow": 0,
-        "revBudget": 1399.98,
-        "expBudget": 1409.35,
-        "numMembers": 2,
-        "totalMemberHours": 0
-    },
+    "tally": "/brand/104/tally",
     "edit": "/form/brand-edit"
 }

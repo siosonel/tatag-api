@@ -106,6 +106,7 @@ CREATE TABLE `consumers` (
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
+  `user_id` int(11) DEFAULT '0',
   PRIMARY KEY (`consumer_id`)
 ) ENGINE=MEMORY AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Machine consumers of the API';
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -70,7 +70,10 @@
 		      "description": "A collection of the brands administered by the current user."
      },
 		 
-		 
+     "my-apps": {
+              "description": "A user's collection of 'app'."
+     },
+
      "team-brand": {
 		      "description": "A brand to which the current user belongs to."
      },
@@ -166,5 +169,33 @@
 		 
      "admin-account-holder": {
 		      "description": "A holder of a brand account thta is administered by the current user."
-     }
+     },
+
+     "dev-budgetlog": {		
+              "description": "A simple log of budget additions and use as the corresponding transaction records get approved. The budgetlog may be used for data warehousing purposes."
+	 },
+
+	 "dev-tally": {		
+              "description": "Combined datasets, made of dev-addedByWeek, dev-inflowByWeek, dev-outflowByWeek, dev-intrauseByWeek, dev-flowMatrix."
+	 },
+
+	 "dev-addedByWeek": {
+	          "description": "A dataset of added budgets by brand by week."
+	 },
+
+     "dev-inflowByWeek": {		
+              "description": "A dataset of inflow, a.k.a. received budget use, by brand by week."
+	 },
+
+     "dev-outflowByWeek": {		
+              "description": "A dataset of outflow, a.k.a. originated budget use, by brand by week."
+	 },
+
+     "dev-intrauseByWeek": {		
+              "description": "A dataset of intrause, a.k.a intra-entity budget use, by brand by week."
+	 },
+
+     "dev-flowMatrix": {		
+              "description": "A dataset of budget use between brands by week."
+	 }
 }

@@ -1,3 +1,310 @@
 {
-
+    "@id": "/tally/?db=tatagtestdtd",
+    "data": [
+        {
+            "brand_id": 104,
+            "data": [
+                {
+                    "brand_id": 104,
+                    "week": 2,
+                    "n_start_bal": 0,
+                    "issued": 1000,
+                    "intrause": 6.15,
+                    "inflow": 9.37,
+                    "outflow": 0,
+                    "num_members": 2,
+                    "member_hours": 0,
+                    "type_system": "for-profit",
+                    "type_id": 9,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": "2016-01-27 14:13:26"
+                },
+                {
+                    "brand_id": 104,
+                    "week": 3,
+                    "n_start_bal": 984.48,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 2,
+                    "member_hours": 0,
+                    "type_system": "for-profit",
+                    "type_id": 9,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": "2016-01-27 15:55:53"
+                }
+            ]
+        },
+        {
+            "brand_id": 105,
+            "data": [
+                {
+                    "brand_id": 105,
+                    "week": 2,
+                    "n_start_bal": 0,
+                    "issued": 1000,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 9.37,
+                    "num_members": 1,
+                    "member_hours": 0,
+                    "type_system": "for-profit",
+                    "type_id": 9,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": "2016-01-27 14:13:26"
+                },
+                {
+                    "brand_id": 105,
+                    "week": 3,
+                    "n_start_bal": 1000,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 1,
+                    "member_hours": 0,
+                    "type_system": "for-profit",
+                    "type_id": 9,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": "2016-01-27 15:55:53"
+                }
+            ]
+        },
+        {
+            "brand_id": 106,
+            "data": [
+                {
+                    "brand_id": 106,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 107,
+            "data": [
+                {
+                    "brand_id": 107,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 108,
+            "data": [
+                {
+                    "brand_id": 108,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 109,
+            "data": [
+                {
+                    "brand_id": 109,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 110,
+            "data": [
+                {
+                    "brand_id": 110,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 111,
+            "data": [
+                {
+                    "brand_id": 111,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 112,
+            "data": [
+                {
+                    "brand_id": 112,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 113,
+            "data": [
+                {
+                    "brand_id": 113,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 114,
+            "data": [
+                {
+                    "brand_id": 114,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 115,
+            "data": [
+                {
+                    "brand_id": 115,
+                    "week": 47,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 116,
+            "data": [
+                {
+                    "brand_id": 116,
+                    "week": 47,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        }
+    ]
 }

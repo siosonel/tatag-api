@@ -71,6 +71,7 @@ CREATE TABLE `consumers` (
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated` timestamp NULL DEFAULT NULL,
   `ended` timestamp NULL DEFAULT NULL,
+  `user_id` int(11) DEFAULT '0',
   PRIMARY KEY (`consumer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Machine consumers of the API';
 

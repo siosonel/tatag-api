@@ -4138,7 +4138,7 @@ api.loadConcept('dev-budgetlog');
         }
     ]
 }</code></pre>
-<p>blah blah blah </p>
+<p>A simple log of budget additions and use as the corresponding transaction records get approved. The budgetlog may be used for data warehousing purposes. </p>
 <table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>data</td><td>array</td><td>...</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr></tbody></table>
 <h2 id="dev-tally">dev-tally</h2>
 <pre><code class="language-javascript">
@@ -4148,10 +4148,317 @@ api.loadConcept('dev-tally');
 <p>Status <span style='color:#0f0'>200</span></p>
 </blockquote>
 <pre><code>{
-
+    "@id": "/tally/?db=tatagtestdtd",
+    "data": [
+        {
+            "brand_id": 104,
+            "data": [
+                {
+                    "brand_id": 104,
+                    "week": 2,
+                    "n_start_bal": 0,
+                    "issued": 1000,
+                    "intrause": 6.15,
+                    "inflow": 9.37,
+                    "outflow": 0,
+                    "num_members": 2,
+                    "member_hours": 0,
+                    "type_system": "for-profit",
+                    "type_id": 9,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": "2016-01-27 14:13:26"
+                },
+                {
+                    "brand_id": 104,
+                    "week": 3,
+                    "n_start_bal": 984.48,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 2,
+                    "member_hours": 0,
+                    "type_system": "for-profit",
+                    "type_id": 9,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": "2016-01-27 15:55:53"
+                }
+            ]
+        },
+        {
+            "brand_id": 105,
+            "data": [
+                {
+                    "brand_id": 105,
+                    "week": 2,
+                    "n_start_bal": 0,
+                    "issued": 1000,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 9.37,
+                    "num_members": 1,
+                    "member_hours": 0,
+                    "type_system": "for-profit",
+                    "type_id": 9,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": "2016-01-27 14:13:26"
+                },
+                {
+                    "brand_id": 105,
+                    "week": 3,
+                    "n_start_bal": 1000,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 1,
+                    "member_hours": 0,
+                    "type_system": "for-profit",
+                    "type_id": 9,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": "2016-01-27 15:55:53"
+                }
+            ]
+        },
+        {
+            "brand_id": 106,
+            "data": [
+                {
+                    "brand_id": 106,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 107,
+            "data": [
+                {
+                    "brand_id": 107,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 108,
+            "data": [
+                {
+                    "brand_id": 108,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 109,
+            "data": [
+                {
+                    "brand_id": 109,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 110,
+            "data": [
+                {
+                    "brand_id": 110,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 111,
+            "data": [
+                {
+                    "brand_id": 111,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 112,
+            "data": [
+                {
+                    "brand_id": 112,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 113,
+            "data": [
+                {
+                    "brand_id": 113,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 114,
+            "data": [
+                {
+                    "brand_id": 114,
+                    "week": 32,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 115,
+            "data": [
+                {
+                    "brand_id": 115,
+                    "week": 47,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        },
+        {
+            "brand_id": 116,
+            "data": [
+                {
+                    "brand_id": 116,
+                    "week": 47,
+                    "n_start_bal": 0,
+                    "issued": 0,
+                    "intrause": 0,
+                    "inflow": 0,
+                    "outflow": 0,
+                    "num_members": 0,
+                    "member_hours": 0,
+                    "type_system": "sim",
+                    "type_id": 10,
+                    "country_code": "USA",
+                    "area_code": 206,
+                    "updated": null
+                }
+            ]
+        }
+    ]
 }</code></pre>
-<p>blah blah blah </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody></tbody></table>
+<p>Combined datasets, made of dev-addedByWeek, dev-inflowByWeek, dev-outflowByWeek, dev-intrauseByWeek, dev-flowMatrix. </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>data</td><td>array</td><td>...</td></tr></tbody></table>
 <h2 id="dev-addedbyweek">dev-addedByWeek</h2>
 <pre><code class="language-javascript">
 api.loadConcept('dev-addedByWeek');
@@ -4664,7 +4971,7 @@ api.loadConcept('dev-addedByWeek');
         }
     ]
 }</code></pre>
-<p>blah blah blah </p>
+<p>A dataset of added budgets by brand by week. </p>
 <table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>data</td><td>array</td><td>...</td></tr></tbody></table>
 <h2 id="dev-inflowbyweek">dev-inflowByWeek</h2>
 <pre><code class="language-javascript">
@@ -4688,7 +4995,7 @@ api.loadConcept('dev-inflowByWeek');
         }
     ]
 }</code></pre>
-<p>blah blah blah </p>
+<p>A dataset of inflow, a.k.a. received budget use, by brand by week. </p>
 <table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>data</td><td>array</td><td>...</td></tr></tbody></table>
 <h2 id="dev-outflowbyweek">dev-outflowByWeek</h2>
 <pre><code class="language-javascript">
@@ -4712,7 +5019,7 @@ api.loadConcept('dev-outflowByWeek');
         }
     ]
 }</code></pre>
-<p>blah blah blah </p>
+<p>A dataset of outflow, a.k.a. originated budget use, by brand by week. </p>
 <table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>data</td><td>array</td><td>...</td></tr></tbody></table>
 <h2 id="dev-intrausebyweek">dev-intrauseByWeek</h2>
 <pre><code class="language-javascript">
@@ -4736,7 +5043,7 @@ api.loadConcept('dev-intrauseByWeek');
         }
     ]
 }</code></pre>
-<p>blah blah blah </p>
+<p>A dataset of intrause, a.k.a intra-entity budget use, by brand by week. </p>
 <table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>data</td><td>array</td><td>...</td></tr></tbody></table>
 <h2 id="dev-flowmatrix">dev-flowMatrix</h2>
 <pre><code class="language-javascript">
@@ -4754,7 +5061,7 @@ api.loadConcept('dev-flowMatrix');
 
     ]
 }</code></pre>
-<p>blah blah blah </p>
+<p>A dataset of budget use between brands by week. </p>
 <table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>matrix</td><td>array</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>brands</td><td>link</td><td>...</td></tr></tbody></table>
 <h1 id="system-resources">System Resources</h1>
 <p>These are system administration related resources.</p>
