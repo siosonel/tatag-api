@@ -54,7 +54,10 @@ class BudgetUsed extends Base {
 			if (substr($key,0,3)==='to_') unset($this->$key);
 		}
 
-		$this->verifier->notifyRecipient($this->obj->to_user, "budget use $this->amount", "You don't have to do anything.");
+		$this->advise = $this->getAdvise();
+		$this->verifier->notifyRecipient(
+			$this->obj->to_user, "budget use $this->amount", "[". json_encode($this->advise) ."]. You don't have to do anything."
+		);
 		
 		return array($this);
 	}	
@@ -101,6 +104,17 @@ class BudgetUsed extends Base {
 	function verifyBals() {
 		if (1*$this->verifier->from_holder['balance'] < $this->amount) return "Account #$this->from_acct has insufficient balance. ";
 	}
+
+	function getAdvise() {
+		$info = new stdClass();
+		$info->from_brand = $this->verifier->from_holder['brand_id'];
+		$info->to_brand = $this->verifier->to_holder['brand_id'];
+
+		if ($info->from_brand==$info->to_brand) return 7;
+
+		include_once "models/AppAdvise.php";
+		$Advisor = new AppAdvise($info);
+		return $Advisor->get();
+	}
 }
 
-?>

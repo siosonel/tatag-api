@@ -79,7 +79,7 @@ class Requester {
 			"", 
 			"collection", "about", "ts", "ranks", "tally", 
 			"flow", "inflow", "outflow", "added", "intrause",
-			"sim", "arRatio", "promo", "report", "trial"
+			"sim", "arRatio", "promo", "report", "trial", "advise"
 		);
 
 		if (SITE=='dev') {

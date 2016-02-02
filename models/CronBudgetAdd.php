@@ -36,9 +36,11 @@ class CronBudgetAdd extends Base {
 			$b['weeklyBudget'] = $r['weeklyBudget'];
 			$b['plannedAdd'] = min($r['weeklyBudget']-$b['revBal'], $r['weeklyBudget']-$b['expBal']);
 			
-			$sql = "INSERT INTO records (txntype,from_acct, to_acct, amount, note, status) VALUES ('np', $b[revAcct], $b[expAcct], $b[plannedAdd], 'auto-add', 0);";
-			$b['sql'] = $sql;
-			$b['numInserted'] = DBquery::set($sql);
+			if ($b['plannedAdd']) {
+				$sql = "INSERT INTO records (txntype,from_acct, to_acct, amount, note, status) VALUES ('np', $b[revAcct], $b[expAcct], $b[plannedAdd], 'auto-add', 0);";
+				$b['sql'] = $sql;
+				$b['numInserted'] = DBquery::set($sql);
+			}
 
 			$graph[] = $b;
 		}

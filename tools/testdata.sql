@@ -56,8 +56,8 @@ UNLOCK TABLES;
 LOCK TABLES `brands` WRITE;
 /*!40000 ALTER TABLE `brands` DISABLE KEYS */;
 INSERT INTO `brands` VALUES 
-(104,'abc','to be the first brand','for testing',0,'0','2015-01-05 19:53:31',NULL,NULL,NULL,'http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}','USA','206','for-profit',9,NULL,NULL),
-(105,'def','to be the second brand','for testing',0,'0','2015-01-05 19:53:33',NULL,NULL,NULL,'http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}','USA','206','for-profit',9,NULL,NULL),
+(104,'abc','to be the first brand','for testing',0,'0','2015-01-05 19:53:31',NULL,NULL,NULL,0,'USA','206','for-profit',9,NULL,NULL),
+(105,'def','to be the second brand','for testing',0,'0','2015-01-05 19:53:33',NULL,NULL,NULL,0,'USA','206','for-profit',9,NULL,NULL),
 (106,'~Amazon.com, Boren Avenue North, Seattle, WA, United States','simulate a well-known brand for whitelisting or blacklisting','This is a simulated brand to be used for testing the tatag system.',NULL,NULL,'2015-08-09 01:38:54',NULL,NULL,NULL,NULL,'USA','206','sim',10,NULL,NULL),
 (107,'~The Boeing Company, West Casino Road, Everett, WA, United States','simulate a well-known brand for whitelisting or blacklisting','This is a simulated brand to be used for testing the tatag system.',NULL,NULL,'2015-08-09 01:39:44',NULL,NULL,NULL,NULL,'USA','206','sim',10,NULL,NULL),
 (108,'~Starbucks, Aurora Avenue North, Shoreline, WA, United States','simulate a well-known brand for whitelisting or blacklisting','This is a simulated brand to be used for testing the tatag system.',NULL,NULL,'2015-08-09 01:40:26',NULL,NULL,NULL,NULL,'USA','206','sim',10,NULL,NULL),
@@ -75,9 +75,9 @@ UNLOCK TABLES;
 LOCK TABLES `consumers` WRITE;
 /*!40000 ALTER TABLE `consumers` DISABLE KEYS */;
 INSERT INTO `consumers` VALUES 
-(1,'login','login','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.',NULL,NOW(),NULL,NULL),
-(2,'tatag-ui','ui','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.',NULL,NOW(),NULL,NULL),
-(3,'flora','sim','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.',NULL,NOW(),NULL,NULL);
+(1,'login','login','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.',NULL,NOW(),NULL,NULL,21),
+(2,'tatag-ui','ui','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.',NULL,NOW(),NULL,NULL,21),
+(3,'flora','sim','$2y$10$fsqU/JRVmc3fXxVA3pclsO9/jyXur2RDIIlIq/5KXy1PVbsc39cc.',NULL,NOW(),NULL,NULL,21);
 /*!40000 ALTER TABLE `consumers` ENABLE KEYS */;
 UNLOCK TABLES;
 
