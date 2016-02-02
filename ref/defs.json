@@ -1725,6 +1725,10 @@
 
 	"userApps": {
 		"description": "A user's collection of apps.",
+		"properties": {
+			"required": ["@type", "@id", "items"],
+			"optional": ["links", "actions", "pageOrder", "itemsLimit"]
+		},
 		"actions": {
 			"add": {
 				"title": "Add a new application",
@@ -1754,15 +1758,27 @@
 	},
 
 	"appDetails": {
-		"description": "An application's details, visible only to the application developer."
+		"description": "An application's details, visible only to the application developer.",
+		"properties": {
+			"required": [],
+			"optional": []
+		}
 	},
 
 	"appAdvise": {
-		"description": "An application's advise on whether to accept or reject a payment offer."
+		"description": "An application's advise on whether to accept or reject a payment offer.",
+		"properties": {
+			"required": [],
+			"optional": []
+		}
 	},
 
 	"appConfig": {
 		"description": "An application's configuration, primarily intended for advisor-type apps.",
+		"properties": {
+			"required": [],
+			"optional": []
+		},
 		"actions": {
 			"edit": {
 				"title": "Edit an application configuration.",

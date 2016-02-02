@@ -31,6 +31,9 @@
     "my-issuers": [
         "add"
     ],
+    "my-apps": [
+        "add"
+    ],
     "team-promos": [
         "add"
     ],
@@ -77,6 +80,12 @@
         "add"
     ],
     "admin-throttle": [
+        "edit"
+    ],
+    "dev-details": [
+        "edit"
+    ],
+    "dev-config": [
         "edit"
     ]
 }
