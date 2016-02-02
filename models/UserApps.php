@@ -12,7 +12,7 @@ class UserApps extends Collection {
 
 		$this->init($data);
 
-		$this->okToAdd = array("name", "secret", "redirect_url");
+		$this->okToAdd = array("name", "secret", "type", "redirect_url");
 	}
 
 	function get() {

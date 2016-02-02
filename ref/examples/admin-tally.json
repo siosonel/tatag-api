@@ -1,5 +1,6 @@
 {
     "@type": "budgetTally",
+    "@id": "/brand/104/tally",
     "added": 1500.11,
     "intrause": 90.76,
     "inflow": 9.37,

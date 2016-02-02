@@ -7,7 +7,7 @@
     "description": "for testing",
     "mission": "to be the first brand",
     "created": "2015-01-05 11:53:31",
-    "advisor": "http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}",
+    "advisor": 0,
     "type_system": "for-profit",
     "type_id": 9,
     "country_code": "USA",

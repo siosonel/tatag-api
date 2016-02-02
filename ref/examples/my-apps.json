@@ -7,7 +7,11 @@
     "@id": "/user/21/apps",
     "@type": "userApps",
     "app": [
-        "/app/trial"
+        "/app/trial",
+        "/app/1/details",
+        "/app/2/details",
+        "/app/3/details",
+        "/app/4/details"
     ],
     "add": "/form/app-add"
 }
