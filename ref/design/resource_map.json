@@ -196,6 +196,7 @@
         "me": {
             "apps": {
                 "app": {
+                    "#": "details",
                     "budgetlog": {},
                     "tally": {},
                     "addedByWeek": {},
@@ -203,6 +204,12 @@
                     "outflowByWeek": {},
                     "intrauseByWeek": {},
                     "flowMatrix": {},
+                    "advise": {},
+                    "config": {
+                        "#forms": [
+                            "edit"
+                        ]
+                    },
                     "#forms": [
                         "edit"
                     ]

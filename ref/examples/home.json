@@ -29,14 +29,16 @@
         },
         {
             "@id": "/app/trial",
-            "@type": "appResources",
+            "@type": "appDetail",
             "budgetlog": "/report/addUse",
             "tally": "/tally/",
             "addedByWeek": "/added/byWeek",
             "inflowByWeek": "/inflow/byWeek",
             "outflowByWeek": "/outflow/byWeek",
             "intrauseByWeek": "/intrause/byWeek",
-            "flowMatrix": "/flow/matrix"
+            "flowMatrix": "/flow/matrix",
+            "advise": "/app/4/advise?from_brand=104&to_brand=105",
+            "config": "/app/0/config"
         }
     ]
 }

@@ -1,0 +1,9 @@
+{
+    "id": 0,
+    "@id": "/app/0/config",
+    "@type": "appConfig",
+    "maxBalDiff": -1000,
+    "maxNPratio": 0.5,
+    "maxIOratio": 0.5,
+    "edit": "/form/app-config-edit"
+}

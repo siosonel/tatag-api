@@ -1,6 +1,6 @@
 <?php
 
-class Advisor0 {
+class Advisor4 {
 	function __construct($info='') {
 		$this->configFile = "advisors/config/$info->advisor.json";
 		$this->config = file_exists($this->configFile) ? json_decode(file_get_contents($this->configFile)) : new stdClass();

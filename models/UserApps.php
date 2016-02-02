@@ -23,10 +23,17 @@ class UserApps extends Collection {
 		$rows = DBquery::get($sql, array($this->user_id));
 
 		foreach($rows AS $r) {
+			if ($r['type']=='advisor') {
+				$r['advise'] = "$this->root/app/$r[consumer_id]/advise";
+				$r['config'] = "$this->root/app/$r[consumer_id]/config";
+			}
+
+			$r['@id'] = "$this->root/app/$r[consumer_id]/details";
+			$this->app[] = $r["@id"];
 			$graph[] = $r;
 		}
 
-		$this->paginate();
+		$this->paginate('consumer_id');
 		return $graph;
 	}
 

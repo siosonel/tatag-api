@@ -15,7 +15,8 @@ class AppTrial extends Base {
             "inflowByWeek": "/inflow/byWeek",
             "outflowByWeek": "/outflow/byWeek",
             "intrauseByWeek": "/intrause/byWeek",
-            "flowMatrix": "/flow/matrix"
+            "flowMatrix": "/flow/matrix",
+            "config": "/app/4/config"
         }'));
 	}
 }

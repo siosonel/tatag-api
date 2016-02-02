@@ -325,6 +325,18 @@
         "app",
         "flowMatrix"
     ],
+    "dev-advise": [
+        "me",
+        "apps",
+        "app",
+        "advise"
+    ],
+    "dev-config": [
+        "me",
+        "apps",
+        "app",
+        "config"
+    ],
     "sys-trigger": [
         "trigger"
     ],
@@ -343,5 +355,10 @@
     "sys-tally": [
         "trigger",
         "tally"
+    ],
+    "dev-details": [
+        "me",
+        "apps",
+        "app"
     ]
 }

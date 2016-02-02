@@ -85,6 +85,7 @@ class Requester {
 		if (SITE=='dev') {
 			$openAccess[] = "cron";
 			$openAccess[] = "sys";
+			$openAccess[] = "config";
 		}
 		
 		if (!isset($_SERVER['PHP_AUTH_USER'])

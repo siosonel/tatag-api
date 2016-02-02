@@ -88,10 +88,11 @@ class UserAccounts extends Base {
 			$r['edit'] = "$this->root/form/holder-edit";
 			$r['relays'] = "$this->root/holder/$r[id]/relays";
 			$graph[] = $r;
-			$this->items[] = $r['@id'];
+			$this->holding[] = $r['@id'];
 		}
 		
-		$this->{$this->collectionOf} = $this->items;
+		$this->items = array();
+		//$this->{$this->collectionOf} = $this->items;
 		
 		return $graph;
 	}

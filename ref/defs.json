@@ -53,8 +53,9 @@
 		"inflowByWeek",
 		"outflowByWeek",
 		"intrauseByWeek",
-		"flowMatrix"
+		"flowMatrix",
 
+		"appAdvise"
 	],
 
 	"user": {		
@@ -1744,6 +1745,42 @@
 					"inputs": {
 						"name": "my test app",
 						"secret": "Ksi380sgtrpeOiwskswidf120m75"
+					},
+					"status": 200
+				}]
+			}
+		}
+	},
+
+	"appDetails": {
+		"description": "An application's details, visible only to the application developer."
+	},
+
+	"appAdvise": {
+		"description": "An application's advise on whether to accept or reject a payment offer."
+	},
+
+	"appConfig": {
+		"description": "An application's configuration, primarily intended for advisor-type apps.",
+		"actions": {
+			"edit": {
+				"title": "Edit an application configuration.",
+				"@type": "form",
+				"@id": "/form/app-config-edit",
+				"method": "POST",
+
+				"inputs": {
+					"required": [],
+					"optional": []
+				},
+
+				"examples": [{
+					"label": "should allow an application owner to edit advise configuration",
+					"resource": {
+						"@id": "/app/4/config"
+					},
+					"inputs": {
+						"minRevBal": -5
 					},
 					"status": 200
 				}]

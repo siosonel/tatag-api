@@ -5,6 +5,10 @@ class AppAdvise extends Base {
 		$this->from_brand = ($data AND isset($data->from_brand)) ? $data->from_brand : $_GET['from_brand'];
 		$this->to_brand = ($data AND isset($data->to_brand)) ? $data->to_brand : $_GET['to_brand'];
 
+		if (!$this->from_brand OR !$this->to_brand) Error::http(400, 
+			"A non-zero integer value must be specified for from_brand (specified '$this->from_brand') and to_brand ('$this->to_brand') as GET query parameters."
+		);
+
 		$this->consumer_id = ($data AND isset($data->from_brand)) ? 0 : $this->getID();
 		$this->{"@id"} = ($this->consumer_id) ? "$this->root/app/$this->consumer_id/advise" : "$this->root/app/advise";
 		$this->{"@type"} = "appAdvise";
@@ -45,8 +49,10 @@ class AppAdvise extends Base {
 
 		$cls = "Advisor$this->advisor"; 
 		require_once "advisors/$cls.php";
+
 		$Advisor = new $cls($this);
 		$this->advise = $Advisor->advise();
+		
 		unset($this->tally);
 		return array($this);
 	}
@@ -65,12 +71,5 @@ class AppAdvise extends Base {
 		$tally->pnRatio = $tally->expBal / ($tally->revBal+1);
 		$tally->pnGapAbs = $tally->expBal - $tally->revBal;
 		$tally->pnGapRatio = $pnGapAbs / ($tally->revBal+1);
-	}
-
-	// set consumer-specific config file to be used as input when getting advise
-	// assume config, including whitelist and blacklist, would change much more frequently
-	// than the advise algorithm
-	function set() {
-		if ($this->obj) file_put_contents($this->configFile, json_encode($this->obj));
 	}
 }
