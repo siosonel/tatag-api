@@ -1733,7 +1733,7 @@
 				"method": "POST",
 
 				"inputs": {
-					"required": ["name", "secret"],
+					"required": ["name", "secret", "type"],
 					"optional": ["redirect_url"]
 				},
 
@@ -1744,7 +1744,8 @@
 					},
 					"inputs": {
 						"name": "my test app",
-						"secret": "Ksi380sgtrpeOiwskswidf120m75"
+						"secret": "Ksi380sgtrpeOiwskswidf120m75",
+						"type": "advisor"
 					},
 					"status": 200
 				}]

@@ -10,9 +10,9 @@
                     "amount": 1000
                 },
                 {
-                    "week": 4,
+                    "week": 5,
                     "brand": 104,
-                    "amount": 6463.77
+                    "amount": 200
                 },
                 {
                     "week": 47,
@@ -41,7 +41,7 @@
                 },
                 {
                     "brand": 104,
-                    "week": 5,
+                    "week": 4,
                     "amount": 0
                 },
                 {
@@ -260,11 +260,6 @@
                     "amount": 1000
                 },
                 {
-                    "week": 4,
-                    "brand": 105,
-                    "amount": -750
-                },
-                {
                     "brand": 105,
                     "week": 0,
                     "amount": 0
@@ -282,6 +277,11 @@
                 {
                     "brand": 105,
                     "week": 3,
+                    "amount": 0
+                },
+                {
+                    "brand": 105,
+                    "week": 4,
                     "amount": 0
                 },
                 {

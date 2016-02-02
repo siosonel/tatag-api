@@ -1,0 +1,11 @@
+{
+    "from_brand": 104,
+    "to_brand": 105,
+    "consumer_id": 4,
+    "@id": "/app/4/advise",
+    "@type": "appAdvise",
+    "advisor": 4,
+    "advise": {
+        "status": 7
+    }
+}

@@ -197,5 +197,17 @@
 
      "dev-flowMatrix": {		
               "description": "A dataset of budget use between brands by week."
+	 },
+
+	 'dev-details': {
+	 	      "description": "An application's basic details."
+	 },
+
+	 "dev-advise": {
+	          "description": "An application's advise on whether to accept or reject a payment offer."
+	 },
+
+	 "dev-config": {
+	 		  "description": "An application's optional configuration settings, primarily intended for advisor-type apps."
 	 }
 }

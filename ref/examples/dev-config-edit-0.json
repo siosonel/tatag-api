@@ -1,6 +1,3 @@
 {
-    "maxBalDiff": -1000,
-    "maxNPratio": 0.5,
-    "maxIOratio": 0.5,
     "minRevBal": -5
 }

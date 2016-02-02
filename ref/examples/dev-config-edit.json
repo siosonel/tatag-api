@@ -15,7 +15,7 @@
         {
             "label": "should allow an application owner to edit advise configuration",
             "resource": {
-                "@id": "/app/1/config"
+                "@id": "/app/4/config"
             },
             "inputs": {
                 "minRevBal": -5
