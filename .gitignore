@@ -4,6 +4,9 @@ _exclude/*
 config*
 config/*
 
+cron-trigger.php
+tools/crons/*
+
 resources/*
 lib/*
 

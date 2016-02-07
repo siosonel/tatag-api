@@ -102,7 +102,7 @@ class ForwardVerifier {
 
 		$sql = "SELECT email FROM users WHERE user_id=$to_user";
 		$email = DBquery::get($sql)[0]['email'];
-		if (!$email) return;
+		if (!$email OR !filter_var($email, FILTER_VALIDATE_EMAIL)) return;
 
 		$to      = $email;
 		$subject = $subject;

@@ -82,7 +82,7 @@ class Requester {
 			"sim", "arRatio", "promo", "report", "trial", "advise"
 		);
 
-		if (SITE=='dev') {
+		if (SITE=='dev' OR $_SERVER['REMOTE_ADDR']==$_SERVER['SERVER_ADDR'] OR $_SERVER['REMOTE_ADDR']=='127.0.0.1') {
 			$openAccess[] = "cron";
 			$openAccess[] = "sys";
 			$openAccess[] = "config";

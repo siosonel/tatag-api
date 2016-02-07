@@ -45,7 +45,7 @@ class AppAdvise extends Base {
 
 	function get() {
 		$this->initTally();
-		$this->calc($this->tally);		
+		$this->calc($this->tally);	
 
 		$cls = "Advisor$this->advisor"; 
 		require_once "advisors/$cls.php";
@@ -53,6 +53,8 @@ class AppAdvise extends Base {
 		$Advisor = new $cls($this);
 		$this->advise = $Advisor->advise();
 		
+		if (isset($_GET['example'])) return array($this);
+
 		unset($this->tally);
 		return array($this);
 	}

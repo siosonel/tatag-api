@@ -218,6 +218,7 @@ CREATE TABLE `reports` (
   `max_id` int(11) DEFAULT NULL,
   `max_updated` timestamp NULL DEFAULT NULL,
   `keyword` varchar(16) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`report_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 

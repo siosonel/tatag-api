@@ -161,7 +161,7 @@ api.loadConcept('public-brands');
             "updated": null,
             "ended": null,
             "url": null,
-            "advisor": "http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}",
+            "advisor": 0,
             "type_system": "for-profit",
             "type_id": 9,
             "country_code": "USA",
@@ -176,7 +176,7 @@ api.loadConcept('public-brands');
             "updated": null,
             "ended": null,
             "url": null,
-            "advisor": "http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}",
+            "advisor": 0,
             "type_system": "for-profit",
             "type_id": 9,
             "country_code": "USA",
@@ -219,7 +219,7 @@ api.loadConcept('public-brand');
         "updated": null,
         "ended": null,
         "url": null,
-        "advisor": "http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}",
+        "advisor": 0,
         "type_system": "for-profit",
         "type_id": 9,
         "country_code": "USA",
@@ -228,7 +228,7 @@ api.loadConcept('public-brand');
     }
 ]</code></pre>
 <p>A registered team that issues its own currency. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>advisor</td><td>string</td><td>...</td></tr><tr><td>area_code</td><td>integer</td><td>The phone area code where a brand is located. (optional, self-reported)</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>country_code</td><td>string</td><td>The ISO3 code of a brand location.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>ended</td><td>NULL</td><td>The date of resource or relation deactivation, formatted as `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>type_id</td><td>integer</td><td>A brand's self-reported classification.</td></tr><tr><td>type_system</td><td>string</td><td>The classification system that is used to determine the brand type_id value.</td></tr><tr><td>updated</td><td>NULL</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td>url</td><td>NULL</td><td>A link to a web page or image, typically not considered as an API data and therefore not expected to be dereferenced as part of the payload but instead opened as an external link or used in HTML representations.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>advisor</td><td>integer</td><td>...</td></tr><tr><td>area_code</td><td>integer</td><td>The phone area code where a brand is located. (optional, self-reported)</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>country_code</td><td>string</td><td>The ISO3 code of a brand location.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>ended</td><td>NULL</td><td>The date of resource or relation deactivation, formatted as `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>type_id</td><td>integer</td><td>A brand's self-reported classification.</td></tr><tr><td>type_system</td><td>string</td><td>The classification system that is used to determine the brand type_id value.</td></tr><tr><td>updated</td><td>NULL</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td>url</td><td>NULL</td><td>A link to a web page or image, typically not considered as an API data and therefore not expected to be dereferenced as part of the payload but instead opened as an external link or used in HTML representations.</td></tr></tbody></table>
 <h2 id="public-promos">public-promos</h2>
 <pre><code class="language-javascript">
 api.loadConcept('public-promos');
@@ -244,78 +244,9 @@ api.loadConcept('public-promos');
     "@type": "promoCollection",
     "@id": "/promo/collection",
     "promo": [
-        {
-            "promo_id": 11,
-            "name": "finallyu",
-            "description": "yes",
-            "amount": 1.11,
-            "imageURL": "",
-            "infoURL": null,
-            "created": "2015-11-18 10:36:58",
-            "updated": null,
-            "expires": "2016-12-31 00:00:00",
-            "keyword": "ad",
-            "by_all_limit": 25,
-            "by_brand_limit": 5,
-            "by_user_limit": 2,
-            "by_user_wait": 24,
-            "id": 11,
-            "@id": "/promo/11",
-            "@type": "promo",
-            "brand": "/brand/104/about",
-            "promoPage": "http://tatag.dev/ad/11",
-            "code": "ad-11",
-            "payURL": "http://tatag.dev/for/ad-11",
-            "imageTemplate": "/ui/logo.php"
-        },
-        {
-            "promo_id": 10,
-            "name": "mmm",
-            "description": "nnn",
-            "amount": 2.22,
-            "imageURL": "",
-            "infoURL": null,
-            "created": "2015-11-18 10:15:31",
-            "updated": null,
-            "expires": "2016-12-31 00:00:00",
-            "keyword": "ad",
-            "by_all_limit": 25,
-            "by_brand_limit": 5,
-            "by_user_limit": 2,
-            "by_user_wait": 24,
-            "id": 10,
-            "@id": "/promo/10",
-            "@type": "promo",
-            "brand": "/brand/104/about",
-            "promoPage": "http://tatag.dev/ad/10",
-            "code": "ad-10",
-            "payURL": "http://tatag.dev/for/ad-10",
-            "imageTemplate": "/ui/logo.php"
-        },
-        {
-            "promo_id": 9,
-            "name": "raisins",
-            "description": "test",
-            "amount": 3.33,
-            "imageURL": "",
-            "infoURL": null,
-            "created": "2015-11-18 10:14:48",
-            "updated": null,
-            "expires": "2016-12-31 00:00:00",
-            "keyword": "ad",
-            "by_all_limit": 25,
-            "by_brand_limit": 5,
-            "by_user_limit": 2,
-            "by_user_wait": 24,
-            "id": 9,
-            "@id": "/promo/9",
-            "@type": "promo",
-            "brand": "/brand/104/about",
-            "promoPage": "http://tatag.dev/ad/9",
-            "code": "ad-9",
-            "payURL": "http://tatag.dev/for/ad-9",
-            "imageTemplate": "/ui/logo.php"
-        }
+        "/promo/11",
+        "/promo/10",
+        "/promo/9"
     ],
     "search": "/form/promo-search"
 }</code></pre>
@@ -347,6 +278,7 @@ api.loadConcept('public-promo');
         "id": 11,
         "@id": "/promo/11",
         "@type": "promo",
+        "edit": "/form/promo-edit",
         "brand": "/brand/104/about",
         "promoPage": "http://tatag.dev/ad/11",
         "code": "ad-11",
@@ -355,7 +287,7 @@ api.loadConcept('public-promo');
     }
 ]</code></pre>
 <p>Anything that a participant could pay for, such as for purchasing products, funding nonprofit campaigns, or supporting team projects with donations. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>double</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>by_all_limit</td><td>integer</td><td>This is a weekly limit on the total inflow transaction amount for a given account or usage for a given product, regardless of the payor's brand or user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_brand_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's brand id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_wait</td><td>integer</td><td>How long a user must wait after using a promo, before that user can reuse the same promo.</td></tr><tr><td>code</td><td>string</td><td>An alpha-numeric string that a payment recipient shares with a payor to authorize a payment or promo use.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>expires</td><td>string</td><td>The date after which a given resource will no longer be available. For example, a promo may expire after a week.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>imageTemplate</td><td>string</td><td>If given, a user interface provider may use this resource to display a brand icon or promo image.</td></tr><tr><td>imageURL</td><td>string</td><td>If given, a user interface provider may use this link to display a brand icon or promo image.</td></tr><tr><td>infoURL</td><td>NULL</td><td>External web page about a resource.</td></tr><tr><td>keyword</td><td>string</td><td>In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>payURL</td><td>string</td><td>A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.</td></tr><tr><td>promoPage</td><td>string</td><td>The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.</td></tr><tr><td>promo_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>updated</td><td>NULL</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#public-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>double</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>by_all_limit</td><td>integer</td><td>This is a weekly limit on the total inflow transaction amount for a given account or usage for a given product, regardless of the payor's brand or user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_brand_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's brand id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_wait</td><td>integer</td><td>How long a user must wait after using a promo, before that user can reuse the same promo.</td></tr><tr><td>code</td><td>string</td><td>An alpha-numeric string that a payment recipient shares with a payor to authorize a payment or promo use.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>expires</td><td>string</td><td>The date after which a given resource will no longer be available. For example, a promo may expire after a week.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>imageTemplate</td><td>string</td><td>If given, a user interface provider may use this resource to display a brand icon or promo image.</td></tr><tr><td>imageURL</td><td>string</td><td>If given, a user interface provider may use this link to display a brand icon or promo image.</td></tr><tr><td>infoURL</td><td>NULL</td><td>External web page about a resource.</td></tr><tr><td>keyword</td><td>string</td><td>In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>payURL</td><td>string</td><td>A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.</td></tr><tr><td>promoPage</td><td>string</td><td>The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.</td></tr><tr><td>promo_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>updated</td><td>NULL</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#public-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#public-promo-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h1 id="personal-resources">Personal Resources</h1>
 <p>These are resources that belong to the current user and are meant for private viewing. These resources are inteded to be used for wallet type applications, and in order for such applications to act on behalf of a user, oauth-type authentication is required.</p>
 <h2 id="my-me">my-me</h2>
@@ -377,11 +309,12 @@ api.loadConcept('my-me');
     "login_provider": "gp",
     "teams": "/user/21/teams",
     "issuers": "/user/21/brands",
+    "apps": "/user/21/apps",
     "promoSearch": "/form/promo-search",
     "id": 21
 }</code></pre>
 <p>The currently logged-in user. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>login_provider</td><td>string</td><td>The identity provider for the currently logged-in user, usually an OpenId provider.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>promoSearch</td><td>string</td><td>...</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-about'>about</a></td><td>link</td><td>Information about the current resource.</td></tr><tr><td><a href='#my-holdings'>holdings</a></td><td>link</td><td>A collection of accountholdings.</td></tr><tr><td><a href='#my-issuers'>issuers</a></td><td>link</td><td>A collection of brand-resources to which a user has a member role of admin.</td></tr><tr><td><a href='#my-memberships'>memberships</a></td><td>link</td><td>A collection of team membership information for a user.</td></tr><tr><td><a href='#my-ratings'>ratings</a></td><td>link</td><td>A collection of 'rating'.</td></tr><tr><td><a href='#my-teams'>teams</a></td><td>link</td><td>A collection of brand-resources to which a user belongs as a member.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>login_provider</td><td>string</td><td>The identity provider for the currently logged-in user, usually an OpenId provider.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>promoSearch</td><td>string</td><td>...</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-about'>about</a></td><td>link</td><td>Information about the current resource.</td></tr><tr><td><a href='#my-apps'>apps</a></td><td>link</td><td>...</td></tr><tr><td><a href='#my-holdings'>holdings</a></td><td>link</td><td>A collection of accountholdings.</td></tr><tr><td><a href='#my-issuers'>issuers</a></td><td>link</td><td>A collection of brand-resources to which a user has a member role of admin.</td></tr><tr><td><a href='#my-memberships'>memberships</a></td><td>link</td><td>A collection of team membership information for a user.</td></tr><tr><td><a href='#my-ratings'>ratings</a></td><td>link</td><td>A collection of 'rating'.</td></tr><tr><td><a href='#my-teams'>teams</a></td><td>link</td><td>A collection of brand-resources to which a user belongs as a member.</td></tr></tbody></table>
 <h2 id="my-memberships">my-memberships</h2>
 <pre><code class="language-javascript">
 api.loadConcept('my-memberships');
@@ -530,17 +463,7 @@ api.loadConcept('my-issuer');
     "promos": "/brand/104/promos",
     "records": "/budget/104/records",
     "throttles": "/budget/104/throttles",
-    "tally": {
-        "@type": "budgetTally",
-        "added": 1500.11,
-        "intrause": 90.76,
-        "inflow": 9.37,
-        "outflow": 0,
-        "revBudget": 1399.98,
-        "expBudget": 1409.35,
-        "numMembers": 2,
-        "totalMemberHours": 0
-    },
+    "tally": "/brand/104/tally",
     "edit": "/form/brand-edit"
 }</code></pre>
 <p>blah blah blah </p>
@@ -1128,11 +1051,12 @@ api.loadConcept('my-account-record');
         "updated": 1448144507,
         "@type": "accountRecord",
         "@id": "/account/92/records?record_id=64",
+        "id": 64,
         "other": 94
     }
 ]</code></pre>
 <p>An account's transaction record. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>double</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>brand_name</td><td>string</td><td>(deprecated) The name of the related brand. Use the (sub)resource 'name' instead.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>note</td><td>string</td><td>A short text used to annotate a resource such as a transaction record.</td></tr><tr><td>other</td><td>integer</td><td>The other brand in a transaction record, from the viewpoint of an accountholder.</td></tr><tr><td>other_acct</td><td>integer</td><td>The other account in a transaction record, from the viewpoint of an accountholder.</td></tr><tr><td>record_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>role</td><td>string</td><td>A user's role within the given context, such as a team member role or a payment role.</td></tr><tr><td>status</td><td>integer</td><td>An integer associated with the current state of a resource. For example, a transaction record may be pending automated approval (status=0), on hold for manual approval (status=5), approved (status=7), or rejected (status <0).</td></tr><tr><td>throttle_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>txntype</td><td>string</td><td>The type of budget activity that a transaction record is classified as. There are four possible values: 'np' (budget add), 'nn' (revenue budget transfer), 'pp' (expense budget transfer), and 'pn' (budget use).</td></tr><tr><td>updated</td><td>integer</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-account-record-approve'>approve</a></td><td>form</td><td>A form for approving the completion of a pending resource action.</td></tr><tr><td><a href='#my-account-record-hold'>hold</a></td><td>form</td><td>A form for preventing the auto-approval or auto-rejection of a pending resource action.</td></tr><tr><td><a href='#my-account-record-reject'>reject</a></td><td>form</td><td>A form for rejecting the completion of a pending resource action.</td></tr><tr><td><a href='#my-account-record-unadd'>unadd</a></td><td>form</td><td>A form for reversing a previous approved 'add' action.</td></tr><tr><td><a href='#my-account-record-unuse'>unuse</a></td><td>form</td><td>A form for reversing a previously approved 'use' action.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>double</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>brand_name</td><td>string</td><td>(deprecated) The name of the related brand. Use the (sub)resource 'name' instead.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>note</td><td>string</td><td>A short text used to annotate a resource such as a transaction record.</td></tr><tr><td>other</td><td>integer</td><td>The other brand in a transaction record, from the viewpoint of an accountholder.</td></tr><tr><td>other_acct</td><td>integer</td><td>The other account in a transaction record, from the viewpoint of an accountholder.</td></tr><tr><td>record_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>role</td><td>string</td><td>A user's role within the given context, such as a team member role or a payment role.</td></tr><tr><td>status</td><td>integer</td><td>An integer associated with the current state of a resource. For example, a transaction record may be pending automated approval (status=0), on hold for manual approval (status=5), approved (status=7), or rejected (status <0).</td></tr><tr><td>throttle_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>txntype</td><td>string</td><td>The type of budget activity that a transaction record is classified as. There are four possible values: 'np' (budget add), 'nn' (revenue budget transfer), 'pp' (expense budget transfer), and 'pn' (budget use).</td></tr><tr><td>updated</td><td>integer</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-account-record-approve'>approve</a></td><td>form</td><td>A form for approving the completion of a pending resource action.</td></tr><tr><td><a href='#my-account-record-hold'>hold</a></td><td>form</td><td>A form for preventing the auto-approval or auto-rejection of a pending resource action.</td></tr><tr><td><a href='#my-account-record-reject'>reject</a></td><td>form</td><td>A form for rejecting the completion of a pending resource action.</td></tr><tr><td><a href='#my-account-record-unadd'>unadd</a></td><td>form</td><td>A form for reversing a previous approved 'add' action.</td></tr><tr><td><a href='#my-account-record-unuse'>unuse</a></td><td>form</td><td>A form for reversing a previously approved 'use' action.</td></tr></tbody></table>
 <h3 id="my-account-record-hold">my-account-record-hold</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['hold']).then(...);
@@ -2034,9 +1958,66 @@ api.loadConcept('my-apps');
 <blockquote>
 <p>Status <span style='color:#0f0'>200</span></p>
 </blockquote>
-<pre><code>null</code></pre>
-<p>blah blah blah </p>
-<p>_table:examples/my-apps.json</p>
+<pre><code>{
+    "pageOrder": "asc",
+    "itemsLimit": 50,
+    "collectionOf": "app",
+    "pageOf": "/user/21/apps",
+    "user_id": 21,
+    "@id": "/user/21/apps",
+    "@type": "userApps",
+    "app": [
+        "/app/trial",
+        "/app/1/details",
+        "/app/2/details"
+    ],
+    "add": "/form/app-add"
+}</code></pre>
+<p>A user's collection of 'app'. </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td>user_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>app</td><td>link</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-apps-add'>add</a></td><td>form</td><td>A form for adding a resource to a collection, or for adding to a resource's tracked quantity.</td></tr></tbody></table>
+<h3 id="my-apps-add">my-apps-add</h3>
+<pre><code class="language-javascript">
+api.loadId(currResource['add']).then(...);
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>// the response returned by promise.then
+{
+    "title": "Add a new application",
+    "@type": "form",
+    "@id": "/form/app-add",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "name",
+            "secret"
+        ],
+        "optional": [
+            "redirect_url"
+        ]
+    }
+}</code></pre>
+<p>Add a new application</p>
+<table><thead><tr><th>Property</th><th>Value</th></tr></thead><tbody><tr><td>method</td><td>POST</td></tr><tr><td>inputs required</td><td>["name","secret"]</td></tr><tr><td>inputs optional</td><td>["redirect_url"]</td></tr></tbody></table>
+<h4 id="my-apps-add-0">my-apps-add-0</h4>
+<pre><code>var currResource = {
+    "@id": "/user/21/apps"
+};
+
+api.submit(currResource, 'add', {
+    "name": "my test app",
+    "secret": "Ksi380sgtrpeOiwskswidf120m75"
+}, successFxn, errorFxn);</code></pre>
+<p>Example: should allow a user to add an application</p>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "name": "my test app",
+    "secret": "Ksi380sgtrpeOiwskswidf120m75",
+    "consumer_id": 7
+}</code></pre>
 <h1 id="team-resources">Team Resources</h1>
 <p>All members of a team share access to these resources. The accessible resources are based on the membership of the currently logged-in user.</p>
 <h2 id="team-brand">team-brand</h2>
@@ -2060,17 +2041,7 @@ api.loadConcept('team-brand');
         "about": "/brand/104/about",
         "promos": "/brand/104/promos",
         "orders": "/team/104/orders",
-        "tally": {
-            "@type": "budgetTally",
-            "added": 1500.11,
-            "intrause": 90.76,
-            "inflow": 9.37,
-            "outflow": 0,
-            "revBudget": 1399.98,
-            "expBudget": 1409.35,
-            "numMembers": 2,
-            "totalMemberHours": 0
-        },
+        "tally": "/brand/104/tally",
         "edit": "/form/brand-edit"
     }
 ]</code></pre>
@@ -2681,17 +2652,7 @@ api.loadConcept('admin-brand');
         "promos": "/brand/104/promos",
         "records": "/budget/104/records",
         "throttles": "/budget/104/throttles",
-        "tally": {
-            "@type": "budgetTally",
-            "added": 1500.11,
-            "intrause": 90.76,
-            "inflow": 9.37,
-            "outflow": 0,
-            "revBudget": 1399.98,
-            "expBudget": 1409.35,
-            "numMembers": 2,
-            "totalMemberHours": 0
-        },
+        "tally": "/brand/104/tally",
         "edit": "/form/brand-edit"
     }
 ]</code></pre>
@@ -3605,7 +3566,7 @@ api.loadConcept('admin-about');
     "description": "for testing",
     "mission": "to be the first brand",
     "created": "2015-01-05 11:53:31",
-    "advisor": "http://tatag.dev/api/advisor.php/{?brand_id,revBudget,expBudget,inflow,outflow,numMembers,totalMemberHours}",
+    "advisor": 0,
     "type_system": "for-profit",
     "type_id": 9,
     "country_code": "USA",
@@ -3623,7 +3584,7 @@ api.loadConcept('admin-about');
     }
 }</code></pre>
 <p>Public information about a brand. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>advisor</td><td>string</td><td>...</td></tr><tr><td>area_code</td><td>integer</td><td>The phone area code where a brand is located. (optional, self-reported)</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>country_code</td><td>string</td><td>The ISO3 code of a brand location.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>mission</td><td>string</td><td>...</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>type_id</td><td>integer</td><td>A brand's self-reported classification.</td></tr><tr><td>type_system</td><td>string</td><td>The classification system that is used to determine the brand type_id value.</td></tr><tr><td>url</td><td>string</td><td>A link to a web page or image, typically not considered as an API data and therefore not expected to be dereferenced as part of the payload but instead opened as an external link or used in HTML representations.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-tally'>tally</a></td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>advisor</td><td>integer</td><td>...</td></tr><tr><td>area_code</td><td>integer</td><td>The phone area code where a brand is located. (optional, self-reported)</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>country_code</td><td>string</td><td>The ISO3 code of a brand location.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>mission</td><td>string</td><td>...</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>type_id</td><td>integer</td><td>A brand's self-reported classification.</td></tr><tr><td>type_system</td><td>string</td><td>The classification system that is used to determine the brand type_id value.</td></tr><tr><td>url</td><td>string</td><td>A link to a web page or image, typically not considered as an API data and therefore not expected to be dereferenced as part of the payload but instead opened as an external link or used in HTML representations.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-tally'>tally</a></td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr></tbody></table>
 <h2 id="admin-tally">admin-tally</h2>
 <pre><code class="language-javascript">
 api.loadConcept('admin-tally');
@@ -3633,6 +3594,7 @@ api.loadConcept('admin-tally');
 </blockquote>
 <pre><code>{
     "@type": "budgetTally",
+    "@id": "/brand/104/tally",
     "added": 1500.11,
     "intrause": 90.76,
     "inflow": 9.37,
@@ -3643,7 +3605,7 @@ api.loadConcept('admin-tally');
     "totalMemberHours": 0
 }</code></pre>
 <p>A summary of a brand's budget balances and activity. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>added</td><td>double</td><td>...</td></tr><tr><td>expBudget</td><td>double</td><td>...</td></tr><tr><td>inflow</td><td>double</td><td>...</td></tr><tr><td>intrause</td><td>double</td><td>...</td></tr><tr><td>numMembers</td><td>integer</td><td>...</td></tr><tr><td>outflow</td><td>integer</td><td>...</td></tr><tr><td>revBudget</td><td>double</td><td>...</td></tr><tr><td>totalMemberHours</td><td>integer</td><td>...</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>added</td><td>double</td><td>...</td></tr><tr><td>expBudget</td><td>double</td><td>...</td></tr><tr><td>inflow</td><td>double</td><td>...</td></tr><tr><td>intrause</td><td>double</td><td>...</td></tr><tr><td>numMembers</td><td>integer</td><td>...</td></tr><tr><td>outflow</td><td>integer</td><td>...</td></tr><tr><td>revBudget</td><td>double</td><td>...</td></tr><tr><td>totalMemberHours</td><td>integer</td><td>...</td></tr></tbody></table>
 <h2 id="admin-promos">admin-promos</h2>
 <pre><code class="language-javascript">
 api.loadConcept('admin-promos');
@@ -4082,18 +4044,38 @@ api.loadConcept('dev-app');
 <pre><code>[
     {
         "@id": "/app/trial",
-        "@type": "appResources",
-        "budgetlog": "/report/addUse",
+        "@type": "appDetail",
+        "budgetlog": {
+            "pageOrder": "desc",
+            "itemsLimit": 1000,
+            "collectionOf": "data",
+            "pageOf": "/report/addUse",
+            "@id": "/report/addUse",
+            "@type": "dataset",
+            "data": [
+
+            ]
+        },
         "tally": "/tally/",
         "addedByWeek": "/added/byWeek",
         "inflowByWeek": "/inflow/byWeek",
         "outflowByWeek": "/outflow/byWeek",
         "intrauseByWeek": "/intrause/byWeek",
-        "flowMatrix": "/flow/matrix"
+        "flowMatrix": "/flow/matrix",
+        "advise": "/app/4/advise?from_brand=104&amp;to_brand=105",
+        "config": {
+            "id": 0,
+            "@id": "/app/0/config",
+            "@type": "appConfig",
+            "maxBalDiff": -1000,
+            "maxNPratio": 0.5,
+            "maxIOratio": 0.5,
+            "edit": "/form/app-config-edit"
+        }
     }
 ]</code></pre>
 <p>blah blah blah </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#dev-addedByWeek'>addedByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-budgetlog'>budgetlog</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-flowMatrix'>flowMatrix</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-inflowByWeek'>inflowByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-intrauseByWeek'>intrauseByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-outflowByWeek'>outflowByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-tally'>tally</a></td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#dev-addedByWeek'>addedByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-advise'>advise</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-budgetlog'>budgetlog</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-config'>config</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-flowMatrix'>flowMatrix</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-inflowByWeek'>inflowByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-intrauseByWeek'>intrauseByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-outflowByWeek'>outflowByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-tally'>tally</a></td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr></tbody></table>
 <h2 id="dev-budgetlog">dev-budgetlog</h2>
 <pre><code class="language-javascript">
 api.loadConcept('dev-budgetlog');
@@ -4109,33 +4091,7 @@ api.loadConcept('dev-budgetlog');
     "@id": "/report/addUse",
     "@type": "dataset",
     "data": [
-        {
-            "report_id": 12,
-            "txntype": "pn",
-            "from_brand": 105,
-            "to_brand": 104,
-            "amount": 9.37,
-            "updated": 1447917341,
-            "keyword": null
-        },
-        {
-            "report_id": 11,
-            "txntype": "pn",
-            "from_brand": 104,
-            "to_brand": 104,
-            "amount": 25,
-            "updated": 1447917025,
-            "keyword": "ad"
-        },
-        {
-            "report_id": 10,
-            "txntype": "pn",
-            "from_brand": 104,
-            "to_brand": 104,
-            "amount": 65.76,
-            "updated": 1448144507,
-            "keyword": null
-        }
+
     ]
 }</code></pre>
 <p>A simple log of budget additions and use as the corresponding transaction records get approved. The budgetlog may be used for data warehousing purposes. </p>
@@ -4148,317 +4104,10 @@ api.loadConcept('dev-tally');
 <p>Status <span style='color:#0f0'>200</span></p>
 </blockquote>
 <pre><code>{
-    "@id": "/tally/?db=tatagtestdtd",
-    "data": [
-        {
-            "brand_id": 104,
-            "data": [
-                {
-                    "brand_id": 104,
-                    "week": 2,
-                    "n_start_bal": 0,
-                    "issued": 1000,
-                    "intrause": 6.15,
-                    "inflow": 9.37,
-                    "outflow": 0,
-                    "num_members": 2,
-                    "member_hours": 0,
-                    "type_system": "for-profit",
-                    "type_id": 9,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": "2016-01-27 14:13:26"
-                },
-                {
-                    "brand_id": 104,
-                    "week": 3,
-                    "n_start_bal": 984.48,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 2,
-                    "member_hours": 0,
-                    "type_system": "for-profit",
-                    "type_id": 9,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": "2016-01-27 15:55:53"
-                }
-            ]
-        },
-        {
-            "brand_id": 105,
-            "data": [
-                {
-                    "brand_id": 105,
-                    "week": 2,
-                    "n_start_bal": 0,
-                    "issued": 1000,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 9.37,
-                    "num_members": 1,
-                    "member_hours": 0,
-                    "type_system": "for-profit",
-                    "type_id": 9,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": "2016-01-27 14:13:26"
-                },
-                {
-                    "brand_id": 105,
-                    "week": 3,
-                    "n_start_bal": 1000,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 1,
-                    "member_hours": 0,
-                    "type_system": "for-profit",
-                    "type_id": 9,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": "2016-01-27 15:55:53"
-                }
-            ]
-        },
-        {
-            "brand_id": 106,
-            "data": [
-                {
-                    "brand_id": 106,
-                    "week": 32,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        },
-        {
-            "brand_id": 107,
-            "data": [
-                {
-                    "brand_id": 107,
-                    "week": 32,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        },
-        {
-            "brand_id": 108,
-            "data": [
-                {
-                    "brand_id": 108,
-                    "week": 32,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        },
-        {
-            "brand_id": 109,
-            "data": [
-                {
-                    "brand_id": 109,
-                    "week": 32,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        },
-        {
-            "brand_id": 110,
-            "data": [
-                {
-                    "brand_id": 110,
-                    "week": 32,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        },
-        {
-            "brand_id": 111,
-            "data": [
-                {
-                    "brand_id": 111,
-                    "week": 32,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        },
-        {
-            "brand_id": 112,
-            "data": [
-                {
-                    "brand_id": 112,
-                    "week": 32,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        },
-        {
-            "brand_id": 113,
-            "data": [
-                {
-                    "brand_id": 113,
-                    "week": 32,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        },
-        {
-            "brand_id": 114,
-            "data": [
-                {
-                    "brand_id": 114,
-                    "week": 32,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        },
-        {
-            "brand_id": 115,
-            "data": [
-                {
-                    "brand_id": 115,
-                    "week": 47,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        },
-        {
-            "brand_id": 116,
-            "data": [
-                {
-                    "brand_id": 116,
-                    "week": 47,
-                    "n_start_bal": 0,
-                    "issued": 0,
-                    "intrause": 0,
-                    "inflow": 0,
-                    "outflow": 0,
-                    "num_members": 0,
-                    "member_hours": 0,
-                    "type_system": "sim",
-                    "type_id": 10,
-                    "country_code": "USA",
-                    "area_code": 206,
-                    "updated": null
-                }
-            ]
-        }
-    ]
+
 }</code></pre>
 <p>Combined datasets, made of dev-addedByWeek, dev-inflowByWeek, dev-outflowByWeek, dev-intrauseByWeek, dev-flowMatrix. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>data</td><td>array</td><td>...</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody></tbody></table>
 <h2 id="dev-addedbyweek">dev-addedByWeek</h2>
 <pre><code class="language-javascript">
 api.loadConcept('dev-addedByWeek');
@@ -4476,6 +4125,11 @@ api.loadConcept('dev-addedByWeek');
                     "week": null,
                     "brand": 104,
                     "amount": 1000
+                },
+                {
+                    "week": 5,
+                    "brand": 104,
+                    "amount": 200
                 },
                 {
                     "week": 47,
@@ -4505,11 +4159,6 @@ api.loadConcept('dev-addedByWeek');
                 {
                     "brand": 104,
                     "week": 4,
-                    "amount": 0
-                },
-                {
-                    "brand": 104,
-                    "week": 5,
                     "amount": 0
                 },
                 {
@@ -5063,6 +4712,125 @@ api.loadConcept('dev-flowMatrix');
 }</code></pre>
 <p>A dataset of budget use between brands by week. </p>
 <table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>matrix</td><td>array</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td>brands</td><td>link</td><td>...</td></tr></tbody></table>
+<h2 id="dev-details">dev-details</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-details');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>[
+    {
+        "@id": "/app/trial",
+        "@type": "appDetail",
+        "budgetlog": {
+            "pageOrder": "desc",
+            "itemsLimit": 1000,
+            "collectionOf": "data",
+            "pageOf": "/report/addUse",
+            "@id": "/report/addUse",
+            "@type": "dataset",
+            "data": [
+
+            ]
+        },
+        "tally": "/tally/",
+        "addedByWeek": "/added/byWeek",
+        "inflowByWeek": "/inflow/byWeek",
+        "outflowByWeek": "/outflow/byWeek",
+        "intrauseByWeek": "/intrause/byWeek",
+        "flowMatrix": "/flow/matrix",
+        "advise": "/app/4/advise?from_brand=104&amp;to_brand=105",
+        "config": {
+            "id": 0,
+            "@id": "/app/0/config",
+            "@type": "appConfig",
+            "maxBalDiff": -1000,
+            "maxNPratio": 0.5,
+            "maxIOratio": 0.5,
+            "edit": "/form/app-config-edit"
+        }
+    }
+]</code></pre>
+<p>An application's basic details. </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#dev-addedByWeek'>addedByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-advise'>advise</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-budgetlog'>budgetlog</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-config'>config</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-flowMatrix'>flowMatrix</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-inflowByWeek'>inflowByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-intrauseByWeek'>intrauseByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-outflowByWeek'>outflowByWeek</a></td><td>link</td><td>...</td></tr><tr><td><a href='#dev-tally'>tally</a></td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#dev-details-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<h2 id="dev-advise">dev-advise</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-advise');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "from_brand": 104,
+    "to_brand": 105,
+    "consumer_id": 4,
+    "@id": "/app/4/advise",
+    "@type": "appAdvise",
+    "advisor": 4,
+    "advise": {
+        "status": 7
+    }
+}</code></pre>
+<p>An application's advise on whether to accept or reject a payment offer. </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>advisor</td><td>integer</td><td>...</td></tr><tr><td>consumer_id</td><td>integer</td><td>...</td></tr><tr><td>from_brand</td><td>integer</td><td>...</td></tr><tr><td>to_brand</td><td>integer</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#dev-advise'>advise</a></td><td>link</td><td>...</td></tr></tbody></table>
+<h2 id="dev-config">dev-config</h2>
+<pre><code class="language-javascript">
+api.loadConcept('dev-config');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "id": 0,
+    "@id": "/app/0/config",
+    "@type": "appConfig",
+    "maxBalDiff": -1000,
+    "maxNPratio": 0.5,
+    "maxIOratio": 0.5,
+    "edit": "/form/app-config-edit"
+}</code></pre>
+<p>An application's optional configuration settings, primarily intended for advisor-type apps. </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>maxBalDiff</td><td>integer</td><td>...</td></tr><tr><td>maxIOratio</td><td>double</td><td>...</td></tr><tr><td>maxNPratio</td><td>double</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#dev-config-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<h3 id="dev-config-edit">dev-config-edit</h3>
+<pre><code class="language-javascript">
+api.loadId(currResource['edit']).then(...);
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>// the response returned by promise.then
+{
+    "title": "Edit an application configuration.",
+    "@type": "form",
+    "@id": "/form/app-config-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [
+
+        ],
+        "optional": [
+
+        ]
+    }
+}</code></pre>
+<p>Edit an application configuration.</p>
+<table><thead><tr><th>Property</th><th>Value</th></tr></thead><tbody><tr><td>method</td><td>POST</td></tr><tr><td>inputs required</td><td>[]</td></tr><tr><td>inputs optional</td><td>[]</td></tr></tbody></table>
+<h4 id="dev-config-edit-0">dev-config-edit-0</h4>
+<pre><code>var currResource = {
+    "@id": "/app/4/config"
+};
+
+api.submit(currResource, 'edit', {
+    "minRevBal": -5
+}, successFxn, errorFxn);</code></pre>
+<p>Example: should allow an application owner to edit advise configuration</p>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "minRevBal": -5
+}</code></pre>
 <h1 id="system-resources">System Resources</h1>
 <p>These are system administration related resources.</p>
 <h2 id="sys-trigger">sys-trigger</h2>

@@ -56,7 +56,7 @@ class BudgetUsed extends Base {
 
 		$this->advise = $this->getAdvise();
 		$this->verifier->notifyRecipient(
-			$this->obj->to_user, "budget use $this->amount", "[". json_encode($this->advise) ."]. You don't have to do anything."
+			$this->obj->to_user, "budget use $this->amount", "[advise=". json_encode($this->advise) ."]. You don't have to do anything."
 		);
 		
 		return array($this);
@@ -102,7 +102,14 @@ class BudgetUsed extends Base {
 	}
 	
 	function verifyBals() {
-		if (1*$this->verifier->from_holder['balance'] < $this->amount) return "Account #$this->from_acct has insufficient balance. ";
+		if (1*$this->verifier->from_holder['balance'] < $this->amount) {
+			if ($this->record_id) {
+				$sql = "UPDATE records SET status=-1 WHERE record_id=$this->record_id";
+				DBquery::set($sql);
+			}
+
+			return "Account #$this->from_acct has insufficient balance. ";
+		}
 	}
 
 	function getAdvise() {

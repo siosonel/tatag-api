@@ -14,14 +14,15 @@ class CronReport extends Collection {
 		$graph = array($this);
 
 		$sql = "INSERT INTO reports 
-			(txntype, from_brand, to_brand, amount, max_id, max_updated, keyword)
+			(txntype, from_brand, to_brand, amount, max_id, max_updated, keyword, status)
 			SELECT txntype, 
 				f.brand_id AS from_brand, 
 				t.brand_id AS to_brand, 
 				SUM(r.amount) AS amount, 
 				MAX(record_id) AS max_id,
 				MAX(r.updated) AS max_updated,
-				p.keyword AS keyword
+				p.keyword AS keyword,
+				r.status AS status
 			FROM records r
 			INNER JOIN accounts f ON f.account_id = r.from_acct
 			INNER JOIN accounts t ON t.account_id = r.to_acct
