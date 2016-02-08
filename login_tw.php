@@ -1,6 +1,6 @@
 <?php
 require_once "config-public.php";
-require_once "models/Utils.php";
+require_once "utils/Utils.php";
 require_once "models/Base.php";
 require_once "models/Tokentw.php";
 

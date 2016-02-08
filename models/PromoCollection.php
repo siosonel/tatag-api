@@ -94,7 +94,7 @@ class PromoCollection extends Collection {
 		
 		$items = DBquery::get($sql, $this->condVals);		
 		Requester::detectMemberships();
-		
+
 		foreach($items AS &$r) {
 			$r['id'] = $r['promo_id'];
 			$r['@id'] = "$this->root/promo/". $r['promo_id'];
@@ -122,10 +122,11 @@ class PromoCollection extends Collection {
 			if (!$r['expires']) $r['expires'] = "2019-12-31 11:59:59";
 
 			$this->{$this->collectionOf}[] = $r['@id'];
+			$p[] = $r;
 			$graph[] = $r;
 		}
 		
-		$this->paginate('promo_id');
+		$this->paginate('promo_id', $p);
 		
 		if ($this->cond) return $graph;
 		return array_merge($graph, array(BrandLogo::svgTemplate()));

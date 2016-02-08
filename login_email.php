@@ -65,13 +65,13 @@
 		
 		<div id='forgotDiv'>
 			<input type='radio' name='action' id='action-recover' value='recover' />
-			<label for='action-recover'>I forgot my password and need a verification code to recover my access.
+			<label for='action-recover'>I forgot my password and need a verification code to <b>recover</b> my access.
 			</label>
 		</div>
 		
 		<div id='registerDiv'>
 			<input type='radio' name='action' id='action-register' value='register'/>
-			<label for='action-register'>I don't have a password and need a verification code to register.</label>
+			<label for='action-register'>I don't have a password and need a verification code to <b>register</b>.</label>
 		</div>
 		
 		<div id='recaptchaWrapper'>

@@ -13,7 +13,7 @@ class ReportAddUse extends Collection {
 	}
 
 	function get() {
-		$sql = "SELECT report_id, txntype, from_brand, to_brand, amount, UNIX_TIMESTAMP(max_updated) AS updated, keyword
+		$sql = "SELECT report_id, txntype, from_brand, to_brand, amount, UNIX_TIMESTAMP(max_updated) AS updated, keyword, status
 			FROM reports 			
 			WHERE report_id $this->ltgt $this->limitID
 			ORDER BY report_id $this->pageOrder
