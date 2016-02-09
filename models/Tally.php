@@ -15,7 +15,7 @@ class Tally {
 			$this->params[] = $_GET['areaCode'];
 		}
 
-		if (!isset($_GET['typeSystem']))  $typeSystem = '';
+		if (!isset($_GET['typeSystem']) OR !$_GET['typeSystem'])  $typeSystem = '';
 		else {
 			$this->typeSystem = "AND type_system=?";
 			$this->params[] = $_GET['typeSystem'];

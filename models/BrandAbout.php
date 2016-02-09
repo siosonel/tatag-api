@@ -50,6 +50,7 @@ class BrandAbout extends Base {
 	}
 	
 	function getMetaVals() {
+		if (!$this->country_code) $this->country_code = "USA";
 		$area_codes = json_decode(file_get_contents("ref/area_codes/$this->country_code.json"));			
 		foreach($area_codes AS $loc=>$num) {
 			if ($num==$this->area_code) {$this->area_name = $loc; break;}
@@ -60,6 +61,8 @@ class BrandAbout extends Base {
 			if ($arr[3]==$this->country_code) {$this->country_name = $arr[0]; break;}
 		}
 		
+		if (!$this->type_system) $this->type_system = "sim";
+		if (!$this->type_id) $this->type_id = 10;
 		$types = json_decode(file_get_contents("ref/brand_classification.json"));
 		foreach($types->{$this->type_system}->types AS $obj) {
 			if ($obj->id == $this->type_id) {$this->type = $obj->type; break;}

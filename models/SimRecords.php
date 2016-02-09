@@ -8,14 +8,16 @@ class SimRecords extends Collection {
 	private $nominalRating = 95;
 	
 	function __construct() {
-		$this->weekNum = date('W');
+		$this->currWeek = date('W');
+		$this->weekNum = (isset($_GET['weekNum']) AND is_numeric($_GET['weekNum'])) ? $_GET['weekNum'] : $this->currWeek;
+		$this->sqldate = ($this->currWeek==$this->weekNum) ? "NOW()" : "'". (date("Y-m-d H-i-s", time() - ($this->currWeek - $this->weekNum)*604800)) ."'";
 		$this->setRatings();
 	}
 	
 	
 	function setRatings($brandID=0) {
 		if (!$brand_id) {
-			$sql = "SELECT brand_id, count(*) AS num, sum(rating) AS rating, GROUP_CONCAT(user_id) AS raters
+			$sql = "SELECT brand_id, count(*) AS num, sum(score) AS rating, GROUP_CONCAT(user_id) AS raters
 			FROM ratings
 			WHERE ended IS NULL
 			GROUP BY brand_id";
@@ -79,8 +81,8 @@ class SimRecords extends Collection {
 		$expAcct = $b['expAcct'];
 		
 		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,ref_id,status,created,updated) 
-			VALUES ('np',$revAcct,0,$expAcct,0,$amount,$this->weekNum,0,NOW(),NOW())";
-		
+			VALUES ('np',$revAcct,0,$expAcct,0,$amount,$this->weekNum,0,$this->sqldate,$this->sqldate)";
+	
 		$b['added'] = $sql;
 		DBquery::set($sql);
 		$b['record_id'] = DBquery::$conn->lastInsertId();		
@@ -101,7 +103,7 @@ class SimRecords extends Collection {
 		$toAcct = $to['revAcct'];
 		
 		$sql = "INSERT INTO records (txntype,from_acct,from_user,to_acct,to_user,amount,note,ref_id,status,created,updated) 
-			VALUES ('pn',$fromAcct,0,$toAcct,0,$amount,'sim',$this->weekNum,0,NOW(),NOW())";
+			VALUES ('pn',$fromAcct,0,$toAcct,0,$amount,'sim',$this->weekNum,0,$this->sqldate,$this->sqldate)";
 			
 		$from['outflow'] = $sql;
 		DBquery::set($sql);
@@ -113,9 +115,14 @@ class SimRecords extends Collection {
 			DBquery::get("CALL approveRecord(". $from['record_id'] .")");
 			$from['expBal'] += -1*$amount;
 			$to['revBal'] += -1*$amount;
+
+			if ($this->currWeek != $this->weekNum) {
+				$sql = "UPDATE records SET status=?, updated=$this->sqldate WHERE record_id=?";
+				DBquery::set($sql, array($status, $from['record_id']));
+			}
 		}
 		else {
-			$sql = "UPDATE records SET status=?, updated=NOW() WHERE record_id=?";
+			$sql = "UPDATE records SET status=?, updated=$this->sqldate WHERE record_id=?";
 			DBquery::set($sql, array($status, $from['record_id']));
 		}
 	}
