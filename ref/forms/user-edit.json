@@ -1,0 +1,37 @@
+{
+    "title": "Edit",
+    "@type": "form",
+    "@id": "/form/user-edit",
+    "method": "POST",
+    "inputs": {
+        "optional": [
+            "name",
+            "email"
+        ],
+        "required": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow edits to username",
+            "resource": {
+                "@id": "/user/21"
+            },
+            "inputs": {
+                "name": "esoi-{xtime}"
+            },
+            "status": 200
+        },
+        {
+            "label": "should not allow edits to registered date",
+            "resource": {
+                "@id": "/user/21"
+            },
+            "inputs": {
+                "created": "2015-01-01"
+            },
+            "status": 403
+        }
+    ]
+}

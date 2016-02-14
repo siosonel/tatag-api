@@ -1,0 +1,43 @@
+{
+    "title": "Add an account",
+    "@type": "form",
+    "@id": "/form/account-add",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "name",
+            "authcode",
+            "unit",
+            "sign"
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an admin to add a new account",
+            "resource": {
+                "@id": "/brand/104/accounts"
+            },
+            "inputs": {
+                "name": "test -{xtime}",
+                "authcode": "cftix",
+                "unit": "hour"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-admin to add an account",
+            "resource": {
+                "@id": "/brand/105/accounts"
+            },
+            "inputs": {
+                "name": "test -{xtime}",
+                "authcode": "cftix",
+                "unit": "hour"
+            },
+            "status": 403
+        }
+    ]
+}

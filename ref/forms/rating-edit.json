@@ -1,0 +1,29 @@
+{
+    "title": "Update a rating",
+    "@type": "form",
+    "@id": "/form/rating-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [
+
+        ],
+        "optional": [
+            "score",
+            "reason",
+            "ended"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow a user to update a rating",
+            "resource": {
+                "@id": "/user/21/ratings?rating_id=1"
+            },
+            "inputs": {
+                "score": 1,
+                "reason": "non-polluter {random}"
+            },
+            "status": 200
+        }
+    ]
+}

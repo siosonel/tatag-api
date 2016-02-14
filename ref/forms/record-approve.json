@@ -1,0 +1,31 @@
+{
+    "title": "Manually approve transaction",
+    "@type": "form",
+    "@id": "/form/record-approve",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "status"
+        ],
+        "optional": [
+
+        ],
+        "valueRestrictions": {
+            "status": [
+                7
+            ]
+        }
+    },
+    "examples": [
+        {
+            "label": "should allow record approval",
+            "resource": {
+                "@id": "/account/92/records?record_id=30"
+            },
+            "inputs": {
+                "status": 7
+            },
+            "status": 200
+        }
+    ]
+}

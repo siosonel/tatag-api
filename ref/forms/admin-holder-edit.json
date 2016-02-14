@@ -1,0 +1,37 @@
+{
+    "title": "Edit",
+    "@type": "form",
+    "@id": "/form/admin-holder-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "authcode"
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an admin to edit a holder's authcode",
+            "resource": {
+                "@id": "/member/55/accounts?holder_id=46"
+            },
+            "inputs": {
+                "authcode": "ftix -w"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-admin to edit an account's info",
+            "resource": {
+                "@id": "/member/55/accounts?holder_id=45"
+            },
+            "inputs": {
+                "name": "my -{xtime}",
+                "authcode": "{random}"
+            },
+            "status": 403
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "title": "Edit membership",
+    "@type": "form",
+    "@id": "/form/member-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [
+
+        ],
+        "optional": [
+            "joined",
+            "revoked"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should NOT allow non-admin edits of a member's hours",
+            "resource": {
+                "@id": "/user/21/memberships?member_id=53"
+            },
+            "inputs": {
+                "hours": "{random}"
+            },
+            "status": 403
+        }
+    ]
+}

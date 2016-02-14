@@ -1,0 +1,48 @@
+{
+    "title": "Edit",
+    "@type": "form",
+    "@id": "/form/relay-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [
+
+        ],
+        "optional": [
+            "amount_min",
+            "amount_max",
+            "redirect",
+            "tag",
+            "secret",
+            "txntype",
+            "ended",
+            "by_all_limit",
+            "by_brand_limit",
+            "by_user_limit",
+            "by_user_wait"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an accountholder to edit a relay specification",
+            "resource": {
+                "@id": "/relay/1"
+            },
+            "inputs": {
+                "secret": "{hex}",
+                "amount_max": "{random}"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-accountholder to edit a relay specification",
+            "resource": {
+                "@id": "/relay/3"
+            },
+            "inputs": {
+                "secret": "{hex}",
+                "amount_max": "{random}"
+            },
+            "status": 403
+        }
+    ]
+}

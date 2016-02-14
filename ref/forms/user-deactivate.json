@@ -1,0 +1,6 @@
+{
+    "title": "Deactivate",
+    "@type": "form",
+    "@id": "/form/user-deactivate",
+    "method": "DELETE"
+}

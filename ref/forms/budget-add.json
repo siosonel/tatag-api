@@ -1,0 +1,62 @@
+{
+    "title": "Issue budget",
+    "@type": "form",
+    "@id": "/form/budget-add",
+    "method": "POST",
+    "target": "/budget/issued",
+    "query": {
+        "required": [
+            "account-brand-id"
+        ],
+        "optional": [
+
+        ]
+    },
+    "inputs": {
+        "required": [
+            "from",
+            "to",
+            "amount",
+            "note"
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an accountholding with a 'c' authcode to issue budget",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
+            "inputs": {
+                "from": "41-abc",
+                "to": "42-abc",
+                "amount": 200,
+                "note": "test budget issuance"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow an accountholding without a 'c' authcode to issue budget",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
+            "inputs": {
+                "from": "41-abc",
+                "to": "43-abc",
+                "amount": 200,
+                "note": "test budget issuance"
+            },
+            "status": 403
+        }
+    ]
+}

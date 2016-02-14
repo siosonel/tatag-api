@@ -1,6 +1,11 @@
 # Contributing
 
 
+## API Documentation
+
+https://github.com/siosonel/tatag-api/blob/master/CONTRIBUTING.md
+
+
 ## Advisor Apps
 
 There is a crucial need to offer users a varied selection of Advisors, applications that offers real-time advise on whether to accept or reject a payment offer. 

@@ -1,0 +1,48 @@
+{
+    "title": "Add",
+    "@type": "form",
+    "@id": "/form/holder-relays-add",
+    "method": "POST",
+    "inputs": {
+        "required": [
+
+        ],
+        "optional": [
+            "amount_min",
+            "amount_max",
+            "redirect",
+            "tag",
+            "secret",
+            "txntype",
+            "ended",
+            "by_all_limit",
+            "by_brand_limit",
+            "by_user_limit",
+            "by_user_wait"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an accountholder to add a relay specification",
+            "resource": {
+                "@id": "/holder/41/relays"
+            },
+            "inputs": {
+                "amount_min": 0,
+                "amount_max": "{random}"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-accountholder to add a relay specification",
+            "resource": {
+                "@id": "/holder/44/relays"
+            },
+            "inputs": {
+                "amount_min": 0,
+                "amount_max": "{random}"
+            },
+            "status": 403
+        }
+    ]
+}

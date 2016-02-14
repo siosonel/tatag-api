@@ -82,13 +82,12 @@
 <h2 id="methods">Methods</h2>
 <p>Resources may be linked to forms for creating, editing, or otherwise affecting its state. API clients should not assume that a particular resource will always support the same set of methods. Instead, a client should check for the existence of any of the following form links before initiating the corresponding display or action options.</p>
 <ul>
-<li>createForm</li>
-<li>editForm</li>
-<li>budgetAdd</li>
-<li>budgetTransfer</li>
-<li>budgetUse</li>
+<li>add</li>
+<li>edit</li>
+<li>transfer</li>
 <li>approve</li>
 <li>reject</li>
+<li>etc.</li>
 </ul>
 <h2 id="tolerance">Tolerance</h2>
 <p>The client must be programmed with tolerance in mind, to accomodate potential variations in labels and methods as seen above. Many of these concerns are automatically handled by generic API clients, such as for the Phlat profile. We recommend using generic media-type or profile clients to minimize the effort in getting started and to increase the long-term stability of the consumer application.</p>
@@ -101,38 +100,10 @@
 <li>Changes to the API's sitemap or relation layout (not an issue if you use concept-based navigation)</li>
 </ul>
 <h1 id="versioning">Versioning</h1>
-<blockquote>
-<p>Deprecated example</p>
-</blockquote>
-<pre><code>
-GET /api-20150101/something
-
-// before merging the deprecated attributes or links
-{
-    "@id": "/api-20150101/something", 
-    "name": "example resource",
-    "deprecated": [{
-        "date": 20151019, 
-        "reason": "old attributes",
-        "merge-patch": {
-            "attr1": "value 1",
-            "attr2": "value 2"
-        }
-    }]
-}
-
-// after the client merges in the deprecated attributes
-// and then deleting the "deprecated" array of objects 
-{
-    "@id": "/api-20150101/something", 
-    "name": "example resource",
-    "attr1": "value 1",
-    "attr2": "value 2"
-}
-</code></pre>
-<p>A type of change that is not expected to be handled gracefully is a deprecated resource attribute or relation name. In order to avoid breaking, clients must be able to process the link relation &quot;deprecated&quot;. This link relation points to an array of objects, each representing a deprecation timepoint, an explanation, and a merge-patch object that can be used to extend the current resource with the deprecated attributes and links.</p>
+<p>(... TBD ...)</p>
 <h1 id="authentication">Authentication</h1>
-<p>A bit of a dance using Oauth.</p>
+<p>If your application is not acting on behalf of a user, then simply use HTTP Basic Auth.</p>
+<p>If your application is acting on behalf of a user, such as displaying personal, team, and admin resources, then you would need to do the Oauth dance of passing around token value and secret in the URL. I'll document this dance based on demand.</p>
 <h1 id="public-resources">Public Resources</h1>
 <p>These resources do not require a user to be logged-in.</p>
 <h2 id="public-brands">public-brands</h2>

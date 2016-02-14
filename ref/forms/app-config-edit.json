@@ -1,0 +1,26 @@
+{
+    "title": "Edit an application configuration.",
+    "@type": "form",
+    "@id": "/form/app-config-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [
+
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an application owner to edit advise configuration",
+            "resource": {
+                "@id": "/app/4/config"
+            },
+            "inputs": {
+                "minRevBal": -5
+            },
+            "status": 200
+        }
+    ]
+}

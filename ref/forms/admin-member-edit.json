@@ -1,0 +1,39 @@
+{
+    "title": "Edit",
+    "@type": "form",
+    "@id": "/form/admin-member-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [
+
+        ],
+        "optional": [
+            "role",
+            "hours"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an admin to edit a member's info",
+            "resource": {
+                "@id": "/brand/104/members?member_id=55"
+            },
+            "inputs": {
+                "role": "assistant -{xtime}",
+                "hours": "{random}"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-admin to edit a member's info",
+            "resource": {
+                "@id": "/brand/105/members?member_id=54"
+            },
+            "inputs": {
+                "role": "assistant -{xtime}",
+                "hours": "{random}"
+            },
+            "status": 403
+        }
+    ]
+}

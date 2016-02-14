@@ -1,0 +1,21 @@
+{
+    "title": "Search",
+    "@type": "form",
+    "@id": "/form/promo-search",
+    "method": "POST",
+    "target": "/promo/collection",
+    "query": {
+        "required": [
+
+        ],
+        "optional": [
+            "for"
+        ]
+    },
+    "inputs": {
+
+    },
+    "examples": [
+
+    ]
+}

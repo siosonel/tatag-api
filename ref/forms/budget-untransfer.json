@@ -1,0 +1,47 @@
+{
+    "title": "Reverse transferred budget",
+    "@type": "form",
+    "@id": "/form/budget-untransfer",
+    "method": "POST",
+    "target": "/budget/transferred",
+    "query": {
+        "required": [
+            "account-brand-id"
+        ],
+        "optional": [
+
+        ]
+    },
+    "inputs": {
+        "required": [
+            "from",
+            "to",
+            "amount",
+            "note",
+            "orig_record_id"
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow reversal of transferred budget",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
+            "inputs": {
+                "from": "42-abc",
+                "to": "43-abc",
+                "amount": -2.05,
+                "note": "test transferred budget reversal",
+                "orig_record_id": 31
+            },
+            "status": 200
+        }
+    ]
+}

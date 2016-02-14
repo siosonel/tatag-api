@@ -26,13 +26,12 @@ To get a target resource, the client looks in the root resource to fill-in appli
 
 Resources may be linked to forms for creating, editing, or otherwise affecting its state. API clients should not assume that a particular resource will always support the same set of methods. Instead, a client should check for the existence of any of the following form links before initiating the corresponding display or action options.
 
-- createForm
-- editForm
-- budgetAdd
-- budgetTransfer
-- budgetUse
+- add
+- edit
+- transfer
 - approve
 - reject
+- etc.
 
 
 ## Tolerance
@@ -52,47 +51,16 @@ The API consumer should gracefully handle the following:
 
 # Versioning
 
-> Deprecated example
-
-```
-
-
-GET /api-20150101/something
-
-// before merging the deprecated attributes or links
-{
-	"@id": "/api-20150101/something", 
-	"name": "example resource",
-	"deprecated": [{
-		"date": 20151019, 
-		"reason": "old attributes",
-		"merge-patch": {
-			"attr1": "value 1",
-			"attr2": "value 2"
-		}
-	}]
-}
-
-// after the client merges in the deprecated attributes
-// and then deleting the "deprecated" array of objects 
-{
-	"@id": "/api-20150101/something", 
-	"name": "example resource",
-	"attr1": "value 1",
-	"attr2": "value 2"
-}
-
-```
- 
-
-A type of change that is not expected to be handled gracefully is a deprecated resource attribute or relation name. In order to avoid breaking, clients must be able to process the link relation "deprecated". This link relation points to an array of objects, each representing a deprecation timepoint, an explanation, and a merge-patch object that can be used to extend the current resource with the deprecated attributes and links.
+(... TBD ...)
 
 
 
 
 # Authentication
 
-A bit of a dance using Oauth.
+If your application is not acting on behalf of a user, then simply use HTTP Basic Auth.
+
+If your application is acting on behalf of a user, such as displaying personal, team, and admin resources, then you would need to do the Oauth dance of passing around token value and secret in the URL. I'll document this dance based on demand.
 
 
 

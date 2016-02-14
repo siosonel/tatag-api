@@ -1,0 +1,42 @@
+{
+    "title": "User registration",
+    "@type": "form",
+    "@id": "/form/user-registration",
+    "method": "POST",
+    "target": "/user/collection",
+    "inputs": {
+        "required": [
+            "email",
+            "password",
+            "name"
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow registration by a brand new user",
+            "resource": {
+
+            },
+            "inputs": {
+                "email": "john-{random}@test.org",
+                "name": "John-{random}",
+                "password": "pass2"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow user registration with missing email",
+            "resource": {
+
+            },
+            "inputs": {
+                "name": "John-{random}",
+                "password": "pass2"
+            },
+            "status": 400
+        }
+    ]
+}

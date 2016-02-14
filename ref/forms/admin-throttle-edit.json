@@ -1,0 +1,29 @@
+{
+    "title": "Edit",
+    "@type": "form",
+    "@id": "/form/admin-throttle-edit",
+    "method": "POST",
+    "inputs": {
+        "required": [
+
+        ],
+        "optional": [
+            "period",
+            "by_all",
+            "by_brand",
+            "by_user"
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an admin to edit a throttle's specifications",
+            "resource": {
+                "@id": "/throttle/1"
+            },
+            "inputs": {
+                "period": 99999999
+            },
+            "status": 200
+        }
+    ]
+}

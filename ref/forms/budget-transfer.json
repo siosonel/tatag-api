@@ -1,0 +1,45 @@
+{
+    "title": "Transfer budget",
+    "@type": "form",
+    "@id": "/form/budget-transfer",
+    "method": "POST",
+    "target": "/budget/transferred",
+    "query": {
+        "required": [
+            "account-brand-id"
+        ],
+        "optional": [
+
+        ]
+    },
+    "inputs": {
+        "required": [
+            "from",
+            "to",
+            "amount",
+            "note"
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an originating accountholding with an 'f' and destination accountholding with a 't' authcode to transfer budgets.",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
+            "inputs": {
+                "from": "42-abc",
+                "to": "43-abc",
+                "amount": 22,
+                "note": "test budget transfer"
+            },
+            "status": 200
+        }
+    ]
+}

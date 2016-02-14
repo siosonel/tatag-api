@@ -1,0 +1,42 @@
+{
+    "title": "Add an account holder",
+    "@type": "form",
+    "@id": "/form/holder-add",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "user_id",
+            "account_id",
+            "authcode"
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow an admin to add a new accountholder",
+            "resource": {
+                "@id": "/member/55/accounts"
+            },
+            "inputs": {
+                "user_id": 24,
+                "account_id": 92,
+                "authcode": "cftix"
+            },
+            "status": 200
+        },
+        {
+            "label": "should NOT allow a non-admin to add a new accountholder",
+            "resource": {
+                "@id": "/member/54/accounts"
+            },
+            "inputs": {
+                "user_id": 22,
+                "account_id": 92,
+                "authcode": "cftix"
+            },
+            "status": 403
+        }
+    ]
+}

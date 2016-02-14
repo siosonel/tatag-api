@@ -1,0 +1,47 @@
+{
+    "title": "Reverse issued budget",
+    "@type": "form",
+    "@id": "/form/budget-unadd",
+    "method": "POST",
+    "target": "/budget/issued",
+    "query": {
+        "required": [
+            "account-brand-id"
+        ],
+        "optional": [
+
+        ]
+    },
+    "inputs": {
+        "required": [
+            "from",
+            "to",
+            "amount",
+            "note",
+            "orig_record_id"
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow reversal of issued budget",
+            "resource": {
+                "account": {
+                    "brand": {
+                        "id": 104
+                    }
+                }
+            },
+            "inputs": {
+                "from": "41-abc",
+                "to": "42-abc",
+                "amount": -20,
+                "note": "test issued budget reversal",
+                "orig_record_id": 30
+            },
+            "status": 200
+        }
+    ]
+}

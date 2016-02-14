@@ -7,6 +7,11 @@ There are related projects to the API:
 - https://tatag.cc/viz/lines.php, https://tatag.cc/viz/chord_m.php, https://tatag.cc/viz/arrow.php: Prototype data visualzations. Code at https://github.com/siosonel/tatag-viz.
 
 
+## Project Status
+
+Currently in public alpha release, version 0.5-alpha. 
+
+
 ## Author
 
 Edgar Sioson,  s i o s o n e l a t g m a i l d o t c o m

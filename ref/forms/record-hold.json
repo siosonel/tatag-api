@@ -1,0 +1,31 @@
+{
+    "title": "Hold transaction (disable auto-approval)",
+    "@type": "form",
+    "@id": "/form/record-hold",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "status"
+        ],
+        "optional": [
+
+        ],
+        "valueRestrictions": {
+            "status": [
+                5
+            ]
+        }
+    },
+    "examples": [
+        {
+            "label": "should allow putting record on hold",
+            "resource": {
+                "@id": "/account/92/records?record_id=30"
+            },
+            "inputs": {
+                "status": 5
+            },
+            "status": 200
+        }
+    ]
+}

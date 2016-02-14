@@ -1,0 +1,26 @@
+{
+    "title": "Accept membership",
+    "@type": "form",
+    "@id": "/form/member-accept",
+    "method": "POST",
+    "inputs": {
+        "required": [
+            "joined"
+        ],
+        "optional": [
+
+        ]
+    },
+    "examples": [
+        {
+            "label": "should allow a member to accept membership by providing a joined date",
+            "resource": {
+                "@id": "/user/21/memberships?member_id=53"
+            },
+            "inputs": {
+                "joined": "{date}"
+            },
+            "status": 200
+        }
+    ]
+}

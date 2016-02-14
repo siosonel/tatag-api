@@ -3,6 +3,7 @@
 class PromoCollection extends Collection {
 	private $cond;
 	private $condVals;
+	protected $relay;
 	
 	function __construct($data='') { 		
 		$this->{"@type"} = "promoCollection";
@@ -148,9 +149,17 @@ class PromoCollection extends Collection {
 		$this->addKeyVal('relay_id',$HolderRelays->relay_id);
 		
 		$this->obj->promo_id = $this->insert();
+		$this->obj->id = $this->obj->promo_id;
+		$this->obj->{'@id'} = "$this->root/promo/". $this->obj->id;
 		$this->obj->relay = $this->relay;
 		$this->obj->relay_id = $HolderRelays->relay_id;
-		return array($this->obj);
+
+		$graph = array($this);
+		$this->promo = array($this->obj->{'@id'});
+		$graph[] = $this->obj;
+		//$this->paginate('promo_id', array($this->obj));
+
+		return array($this->obj); //$graph;
 	}
 	
 	function setAddlCond() {
