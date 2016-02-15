@@ -12,24 +12,24 @@ There is a crucial need to offer users a varied selection of Advisors, applicati
 
 A related challenge here is: What information and level of input data freshness are required for an effective Advisor program?
 
-- Example Advisor Code: https://github.com/siosonel/tatag-api/blob/master/advisors/Advisor2.php
-- Expected Input to the advisor.advice() method: see the 'tally' property in http://tatag.cc/api/app/advise?from_brand=1&to_brand=2&example=1
-- Expected Output of the advisor.advice() method: see the advise property in http://tatag.cc/api/app/advise?from_brand=1&to_brand=2&example=1
+- Example Advisor Code: [advisor](https://github.com/siosonel/tatag-api/blob/master/advisors/Advisor2.php)
+- Expected Input to the advisor.advice() method: see the ['tally' property](http://tatag.cc/api/app/advise?from_brand=1&to_brand=2&example=1)
+- Expected Output of the advisor.advice() method: see the [advise property](http://tatag.cc/api/app/advise?from_brand=1&to_brand=2&example=1)
 - An Advisor may use information from other sources, other than tatag.cc, in the formulation of its advise.
 
 
 ## Aggregator Apps
 
-The tatag.cc platform is primarily OLTP (transaction) oriented. Aggregator applications should help with the OLAP (warehousing) of transaction data. Aggregators must periodically pull reports from tatag.cc; see the "data" property in the code example of https://tatag.cc/api/ref/docs.html#dev-budgetlog.
+The tatag.cc platform is primarily OLTP (transaction) oriented. Aggregator applications should help with the OLAP (warehousing) of transaction data. Aggregators must periodically pull reports from tatag.cc; see the "data" property in [this code example](https://tatag.cc/api/ref/docs.html#dev-budgetlog).
 
 A related challenge here is: How to audit and reconcile aggregated reports from different service providers? How would a block-chain type report chaining help ensure the integrity of aggregated reports?
 
 
 ## User Interface
 
-You can design and create user interfaces similar to the wallet and team pages of the default UI. See https://tatag.cc/wallet and https://tatag.cc/teams, respectively. Those UIs render personal, teams, and admin resources, which all require Oauth-type authentication.
+You can design and create user interfaces similar to the [wallet](https://tatag.cc/wallet) and [team](https://tatag.cc/teams) pages of the default UI. Those UIs render personal, teams, and admin resources, which all require Oauth-type authentication.
 
-There is a React-driven UI, see code at https://github.com/siosonel/tatag-rx.
+There is an example of a [React-driven UI](https://github.com/siosonel/tatag-rx).
 
 
 ## Risks

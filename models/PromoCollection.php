@@ -164,21 +164,27 @@ class PromoCollection extends Collection {
 	
 	function setAddlCond() {
 		$this->condVals = array();
-		if (!isset($_GET['for']) OR !$_GET['for']) return;
-		
-		$for = explode('-', trim($_GET['for']));
-		
-		if (count($for)==1) {
-			$this->cond = "AND keyword=?";
-			$this->condVals = array($for[0]);
-		}		
-		else if (!is_numeric($for[1])) {
-			$this->cond = "AND keyword=?";
-			$this->condVals = array(implode("-", $for));			
-		}
-		else {
-			$this->cond = "AND keyword=? AND promo_id=?";
-			$this->condVals = $for;
+
+		if (isset($_GET['brand_id']) AND is_numeric($_GET['brand_id'])) {
+			$this->cond = "AND brand_id=?";
+			$this->condVals = array($_GET['brand_id']);
+		} 
+
+		if (isset($_GET['for']) AND $_GET['for']) {		
+			$for = explode('-', trim($_GET['for']));
+			
+			if (count($for)==1) {
+				$this->cond = "AND keyword=?";
+				$this->condVals = array($for[0]);
+			}		
+			else if (!is_numeric($for[1])) {
+				$this->cond = "AND keyword=?";
+				$this->condVals = array(implode("-", $for));			
+			}
+			else {
+				$this->cond = "AND keyword=? AND promo_id=?";
+				$this->condVals = $for;
+			}
 		}
 	}
 }

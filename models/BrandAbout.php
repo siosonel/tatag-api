@@ -42,7 +42,7 @@ class BrandAbout extends Base {
 		$row = DBquery::get($sql, array($this->brand_id));
 		if ($row[0]) {
 			foreach($row[0] AS $key=>$val) {
-				if ($key=='url' AND !$val) $val = "http://tatag.cc/$this->brand_id";
+				if ($key=='url' AND !$val) $val = "https://tatag.cc/$this->brand_id";
 				if ($key=='country_code' AND !$val) $val = "USA";
 				$this->$key = $val;
 			}
