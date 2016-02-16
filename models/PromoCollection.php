@@ -5,12 +5,14 @@ class PromoCollection extends Collection {
 	private $condVals;
 	protected $relay;
 	
-	function __construct($data='') { 		
+	function __construct($data='') {
 		$this->{"@type"} = "promoCollection";
-		$this->{'@id'} = "$this->root/promo/collection".$params;
+
+		$this->{'@id'} = "$this->root/promo/collection";
 		$this->table = "promos";
 		$this->idkey = 'promo_id';
 		$this->collectionOf = "promo";
+		$this->popular = "$this->root/promo/popular";
 		
 		if (Router::$method=='add' OR Router::$method=='set') $this->translateInput($data);
 		
@@ -56,8 +58,8 @@ class PromoCollection extends Collection {
 	}
 	
 	function get() {	
-		$this->setAddlCond(); 
-		//if (!$this->cond) $this->setForms();
+		$this->setAddlCond();
+		$this->{$this->collectionOf} = array();
 
 		$graph = array($this);
 		$tracked = array();
@@ -77,7 +79,7 @@ class PromoCollection extends Collection {
 				imageURL, 
 				infoURL, 
 				p.created, 
-				p.updated, 
+				COALESCE(p.updated, UNIX_TIMESTAMP(p.created)) AS updated, 
 				p.expires, 
 				keyword,
 				by_all_limit, 
@@ -88,6 +90,8 @@ class PromoCollection extends Collection {
 			JOIN relays USING (relay_id)
 			JOIN brands USING (brand_id)
 			WHERE promo_id $this->ltgt $this->limitID $this->cond
+				AND COALESCE(p.updated, UNIX_TIMESTAMP(p.created)) > $this->minUpdated
+				AND promo_id > $this->cutoffID
 				AND (expires IS NULL OR expires>NOW())
 				AND by_user_limit > 0 AND by_brand_limit > 0 AND by_all_limit > 0
 			ORDER BY promo_id $this->pageOrder
@@ -127,6 +131,8 @@ class PromoCollection extends Collection {
 			$graph[] = $r;
 		}
 		
+
+		$this->setPageOf(array("brand_id", "for", "keyword", "id"));
 		$this->paginate('promo_id', $p);
 		
 		if ($this->cond) return $graph;
@@ -163,29 +169,47 @@ class PromoCollection extends Collection {
 	}
 	
 	function setAddlCond() {
+		$this->cond = array();
 		$this->condVals = array();
 
 		if (isset($_GET['brand_id']) AND is_numeric($_GET['brand_id'])) {
-			$this->cond = "AND brand_id=?";
-			$this->condVals = array($_GET['brand_id']);
+			$this->cond[] = "AND brand_id=?";
+			$this->condVals[] = $_GET['brand_id'];
+		} 
+
+		if (isset($_GET['keyword']) AND $_GET['keyword']) {
+			$this->cond[] = "AND keyword=?";
+			$this->condVals[] = $_GET['keyword'];
+		} 
+
+		if (isset($_GET['amount_min']) AND is_numeric($_GET['amount_min'])) {
+			$this->cond[] = "AND amount >= ?";
+			$this->condVals[] = $_GET['amount_min'];
+		} 
+
+		if (isset($_GET['amount_max']) AND is_numeric($_GET['amount_max'])) {
+			$this->cond[] = "AND amount <= ?";
+			$this->condVals[] = $_GET['amount_max'];
 		} 
 
 		if (isset($_GET['for']) AND $_GET['for']) {		
 			$for = explode('-', trim($_GET['for']));
 			
 			if (count($for)==1) {
-				$this->cond = "AND keyword=?";
-				$this->condVals = array($for[0]);
+				$this->cond[] = "AND keyword=?";
+				$this->condVals[] = $for[0];
 			}		
 			else if (!is_numeric($for[1])) {
-				$this->cond = "AND keyword=?";
-				$this->condVals = array(implode("-", $for));			
+				$this->cond[] = "AND keyword=?";
+				$this->condVals[] = implode("-", $for);			
 			}
 			else {
-				$this->cond = "AND keyword=? AND promo_id=?";
-				$this->condVals = $for;
+				$this->cond[] = "AND keyword=? AND promo_id=?";
+				$this->condVals[] = $for;
 			}
 		}
+
+		$this->cond = implode(" ",$this->cond);
 	}
 }
 

@@ -1,7 +1,11 @@
 {
     "public": {
         "promos": {
-            "promo": {}
+            "promo": {},
+            "popular": {},
+            "#forms": [
+                "search"
+            ]     
         },
         "brands": {
             "brand": {}

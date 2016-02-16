@@ -1,4 +1,7 @@
 {
+    "public-promos": [
+        "search"
+    ],
     "my-membership": [
         "accept",
         "revoke"

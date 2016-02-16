@@ -48,7 +48,7 @@ class Collection extends Base {
 	}
 	
 	function paginate($keyName, $items=null) {
-		$this->pageOf = $this->{'@id'};
+		if (!$this->pageOf) $this->pageOf = $this->setPageOf();
 		$maxUpdated = 0;
 		
 		if (!$items AND isset($this->{$this->collectionOf})) $items = $this->{$this->collectionOf}; 
@@ -117,5 +117,16 @@ class Collection extends Base {
 			$this->$latter = $this->{"@id"} ."?limitIDs=". implode(",", $prevNext); 
 			if ($query) $this->$latter .= "&$query";
 		}
+	}
+
+
+	function setPageOf($okToUse=array()) {
+		$params = array();
+		foreach($_GET AS $k=>$v) {
+			if (in_array($k,$okToUse)) $params[$k] = $v;
+		}
+
+		$delim = $params ? "?" : "";
+		$this->pageOf = $this->{'@id'} . $delim . http_build_query($params);
 	}
 }

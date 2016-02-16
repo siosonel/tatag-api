@@ -1,21 +1,39 @@
 {
-    "title": "Search",
+    "title": "Search promos",
     "@type": "form",
     "@id": "/form/promo-search",
-    "method": "POST",
+    "method": "GET",
     "target": "/promo/collection",
     "query": {
         "required": [
 
         ],
         "optional": [
-            "for"
+            "for",
+            "keyword",
+            "brand_id",
+            "amount_min",
+            "amount_max"
         ]
     },
     "inputs": {
+        "required": [
 
+        ],
+        "optional": [
+
+        ]
     },
     "examples": [
-
+        {
+            "label": "should allow searching by keyword",
+            "resource": {
+                "@id": "/promo/collection?db=tatagtestdtd"
+            },
+            "inputs": {
+                "keyword": "software"
+            },
+            "status": 200
+        }
     ]
 }

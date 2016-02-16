@@ -5,7 +5,10 @@
     "pageOf": "/promo/collection",
     "@type": "promoCollection",
     "@id": "/promo/collection",
+    "popular": "/promo/popular",
     "promo": [
+        "/promo/13",
+        "/promo/12",
         "/promo/11",
         "/promo/10",
         "/promo/9",

@@ -233,7 +233,18 @@ CREATE TABLE `promos` (
 
 LOCK TABLES `promos` WRITE;
 /*!40000 ALTER TABLE `promos` DISABLE KEYS */;
-INSERT INTO `promos` VALUES (1,104,'Test promo','A brand #104 promo',NULL,NULL,25.00,NULL,'2015-01-01 00:00:00',NULL,NULL,NULL,1,'ad'),(2,105,'Test promo','A brand #105 promo',NULL,NULL,25.00,NULL,'2015-01-01 00:00:00',NULL,NULL,NULL,4,'ad'),(3,104,'product promo 1f8','a brand 104 promo 1f8',NULL,NULL,57.57,NULL,'2015-11-18 00:15:57',NULL,NULL,'2016-12-31 08:00:00',5,'ad'),(4,104,'product promo 67','a brand 104 promo 67',NULL,NULL,57.69,NULL,'2015-11-18 00:16:09',NULL,NULL,'2016-12-31 08:00:00',6,'ad'),(5,104,'product promo 3cc','a brand 104 promo 3cc',NULL,NULL,57.71,NULL,'2015-11-18 00:16:12',NULL,NULL,'2016-12-31 08:00:00',7,'ad'),(6,104,'product promo 3cc','a brand 104 promo 3cc',NULL,NULL,57.71,NULL,'2015-11-18 00:16:12',NULL,NULL,'2016-12-31 08:00:00',8,'ad'),(7,104,'test','test','',NULL,7.77,NULL,'2015-11-18 18:05:36',NULL,NULL,'2016-12-31 08:00:00',9,'ad'),(8,104,'help me','test','',NULL,44.44,NULL,'2015-11-18 18:11:48',NULL,NULL,'2016-12-31 08:00:00',10,'ad'),(9,104,'raisins','test','',NULL,3.33,NULL,'2015-11-18 18:14:48',NULL,NULL,'2016-12-31 08:00:00',11,'ad'),(10,104,'mmm','nnn','',NULL,2.22,NULL,'2015-11-18 18:15:31',NULL,NULL,'2016-12-31 08:00:00',12,'ad'),(11,104,'finallyu','yes','',NULL,1.11,NULL,'2015-11-18 18:36:58',NULL,NULL,'2016-12-31 08:00:00',13,'ad');
+INSERT INTO `promos` VALUES 
+(1,104,'Test promo','A brand #104 promo',NULL,NULL,25.00,NULL,'2015-01-01 00:00:00',NULL,NULL,NULL,1,'software')
+,(2,105,'Test promo','A brand #105 promo',NULL,NULL,25.00,NULL,'2015-01-01 00:00:00',NULL,NULL,NULL,4,'food')
+,(3,104,'product promo 1f8','a brand 104 promo 1f8',NULL,NULL,57.57,NULL,'2015-11-18 00:15:57',NULL,NULL,'2016-12-31 08:00:00',5,'grocery')
+,(4,104,'product promo 67','a brand 104 promo 67',NULL,NULL,57.69,NULL,'2015-11-18 00:16:09',NULL,NULL,'2016-12-31 08:00:00',6,'ride')
+,(5,104,'product promo 3cc','a brand 104 promo 3cc',NULL,NULL,57.71,NULL,'2015-11-18 00:16:12',NULL,NULL,'2016-12-31 08:00:00',7,'drink')
+,(6,104,'product promo 3cc','a brand 104 promo 3cc',NULL,NULL,57.71,NULL,'2015-11-18 00:16:12',NULL,NULL,'2016-12-31 08:00:00',8,'book')
+,(7,104,'test','test','',NULL,7.77,NULL,'2015-11-18 18:05:36',NULL,NULL,'2016-12-31 08:00:00',9,'grocery')
+,(8,104,'help me','test','',NULL,44.44,NULL,'2015-11-18 18:11:48',NULL,NULL,'2016-12-31 08:00:00',10,'ad')
+,(9,104,'raisins','test','',NULL,3.33,NULL,'2015-11-18 18:14:48',NULL,NULL,'2016-12-31 08:00:00',11,'ad')
+,(10,104,'mmm','nnn','',NULL,2.22,NULL,'2015-11-18 18:15:31',NULL,NULL,'2016-12-31 08:00:00',12,'ad')
+,(11,104,'finallyu','yes','',NULL,1.11,NULL,'2015-11-18 18:36:58',NULL,NULL,'2016-12-31 08:00:00',13,'ad');
 /*!40000 ALTER TABLE `promos` ENABLE KEYS */;
 UNLOCK TABLES;
 

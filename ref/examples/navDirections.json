@@ -6,6 +6,10 @@
         "promos",
         "promo"
     ],
+    "public-promos-popular": [
+        "promos",
+        "popular"
+    ],
     "public-brands": [
         "brands"
     ],

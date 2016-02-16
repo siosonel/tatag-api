@@ -1,0 +1,11 @@
+{
+    "pageOrder": "desc",
+    "itemsLimit": 50,
+    "collectionOf": "promo",
+    "pageOf": "/promo/popular",
+    "@type": "promoPopular",
+    "@id": "/promo/popular",
+    "promo": [
+        "/promo/1"
+    ]
+}

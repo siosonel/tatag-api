@@ -2,7 +2,7 @@
     "pageOrder": "asc",
     "itemsLimit": 50,
     "collectionOf": "brand",
-    "pageOf": "/brand/collection",
+    "pageOf": null,
     "@id": "/brand/collection",
     "@type": "brandCollection",
     "numBrands": 13,
