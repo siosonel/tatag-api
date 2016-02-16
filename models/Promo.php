@@ -24,11 +24,16 @@ class Promo extends Base {
 			403, "The user is not a member of the brand that owns this promo and does not have accees to its details."
 		);
 		
-		$this->okToSet = array('name','description', 'amount', 'expires', 'imageURL', 'infoURL');
+		$this->okToSet = array('name','description', 'amount', 'expires', 'imageURL', 'infoURL', 'keyword');
 		if ($this->expires) $this->okToSet[] = 'expires';
 		
 		$this->update(array('promo_id'=>$this->promo_id));
-		//$this->obj->{'@id'} = $this->{'@id'};
+		if ($this->obj->keyword) {
+			$this->obj->code = $this->obj->keyword ."-". $this->id;
+			$this->obj->payURL = Requester::$ProtDomain ."/for/".$this->obj->code;
+		}
+
+		$this->obj->{'@id'} = $this->{'@id'};
 		return array($this->obj);
 	}
 	
@@ -53,9 +58,10 @@ class Promo extends Base {
 		foreach($r AS $k=>$v) $this->$k = $v;
 		if (!$this->imageURL) $this->imageURL = Requester::$ProtDomain ."/ui/css/logo5.png"; //."/ui/logo.php?brand=". $rows[0]['brand_name'];
 		
-		$this->payURL = Requester::$ProtDomain ."/for/$r[keyword]-$r[promo_id]";
-		$this->promoPage = "/ad/$r[amount]";
 		$this->code = "$r[keyword]-$r[promo_id]";
+		$this->payURL = Requester::$ProtDomain ."/for/$this->code";
+		$this->promoPage = "/ad/$r[amount]";
+
 		if (!$this->expires) $this->expires = "2019-12-31 11:59:59";
 
 		if (Requester::isMember($rows[0]['brand_id'])) $this->edit = "/form/promo-edit";

@@ -41,15 +41,28 @@ class BrandPromos extends PromoCollection {
 			"relay_" => array(
 				"@id" => "$this->root/relay/{id}", 
 				"@type" => "relay",
-				"edit" => "/form/relay-edit"
+				"edit" => "/form/relay-edit",
+				"by_all_limit" => "{by_all_limit}",
 			)
 		);
 		
-		$sql = "SELECT promo_id AS id, brand_id, brands.name AS brand_name, 
-				p.name AS name, p.description AS description, amount, imageURL, infoURL, 
-				p.created, p.updated, expires, 
-				relay_id, keyword, 
-				by_all_limit, by_brand_limit, by_user_limit, by_user_wait
+		$sql = "SELECT promo_id AS id, 
+				brand_id, 
+				brands.name AS brand_name, 
+				p.name AS name, 
+				p.description AS description, 
+				amount, 
+				imageURL, 
+				infoURL, 
+				p.created, 
+				p.updated, 
+				expires, 
+				relay_id, 
+				keyword, 
+				by_all_limit AS relay_by_all_limit, 
+				by_brand_limit AS relay_by_brand_limit, 
+				by_user_limit AS relay_by_user_limit, 
+				by_user_wait AS relay_by_user_wait
 			FROM promos p
 			JOIN relays r USING (relay_id)
 			JOIN brands USING (brand_id)

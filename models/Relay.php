@@ -32,6 +32,7 @@ class Relay extends Base {
 		
 		$_GET['holder_id'] = $this->holder_id;
 		$this->update(array('relay_id'=>$this->relay_id));
+		$this->obj->{'@id'} = $this->{'@id'};
 		return array($this->obj);
 	}
 	
