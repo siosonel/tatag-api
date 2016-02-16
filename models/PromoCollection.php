@@ -172,14 +172,26 @@ class PromoCollection extends Collection {
 		$this->cond = array();
 		$this->condVals = array();
 
-		if (isset($_GET['brand_id']) AND is_numeric($_GET['brand_id'])) {
-			$this->cond[] = "AND brand_id=?";
-			$this->condVals[] = $_GET['brand_id'];
+		if (isset($_GET['brand_id'])) {
+			if (is_numeric($_GET['brand_id'])) {
+				$this->cond[] = "AND brand_id=?";				
+				$this->condVals[] = $_GET['brand_id'];
+			}
+			else {
+				$this->cond[] = "AND brands.name LIKE ". DBquery::$conn->quote('%'.$_GET['brand_id'].'%');
+			}
 		} 
 
 		if (isset($_GET['keyword']) AND $_GET['keyword']) {
-			$this->cond[] = "AND keyword=?";
-			$this->condVals[] = $_GET['keyword'];
+			$keyword = $_GET['keyword'];
+			if (substr($keyword,-1)=="-") {
+				$this->cond[] = "AND keyword=?";
+				$this->condVals[] = substr($keyword,0,-1);
+			}
+			else {
+				$quotedKeyword = DBquery::$conn->quote("%$keyword%");
+				$this->cond[] = "AND (keyword LIKE $quotedKeyword OR p.name LIKE $quotedKeyword OR p.description LIKE $quotedKeyword)";
+			}
 		} 
 
 		if (isset($_GET['amount_min']) AND is_numeric($_GET['amount_min'])) {
@@ -205,7 +217,8 @@ class PromoCollection extends Collection {
 			}
 			else {
 				$this->cond[] = "AND keyword=? AND promo_id=?";
-				$this->condVals[] = $for;
+				$this->condVals[] = $for[0];
+				$this->condVals[] = $for[1];
 			}
 		}
 

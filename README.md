@@ -9,7 +9,7 @@ There are related projects to the API:
 
 ## Project Status
 
-Currently in public alpha release, version 0.6-alpha. 
+Currently in public alpha release, version 0.3-alpha. 
 
 
 ## Author

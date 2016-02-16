@@ -48,7 +48,7 @@ class Collection extends Base {
 	}
 	
 	function paginate($keyName, $items=null) {
-		if (!$this->pageOf) $this->pageOf = $this->setPageOf();
+		if (!$this->pageOf) $this->setPageOf();
 		$maxUpdated = 0;
 		
 		if (!$items AND isset($this->{$this->collectionOf})) $items = $this->{$this->collectionOf}; 
