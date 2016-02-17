@@ -11,5 +11,6 @@
     "about": "/brand/104/about",
     "promos": "/brand/104/promos",
     "tally": "/brand/104/tally",
-    "edit": "/form/brand-edit"
+    "edit": "/form/brand-edit",
+    "orders": "/team/104/orders"
 }

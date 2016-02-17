@@ -16,18 +16,21 @@ class TeamAccounts extends Collection {
 		$this->okToGet = array("brand_id", "account_id", "name", "balance", "unit", "authcode");
 	}
 	
-	function get() {
+	function get() {		
+		$graph = array($this);
+
 		$sql = "CALL brandAccountsAsc($this->brand_id, 0, 100)";		
 		$items = DBquery::get($sql, array($this->brand_id, $this->brand_id, $this->brand_id));
 		
 		foreach($items AS &$r) {
-			$r['@id'] = $this->{"@id"} ."?account_id=". $r['account_id'];
+			$r['@id'] = $this->{"@id"} ."?account_id=". $r['id'];
 			$r['brand'] = "$this->root/team/$this->brand_id";
-			$this->{$this->collectionOf}[] = $r;
+			$this->{$this->collectionOf}[] = $r['@id'];
+			$graph[] = $r;
 		}
 		
 		$this->paginate('account_id');
-		return array($this);
+		return $graph;
 	}
 }
 

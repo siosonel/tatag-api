@@ -7,6 +7,8 @@
     "@id": "/promo/collection",
     "popular": "/promo/popular",
     "promo": [
+        "/promo/15",
+        "/promo/14",
         "/promo/13",
         "/promo/12",
         "/promo/11",

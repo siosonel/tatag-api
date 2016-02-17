@@ -17,7 +17,9 @@ class TeamMembers extends Collection {
 		$this->okToFilterBy = array("member_id", "user_id");
 	}
 	
-	function get() {		
+	function get() {	
+		$graph = array($this);
+
 		$sql = "SELECT member_id AS id, m.user_id, role, hours, m.created, u.name, m.joined, m.revoked
 			FROM members m
 			JOIN users u ON u.user_id=m.user_id 
@@ -30,11 +32,12 @@ class TeamMembers extends Collection {
 		foreach($items AS &$r) {
 			$r['@id'] = $this->{"@id"} ."?member_id=". $r['id'];
 			$r['brand'] = "$this->root/team/$this->brand_id";
-			$this->{$this->collectionOf}[] = $r;
+			$this->{$this->collectionOf}[] = $r['@id'];
+			$graph[] = $r;
 		}
 		
 		$this->paginate('member_id');
-		return array($this);
+		return $graph;
 	}
 }
 

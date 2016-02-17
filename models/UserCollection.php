@@ -51,6 +51,7 @@ class UserCollection extends Base {
 		require_once "models/BrandCollection.php";
 		require_once "models/Brand.php";
 		require_once "models/BudgetIssued.php";
+		require_once "models/BrandPromos.php";
 		
 		$Brand = (new BrandCollection(json_decode('{
 			"name": "test-'. time() .'",
@@ -68,6 +69,18 @@ class UserCollection extends Base {
 			"to": "'. $Brand->holders[1]->holder_id .'-'. $Brand->holders[1]->limkey .'",
 			"amount": 10.00,
 			"note": "first issued budget"
+		}')))->add();
+
+		$Promo = (new BrandPromos(json_decode('{
+			"name": "Welcome Team #'. $Brand->brand_id .'",
+			"description": "Help new teams reach their starting revenue goals. More teams leads to a more robust market!",
+			"amount": 1.00,
+			"holder_id": '. $Brand->holders[0]->holder_id .',
+			"keyword": "welcome",
+			"by_all_limit": 10,
+			"by_brand_limit": 2,
+			"by_user_limit": 1,
+			"by_user_wait": 336
 		}')))->add();
 	}
 }
