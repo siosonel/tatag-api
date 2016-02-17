@@ -62,7 +62,7 @@ class PromoPopular extends PromoCollection {
 			) records USING (promo_id)
 			JOIN relays USING (relay_id)
 			JOIN brands USING (brand_id)
-			WHERE promo_id $this->ltgt $this->limitID $this->cond AND MOD(promo_id,2)=1
+			WHERE promo_id $this->ltgt $this->limitID $this->cond
 				AND (expires IS NULL OR expires>NOW())
 				AND by_user_limit > 0 AND by_brand_limit > 0 AND by_all_limit > 0
 			ORDER BY promo_id $this->pageOrder

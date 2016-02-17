@@ -1,5 +1,9 @@
 # Contributing
 
+## Feature Requests / Bugs 
+
+Report or develop solutions for issues at: https://github.com/siosonel/tatag-api/issues
+
 
 ## API Documentation
 
