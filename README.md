@@ -1,10 +1,10 @@
 # Tatag-API
 
-An open platform for funding teams via a budgets-as-currency framework. See https://tatag.cc/ui/home-about for a more detailed introduction to this project.
+An open platform for funding teams via a budgets-as-currency framework. See [the about page](https://tatag.cc/ui/home-about) for a more detailed introduction to this project.
 
 There are related projects to the API:
-- https://tatag.cc/ui/wallet: A working UI prototype for wallet and team resources. Code at https://github.com/siosonel/tatag-ui. 
-- https://tatag.cc/viz/lines.php, https://tatag.cc/viz/chord_m.php, https://tatag.cc/viz/arrow.php: Prototype data visualzations. Code at https://github.com/siosonel/tatag-viz.
+- [User Interface](https://tatag.cc/ui/wallet): A working UI prototype for wallet and team resources. Code at https://github.com/siosonel/tatag-ui. 
+- [Line charts](https://tatag.cc/viz/lines.php), [chord diagram](https://tatag.cc/viz/chord_m.php), [arrow diagram](https://tatag.cc/viz/arrow.php): Prototype data visualzations. Code at https://github.com/siosonel/tatag-viz.
 
 
 ## Project Status
@@ -48,7 +48,7 @@ There is extensive documentation at https://tatag.cc/api/ref/docs.html.
     > git clone git@github.com:siosonel/tatag-api.git
     ```
 
-2. Define HOME and fill-in database credentials in config-public.php. All other types of credentials are optional. Note that the "-public" label indicates the audience type for which the configuration is targeted, and NOT that this file's contents are meant to be publicly visible.
+2. Define HOME and fill-in database credentials in config-exmaple.php, then that file SAVE AS to config-public.php. All other types of credentials in the configuration file example are optional. Note that the "-public" label indicates the audience type for which the configuration is targeted, and NOT that this file's contents are meant to be publicly visible.
 
 3. Install Composer if you don't have it yet:
 
@@ -72,11 +72,7 @@ There is extensive documentation at https://tatag.cc/api/ref/docs.html.
 
 To-do: add php unit tests.
 
-For now: 
-
-    ```
-    > git clone git@github.com:siosonel/addtd.git
-
+For now: ... (will add more details of the design, testing, documentation tool)
 
 
 
