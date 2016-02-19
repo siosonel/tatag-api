@@ -341,9 +341,9 @@ CREATE TABLE `users` (
 --
 
 
-DELIMITER ;;
 
-DROP PROCEDURE IF EXISTS `accountInfo`;;
+
+DROP PROCEDURE IF EXISTS `accountInfo`;
 
 CREATE PROCEDURE `accountInfo`(IN acctID INT)
 BEGIN
@@ -363,10 +363,10 @@ LEFT JOIN (
 ) t ON to_acct=account_id
 WHERE account_id=acctID;
 
-END;;
+END;
 
 
-DROP PROCEDURE IF EXISTS `acctAuthBals`;;
+DROP PROCEDURE IF EXISTS `acctAuthBals`;
 
 CREATE PROCEDURE `acctAuthBals`(
 	IN fromAcct INT,
@@ -390,11 +390,11 @@ LEFT JOIN (
 ) t ON to_acct=account_id
 WHERE account_id IN (fromAcct, toAcct);
 
-END;;
+END;
 
 
 
-DROP PROCEDURE IF EXISTS `holderAccts`;;
+DROP PROCEDURE IF EXISTS `holderAccts`;
 
 CREATE PROCEDURE `holderAccts`(IN userID INT)
 BEGIN
@@ -419,11 +419,11 @@ LEFT JOIN (
 JOIN holders h ON (h.account_id=a.account_id)
 WHERE user_id=userID;
 
-END;;
+END;
 
 
 
-DROP PROCEDURE IF EXISTS `postBal`;;
+DROP PROCEDURE IF EXISTS `postBal`;
 
 CREATE PROCEDURE `postBal`(
 	IN fromAcct INT,
@@ -465,11 +465,11 @@ BEGIN
 		SET mssg=@entryID;
 	END IF;
 
-END;;
+END;
 
 
 
-DROP PROCEDURE IF EXISTS `accountRecords`;;
+DROP PROCEDURE IF EXISTS `accountRecords`;
 
 CREATE PROCEDURE `accountRecords`(
 	IN acctID INT,
@@ -503,11 +503,11 @@ WHERE to_acct=acctID AND record_id < maxRecordID AND record_id > cutoffID
 ORDER BY record_id DESC 
 LIMIT itemsLimit;
 
-END;;
+END;
 
 
 
-DROP PROCEDURE IF EXISTS `holderCheck`;;
+DROP PROCEDURE IF EXISTS `holderCheck`;
 
 CREATE PROCEDURE `holderCheck`(
 	IN holderID INT
@@ -534,11 +534,11 @@ LEFT JOIN (
 	GROUP BY to_acct
 ) t ON to_acct = h.account_id;
 
-END;;
+END;
 
 
 
-DROP PROCEDURE IF EXISTS `userAccounts`;;
+DROP PROCEDURE IF EXISTS `userAccounts`;
 
 CREATE PROCEDURE `userAccounts` (
 	IN userID INT
@@ -582,12 +582,12 @@ LEFT JOIN (
 ) t ON to_acct=a.account_id
 GROUP BY a.account_id;
 
-END;;
+END;
 
 
 
 
-DROP PROCEDURE IF EXISTS `approveRecord`;;
+DROP PROCEDURE IF EXISTS `approveRecord`;
 
 CREATE PROCEDURE `approveRecord`(
 	IN $record_id INT
@@ -606,12 +606,12 @@ IF @f!=0 AND @t!=0 THEN BEGIN
 	COMMIT;
 	END; 
 END IF;
-END;;
+END;
 
 
 
 
-DROP PROCEDURE IF EXISTS `brandAccountsAsc`;;
+DROP PROCEDURE IF EXISTS `brandAccountsAsc`;
 
 CREATE PROCEDURE `brandAccountsAsc` (
 	IN $brandID INT,
@@ -647,11 +647,11 @@ GROUP BY account_id
 ORDER BY account_id ASC
 LIMIT $itemsLimit;
 
-END;;
+END;
 
 
 
-DROP PROCEDURE IF EXISTS `tallyAdded`;;
+DROP PROCEDURE IF EXISTS `tallyAdded`;
 
 CREATE PROCEDURE `tallyAdded` (
 	IN $brandID INT,
@@ -670,12 +670,12 @@ WHERE f.brand_id = $brandID
 	AND status>-1
 	AND r.created BETWEEN $startDate AND $endDate;
 
-END;;
+END;
 
 
 
 
-DROP PROCEDURE IF EXISTS `tallyIntrause`;;
+DROP PROCEDURE IF EXISTS `tallyIntrause`;
 
 CREATE PROCEDURE `tallyIntrause` (
 	IN $brandID INT,
@@ -695,11 +695,11 @@ WHERE t.brand_id = $brandID
 	AND status>-1
 	AND r.created BETWEEN $startDate AND $endDate;
 
-END;;
+END;
 
 
 
-DROP PROCEDURE IF EXISTS `tallyInflow`;;
+DROP PROCEDURE IF EXISTS `tallyInflow`;
 
 CREATE PROCEDURE `tallyInflow` (
 	IN $brandID INT,
@@ -718,12 +718,12 @@ WHERE t.brand_id = $brandID
 	AND status>-1
 	AND r.created BETWEEN $startDate AND $endDate;
 
-END;;
+END;
 
 
 
 
-DROP PROCEDURE IF EXISTS `tallyOutflow`;;
+DROP PROCEDURE IF EXISTS `tallyOutflow`;
 
 CREATE PROCEDURE `tallyOutflow` (
 	IN $brandID INT,
@@ -743,10 +743,10 @@ WHERE f.brand_id = $brandID
 	AND status>-1
 	AND r.created BETWEEN $startDate AND $endDate;
 
-END;;
+END;
 
 
-DROP PROCEDURE IF EXISTS `budgetTotal`;;
+DROP PROCEDURE IF EXISTS `budgetTotal`;
 
 CREATE PROCEDURE `budgetTotal` (
 	IN $brandID INT,
@@ -775,10 +775,10 @@ LEFT JOIN (
 ) t ON to_acct=account_id	
 WHERE brand_id=$brandID AND sign=$sign;
 
-END;;
+END;
 
 
-DROP PROCEDURE IF EXISTS `budgetRevExp`;;
+DROP PROCEDURE IF EXISTS `budgetRevExp`;
 
 CREATE PROCEDURE `budgetRevExp`(
 	IN $brandID INT
@@ -808,10 +808,10 @@ select
 	(SELECT WEEKOFYEAR(MAX(updated)) FROM records WHERE brand_id=$brandID AND txntype='np') AS lastWeekAdded
 ;
 
-END;;
+END;
 
 
-DROP PROCEDURE IF EXISTS `tally`;;
+DROP PROCEDURE IF EXISTS `tally`;
 
 CREATE PROCEDURE `tally`(
 	IN $brandID INT,
@@ -844,14 +844,12 @@ select
 	@numMembers AS numMembers,
 	@totalMemberHours AS totalMemberHours;
 
-END;;
+END;
 
-delimiter ;;
 
-DROP PROCEDURE IF EXISTS `detect_imbalance`;; 
+DROP PROCEDURE IF EXISTS `detect_imbalance`; 
 
-CREATE PROCEDURE `detect_imbalance`(
-)
+CREATE PROCEDURE `detect_imbalance`()
 
 BEGIN
 select * from (
@@ -901,7 +899,7 @@ select * from (
 where balance<0 OR byrec.balance != actual
 ;
 
-END;;
+END;
 
 
 

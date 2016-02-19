@@ -21,6 +21,11 @@
             "keyword"
         ]
     },
+    "validate": {
+        "keyword": {
+            "regex": "^[a-zA-Z]+$"
+        }
+    },
     "examples": [
         {
             "label": "should allow a brand member to add a promo specification",

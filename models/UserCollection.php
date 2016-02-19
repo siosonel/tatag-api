@@ -3,6 +3,8 @@
 Public access to users collection
 */
 
+require_once "utils/Requester.php";
+
 class UserCollection extends Base {	
 	function __construct($data='') {
 		$this->{"@id"} = "$this->root/user/collection";

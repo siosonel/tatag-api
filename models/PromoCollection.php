@@ -79,7 +79,7 @@ class PromoCollection extends Collection {
 				imageURL, 
 				infoURL, 
 				p.created, 
-				COALESCE(p.updated, UNIX_TIMESTAMP(p.created)) AS updated, 
+				UNIX_TIMESTAMP(COALESCE(p.updated, p.created)) AS updated, 
 				p.expires, 
 				keyword,
 				by_all_limit, 

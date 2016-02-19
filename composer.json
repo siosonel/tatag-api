@@ -1,0 +1,29 @@
+{       
+    "name": "siosonel/tatag-api", 
+    "type": "application",
+    "description": "The backend for the tatag.cc platform.",
+    "keywords": ["api", "hypermedia", "rest"],
+    "license": "MIT",
+    "homepage": "https://github.com/siosonel/tatag-api/",
+    "authors": [
+        {
+            "name": "Edgar Sioson",
+            "email": "siosonel@gmail.com",
+            "homepage": "http://edgarsioson.com/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/siosonel/tatag-api/",
+        "issues": "https://github.com/siosonel/tatag-api/issues"
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "abraham/twitteroauth": "0.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Abraham\\TwitterOAuth\\": "src"
+        }
+    }
+}

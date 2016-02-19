@@ -127,9 +127,9 @@ api.loadConcept('public-brands');
         {
             "brand_id": 104,
             "name": "abc",
-            "description": "for testing",
+            "description": "another description -1455687238",
             "created": "2015-01-05 11:53:31",
-            "updated": null,
+            "updated": "2016-02-16 21:33:59",
             "ended": null,
             "url": null,
             "advisor": 0,
@@ -185,9 +185,9 @@ api.loadConcept('public-brand');
     {
         "brand_id": 104,
         "name": "abc",
-        "description": "for testing",
+        "description": "another description -1455687238",
         "created": "2015-01-05 11:53:31",
-        "updated": null,
+        "updated": "2016-02-16 21:33:59",
         "ended": null,
         "url": null,
         "advisor": 0,
@@ -199,7 +199,7 @@ api.loadConcept('public-brand');
     }
 ]</code></pre>
 <p>A registered team that issues its own currency. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>advisor</td><td>integer</td><td>...</td></tr><tr><td>area_code</td><td>integer</td><td>The phone area code where a brand is located. (optional, self-reported)</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>country_code</td><td>string</td><td>The ISO3 code of a brand location.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>ended</td><td>NULL</td><td>The date of resource or relation deactivation, formatted as `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>type_id</td><td>integer</td><td>A brand's self-reported classification.</td></tr><tr><td>type_system</td><td>string</td><td>The classification system that is used to determine the brand type_id value.</td></tr><tr><td>updated</td><td>NULL</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td>url</td><td>NULL</td><td>A link to a web page or image, typically not considered as an API data and therefore not expected to be dereferenced as part of the payload but instead opened as an external link or used in HTML representations.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>advisor</td><td>integer</td><td>...</td></tr><tr><td>area_code</td><td>integer</td><td>The phone area code where a brand is located. (optional, self-reported)</td></tr><tr><td>brand_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>country_code</td><td>string</td><td>The ISO3 code of a brand location.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>ended</td><td>NULL</td><td>The date of resource or relation deactivation, formatted as `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>type_id</td><td>integer</td><td>A brand's self-reported classification.</td></tr><tr><td>type_system</td><td>string</td><td>The classification system that is used to determine the brand type_id value.</td></tr><tr><td>updated</td><td>string</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td>url</td><td>NULL</td><td>A link to a web page or image, typically not considered as an API data and therefore not expected to be dereferenced as part of the payload but instead opened as an external link or used in HTML representations.</td></tr></tbody></table>
 <h2 id="public-promos">public-promos</h2>
 <pre><code class="language-javascript">
 api.loadConcept('public-promos');
@@ -214,15 +214,16 @@ api.loadConcept('public-promos');
     "pageOf": "/promo/collection",
     "@type": "promoCollection",
     "@id": "/promo/collection",
+    "popular": "/promo/popular",
     "promo": [
-        "/promo/11",
-        "/promo/10",
-        "/promo/9"
+        "/promo/15",
+        "/promo/14",
+        "/promo/13"
     ],
     "search": "/form/promo-search"
 }</code></pre>
 <p>A collection or paged list of public-promo. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td>search</td><td>string</td><td>...</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#public-promo'>promo</a></td><td>link</td><td>A brand promotion, used to advertise anything that could be the target of a payment.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#public-promos-popular'>popular</a></td><td>link</td><td>...</td></tr><tr><td><a href='#public-promo'>promo</a></td><td>link</td><td>A brand promotion, used to advertise anything that could be the target of a payment.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#public-promos-search'>search</a></td><td>form</td><td>...</td></tr></tbody></table>
 <h2 id="public-promo">public-promo</h2>
 <pre><code class="language-javascript">
 api.loadConcept('public-promo');
@@ -232,33 +233,53 @@ api.loadConcept('public-promo');
 </blockquote>
 <pre><code>[
     {
-        "promo_id": 11,
-        "name": "finallyu",
-        "description": "yes",
-        "amount": 1.11,
-        "imageURL": "",
+        "promo_id": 15,
+        "name": "product promo {hex}",
+        "description": "a brand 104 promo {hex}",
+        "amount": 5.43,
+        "imageURL": null,
         "infoURL": null,
-        "created": "2015-11-18 10:36:58",
-        "updated": null,
+        "created": "2016-02-16 21:34:00",
+        "updated": 1455687240,
         "expires": "2016-12-31 00:00:00",
         "keyword": "ad",
         "by_all_limit": 25,
         "by_brand_limit": 5,
         "by_user_limit": 2,
         "by_user_wait": 24,
-        "id": 11,
-        "@id": "/promo/11",
+        "id": 15,
+        "@id": "/promo/15",
         "@type": "promo",
         "edit": "/form/promo-edit",
         "brand": "/brand/104/about",
-        "promoPage": "http://tatag.dev/ad/11",
-        "code": "ad-11",
-        "payURL": "http://tatag.dev/for/ad-11",
+        "promoPage": "http://tatag.dev/ad/15",
+        "code": "ad-15",
+        "payURL": "http://tatag.dev/for/ad-15",
         "imageTemplate": "/ui/logo.php"
     }
 ]</code></pre>
 <p>Anything that a participant could pay for, such as for purchasing products, funding nonprofit campaigns, or supporting team projects with donations. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>double</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>by_all_limit</td><td>integer</td><td>This is a weekly limit on the total inflow transaction amount for a given account or usage for a given product, regardless of the payor's brand or user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_brand_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's brand id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_wait</td><td>integer</td><td>How long a user must wait after using a promo, before that user can reuse the same promo.</td></tr><tr><td>code</td><td>string</td><td>An alpha-numeric string that a payment recipient shares with a payor to authorize a payment or promo use.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>expires</td><td>string</td><td>The date after which a given resource will no longer be available. For example, a promo may expire after a week.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>imageTemplate</td><td>string</td><td>If given, a user interface provider may use this resource to display a brand icon or promo image.</td></tr><tr><td>imageURL</td><td>string</td><td>If given, a user interface provider may use this link to display a brand icon or promo image.</td></tr><tr><td>infoURL</td><td>NULL</td><td>External web page about a resource.</td></tr><tr><td>keyword</td><td>string</td><td>In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>payURL</td><td>string</td><td>A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.</td></tr><tr><td>promoPage</td><td>string</td><td>The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.</td></tr><tr><td>promo_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>updated</td><td>NULL</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#public-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#public-promo-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>double</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>by_all_limit</td><td>integer</td><td>This is a weekly limit on the total inflow transaction amount for a given account or usage for a given product, regardless of the payor's brand or user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_brand_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's brand id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_wait</td><td>integer</td><td>How long a user must wait after using a promo, before that user can reuse the same promo.</td></tr><tr><td>code</td><td>string</td><td>An alpha-numeric string that a payment recipient shares with a payor to authorize a payment or promo use.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>expires</td><td>string</td><td>The date after which a given resource will no longer be available. For example, a promo may expire after a week.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>imageTemplate</td><td>string</td><td>If given, a user interface provider may use this resource to display a brand icon or promo image.</td></tr><tr><td>imageURL</td><td>NULL</td><td>If given, a user interface provider may use this link to display a brand icon or promo image.</td></tr><tr><td>infoURL</td><td>NULL</td><td>External web page about a resource.</td></tr><tr><td>keyword</td><td>string</td><td>In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>payURL</td><td>string</td><td>A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.</td></tr><tr><td>promoPage</td><td>string</td><td>The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.</td></tr><tr><td>promo_id</td><td>integer</td><td>(deprecated)</td></tr><tr><td>updated</td><td>integer</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#public-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#public-promo-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<h2 id="public-promos-popular">public-promos-popular</h2>
+<pre><code class="language-javascript">
+api.loadConcept('public-promos-popular');
+</code></pre>
+<blockquote>
+<p>Status <span style='color:#0f0'>200</span></p>
+</blockquote>
+<pre><code>{
+    "pageOrder": "desc",
+    "itemsLimit": 50,
+    "collectionOf": "promo",
+    "pageOf": "/promo/popular",
+    "@type": "promoPopular",
+    "@id": "/promo/popular",
+    "promo": [
+        "/promo/1"
+    ]
+}</code></pre>
+<p>blah blah blah </p>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>collectionOf</td><td>string</td><td>The term used for the collection item. For example, instead of promos.items, you could use promos.promo or promos[promos.collectionOf].</td></tr><tr><td>itemsLimit</td><td>integer</td><td>The maximum number of items that is returned in a collection page. To request more than the itemsLimit, make subsequent requests using the collection's 'next' or 'prev' link.</td></tr><tr><td>pageOf</td><td>string</td><td>The '@id' of the collection to which the current page belongs. In other words, this is the link to the default collection resource without pagination.</td></tr><tr><td>pageOrder</td><td>string</td><td>Either 'asc' or 'desc' based on item id's.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#public-promo'>promo</a></td><td>link</td><td>A brand promotion, used to advertise anything that could be the target of a payment.</td></tr></tbody></table>
 <h1 id="personal-resources">Personal Resources</h1>
 <p>These are resources that belong to the current user and are meant for private viewing. These resources are inteded to be used for wallet type applications, and in order for such applications to act on behalf of a user, oauth-type authentication is required.</p>
 <h2 id="my-me">my-me</h2>
@@ -410,10 +431,11 @@ api.loadConcept('my-team');
     "about": "/brand/104/about",
     "promos": "/brand/104/promos",
     "tally": "/brand/104/tally",
-    "edit": "/form/brand-edit"
+    "edit": "/form/brand-edit",
+    "orders": "/team/104/orders"
 }</code></pre>
 <p>blah blah blah </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>logo</td><td>NULL</td><td>An external link to an icon image that symbolizes a brand.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-about'>about</a></td><td>link</td><td>Information about the current resource.</td></tr><tr><td>accounts</td><td>link</td><td>A collection of brand accounts, that is, a brand's ledger.</td></tr><tr><td>members</td><td>link</td><td>A collection of brand members.</td></tr><tr><td>promos</td><td>link</td><td>A collection of brand promotions.</td></tr><tr><td>records</td><td>link</td><td>A collection of 'record'.</td></tr><tr><td>tally</td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr><tr><td>throttles</td><td>link</td><td>A collection of 'throttle'.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-team-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>logo</td><td>NULL</td><td>An external link to an icon image that symbolizes a brand.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#my-about'>about</a></td><td>link</td><td>Information about the current resource.</td></tr><tr><td>accounts</td><td>link</td><td>A collection of brand accounts, that is, a brand's ledger.</td></tr><tr><td>members</td><td>link</td><td>A collection of brand members.</td></tr><tr><td>orders</td><td>link</td><td>...</td></tr><tr><td>promos</td><td>link</td><td>A collection of brand promotions.</td></tr><tr><td>records</td><td>link</td><td>A collection of 'record'.</td></tr><tr><td>tally</td><td>link</td><td>Periodic aggregated budget activity information, by brand and type of activity.</td></tr><tr><td>throttles</td><td>link</td><td>A collection of 'throttle'.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#my-team-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h2 id="my-issuer">my-issuer</h2>
 <pre><code class="language-javascript">
 api.loadConcept('my-issuer');
@@ -2034,30 +2056,8 @@ api.loadConcept('team-members');
     "@type": "members",
     "@id": "/team/104/members",
     "member": [
-        {
-            "id": 53,
-            "user_id": 21,
-            "role": "admin",
-            "hours": 0,
-            "created": "2015-01-05 11:53:31",
-            "name": "User One",
-            "joined": "2015-11-17 04:15:14",
-            "revoked": null,
-            "@id": "/team/104/members?member_id=53",
-            "brand": "/team/104"
-        },
-        {
-            "id": 55,
-            "user_id": 23,
-            "role": "staff",
-            "hours": 0,
-            "created": "2015-01-05 11:53:31",
-            "name": "User Three",
-            "joined": null,
-            "revoked": null,
-            "@id": "/team/104/members?member_id=55",
-            "brand": "/team/104"
-        }
+        "/team/104/members?member_id=53",
+        "/team/104/members?member_id=55"
     ]
 }</code></pre>
 <p>A collection of team-member. </p>
@@ -2101,39 +2101,9 @@ api.loadConcept('team-accounts');
     "@type": "accounts",
     "@id": "/team/104/accounts",
     "account": [
-        {
-            "id": 92,
-            "name": "Main Revenue",
-            "balance": -1399.98,
-            "unit": "hour",
-            "authcode": "cftix",
-            "created": "2015-01-05 11:53:31",
-            "throttle_id": 0,
-            "@id": "/team/104/accounts?account_id=",
-            "brand": "/team/104"
-        },
-        {
-            "id": 93,
-            "name": "Main Expense",
-            "balance": 1221.82,
-            "unit": "hour",
-            "authcode": "cftix",
-            "created": "2015-01-05 11:53:31",
-            "throttle_id": 0,
-            "@id": "/team/104/accounts?account_id=",
-            "brand": "/team/104"
-        },
-        {
-            "id": 94,
-            "name": "Personal Expense",
-            "balance": 187.53,
-            "unit": "hour",
-            "authcode": "ti",
-            "created": "2015-01-05 11:53:32",
-            "throttle_id": 0,
-            "@id": "/team/104/accounts?account_id=",
-            "brand": "/team/104"
-        }
+        "/team/104/accounts?account_id=92",
+        "/team/104/accounts?account_id=93",
+        "/team/104/accounts?account_id=94"
     ]
 }</code></pre>
 <p>A collection of team-account, also referred to as a team ledger. </p>
@@ -2154,7 +2124,7 @@ api.loadConcept('team-account');
         "authcode": "cftix",
         "created": "2015-01-05 11:53:31",
         "throttle_id": 0,
-        "@id": "/team/104/accounts?account_id=",
+        "@id": "/team/104/accounts?account_id=92",
         "brand": "/team/104"
     }
 ]</code></pre>
@@ -2320,8 +2290,6 @@ api.loadConcept('team-promo');
     {
         "id": 1,
         "name": "Test promo",
-        "@id": "/promo/1",
-        "@type": "promo",
         "description": "A brand #104 promo",
         "amount": 25,
         "imageURL": null,
@@ -2329,21 +2297,19 @@ api.loadConcept('team-promo');
         "created": "2014-12-31 16:00:00",
         "updated": null,
         "expires": null,
-        "keyword": "ad",
-        "by_all_limit": 25,
-        "by_brand_limit": 5,
-        "by_user_limit": 25,
-        "by_user_wait": 24,
+        "keyword": "software",
         "brand": "/brand/104",
         "relay": "/relay/1",
-        "payURL": "http://tatag.dev/for/ad-1",
-        "code": "ad-1",
+        "@id": "/promo/1",
+        "@type": "promo",
+        "payURL": "http://tatag.dev/for/software-1",
+        "code": "software-1",
         "promoPage": "http://tatag.dev/ad/1",
         "edit": "/form/promo-edit"
     }
 ]</code></pre>
 <p>A promo that has been created by a team, intended to announce or advertise products, services, and projects that any user could help pay for. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>integer</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>by_all_limit</td><td>integer</td><td>This is a weekly limit on the total inflow transaction amount for a given account or usage for a given product, regardless of the payor's brand or user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_brand_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's brand id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_wait</td><td>integer</td><td>How long a user must wait after using a promo, before that user can reuse the same promo.</td></tr><tr><td>code</td><td>string</td><td>An alpha-numeric string that a payment recipient shares with a payor to authorize a payment or promo use.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>expires</td><td>NULL</td><td>The date after which a given resource will no longer be available. For example, a promo may expire after a week.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>imageURL</td><td>NULL</td><td>If given, a user interface provider may use this link to display a brand icon or promo image.</td></tr><tr><td>infoURL</td><td>string</td><td>External web page about a resource.</td></tr><tr><td>keyword</td><td>string</td><td>In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>payURL</td><td>string</td><td>A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.</td></tr><tr><td>promoPage</td><td>string</td><td>The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.</td></tr><tr><td>updated</td><td>NULL</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#team-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td>relay</td><td>link</td><td>A token that is used to preauthorize the use of a recipient account.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#team-promo-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>integer</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>code</td><td>string</td><td>An alpha-numeric string that a payment recipient shares with a payor to authorize a payment or promo use.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>expires</td><td>NULL</td><td>The date after which a given resource will no longer be available. For example, a promo may expire after a week.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>imageURL</td><td>NULL</td><td>If given, a user interface provider may use this link to display a brand icon or promo image.</td></tr><tr><td>infoURL</td><td>string</td><td>External web page about a resource.</td></tr><tr><td>keyword</td><td>string</td><td>In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>payURL</td><td>string</td><td>A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.</td></tr><tr><td>promoPage</td><td>string</td><td>The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.</td></tr><tr><td>updated</td><td>NULL</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#team-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td>relay</td><td>link</td><td>A token that is used to preauthorize the use of a recipient account.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#team-promo-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h3 id="team-promo-edit">team-promo-edit</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['edit']).then(...);
@@ -3736,31 +3702,27 @@ api.loadConcept('admin-promo');
 <pre><code>[
     {
         "id": 1,
-        "name": "Test promo",
+        "name": "{hex}",
         "description": "A brand #104 promo",
-        "amount": 25,
+        "amount": 8.97,
         "imageURL": null,
         "infoURL": "http://tatag.dev/ad/1",
         "created": "2014-12-31 16:00:00",
-        "updated": null,
+        "updated": "2016-02-16 21:33:21",
         "expires": null,
-        "keyword": "ad",
-        "by_all_limit": 25,
-        "by_brand_limit": 5,
-        "by_user_limit": 25,
-        "by_user_wait": 24,
+        "keyword": "software",
         "brand": "/brand/104",
         "relay": "/relay/1",
         "@id": "/promo/1",
         "@type": "promo",
-        "payURL": "http://tatag.dev/for/ad-1",
-        "code": "ad-1",
+        "payURL": "http://tatag.dev/for/software-1",
+        "code": "software-1",
         "promoPage": "http://tatag.dev/ad/1",
         "edit": "/form/promo-edit"
     }
 ]</code></pre>
 <p>A brand promo that is administered by the current user. A promo is intended to announce or advertise products, services, and projects that any user could help pay for. </p>
-<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>integer</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>by_all_limit</td><td>integer</td><td>This is a weekly limit on the total inflow transaction amount for a given account or usage for a given product, regardless of the payor's brand or user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_brand_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's brand id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_limit</td><td>integer</td><td>A weekly limit on total inflow transaction amount for a given account or usage for a given promo, based on the payor's user id. This is similar to coupon restrictions, allowing your brand to set limits on transactions and also to combat spammy payment offers. </td></tr><tr><td>by_user_wait</td><td>integer</td><td>How long a user must wait after using a promo, before that user can reuse the same promo.</td></tr><tr><td>code</td><td>string</td><td>An alpha-numeric string that a payment recipient shares with a payor to authorize a payment or promo use.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>expires</td><td>NULL</td><td>The date after which a given resource will no longer be available. For example, a promo may expire after a week.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>imageURL</td><td>NULL</td><td>If given, a user interface provider may use this link to display a brand icon or promo image.</td></tr><tr><td>infoURL</td><td>string</td><td>External web page about a resource.</td></tr><tr><td>keyword</td><td>string</td><td>In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>payURL</td><td>string</td><td>A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.</td></tr><tr><td>promoPage</td><td>string</td><td>The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.</td></tr><tr><td>updated</td><td>NULL</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td>relay</td><td>link</td><td>A token that is used to preauthorize the use of a recipient account.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-promo-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
+<table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>@id</td><td>string</td><td>...</td></tr><tr><td>@type</td><td>string</td><td>...</td></tr><tr><td>amount</td><td>double</td><td>A numeric value that quantifies an important aspect of a resource. For example, in the context of a promo or transaction record, the amount may be a product price or a suggested donation amount.</td></tr><tr><td>code</td><td>string</td><td>An alpha-numeric string that a payment recipient shares with a payor to authorize a payment or promo use.</td></tr><tr><td>created</td><td>string</td><td>The date and time when a resource was created, in the form of `YYYY-MM-DD hh:mm:ss`.</td></tr><tr><td>description</td><td>string</td><td>...</td></tr><tr><td>expires</td><td>NULL</td><td>The date after which a given resource will no longer be available. For example, a promo may expire after a week.</td></tr><tr><td>id</td><td>integer</td><td>A numeric identifier for a resource, that is unique for a given resource type.</td></tr><tr><td>imageURL</td><td>NULL</td><td>If given, a user interface provider may use this link to display a brand icon or promo image.</td></tr><tr><td>infoURL</td><td>string</td><td>External web page about a resource.</td></tr><tr><td>keyword</td><td>string</td><td>In the context of a relay, this is the prefix to be used with a relay id, such as the 'food-' in the relay token value of 'food-645'. This keyword is assigned by the user when creating a promo, and also helps to counter (but not prevent) spammy transaction offers by making it harder to guess the full value of a relay token.</td></tr><tr><td>name</td><td>string</td><td>The name of the resource.</td></tr><tr><td>payURL</td><td>string</td><td>A URL that, when clicked, is intended to automatically open the tatag.cc wallet of a payor.</td></tr><tr><td>promoPage</td><td>string</td><td>The tatag.cc-hosted web page about the promo. An infoURL, when available, should be preferred as an external link.</td></tr><tr><td>updated</td><td>string</td><td>The UNIX timestamp when a resource was last updated.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Links</td></tr><tr><td><a href='#admin-brand'>brand</a></td><td>link</td><td>The currency issuer related to this resource.</td></tr><tr><td>relay</td><td>link</td><td>A token that is used to preauthorize the use of a recipient account.</td></tr><tr><td colspan='3' style='background-color:#ececec; text-align: left;'>Forms</td></tr><tr><td><a href='#admin-promo-edit'>edit</a></td><td>form</td><td>A form for updating a resource.</td></tr></tbody></table>
 <h3 id="admin-promo-edit">admin-promo-edit</h3>
 <pre><code class="language-javascript">
 api.loadId(currResource['edit']).then(...);

@@ -1648,6 +1648,15 @@
 					"optional": ["imageURL", "infoURL", "expires", "by_all_limit", "by_brand_limit", "by_user_limit", "by_user_wait","keyword"]
 				},
 				
+				"validate": {
+					"keyword": {
+						"regex": {
+							"value": "^[a-zA-Z]+$",
+							"errorMessage": "The keyword value must have alphabet characters only (no numbers, spaces, or special characters)."
+						}
+					}	
+				},
+				
 				"examples": [{
 					"label": "should allow a brand member to add a promo specification",
 					"resource": {
@@ -1720,7 +1729,7 @@
 					"required": [],
 					"optional": []
 				},
-				
+
 				"examples": [{
 					"label": "should allow searching by keyword",
 					"resource": {

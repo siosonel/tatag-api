@@ -1,8 +1,10 @@
 ﻿
 _exclude/*
+vendor/*
 
 config*
 config/*
+!config-example.php
 
 cron-trigger.php
 tools/crons/*

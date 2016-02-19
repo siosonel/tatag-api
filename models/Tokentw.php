@@ -1,7 +1,9 @@
 <?php
-require_once "models/Router.php";
+require_once 'vendor/autoload.php';
+require_once 'config-public.php';
+require_once "utils/Router.php";
 require_once "models/Token.php";
-require "../twitteroauth/autoload.php";
+
 use Abraham\TwitterOAuth\TwitterOAuth;
 
 class Tokentw extends Token {	
